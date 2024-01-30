@@ -27,6 +27,7 @@ jobs:
           container port: 3306
           mysql database: 'new_morandi'
           mysql root password: 1234
+          mysql options: '--skip-ssl' # SSL 비활성화
 
       - name: Create application-dev.yml from GitHub Secret
         run: |
