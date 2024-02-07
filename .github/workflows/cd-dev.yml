@@ -39,7 +39,6 @@ jobs:
           mkdir -p src/main/resources
           echo "${{ secrets.DEV_APPLICATION_YML }}" > src/main/resources/application.yml
 
-
       - name: Build with Gradle
         env:
           ORG_GRADLE_OPTS: "-Duser.timezone=Asia/Seoul"
