@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: dev_morandi_backend
-  ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}
+  ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/dev_morandi_backend
   EC2_BASTION_HOST: ${{ secrets.RELEASE_BASTION_HOST }}
   EC2_BACKEND_HOST: ${{ secrets.DEV_BACKEND_HOST }} # EC2 인스턴스의 Private IP
   GITHUB_SHA: ${{ github.sha }}
