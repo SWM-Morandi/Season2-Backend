@@ -72,6 +72,6 @@ jobs:
           port: 22
           envs: EC2_BACKEND_HOST,GITHUB_SHA,ECR_REGISTRY
           script: |
-            ssh -o StrictHostKeyChecking=no ubuntu@$EC2_BACKEND_HOST 'bash /home/ubuntu/morandi-backend/deploy.sh'
+            ssh -o StrictHostKeyChecking=no ubuntu@$EC2_BACKEND_HOST 'export TAG=$GITHUB_SHA && bash /home/ubuntu/morandi-backend/deploy.sh'
 
 
