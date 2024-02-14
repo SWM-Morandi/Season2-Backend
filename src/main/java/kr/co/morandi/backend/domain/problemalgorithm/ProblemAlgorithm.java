@@ -1,7 +1,8 @@
-package kr.co.morandi.backend.domain.problem;
+package kr.co.morandi.backend.domain.problemalgorithm;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.algorithm.Algorithm;
+import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,10 +19,8 @@ public class ProblemAlgorithm {
     private Long problemAlgorithmId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ALGORITHM_ID")
     private Algorithm algorithm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PROBLEM_ID")
     private Problem problem;
 }

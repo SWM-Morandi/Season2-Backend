@@ -1,18 +1,15 @@
 package kr.co.morandi.backend.domain.contenttype;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ContentType {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,16 +1,11 @@
 package kr.co.morandi.backend.domain.member;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +23,15 @@ public class Member {
     private String profileURL;
 
     private String description;
+
+    @Builder
+    private Member(Long memberId, String nickname, String baekjoonId, String socialEmail, SocialType socialInfo, String profileURL, String description) {
+        this.memberId = memberId;
+        this.nickname = nickname;
+        this.baekjoonId = baekjoonId;
+        this.socialEmail = socialEmail;
+        this.socialInfo = socialInfo;
+        this.profileURL = profileURL;
+        this.description = description;
+    }
 }

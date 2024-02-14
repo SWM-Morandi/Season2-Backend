@@ -1,21 +1,20 @@
-package kr.co.morandi.backend.domain.contenttype.customsets;
+package kr.co.morandi.backend.domain.contenttype.customdefense;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.contenttype.ContentType;
 import kr.co.morandi.backend.domain.member.Member;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("CustomSets")
+@DiscriminatorValue("CustomDefense")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomSets extends ContentType {
+public class CustomDefense extends ContentType {
 
     private LocalDateTime testDate;
 
@@ -35,6 +34,5 @@ public class CustomSets extends ContentType {
     private Long timeLimit;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import kr.co.morandi.backend.domain.contenttype.tier.ProblemTier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class Problem {
 
     private Long baekjoonProblemId;
 
-    private String problemDifficulty;
+    private ProblemTier problemTier;
 
     private Long solvedCount;
 }

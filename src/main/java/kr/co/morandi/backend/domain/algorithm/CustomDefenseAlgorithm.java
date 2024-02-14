@@ -9,16 +9,14 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomSetsAlgorithm {
+public class CustomDefenseAlgorithm {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customSetsAlgorithmId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CONTENT_TYPE_ID")
     private ContentType contentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ALGORITHM_ID")
     private Algorithm algorithm;
 }

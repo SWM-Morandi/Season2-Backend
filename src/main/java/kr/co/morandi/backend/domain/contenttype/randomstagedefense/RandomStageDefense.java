@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.contenttype.randomdefense;
+package kr.co.morandi.backend.domain.contenttype.randomstagedefense;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.contenttype.ContentType;
@@ -7,18 +7,17 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@DiscriminatorValue("RandomDefense")
+@DiscriminatorValue("StageDefense")
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RandomDefense extends ContentType {
+public class RandomStageDefense extends ContentType {
+
+    private Double averageStage;
 
     @Embedded
     private RandomCriteria randomCriteria;
 
-    private Long problemCount;
-
     private Long timeLimit;
-
 
 }

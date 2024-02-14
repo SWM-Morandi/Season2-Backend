@@ -1,20 +1,19 @@
-package kr.co.morandi.backend.domain.contenttype.dailysets;
+package kr.co.morandi.backend.domain.contenttype.dailytest;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import kr.co.morandi.backend.domain.contenttype.ContentType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("DailySets")
+@DiscriminatorValue("DailyTest")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DailySets extends ContentType {
-    private LocalDateTime testDate;
+public class DailyTest extends ContentType {
+    private LocalDateTime date;
 }

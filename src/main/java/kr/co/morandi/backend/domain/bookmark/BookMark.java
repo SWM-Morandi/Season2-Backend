@@ -19,10 +19,8 @@ public class BookMark {
     private Long bookMarkId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CONTENT_TYPE_ID")
     private ContentType contentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 }
