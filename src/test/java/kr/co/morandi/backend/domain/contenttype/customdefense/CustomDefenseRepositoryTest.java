@@ -63,8 +63,6 @@ class CustomDefenseRepositoryTest {
         CustomDefense customDefense2 = CustomDefense.create(List.of(problem1,problem3), member, "커스텀 디펜스2","커스텀 디펜스2 설명", OPEN, SILVER, 60L, now);
         CustomDefense customDefense3 = CustomDefense.create(List.of(problem2,problem3), member, "커스텀 디펜스3","커스텀 디펜스3 설명", CLOSE, GOLD, 60L, now);
 
-
-        // when
         customDefenseRepository.saveAll(List.of(customDefense1, customDefense2, customDefense3));
 
         // when
