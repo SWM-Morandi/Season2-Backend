@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 
-import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
+import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.problem.ProblemStatus.INIT;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,6 +23,22 @@ class ProblemTest {
                 .containsExactly(
                         1L, B5, INIT, 0L
                 );
+    }
+
+    @DisplayName("문제가 활성화되면 문제의 상태는 ACTIVE여야 한다.")
+    @Test
+    void activate() {
+        // given
+        Problem problem1 = Problem.create(1L, B5, 0L);
+        Problem problem2 = Problem.create(2L, S5, 0L);
+
+        // when
+        problem1.activate();
+
+        // then
+        assertThat(problem1.getProblemStatus()).isEqualTo(ProblemStatus.ACTIVE);
+        assertThat(problem2.getProblemStatus()).isEqualTo(INIT);
+
     }
 
 }
