@@ -16,10 +16,11 @@ class RandomCriteriaTest {
         // given
         long minSolvedCount = -2L;
         long maxSolvedCount = -1L;
+        RandomCriteria.DifficultyRange difficultyRange = RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1);
+
 
         // when & then
-        assertThatThrownBy(() -> RandomCriteria.of(
-                RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
+        assertThatThrownBy(() -> RandomCriteria.of(difficultyRange, minSolvedCount, maxSolvedCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Solved count must be greater than or equal to 0");
     }
@@ -30,10 +31,10 @@ class RandomCriteriaTest {
         // given
         long minSolvedCount = 100L;
         long maxSolvedCount = 50L;
+        RandomCriteria.DifficultyRange difficultyRange = RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1);
 
         // when & then
-        assertThatThrownBy(() -> RandomCriteria.of(
-                RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
+        assertThatThrownBy(() -> RandomCriteria.of(difficultyRange, minSolvedCount, maxSolvedCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Min solved count must be less than or equal to max solved count");
 
@@ -45,10 +46,10 @@ class RandomCriteriaTest {
         // given
         long minSolvedCount = 100L;
         long maxSolvedCount = 100L;
+        RandomCriteria.DifficultyRange difficultyRange = RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1);
 
         // when & then
-        assertThatThrownBy(() -> RandomCriteria.of(
-                RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
+        assertThatThrownBy(() -> RandomCriteria.of(difficultyRange, minSolvedCount, maxSolvedCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Min solved count must be less than or equal to max solved count");
     }
