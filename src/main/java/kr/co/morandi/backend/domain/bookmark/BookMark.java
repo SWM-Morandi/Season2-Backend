@@ -19,6 +19,7 @@ public class BookMark extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @Builder
     private BookMark(ContentType contentType, Member member) {
         this.contentType = contentType;
         this.member = member;
