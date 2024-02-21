@@ -26,7 +26,8 @@ public class CustomDefense extends ContentType {
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
 
-    private String difficulty;
+    @Enumerated(EnumType.STRING)
+    private DefenseTier defenseTier;
 
     private Long timeLimit;
 
