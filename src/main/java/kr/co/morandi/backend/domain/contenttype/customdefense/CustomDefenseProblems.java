@@ -2,6 +2,7 @@ package kr.co.morandi.backend.domain.contenttype.customdefense;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
+import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.*;
 
 @Entity
@@ -19,10 +20,13 @@ public class CustomDefenseProblems extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private CustomDefense customDefense;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Problem problem;
     @Builder
-    private CustomDefenseProblems(Long submitCount, Long solvedCount, CustomDefense customDefense) {
+    private CustomDefenseProblems(Long submitCount, Long solvedCount, CustomDefense customDefense, Problem problem) {
         this.submitCount = submitCount;
         this.solvedCount = solvedCount;
         this.customDefense = customDefense;
+        this.problem = problem;
     }
 }
