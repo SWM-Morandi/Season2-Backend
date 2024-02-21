@@ -12,27 +12,38 @@ public class Member extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
+    @Column(unique = true)
     private String nickname;
 
     private String baekjoonId;
 
-    private String socialEmail;
+    private String email;
 
     @Enumerated(EnumType.STRING)
-    private SocialType socialInfo;
+    private SocialType socialType;
 
-    private String profileURL;
+    private String profileImageURL;
 
     private String description;
 
     @Builder
-    private Member(Long memberId, String nickname, String baekjoonId, String socialEmail, SocialType socialInfo, String profileURL, String description) {
+    private Member(Long memberId, String nickname, String baekjoonId, String email, SocialType socialType, String profileImageURL, String description) {
         this.memberId = memberId;
         this.nickname = nickname;
         this.baekjoonId = baekjoonId;
-        this.socialEmail = socialEmail;
-        this.socialInfo = socialInfo;
-        this.profileURL = profileURL;
+        this.email = email;
+        this.socialType = socialType;
+        this.profileImageURL = profileImageURL;
         this.description = description;
+    }
+
+    public static Member create(String nickname, String email, SocialType socialType, String profileImageURL, String description) {
+        return Member.builder()
+                .nickname(nickname)
+                .email(email)
+                .socialType(socialType)
+                .profileImageURL(profileImageURL)
+                .description(description)
+                .build();
     }
 }
