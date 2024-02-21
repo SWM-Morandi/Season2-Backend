@@ -15,5 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DailyTest extends ContentType {
+
     private LocalDateTime date;
+
 }

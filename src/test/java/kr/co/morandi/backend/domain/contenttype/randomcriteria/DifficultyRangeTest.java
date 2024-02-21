@@ -1,10 +1,13 @@
 package kr.co.morandi.backend.domain.contenttype.randomcriteria;
 
+import kr.co.morandi.backend.domain.contenttype.randomdefense.randomcriteria.RandomCriteria;
 import kr.co.morandi.backend.domain.contenttype.tier.ProblemTier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
+import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B1;
+import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
@@ -14,11 +17,11 @@ class DifficultyRangeTest {
     @Test
     void startAndEndDifficultySameException() {
         // given
-        ProblemTier start = ProblemTier.B1;
-        ProblemTier end = ProblemTier.B1;
+        ProblemTier start = B1;
+        ProblemTier end = B1;
 
         // when & then
-        assertThatThrownBy(() -> DifficultyRange.of(start, end))
+        assertThatThrownBy(() -> RandomCriteria.DifficultyRange.of(start, end))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Start difficulty and end difficulty must not be same");
 
@@ -28,11 +31,11 @@ class DifficultyRangeTest {
     @Test
     void startDifficultyGreaterThanEndDifficultyException() {
         // given
-        ProblemTier start = ProblemTier.B1;
-        ProblemTier end = ProblemTier.B5;
+        ProblemTier start = B1;
+        ProblemTier end = B5;
 
         // when & then
-        assertThatThrownBy(() -> DifficultyRange.of(start, end))
+        assertThatThrownBy(() -> RandomCriteria.DifficultyRange.of(start, end))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Start difficulty must be less than or equal to end difficulty");
     }
@@ -42,10 +45,10 @@ class DifficultyRangeTest {
     void startOrEndDifficultyNullException() {
         // given
         ProblemTier start = null;
-        ProblemTier end = ProblemTier.B5;
+        ProblemTier end = B5;
 
         // when & then
-        assertThatThrownBy(() -> DifficultyRange.of(start, end))
+        assertThatThrownBy(() -> RandomCriteria.DifficultyRange.of(start, end))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("DifficultyRange must not be null");
     }

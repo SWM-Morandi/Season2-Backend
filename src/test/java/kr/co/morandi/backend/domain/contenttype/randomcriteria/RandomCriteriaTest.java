@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.domain.contenttype.randomcriteria;
 
+import kr.co.morandi.backend.domain.contenttype.randomdefense.randomcriteria.RandomCriteria;
 import kr.co.morandi.backend.domain.contenttype.tier.ProblemTier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class RandomCriteriaTest {
 
         // when & then
         assertThatThrownBy(() -> RandomCriteria.of(
-                DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
+                RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Solved count must be greater than or equal to 0");
     }
@@ -32,7 +33,7 @@ class RandomCriteriaTest {
 
         // when & then
         assertThatThrownBy(() -> RandomCriteria.of(
-                DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
+                RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Min solved count must be less than or equal to max solved count");
 
@@ -47,7 +48,7 @@ class RandomCriteriaTest {
 
         // when & then
         assertThatThrownBy(() -> RandomCriteria.of(
-                DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
+                RandomCriteria.DifficultyRange.of(ProblemTier.B5, ProblemTier.B1), minSolvedCount, maxSolvedCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Min solved count must be less than or equal to max solved count");
     }

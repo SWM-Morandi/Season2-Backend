@@ -1,12 +1,13 @@
 package kr.co.morandi.backend.domain.member;
 
 import jakarta.persistence.*;
+import kr.co.morandi.backend.domain.BaseEntity;
 import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;

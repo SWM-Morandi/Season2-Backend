@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.member.repository;
+package kr.co.morandi.backend.domain.member;
 
 
 import kr.co.morandi.backend.domain.member.Member;

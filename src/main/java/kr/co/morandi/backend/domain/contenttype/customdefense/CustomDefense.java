@@ -3,31 +3,29 @@ package kr.co.morandi.backend.domain.contenttype.customdefense;
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.contenttype.ContentType;
 import kr.co.morandi.backend.domain.member.Member;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Entity
 @DiscriminatorValue("CustomDefense")
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CustomDefense extends ContentType {
 
     private LocalDateTime testDate;
 
     private Long problemCount;
 
-    private String information;
+    private String description;
 
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
-
-    private Long goodCount;
-
-    private Long badCount;
 
     private String difficulty;
 

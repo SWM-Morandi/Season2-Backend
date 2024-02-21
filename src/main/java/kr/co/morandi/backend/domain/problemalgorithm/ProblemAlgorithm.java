@@ -1,19 +1,15 @@
 package kr.co.morandi.backend.domain.problemalgorithm;
 
 import jakarta.persistence.*;
+import kr.co.morandi.backend.domain.BaseEntity;
 import kr.co.morandi.backend.domain.algorithm.Algorithm;
 import kr.co.morandi.backend.domain.problem.Problem;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProblemAlgorithm {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class ProblemAlgorithm extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long problemAlgorithmId;
@@ -23,4 +19,10 @@ public class ProblemAlgorithm {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
+
+    @Builder
+    private ProblemAlgorithm(Algorithm algorithm, Problem problem) {
+        this.algorithm = algorithm;
+        this.problem = problem;
+    }
 }

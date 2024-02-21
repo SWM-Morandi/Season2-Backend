@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.domain.contenttype;
 
 import jakarta.persistence.*;
+import kr.co.morandi.backend.domain.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -10,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ContentType {
+public abstract class ContentType extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contentTypeId;
