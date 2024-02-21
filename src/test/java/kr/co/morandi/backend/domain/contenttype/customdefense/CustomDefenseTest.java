@@ -12,14 +12,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import static kr.co.morandi.backend.domain.contenttype.customdefense.DefenseTier.GOLD;
 import static kr.co.morandi.backend.domain.contenttype.customdefense.Visibility.OPEN;
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -31,8 +31,6 @@ class CustomDefenseTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Autowired
-    private CustomDefenseRepository customDefenseRepository;
 
     @Autowired
     private CustomDefenseProblemsRepository customDefenseProblemsRepository;
@@ -40,7 +38,6 @@ class CustomDefenseTest {
     @AfterEach
     void tearDown() {
         customDefenseProblemsRepository.deleteAllInBatch();
-        customDefenseRepository.deleteAllInBatch();
         problemRepository.deleteAllInBatch();
         memberRepository.deleteAllInBatch();
     }
@@ -60,7 +57,7 @@ class CustomDefenseTest {
         LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
 
         // when
-        CustomDefense customDefense = CustomDefense.create(problems, member, "커스텀 디펜스1","커스텀 디펜스1 설명", OPEN, GOLD, 60L, now);
+        CustomDefense customDefense = CustomDefense.create(problems, member, "커스텀 디펜스1", "커스텀 디펜스1 설명", OPEN, GOLD, 60L, now);
 
         // then
         assertThat(customDefense.getCreateDate()).isEqualTo(now);
@@ -98,11 +95,7 @@ class CustomDefenseTest {
         Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
         memberRepository.save(member);
 
-        Problem problem1 = Problem.create(1L, B5, 0L);
-        Problem problem2 = Problem.create(2L, S5, 0L);
-        Problem problem3 = Problem.create(3L, G5, 0L);
-        List<Problem> problems = List.of(problem1, problem2, problem3);
-        problemRepository.saveAll(problems);
+        List<Problem> problems = createProblems();
 
         LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
 
@@ -119,6 +112,69 @@ class CustomDefenseTest {
                         tuple(2L, S5),
                         tuple(3L, G5)
                 );
+    }
+
+
+    @DisplayName("커스텀 디펜스를 빈 문제 리스트로 생성하면 예외가 발생한다")
+    @Test
+    void createCustomDefenseWithoutProblem() {
+        // given
+        Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
+        memberRepository.save(member);
+
+        List<Problem> problems = Collections.emptyList();
+
+        LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
+
+        // when & then
+        assertThatThrownBy( () -> CustomDefense.create(problems, member, "커스텀 디펜스1", "커스텀 디펜스1 설명", OPEN, GOLD, 60L, now))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("커스텀 디펜스에는 최소 한 개의 문제가 포함되어야 합니다.");
+
+    }
+
+    @DisplayName("커스텀 디펜스 제한 시간을 0으로 설정하면 예외를 발생한다.")
+    @Test
+    void createCustomDefenseWithZeroTimeLimit() {
+        // given
+        Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
+        memberRepository.save(member);
+
+        List<Problem> problems = createProblems();
+
+        LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
+
+        // when & then
+        assertThatThrownBy( () -> CustomDefense.create(problems, member, "커스텀 디펜스1", "커스텀 디펜스1 설명", OPEN, GOLD, -1L, now))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("커스텀 디펜스 제한 시간은 0보다 커야 합니다.");
+    }
+
+    @DisplayName("커스텀 디펜스 제한 시간을 0 미만의 값으로 설정하면 예외를 발생한다.")
+    @Test
+    void createCustomDefenseWithNegativeTimeLimit() {
+        // given
+        Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
+        memberRepository.save(member);
+
+        List<Problem> problems = createProblems();
+
+        LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
+
+        // when & then
+        assertThatThrownBy( () -> CustomDefense.create(problems, member, "커스텀 디펜스1", "커스텀 디펜스1 설명", OPEN, GOLD, -1L, now))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("커스텀 디펜스 제한 시간은 0보다 커야 합니다.");
+
+    }
+
+    private List<Problem> createProblems() {
+        Problem problem1 = Problem.create(1L, B5, 0L);
+        Problem problem2 = Problem.create(2L, S5, 0L);
+        Problem problem3 = Problem.create(3L, G5, 0L);
+        List<Problem> problems = List.of(problem1, problem2, problem3);
+        problemRepository.saveAll(problems);
+        return problems;
     }
 
 }
