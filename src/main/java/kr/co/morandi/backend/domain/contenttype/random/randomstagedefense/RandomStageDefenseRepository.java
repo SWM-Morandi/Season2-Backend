@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.contenttype.randomdefense;
+package kr.co.morandi.backend.domain.contenttype.random.randomstagedefense;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

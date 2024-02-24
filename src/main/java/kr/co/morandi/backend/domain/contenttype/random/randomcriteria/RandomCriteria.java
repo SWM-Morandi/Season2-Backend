@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.contenttype.randomdefense.randomcriteria;
+package kr.co.morandi.backend.domain.contenttype.random.randomcriteria;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
@@ -12,12 +12,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RandomCriteria {
-
     @Embedded
     private DifficultyRange difficultyRange;
-
     private Long minSolvedCount;
-
     private Long maxSolvedCount;
 
     @Builder

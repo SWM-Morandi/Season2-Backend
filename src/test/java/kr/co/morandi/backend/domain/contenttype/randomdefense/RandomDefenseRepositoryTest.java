@@ -1,7 +1,9 @@
 package kr.co.morandi.backend.domain.contenttype.randomdefense;
 
 
-import kr.co.morandi.backend.domain.contenttype.randomdefense.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.contenttype.random.randomdefense.RandomDefense;
+import kr.co.morandi.backend.domain.contenttype.random.randomdefense.RandomDefenseRepository;
+import kr.co.morandi.backend.domain.contenttype.random.randomcriteria.RandomCriteria;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

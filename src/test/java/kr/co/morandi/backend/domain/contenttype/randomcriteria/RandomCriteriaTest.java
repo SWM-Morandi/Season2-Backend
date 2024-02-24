@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.domain.contenttype.randomcriteria;
 
-import kr.co.morandi.backend.domain.contenttype.randomdefense.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.contenttype.random.randomcriteria.RandomCriteria;
 import kr.co.morandi.backend.domain.contenttype.tier.ProblemTier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
