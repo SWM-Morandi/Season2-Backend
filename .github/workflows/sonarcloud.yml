@@ -20,16 +20,7 @@ jobs:
           java-version: 17
           distribution: 'zulu' # Alternative distribution options are available
 
-      - name: Start MySQL container
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          host port: 3306
-          container port: 3306
-          mysql database: 'new_morandi'
-          mysql root password: 1234
-          mysql options: '--skip-ssl' # SSL 비활성화
-
-      - name: Create application-dev.yml from GitHub Secret
+      - name: Create application-test.yml from GitHub Secret
         run: |
           mkdir -p src/main/resources
           echo "${{ secrets.TEST_APPLICATION_YML }}" > src/main/resources/application.yml
