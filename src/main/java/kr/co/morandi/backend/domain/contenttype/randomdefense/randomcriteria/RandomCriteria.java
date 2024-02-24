@@ -28,11 +28,11 @@ public class RandomCriteria {
     }
 
     public static RandomCriteria of(DifficultyRange difficultyRange, Long minSolvedCount, Long maxSolvedCount) {
-        if(minSolvedCount == null || maxSolvedCount == null)
+        if (minSolvedCount == null || maxSolvedCount == null)
             throw new IllegalArgumentException("Solved count must not be null");
-        if(minSolvedCount < 0 || maxSolvedCount < 0)
+        if (minSolvedCount < 0 || maxSolvedCount < 0)
             throw new IllegalArgumentException("Solved count must be greater than or equal to 0");
-        if(minSolvedCount >= maxSolvedCount)
+        if (minSolvedCount >= maxSolvedCount)
             throw new IllegalArgumentException("Min solved count must be less than or equal to max solved count");
 
 
@@ -57,11 +57,11 @@ public class RandomCriteria {
         }
 
         public static DifficultyRange of(ProblemTier startDifficulty, ProblemTier endDifficulty) {
-            if(startDifficulty == null || endDifficulty == null)
+            if (startDifficulty == null || endDifficulty == null)
                 throw new IllegalArgumentException("DifficultyRange must not be null");
-            if(startDifficulty.compareTo(endDifficulty) > 0)
+            if (startDifficulty.compareTo(endDifficulty) > 0)
                 throw new IllegalArgumentException("Start difficulty must be less than or equal to end difficulty");
-            if(startDifficulty.equals(endDifficulty))
+            if (startDifficulty.equals(endDifficulty))
                 throw new IllegalArgumentException("Start difficulty and end difficulty must not be same");
 
             return DifficultyRange.builder()
