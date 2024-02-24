@@ -24,7 +24,7 @@ public class CustomDefense extends ContentType {
 
     private LocalDateTime createDate;
 
-    private int problemCount;
+    private Integer problemCount;
 
     private String description;
 
