@@ -61,8 +61,6 @@ public class RandomCriteria {
                 throw new IllegalArgumentException("DifficultyRange must not be null");
             if (startDifficulty.compareTo(endDifficulty) > 0)
                 throw new IllegalArgumentException("Start difficulty must be less than or equal to end difficulty");
-            if (startDifficulty.equals(endDifficulty))
-                throw new IllegalArgumentException("Start difficulty and end difficulty must not be same");
 
             return DifficultyRange.builder()
                     .startDifficulty(startDifficulty)
