@@ -17,5 +17,4 @@ import java.time.LocalDateTime;
 public class DailyTest extends ContentType {
 
     private LocalDateTime date;
-
 }
