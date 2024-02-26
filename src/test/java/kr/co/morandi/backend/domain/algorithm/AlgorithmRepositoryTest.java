@@ -1,19 +1,27 @@
 package kr.co.morandi.backend.domain.algorithm;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class AlgorithmRepositoryTest {
 
     @Autowired
     private AlgorithmRepository algorithmRepository;
+    @AfterEach
+    void tearDown() {
+        algorithmRepository.deleteAllInBatch();
+    }
+
     @DisplayName("알고리즘 초기 데이터가 존재하는지 확인한다.")
     @Test
     void existsByBojTagIdOrAlgorithmKey() {
