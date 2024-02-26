@@ -24,7 +24,7 @@ public class AlgorithmInitializer {
     private final AlgorithmRepository algorithmRepository;
     private final ObjectMapper objectMapper;
 
-    @Value("classpath:algorithms.json")
+    @Value("classpath:Algorithms.json")
     private Resource algorithmsResource;
 
     @PostConstruct
