@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import static java.lang.Boolean.FALSE;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
@@ -39,4 +41,13 @@ public abstract class ContentProblemRecord extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
+    public ContentProblemRecord(ContentType contentType, ContentRecord contentRecord, Member member, Problem problem) {
+        this.isSolved = false;
+        this.submitCount = 0L;
+        this.solvedCode = null;
+        this.contentType = contentType;
+        this.contentRecord = contentRecord;
+        this.member = member;
+        this.problem = problem;
+    }
 }

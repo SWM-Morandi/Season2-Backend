@@ -18,6 +18,7 @@ public class CustomDefenseProblems extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
+
     private Long submitCount;
 
     private Long solvedCount;

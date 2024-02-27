@@ -31,7 +31,6 @@ class CustomDefenseTest {
     @Autowired
     private MemberRepository memberRepository;
 
-
     @Autowired
     private CustomDefenseProblemsRepository customDefenseProblemsRepository;
 
@@ -41,7 +40,6 @@ class CustomDefenseTest {
         problemRepository.deleteAllInBatch();
         memberRepository.deleteAllInBatch();
     }
-
     @DisplayName("커스텀 디펜스를 생성하면 등록 시간을 기록한다.")
     @Test
     void registeredWithDateTime() {
@@ -63,7 +61,6 @@ class CustomDefenseTest {
         assertThat(customDefense.getCreateDate()).isEqualTo(now);
 
     }
-
     @DisplayName("커스텀 디펜스를 생성하면 컨텐츠 이름과 설명을 기록한다.")
     @Test
     void createCustomDefenseWithContentName() {
@@ -99,7 +96,6 @@ class CustomDefenseTest {
 
         LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
 
-
         // when
         CustomDefense customDefense = CustomDefense.create(problems, member, "커스텀 디펜스1", "커스텀 디펜스1 설명", OPEN, GOLD, 60L, now);
 
@@ -113,8 +109,6 @@ class CustomDefenseTest {
                         tuple(3L, G5)
                 );
     }
-
-
     @DisplayName("커스텀 디펜스를 빈 문제 리스트로 생성하면 예외가 발생한다")
     @Test
     void createCustomDefenseWithoutProblem() {
