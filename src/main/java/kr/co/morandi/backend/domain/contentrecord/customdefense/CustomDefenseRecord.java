@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @SuperBuilder
@@ -27,8 +26,13 @@ public class CustomDefenseRecord extends ContentRecord {
     private Integer solvedCount;
     private Integer problemCount;
     @Override
-    public ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord, Member member, Problem problem) {
+    public ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord,
+                                                           Member member, Problem problem) {
         return CustomDefenseProblemRecord.builder()
+                .isSolved(false)
+                .submitCount(0L)
+                .solvedCode(null)
+                .solvedTime(0L)
                 .contentType(contentType)
                 .contentRecord(contentRecord)
                 .member(member)

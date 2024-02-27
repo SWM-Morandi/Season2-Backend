@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.domain.contentproblemrecord.customdefense;
 
+import kr.co.morandi.backend.domain.contentproblemrecord.ContentProblemRecord;
 import kr.co.morandi.backend.domain.contentrecord.customdefense.CustomDefenseRecord;
 import kr.co.morandi.backend.domain.contentrecord.customdefense.CustomDefenseRecordRepository;
 import kr.co.morandi.backend.domain.contenttype.customdefense.CustomDefense;
@@ -65,14 +66,10 @@ class CustomDefenseProblemRecordTest {
         CustomDefense customDefense = makeCustomDefense();
         List<Problem> problems = makeCustomProblems(customDefense);
         Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
 
-        // when
-        List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
-                .map(problem -> CustomDefenseProblemRecord.create(customDefense, customDefenseRecord, member, problem))
-                .collect(Collectors.toList());
-
-        // then
+        // when & then
         assertThat(customDefenseProblemRecords)
                 .extracting("isSolved")
                 .containsExactlyInAnyOrder(false, false);
@@ -85,12 +82,8 @@ class CustomDefenseProblemRecordTest {
         CustomDefense customDefense = makeCustomDefense();
         List<Problem> problems = makeCustomProblems(customDefense);
         Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
-
-        // when
-        List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
-                .map(problem -> CustomDefenseProblemRecord.create(customDefense, customDefenseRecord, member, problem))
-                .collect(Collectors.toList());
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
 
         // then
         assertThat(customDefenseProblemRecords)
@@ -105,14 +98,10 @@ class CustomDefenseProblemRecordTest {
         CustomDefense customDefense = makeCustomDefense();
         List<Problem> problems = makeCustomProblems(customDefense);
         Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
 
-        // when
-        List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
-                .map(problem -> CustomDefenseProblemRecord.create(customDefense, customDefenseRecord, member, problem))
-                .collect(Collectors.toList());
-
-        // then
+        // when & then
         assertThat(customDefenseProblemRecords)
                 .extracting("submitCount")
                 .containsExactlyInAnyOrder(0L, 0L);
@@ -125,19 +114,14 @@ class CustomDefenseProblemRecordTest {
         CustomDefense customDefense = makeCustomDefense();
         List<Problem> problems = makeCustomProblems(customDefense);
         Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
 
-        // when
-        List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
-                .map(problem -> CustomDefenseProblemRecord.create(customDefense, customDefenseRecord, member, problem))
-                .collect(Collectors.toList());
-
-        // then
+        // when & then
         assertThat(customDefenseProblemRecords)
                 .extracting("solvedCode")
                 .containsExactlyInAnyOrder(null, null);
     }
-
     private CustomDefense makeCustomDefense() {
         Member member = makeMember("author");
         Problem problem1 = Problem.create(1L, B5, 0L);
@@ -163,9 +147,9 @@ class CustomDefenseProblemRecordTest {
         Member member = Member.create(name, name + "@gmail.com", GOOGLE, name, name);
         return memberRepository.save(member);
     }
-    private CustomDefenseRecord makeCustomDefenseRecord(CustomDefense customDefense, Member member) {
+    private CustomDefenseRecord makeCustomDefenseRecord(CustomDefense customDefense, Member member, List<Problem> problems) {
         LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
         customDefenseRecordRepository.save(customDefenseRecord);
         return customDefenseRecord;
     }

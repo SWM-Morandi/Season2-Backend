@@ -47,7 +47,6 @@ class CustomDefenseRecordTest {
 
     @Autowired
     private CustomDefenseRecordRepository customDefenseRecordRepository;
-
     @AfterEach
     void tearDown() {
         customDefenseRecordRepository.deleteAllInBatch();
@@ -61,11 +60,12 @@ class CustomDefenseRecordTest {
     public void testDateIsEqualNow() {
         // given
         CustomDefense customDefense = makeCustomDefense();
+        List<Problem> problems = makeCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
 
         // then
         assertThat(customDefenseRecord.getTestDate()).isEqualTo(now);
@@ -75,11 +75,12 @@ class CustomDefenseRecordTest {
     public void solvedCountIsZero() {
         // given
         CustomDefense customDefense = makeCustomDefense();
+        List<Problem> problems = makeCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
 
         // then
         assertThat(customDefenseRecord.getSolvedCount()).isZero();
@@ -90,11 +91,12 @@ class CustomDefenseRecordTest {
     public void problemCountIsEqual() {
         // given
         CustomDefense customDefense = makeCustomDefense();
+        List<Problem> problems = makeCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
 
         // then
         assertThat(customDefenseRecord.getProblemCount()).isEqualTo(customDefense.getProblemCount());
@@ -104,11 +106,12 @@ class CustomDefenseRecordTest {
     public void totalSolvedTimeIsZero() {
         // given
         CustomDefense customDefense = makeCustomDefense();
+        List<Problem> problems = makeCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
 
         // then
         assertThat(customDefenseRecord.getTotalSolvedTime()).isZero();
@@ -140,8 +143,9 @@ class CustomDefenseRecordTest {
         return memberRepository.save(member);
     }
     private CustomDefenseRecord makeCustomDefenseRecord(CustomDefense customDefense, Member member) {
+        List<Problem> problems = makeCustomProblems(customDefense);
         LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
         customDefenseRecordRepository.save(customDefenseRecord);
         return customDefenseRecord;
     }

@@ -20,13 +20,4 @@ import lombok.experimental.SuperBuilder;
 public class CustomDefenseProblemRecord extends ContentProblemRecord {
 
     private Long solvedTime;
-    private CustomDefenseProblemRecord(ContentType contentType, ContentRecord contentRecord,
-                                       Member member, Problem problem) {
-        super(contentType, contentRecord, member, problem);
-        this.solvedTime = 0L;
-    }
-    public static CustomDefenseProblemRecord create(ContentType contentType, ContentRecord contentRecord,
-                                                    Member member, Problem problem) {
-        return new CustomDefenseProblemRecord(contentType, contentRecord, member, problem);
-    }
 }
