@@ -15,10 +15,16 @@ public class Algorithm extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long algorithmId;
 
+    private Integer bojTagId;
+
+    private String algorithmKey;
+
     private String algorithmName;
 
     @Builder
-    private Algorithm(String algorithmName) {
+    private Algorithm(Integer bojTagId, String algorithmKey, String algorithmName) {
+        this.bojTagId = bojTagId;
+        this.algorithmKey = algorithmKey;
         this.algorithmName = algorithmName;
     }
 }

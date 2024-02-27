@@ -1,0 +1,1032 @@
+[
+  {
+    "bojTagId": 1,
+    "algorithmKey": "2_sat",
+    "algorithmName": "2-sat"
+  },
+  {
+    "bojTagId": 2,
+    "algorithmKey": "aho_corasick",
+    "algorithmName": "아호-코라식"
+  },
+  {
+    "bojTagId": 3,
+    "algorithmKey": "polygon_area",
+    "algorithmName": "다각형의 넓이"
+  },
+  {
+    "bojTagId": 4,
+    "algorithmKey": "articulation",
+    "algorithmName": "단절점과 단절선"
+  },
+  {
+    "bojTagId": 5,
+    "algorithmKey": "backtracking",
+    "algorithmName": "백트래킹"
+  },
+  {
+    "bojTagId": 6,
+    "algorithmKey": "combinatorics",
+    "algorithmName": "조합론"
+  },
+  {
+    "bojTagId": 7,
+    "algorithmKey": "graphs",
+    "algorithmName": "그래프 이론"
+  },
+  {
+    "bojTagId": 8,
+    "algorithmKey": "hashing",
+    "algorithmName": "해싱"
+  },
+  {
+    "bojTagId": 9,
+    "algorithmKey": "primality_test",
+    "algorithmName": "소수 판정"
+  },
+  {
+    "bojTagId": 10,
+    "algorithmKey": "bellman_ford",
+    "algorithmName": "벨만–포드"
+  },
+  {
+    "bojTagId": 11,
+    "algorithmKey": "graph_traversal",
+    "algorithmName": "그래프 탐색"
+  },
+  {
+    "bojTagId": 12,
+    "algorithmKey": "binary_search",
+    "algorithmName": "이분 탐색"
+  },
+  {
+    "bojTagId": 13,
+    "algorithmKey": "bipartite_matching",
+    "algorithmName": "이분 매칭"
+  },
+  {
+    "bojTagId": 14,
+    "algorithmKey": "bitmask",
+    "algorithmName": "비트마스킹"
+  },
+  {
+    "bojTagId": 15,
+    "algorithmKey": "general_matching",
+    "algorithmName": "일반적인 매칭"
+  },
+  {
+    "bojTagId": 16,
+    "algorithmKey": "burnside",
+    "algorithmName": "번사이드 보조정리"
+  },
+  {
+    "bojTagId": 18,
+    "algorithmKey": "centroid_decomposition",
+    "algorithmName": "센트로이드 분할"
+  },
+  {
+    "bojTagId": 19,
+    "algorithmKey": "crt",
+    "algorithmName": "중국인의 나머지 정리"
+  },
+  {
+    "bojTagId": 20,
+    "algorithmKey": "convex_hull",
+    "algorithmName": "볼록 껍질"
+  },
+  {
+    "bojTagId": 21,
+    "algorithmKey": "delaunay",
+    "algorithmName": "델로네 삼각분할"
+  },
+  {
+    "bojTagId": 22,
+    "algorithmKey": "dijkstra",
+    "algorithmName": "데이크스트라"
+  },
+  {
+    "bojTagId": 23,
+    "algorithmKey": "directed_mst",
+    "algorithmName": "유향 최소 신장 트리"
+  },
+  {
+    "bojTagId": 24,
+    "algorithmKey": "divide_and_conquer",
+    "algorithmName": "분할 정복"
+  },
+  {
+    "bojTagId": 25,
+    "algorithmKey": "dp",
+    "algorithmName": "다이나믹 프로그래밍"
+  },
+  {
+    "bojTagId": 26,
+    "algorithmKey": "euclidean",
+    "algorithmName": "유클리드 호제법"
+  },
+  {
+    "bojTagId": 27,
+    "algorithmKey": "extended_euclidean",
+    "algorithmName": "확장 유클리드 호제법"
+  },
+  {
+    "bojTagId": 28,
+    "algorithmKey": "fft",
+    "algorithmName": "고속 푸리에 변환"
+  },
+  {
+    "bojTagId": 29,
+    "algorithmKey": "flt",
+    "algorithmName": "페르마의 소정리"
+  },
+  {
+    "bojTagId": 31,
+    "algorithmKey": "floyd_warshall",
+    "algorithmName": "플로이드–워셜"
+  },
+  {
+    "bojTagId": 32,
+    "algorithmKey": "gaussian_elimination",
+    "algorithmName": "가우스 소거법"
+  },
+  {
+    "bojTagId": 33,
+    "algorithmKey": "greedy",
+    "algorithmName": "그리디 알고리즘"
+  },
+  {
+    "bojTagId": 34,
+    "algorithmKey": "hall",
+    "algorithmName": "홀의 결혼 정리"
+  },
+  {
+    "bojTagId": 35,
+    "algorithmKey": "hld",
+    "algorithmName": "Heavy-light 분할"
+  },
+  {
+    "bojTagId": 36,
+    "algorithmKey": "hungarian",
+    "algorithmName": "헝가리안"
+  },
+  {
+    "bojTagId": 38,
+    "algorithmKey": "inclusion_and_exclusion",
+    "algorithmName": "포함 배제의 원리"
+  },
+  {
+    "bojTagId": 39,
+    "algorithmKey": "exponentiation_by_squaring",
+    "algorithmName": "분할 정복을 이용한 거듭제곱"
+  },
+  {
+    "bojTagId": 40,
+    "algorithmKey": "kmp",
+    "algorithmName": "KMP"
+  },
+  {
+    "bojTagId": 41,
+    "algorithmKey": "lca",
+    "algorithmName": "최소 공통 조상"
+  },
+  {
+    "bojTagId": 42,
+    "algorithmKey": "line_intersection",
+    "algorithmName": "선분 교차 판정"
+  },
+  {
+    "bojTagId": 43,
+    "algorithmKey": "lis",
+    "algorithmName": "가장 긴 증가하는 부분 수열: O(n log n)"
+  },
+  {
+    "bojTagId": 44,
+    "algorithmKey": "manacher",
+    "algorithmName": "매내처"
+  },
+  {
+    "bojTagId": 45,
+    "algorithmKey": "flow",
+    "algorithmName": "최대 유량"
+  },
+  {
+    "bojTagId": 46,
+    "algorithmKey": "mitm",
+    "algorithmName": "중간에서 만나기"
+  },
+  {
+    "bojTagId": 47,
+    "algorithmKey": "miller_rabin",
+    "algorithmName": "밀러–라빈 소수 판별법"
+  },
+  {
+    "bojTagId": 48,
+    "algorithmKey": "mcmf",
+    "algorithmName": "최소 비용 최대 유량"
+  },
+  {
+    "bojTagId": 49,
+    "algorithmKey": "mst",
+    "algorithmName": "최소 스패닝 트리"
+  },
+  {
+    "bojTagId": 50,
+    "algorithmKey": "mo",
+    "algorithmName": "mo\\'s"
+  },
+  {
+    "bojTagId": 51,
+    "algorithmKey": "mobius_inversion",
+    "algorithmName": "뫼비우스 반전 공식"
+  },
+  {
+    "bojTagId": 52,
+    "algorithmKey": "offline_dynamic_connectivity",
+    "algorithmName": "오프라인 동적 연결성 판정"
+  },
+  {
+    "bojTagId": 53,
+    "algorithmKey": "palindrome_tree",
+    "algorithmName": "회문 트리"
+  },
+  {
+    "bojTagId": 54,
+    "algorithmKey": "pbs",
+    "algorithmName": "병렬 이분 탐색"
+  },
+  {
+    "bojTagId": 55,
+    "algorithmKey": "pst",
+    "algorithmName": "퍼시스턴트 세그먼트 트리"
+  },
+  {
+    "bojTagId": 56,
+    "algorithmKey": "point_in_convex_polygon",
+    "algorithmName": "볼록 다각형 내부의 점 판정"
+  },
+  {
+    "bojTagId": 57,
+    "algorithmKey": "point_in_non_convex_polygon",
+    "algorithmName": "오목 다각형 내부의 점 판정"
+  },
+  {
+    "bojTagId": 58,
+    "algorithmKey": "pollard_rho",
+    "algorithmName": "폴라드 로"
+  },
+  {
+    "bojTagId": 59,
+    "algorithmKey": "priority_queue",
+    "algorithmName": "우선순위 큐"
+  },
+  {
+    "bojTagId": 60,
+    "algorithmKey": "pythagoras",
+    "algorithmName": "피타고라스 정리"
+  },
+  {
+    "bojTagId": 61,
+    "algorithmKey": "rabin_karp",
+    "algorithmName": "라빈–카프"
+  },
+  {
+    "bojTagId": 62,
+    "algorithmKey": "recursion",
+    "algorithmName": "재귀"
+  },
+  {
+    "bojTagId": 63,
+    "algorithmKey": "regex",
+    "algorithmName": "정규 표현식"
+  },
+  {
+    "bojTagId": 64,
+    "algorithmKey": "rotating_calipers",
+    "algorithmName": "회전하는 캘리퍼스"
+  },
+  {
+    "bojTagId": 65,
+    "algorithmKey": "segtree",
+    "algorithmName": "세그먼트 트리"
+  },
+  {
+    "bojTagId": 66,
+    "algorithmKey": "lazyprop",
+    "algorithmName": "느리게 갱신되는 세그먼트 트리"
+  },
+  {
+    "bojTagId": 67,
+    "algorithmKey": "sieve",
+    "algorithmName": "에라토스테네스의 체"
+  },
+  {
+    "bojTagId": 68,
+    "algorithmKey": "sliding_window",
+    "algorithmName": "슬라이딩 윈도우"
+  },
+  {
+    "bojTagId": 69,
+    "algorithmKey": "splay_tree",
+    "algorithmName": "스플레이 트리"
+  },
+  {
+    "bojTagId": 70,
+    "algorithmKey": "sprague_grundy",
+    "algorithmName": "스프라그–그런디 정리"
+  },
+  {
+    "bojTagId": 71,
+    "algorithmKey": "stack",
+    "algorithmName": "스택"
+  },
+  {
+    "bojTagId": 72,
+    "algorithmKey": "queue",
+    "algorithmName": "큐"
+  },
+  {
+    "bojTagId": 73,
+    "algorithmKey": "deque",
+    "algorithmName": "덱"
+  },
+  {
+    "bojTagId": 74,
+    "algorithmKey": "tree_set",
+    "algorithmName": "트리를 사용한 집합과 맵"
+  },
+  {
+    "bojTagId": 75,
+    "algorithmKey": "stoer_wagner",
+    "algorithmName": "스토어–바그너"
+  },
+  {
+    "bojTagId": 76,
+    "algorithmKey": "scc",
+    "algorithmName": "강한 연결 요소"
+  },
+  {
+    "bojTagId": 77,
+    "algorithmKey": "suffix_array",
+    "algorithmName": "접미사 배열과 LCP 배열"
+  },
+  {
+    "bojTagId": 78,
+    "algorithmKey": "topological_sorting",
+    "algorithmName": "위상 정렬"
+  },
+  {
+    "bojTagId": 79,
+    "algorithmKey": "trie",
+    "algorithmName": "트라이"
+  },
+  {
+    "bojTagId": 80,
+    "algorithmKey": "two_pointer",
+    "algorithmName": "두 포인터"
+  },
+  {
+    "bojTagId": 81,
+    "algorithmKey": "disjoint_set",
+    "algorithmName": "분리 집합"
+  },
+  {
+    "bojTagId": 82,
+    "algorithmKey": "voronoi",
+    "algorithmName": "보로노이 다이어그램"
+  },
+  {
+    "bojTagId": 83,
+    "algorithmKey": "z",
+    "algorithmName": "z"
+  },
+  {
+    "bojTagId": 84,
+    "algorithmKey": "sparse_table",
+    "algorithmName": "희소 배열"
+  },
+  {
+    "bojTagId": 87,
+    "algorithmKey": "dp_bitfield",
+    "algorithmName": "비트필드를 이용한 다이나믹 프로그래밍"
+  },
+  {
+    "bojTagId": 89,
+    "algorithmKey": "cht",
+    "algorithmName": "볼록 껍질을 이용한 최적화"
+  },
+  {
+    "bojTagId": 90,
+    "algorithmKey": "knuth",
+    "algorithmName": "크누스 최적화"
+  },
+  {
+    "bojTagId": 91,
+    "algorithmKey": "divide_and_conquer_optimization",
+    "algorithmName": "분할 정복을 사용한 최적화"
+  },
+  {
+    "bojTagId": 92,
+    "algorithmKey": "dp_tree",
+    "algorithmName": "트리에서의 다이나믹 프로그래밍"
+  },
+  {
+    "bojTagId": 93,
+    "algorithmKey": "eulerian_path",
+    "algorithmName": "오일러 경로"
+  },
+  {
+    "bojTagId": 94,
+    "algorithmKey": "rb_tree",
+    "algorithmName": "레드-블랙 트리"
+  },
+  {
+    "bojTagId": 95,
+    "algorithmKey": "number_theory",
+    "algorithmName": "정수론"
+  },
+  {
+    "bojTagId": 96,
+    "algorithmKey": "parsing",
+    "algorithmName": "파싱"
+  },
+  {
+    "bojTagId": 97,
+    "algorithmKey": "sorting",
+    "algorithmName": "정렬"
+  },
+  {
+    "bojTagId": 98,
+    "algorithmKey": "link_cut_tree",
+    "algorithmName": "링크/컷 트리"
+  },
+  {
+    "bojTagId": 100,
+    "algorithmKey": "geometry",
+    "algorithmName": "기하학"
+  },
+  {
+    "bojTagId": 101,
+    "algorithmKey": "ternary_search",
+    "algorithmName": "삼분 탐색"
+  },
+  {
+    "bojTagId": 102,
+    "algorithmKey": "implementation",
+    "algorithmName": "구현"
+  },
+  {
+    "bojTagId": 103,
+    "algorithmKey": "linear_programming",
+    "algorithmName": "선형 계획법"
+  },
+  {
+    "bojTagId": 104,
+    "algorithmKey": "matroid",
+    "algorithmName": "매트로이드"
+  },
+  {
+    "bojTagId": 105,
+    "algorithmKey": "top_tree",
+    "algorithmName": "탑 트리"
+  },
+  {
+    "bojTagId": 106,
+    "algorithmKey": "sweeping",
+    "algorithmName": "스위핑"
+  },
+  {
+    "bojTagId": 107,
+    "algorithmKey": "dp_connection_profile",
+    "algorithmName": "커넥션 프로파일을 이용한 다이나믹 프로그래밍"
+  },
+  {
+    "bojTagId": 108,
+    "algorithmKey": "dp_deque",
+    "algorithmName": "덱을 이용한 다이나믹 프로그래밍"
+  },
+  {
+    "bojTagId": 109,
+    "algorithmKey": "ad_hoc",
+    "algorithmName": "애드 혹"
+  },
+  {
+    "bojTagId": 110,
+    "algorithmKey": "berlekamp_massey",
+    "algorithmName": "벌리캠프–매시"
+  },
+  {
+    "bojTagId": 111,
+    "algorithmKey": "calculus",
+    "algorithmName": "미적분학"
+  },
+  {
+    "bojTagId": 112,
+    "algorithmKey": "kitamasa",
+    "algorithmName": "키타마사"
+  },
+  {
+    "bojTagId": 113,
+    "algorithmKey": "lucas",
+    "algorithmName": "뤼카 정리"
+  },
+  {
+    "bojTagId": 114,
+    "algorithmKey": "bayes",
+    "algorithmName": "베이즈 정리"
+  },
+  {
+    "bojTagId": 115,
+    "algorithmKey": "randomization",
+    "algorithmName": "무작위화"
+  },
+  {
+    "bojTagId": 116,
+    "algorithmKey": "physics",
+    "algorithmName": "물리학"
+  },
+  {
+    "bojTagId": 117,
+    "algorithmKey": "arbitrary_precision",
+    "algorithmName": "임의 정밀도 / 큰 수 연산"
+  },
+  {
+    "bojTagId": 119,
+    "algorithmKey": "euler_characteristic",
+    "algorithmName": "오일러 지표 (χ=V-E+F)"
+  },
+  {
+    "bojTagId": 120,
+    "algorithmKey": "trees",
+    "algorithmName": "트리"
+  },
+  {
+    "bojTagId": 121,
+    "algorithmKey": "arithmetic",
+    "algorithmName": "사칙연산"
+  },
+  {
+    "bojTagId": 122,
+    "algorithmKey": "numerical_analysis",
+    "algorithmName": "수치해석"
+  },
+  {
+    "bojTagId": 123,
+    "algorithmKey": "offline_queries",
+    "algorithmName": "오프라인 쿼리"
+  },
+  {
+    "bojTagId": 124,
+    "algorithmKey": "math",
+    "algorithmName": "수학"
+  },
+  {
+    "bojTagId": 125,
+    "algorithmKey": "bruteforcing",
+    "algorithmName": "브루트포스 알고리즘"
+  },
+  {
+    "bojTagId": 126,
+    "algorithmKey": "bfs",
+    "algorithmName": "너비 우선 탐색"
+  },
+  {
+    "bojTagId": 127,
+    "algorithmKey": "dfs",
+    "algorithmName": "깊이 우선 탐색"
+  },
+  {
+    "bojTagId": 128,
+    "algorithmKey": "constructive",
+    "algorithmName": "해 구성하기"
+  },
+  {
+    "bojTagId": 129,
+    "algorithmKey": "bidirectional_search",
+    "algorithmName": "양방향 탐색"
+  },
+  {
+    "bojTagId": 130,
+    "algorithmKey": "sqrt_decomposition",
+    "algorithmName": "제곱근 분할법"
+  },
+  {
+    "bojTagId": 131,
+    "algorithmKey": "geometry_3d",
+    "algorithmName": "3차원 기하학"
+  },
+  {
+    "bojTagId": 132,
+    "algorithmKey": "geometry_hyper",
+    "algorithmName": "4차원 이상의 기하학"
+  },
+  {
+    "bojTagId": 134,
+    "algorithmKey": "alien",
+    "algorithmName": "Aliens 트릭"
+  },
+  {
+    "bojTagId": 135,
+    "algorithmKey": "dominator_tree",
+    "algorithmName": "도미네이터 트리"
+  },
+  {
+    "bojTagId": 136,
+    "algorithmKey": "hash_set",
+    "algorithmName": "해시를 사용한 집합과 맵"
+  },
+  {
+    "bojTagId": 137,
+    "algorithmKey": "case_work",
+    "algorithmName": "많은 조건 분기"
+  },
+  {
+    "bojTagId": 138,
+    "algorithmKey": "tsp",
+    "algorithmName": "외판원 순회 문제"
+  },
+  {
+    "bojTagId": 139,
+    "algorithmKey": "prefix_sum",
+    "algorithmName": "누적 합"
+  },
+  {
+    "bojTagId": 140,
+    "algorithmKey": "game_theory",
+    "algorithmName": "게임 이론"
+  },
+  {
+    "bojTagId": 141,
+    "algorithmKey": "simulation",
+    "algorithmName": "시뮬레이션"
+  },
+  {
+    "bojTagId": 142,
+    "algorithmKey": "heuristics",
+    "algorithmName": "휴리스틱"
+  },
+  {
+    "bojTagId": 143,
+    "algorithmKey": "cactus",
+    "algorithmName": "선인장"
+  },
+  {
+    "bojTagId": 144,
+    "algorithmKey": "linear_algebra",
+    "algorithmName": "선형대수학"
+  },
+  {
+    "bojTagId": 145,
+    "algorithmKey": "tree_isomorphism",
+    "algorithmName": "트리 동형 사상"
+  },
+  {
+    "bojTagId": 146,
+    "algorithmKey": "discrete_log",
+    "algorithmName": "이산 로그"
+  },
+  {
+    "bojTagId": 147,
+    "algorithmKey": "discrete_sqrt",
+    "algorithmName": "이산 제곱근"
+  },
+  {
+    "bojTagId": 148,
+    "algorithmKey": "knapsack",
+    "algorithmName": "배낭 문제"
+  },
+  {
+    "bojTagId": 149,
+    "algorithmKey": "discrete_kth_root",
+    "algorithmName": "이산 k제곱근"
+  },
+  {
+    "bojTagId": 150,
+    "algorithmKey": "euler_tour_technique",
+    "algorithmName": "오일러 경로 테크닉"
+  },
+  {
+    "bojTagId": 151,
+    "algorithmKey": "euler_phi",
+    "algorithmName": "오일러 피 함수"
+  },
+  {
+    "bojTagId": 152,
+    "algorithmKey": "bitset",
+    "algorithmName": "비트 집합"
+  },
+  {
+    "bojTagId": 153,
+    "algorithmKey": "biconnected_component",
+    "algorithmName": "이중 연결 요소"
+  },
+  {
+    "bojTagId": 154,
+    "algorithmKey": "linked_list",
+    "algorithmName": "연결 리스트"
+  },
+  {
+    "bojTagId": 155,
+    "algorithmKey": "merge_sort_tree",
+    "algorithmName": "머지 소트 트리"
+  },
+  {
+    "bojTagId": 157,
+    "algorithmKey": "slope_trick",
+    "algorithmName": "함수 개형을 이용한 최적화"
+  },
+  {
+    "bojTagId": 158,
+    "algorithmKey": "string",
+    "algorithmName": "문자열"
+  },
+  {
+    "bojTagId": 159,
+    "algorithmKey": "rope",
+    "algorithmName": "로프"
+  },
+  {
+    "bojTagId": 160,
+    "algorithmKey": "majority_vote",
+    "algorithmName": "보이어–무어 다수결 투표"
+  },
+  {
+    "bojTagId": 161,
+    "algorithmKey": "coordinate_compression",
+    "algorithmName": "값 / 좌표 압축"
+  },
+  {
+    "bojTagId": 162,
+    "algorithmKey": "min_enclosing_circle",
+    "algorithmName": "최소 외접원"
+  },
+  {
+    "bojTagId": 163,
+    "algorithmKey": "hirschberg",
+    "algorithmName": "히르쉬버그"
+  },
+  {
+    "bojTagId": 164,
+    "algorithmKey": "modular_multiplicative_inverse",
+    "algorithmName": "모듈로 곱셈 역원"
+  },
+  {
+    "bojTagId": 165,
+    "algorithmKey": "monotone_queue_optimization",
+    "algorithmName": "단조 큐를 이용한 최적화"
+  },
+  {
+    "bojTagId": 166,
+    "algorithmKey": "multi_segtree",
+    "algorithmName": "다차원 세그먼트 트리"
+  },
+  {
+    "bojTagId": 167,
+    "algorithmKey": "mfmc",
+    "algorithmName": "최대 유량 최소 컷 정리"
+  },
+  {
+    "bojTagId": 168,
+    "algorithmKey": "planar_graph",
+    "algorithmName": "평면 그래프"
+  },
+  {
+    "bojTagId": 169,
+    "algorithmKey": "smaller_to_larger",
+    "algorithmName": "작은 집합에서 큰 집합으로 합치는 테크닉"
+  },
+  {
+    "bojTagId": 170,
+    "algorithmKey": "parametric_search",
+    "algorithmName": "매개 변수 탐색"
+  },
+  {
+    "bojTagId": 171,
+    "algorithmKey": "permutation_cycle_decomposition",
+    "algorithmName": "순열 사이클 분할"
+  },
+  {
+    "bojTagId": 172,
+    "algorithmKey": "precomputation",
+    "algorithmName": "런타임 전의 전처리"
+  },
+  {
+    "bojTagId": 173,
+    "algorithmKey": "dancing_links",
+    "algorithmName": "춤추는 링크"
+  },
+  {
+    "bojTagId": 174,
+    "algorithmKey": "knuth_x",
+    "algorithmName": "크누스 X"
+  },
+  {
+    "bojTagId": 175,
+    "algorithmKey": "data_structures",
+    "algorithmName": "자료 구조"
+  },
+  {
+    "bojTagId": 176,
+    "algorithmKey": "0_1_bfs",
+    "algorithmName": "0-1 너비 우선 탐색"
+  },
+  {
+    "bojTagId": 177,
+    "algorithmKey": "probability",
+    "algorithmName": "확률론"
+  },
+  {
+    "bojTagId": 178,
+    "algorithmKey": "statistics",
+    "algorithmName": "통계학"
+  },
+  {
+    "bojTagId": 179,
+    "algorithmKey": "linearity_of_expectation",
+    "algorithmName": "기댓값의 선형성"
+  },
+  {
+    "bojTagId": 180,
+    "algorithmKey": "duality",
+    "algorithmName": "쌍대성"
+  },
+  {
+    "bojTagId": 181,
+    "algorithmKey": "dual_graph",
+    "algorithmName": "쌍대 그래프"
+  },
+  {
+    "bojTagId": 182,
+    "algorithmKey": "suffix_tree",
+    "algorithmName": "접미사 트리"
+  },
+  {
+    "bojTagId": 183,
+    "algorithmKey": "green",
+    "algorithmName": "그린 정리"
+  },
+  {
+    "bojTagId": 184,
+    "algorithmKey": "simulated_annealing",
+    "algorithmName": "담금질 기법"
+  },
+  {
+    "bojTagId": 185,
+    "algorithmKey": "differential_cryptanalysis",
+    "algorithmName": "차분 공격"
+  },
+  {
+    "bojTagId": 186,
+    "algorithmKey": "a_star",
+    "algorithmName": "a*"
+  },
+  {
+    "bojTagId": 187,
+    "algorithmKey": "pick",
+    "algorithmName": "픽의 정리"
+  },
+  {
+    "bojTagId": 188,
+    "algorithmKey": "centroid",
+    "algorithmName": "센트로이드"
+  },
+  {
+    "bojTagId": 189,
+    "algorithmKey": "pigeonhole_principle",
+    "algorithmName": "비둘기집 원리"
+  },
+  {
+    "bojTagId": 190,
+    "algorithmKey": "half_plane_intersection",
+    "algorithmName": "반평면 교집합"
+  },
+  {
+    "bojTagId": 191,
+    "algorithmKey": "circulation",
+    "algorithmName": "서큘레이션"
+  },
+  {
+    "bojTagId": 192,
+    "algorithmKey": "stable_marriage",
+    "algorithmName": "안정 결혼 문제"
+  },
+  {
+    "bojTagId": 193,
+    "algorithmKey": "tree_compression",
+    "algorithmName": "트리 압축"
+  },
+  {
+    "bojTagId": 196,
+    "algorithmKey": "multipoint_evaluation",
+    "algorithmName": "다중 대입값 계산"
+  },
+  {
+    "bojTagId": 197,
+    "algorithmKey": "bipartite_graph",
+    "algorithmName": "이분 그래프"
+  },
+  {
+    "bojTagId": 198,
+    "algorithmKey": "generating_function",
+    "algorithmName": "생성 함수"
+  },
+  {
+    "bojTagId": 199,
+    "algorithmKey": "utf8",
+    "algorithmName": "utf-8 입력 처리"
+  },
+  {
+    "bojTagId": 200,
+    "algorithmKey": "degree_sequence",
+    "algorithmName": "차수열"
+  },
+  {
+    "bojTagId": 201,
+    "algorithmKey": "chordal_graph",
+    "algorithmName": "현 그래프"
+  },
+  {
+    "bojTagId": 202,
+    "algorithmKey": "geometric_boolean_operations",
+    "algorithmName": "도형에서의 불 연산"
+  },
+  {
+    "bojTagId": 203,
+    "algorithmKey": "birthday",
+    "algorithmName": "생일 문제"
+  },
+  {
+    "bojTagId": 204,
+    "algorithmKey": "tree_decomposition",
+    "algorithmName": "트리 분할"
+  },
+  {
+    "bojTagId": 205,
+    "algorithmKey": "hackenbush",
+    "algorithmName": "하켄부시 게임"
+  },
+  {
+    "bojTagId": 206,
+    "algorithmKey": "cartesian_tree",
+    "algorithmName": "데카르트 트리"
+  },
+  {
+    "bojTagId": 207,
+    "algorithmKey": "dp_sum_over_subsets",
+    "algorithmName": "부분집합의 합 다이나믹 프로그래밍"
+  },
+  {
+    "bojTagId": 208,
+    "algorithmKey": "gradient_descent",
+    "algorithmName": "경사 하강법"
+  },
+  {
+    "bojTagId": 209,
+    "algorithmKey": "polynomial_interpolation",
+    "algorithmName": "다항식 보간법"
+  },
+  {
+    "bojTagId": 210,
+    "algorithmKey": "flood_fill",
+    "algorithmName": "플러드 필"
+  },
+  {
+    "bojTagId": 211,
+    "algorithmKey": "functional_graph",
+    "algorithmName": "함수형 그래프"
+  },
+  {
+    "bojTagId": 212,
+    "algorithmKey": "lte",
+    "algorithmName": "지수승강 보조정리"
+  },
+  {
+    "bojTagId": 213,
+    "algorithmKey": "dag",
+    "algorithmName": "방향 비순환 그래프"
+  },
+  {
+    "bojTagId": 214,
+    "algorithmKey": "lgv",
+    "algorithmName": "린드스트롬–게셀–비엔노 보조정리"
+  },
+  {
+    "bojTagId": 215,
+    "algorithmKey": "shortest_path",
+    "algorithmName": "최단 경로"
+  },
+  {
+    "bojTagId": 216,
+    "algorithmKey": "deque_trick",
+    "algorithmName": "덱을 이용한 구간 최댓값 트릭"
+  },
+  {
+    "bojTagId": 217,
+    "algorithmKey": "dp_digit",
+    "algorithmName": "자릿수를 이용한 다이나믹 프로그래밍"
+  },
+  {
+    "bojTagId": 218,
+    "algorithmKey": "floor_sum",
+    "algorithmName": "유리 등차수열의 내림 합"
+  }
+]
