@@ -19,7 +19,6 @@ public abstract class ContentType extends BaseEntity {
     private String contentName;
 
     private Long attemptCount;
-
     public ContentType(String contentName) {
         this.contentName = contentName;
         this.attemptCount = 0L;

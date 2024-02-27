@@ -12,4 +12,5 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("DailyTestProblemRecord")
 public class DailyTestProblemRecord extends ContentProblemRecord {
+
 }

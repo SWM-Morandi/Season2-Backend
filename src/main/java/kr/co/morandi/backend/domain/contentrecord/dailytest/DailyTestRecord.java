@@ -13,6 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Getter
 @SuperBuilder
@@ -22,18 +25,26 @@ public class DailyTestRecord extends ContentRecord {
     private Long solvedCount;
     private Long problemCount;
 
-    private DailyTestRecord(Long solvedCount, Long problemCount) {
-        this.solvedCount = solvedCount;
+    private DailyTestRecord(Long problemCount, LocalDateTime date, ContentType contentType,
+                            Member member, List<Problem> problems) {
+        super(date, contentType, member, problems);
+        this.solvedCount = 0L;
         this.problemCount = problemCount;
     }
-
     @Override
     protected ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord, Member member, Problem problem) {
         return DailyTestProblemRecord.builder()
+                .isSolved(false)
+                .submitCount(0L)
+                .solvedCode(null)
                 .contentType(contentType)
                 .contentRecord(contentRecord)
                 .member(member)
                 .problem(problem)
                 .build();
+    }
+    public static DailyTestRecord create(Long problemCount, LocalDateTime date, ContentType contentType,
+                                         Member member, List<Problem> problems) {
+        return new DailyTestRecord(problemCount, date, contentType, member, problems);
     }
 }
