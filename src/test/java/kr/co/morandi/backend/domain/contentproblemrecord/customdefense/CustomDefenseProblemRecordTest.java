@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +29,7 @@ import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class CustomDefenseProblemRecordTest {
 
     @Autowired
@@ -58,16 +60,12 @@ class CustomDefenseProblemRecordTest {
     }
     @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 정답 여부는 오답처리 되어있다.")
     @Test
-    void createWithisSolved() {
+    void isSolvedFalse() {
         // given
         CustomDefense customDefense = makeCustomDefense();
-        List<CustomDefenseProblems> customDefenseProblems = customDefense.getCustomDefenseProblems();
-        List<Problem> problems = customDefenseProblems.stream().map(CustomDefenseProblems::getProblem).collect(Collectors.toList());
-        Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
-        memberRepository.save(member);
-        LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
-        customDefenseRecordRepository.save(customDefenseRecord);
+        List<Problem> problems = makeCustomProblems(customDefense);
+        Member member = makeMember("user");
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
 
         // when
         List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
@@ -80,10 +78,68 @@ class CustomDefenseProblemRecordTest {
                 .containsExactlyInAnyOrder(false, false);
     }
 
-    private CustomDefense makeCustomDefense() {
-        Member member = Member.create("author", "author@gmail.com", GOOGLE, "author", "author");
-        memberRepository.save(member);
+    @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 각각의 문제 기록의 소요 시간은 0분이다.")
+    @Test
+    void solvedTimeIsZero() {
+        // given
+        CustomDefense customDefense = makeCustomDefense();
+        List<Problem> problems = makeCustomProblems(customDefense);
+        Member member = makeMember("user");
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
 
+        // when
+        List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
+                .map(problem -> CustomDefenseProblemRecord.create(customDefense, customDefenseRecord, member, problem))
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(customDefenseProblemRecords)
+                .extracting("solvedTime")
+                .containsExactlyInAnyOrder(0L, 0L);
+    }
+
+    @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 각각의 문제 제출 횟수는 0회이다.")
+    @Test
+    void submitCountIsZero() {
+        // given
+        CustomDefense customDefense = makeCustomDefense();
+        List<Problem> problems = makeCustomProblems(customDefense);
+        Member member = makeMember("user");
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
+
+        // when
+        List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
+                .map(problem -> CustomDefenseProblemRecord.create(customDefense, customDefenseRecord, member, problem))
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(customDefenseProblemRecords)
+                .extracting("submitCount")
+                .containsExactlyInAnyOrder(0L, 0L);
+    }
+
+    @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 각각의 문제 정답 코드는 null 값이다.")
+    @Test
+    void solvedCodeIsNull() {
+        // given
+        CustomDefense customDefense = makeCustomDefense();
+        List<Problem> problems = makeCustomProblems(customDefense);
+        Member member = makeMember("user");
+        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member);
+
+        // when
+        List<CustomDefenseProblemRecord> customDefenseProblemRecords = problems.stream()
+                .map(problem -> CustomDefenseProblemRecord.create(customDefense, customDefenseRecord, member, problem))
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(customDefenseProblemRecords)
+                .extracting("solvedCode")
+                .containsExactlyInAnyOrder(null, null);
+    }
+
+    private CustomDefense makeCustomDefense() {
+        Member member = makeMember("author");
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
         List<Problem> problems = List.of(problem1, problem2);
@@ -97,5 +153,20 @@ class CustomDefenseProblemRecordTest {
         customDefenseRepository.save(customDefense);
 
         return customDefense;
+    }
+    private List<Problem> makeCustomProblems(CustomDefense customDefense) {
+        List<CustomDefenseProblems> customDefenseProblems = customDefense.getCustomDefenseProblems();
+        List<Problem> problems = customDefenseProblems.stream().map(CustomDefenseProblems::getProblem).collect(Collectors.toList());
+        return problems;
+    }
+    private Member makeMember(String name) {
+        Member member = Member.create(name, name + "@gmail.com", GOOGLE, name, name);
+        return memberRepository.save(member);
+    }
+    private CustomDefenseRecord makeCustomDefenseRecord(CustomDefense customDefense, Member member) {
+        LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now);
+        customDefenseRecordRepository.save(customDefenseRecord);
+        return customDefenseRecord;
     }
 }
