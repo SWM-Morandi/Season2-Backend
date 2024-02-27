@@ -33,9 +33,19 @@ public abstract class ContentRecord extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
-    public ContentRecord(LocalDateTime testDate, ContentType contentType, Member member) {
+
+    @OneToMany(mappedBy = "contentRecord", cascade = CascadeType.ALL)
+    private List<ContentProblemRecord> contentProblemRecords = new ArrayList<>();
+
+    protected abstract ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord, Member member, Problem problem);
+
+    public ContentRecord(LocalDateTime testDate, ContentType contentType, Member member, List<Problem> problems) {
         this.testDate = testDate;
         this.contentType = contentType;
         this.member = member;
+        this.contentProblemRecords = problems.stream()
+                .map(problem -> this.createContentProblemRecord(contentType, this, member, problem))
+                .collect(Collectors.toList());
     }
+
 }
