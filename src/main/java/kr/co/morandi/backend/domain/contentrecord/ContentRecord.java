@@ -49,5 +49,4 @@ public abstract class ContentRecord extends BaseEntity {
                 .map(problem -> this.createContentProblemRecord(contentType, this, member, problem))
                 .collect(Collectors.toList());
     }
-
 }
