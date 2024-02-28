@@ -39,14 +39,15 @@ public class CustomDefenseRecord extends ContentRecord {
                 .problem(problem)
                 .build();
     }
-    private CustomDefenseRecord(CustomDefense customDefense, Member member, LocalDateTime testDate, List<Problem> problems) {
+    private CustomDefenseRecord(CustomDefense customDefense, Member member, LocalDateTime testDate,
+                                List<Problem> problems) {
         super(testDate, customDefense, member, problems);
         this.totalSolvedTime = 0L;
         this.solvedCount = 0;
         this.problemCount = customDefense.getProblemCount();
     }
-    public static CustomDefenseRecord create(CustomDefense customDefense, Member member, LocalDateTime testDate, List<Problem> problems) {
+    public static CustomDefenseRecord create(CustomDefense customDefense, Member member, LocalDateTime testDate,
+                                             List<Problem> problems) {
         return new CustomDefenseRecord(customDefense, member, testDate, problems);
     }
-
 }

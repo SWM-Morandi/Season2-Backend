@@ -23,12 +23,10 @@ class RandomDefenseRepositoryTest {
 
     @Autowired
     private RandomDefenseRepository randomDefenseRepository;
-
     @AfterEach
     void tearDown() {
         randomDefenseRepository.deleteAllInBatch();
     }
-
     @Test
     @DisplayName("저장된 랜덤 디펜스의 정보를 조회할 수 있다.")
     void findByContentName() {
@@ -44,7 +42,6 @@ class RandomDefenseRepositoryTest {
                 .extracting("randomCriteria.maxSolvedCount", "randomCriteria.minSolvedCount", "timeLimit", "problemCount", "randomCriteria.difficultyRange.startDifficulty", "randomCriteria.difficultyRange.endDifficulty")
                 .containsExactly(200L, 100L, 1000L, 4L, B5, B1);
     }
-
     @DisplayName("랜덤 디펜스들을 모두 조회하여 가져올 수 있다.")
     @Test
     void findAllRandomDefense(){
@@ -64,7 +61,6 @@ class RandomDefenseRepositoryTest {
                         tuple(200L, 100L, 1000L, 4L, G5, G1)
                 );
     }
-
     private List<RandomDefense> createRandomDefense() {
         RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
         RandomCriteria.DifficultyRange silverRange = RandomCriteria.DifficultyRange.of(S5, S1);

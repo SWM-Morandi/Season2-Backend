@@ -7,6 +7,7 @@ import kr.co.morandi.backend.domain.contenttype.ContentType;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -34,6 +35,7 @@ public abstract class ContentRecord extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @Builder.Default
     @OneToMany(mappedBy = "contentRecord", cascade = CascadeType.ALL)
     private List<ContentProblemRecord> contentProblemRecords = new ArrayList<>();
 

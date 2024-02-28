@@ -19,6 +19,26 @@ public class RandomDefense extends ContentType {
     private Long problemCount;
 
     private Long timeLimit;
-
-
+    private RandomDefense(RandomCriteria randomCriteria, Long problemCount, Long timeLimit, String contentName) {
+        super(contentName);
+        this.randomCriteria = randomCriteria;
+        this.problemCount = isValidProblemCount(problemCount);
+        this.timeLimit = isValidTimeLimit(timeLimit);
+    }
+    public static RandomDefense create(RandomCriteria randomCriteria, Long problemCount,
+                                       Long timeLimit, String contentName) {
+        return new RandomDefense(randomCriteria, problemCount, timeLimit, contentName);
+    }
+    private Long isValidProblemCount(Long problemCount) {
+        if (problemCount <= 0) {
+            throw new IllegalArgumentException("랜덤 디펜스 문제 수는 1문제 이상 이어야 합니다.");
+        }
+        return problemCount;
+    }
+    private Long isValidTimeLimit(Long timeLimit) {
+        if (timeLimit <= 0) {
+            throw new IllegalArgumentException("랜덤 디펜스 제한 시간은 0보다 커야 합니다.");
+        }
+        return timeLimit;
+    }
 }
