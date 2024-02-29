@@ -37,7 +37,7 @@ class DailyTestProblemRecordTest {
         memberRepository.deleteAllInBatch();
         problemRepository.deleteAllInBatch();
     }
-    @DisplayName("오늘의 문제 테스트가 만들어졌을 때 초기 사용자의 정답 여부는 오답 상태여야 한다.")
+    @DisplayName("오늘의 문제 테스트 응시 기록이 만들어졌을 때 초기 사용자의 정답 여부는 오답 상태여야 한다.")
     @Test
     void isSolvedIsFalse() {
         // given
@@ -53,7 +53,7 @@ class DailyTestProblemRecordTest {
                 .extracting("isSolved")
                 .containsExactlyInAnyOrder(false, false, false);
     }
-    @DisplayName("오늘의 문제 테스트가 만들어졌을 때 초기 사용자의 제출 횟수는 모두 0회여야 한다.")
+    @DisplayName("오늘의 문제 테스트 응시 기록이 만들어졌을 때 초기 사용자의 제출 횟수는 모두 0회여야 한다.")
     @Test
     void submitCountIsZero() {
         // given
@@ -69,7 +69,7 @@ class DailyTestProblemRecordTest {
                 .extracting("submitCount")
                 .containsExactlyInAnyOrder(0L, 0L, 0L);
     }
-    @DisplayName("오늘의 문제 테스트가 만들어졌을 때 초기 사용자의 정답 코드는 null 이어야 한다.")
+    @DisplayName("오늘의 문제 테스트 응시 기록이 만들어졌을 때 초기 사용자의 정답 코드는 null 이어야 한다.")
     @Test
     void solvedCodeIsNull() {
         // given
