@@ -47,11 +47,9 @@ class RandomDefenseProblemRecordTest {
     @Test
     void isSolvedIsFalse() {
         // given
-        RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
-        RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
-        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4L, 120L, "브론즈 랜덤 디펜스");
+        RandomDefense randomDefense = getRandomDefense();
         List<Problem> problems = createProblems();
-        Member member = makeMember("user");
+        Member member = getMember("user");
         LocalDateTime now = LocalDateTime.now();
         RandomDefenseRecord randomDefenseRecord
                 = RandomDefenseRecord.create(randomDefense, member, now, problems, randomDefense.getProblemCount());
@@ -62,15 +60,14 @@ class RandomDefenseProblemRecordTest {
                 .extracting("isSolved")
                 .containsExactly(false, false, false, false);
     }
+
     @DisplayName("사용자가 랜덤 디펜스를 시작했을 때, 문제 풀이 기록의 제출 횟수는 모두 0회여야 한다.")
     @Test
     void submitCountIsZero() {
         // given
-        RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
-        RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
-        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4L, 120L, "브론즈 랜덤 디펜스");
+        RandomDefense randomDefense = getRandomDefense();
         List<Problem> problems = createProblems();
-        Member member = makeMember("user");
+        Member member = getMember("user");
         LocalDateTime now = LocalDateTime.now();
         RandomDefenseRecord randomDefenseRecord
                 = RandomDefenseRecord.create(randomDefense, member, now, problems, randomDefense.getProblemCount());
@@ -85,11 +82,9 @@ class RandomDefenseProblemRecordTest {
     @Test
     void solvedCodeIsNull() {
         // given
-        RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
-        RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
-        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4L, 120L, "브론즈 랜덤 디펜스");
+        RandomDefense randomDefense = getRandomDefense();
         List<Problem> problems = createProblems();
-        Member member = makeMember("user");
+        Member member = getMember("user");
         LocalDateTime now = LocalDateTime.now();
         RandomDefenseRecord randomDefenseRecord
                 = RandomDefenseRecord.create(randomDefense, member, now, problems, randomDefense.getProblemCount());
@@ -104,11 +99,9 @@ class RandomDefenseProblemRecordTest {
     @Test
     void solvedTimeIsZero() {
         // given
-        RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
-        RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
-        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4L, 120L, "브론즈 랜덤 디펜스");
+        RandomDefense randomDefense = getRandomDefense();
         List<Problem> problems = createProblems();
-        Member member = makeMember("user");
+        Member member = getMember("user");
         LocalDateTime now = LocalDateTime.now();
         RandomDefenseRecord randomDefenseRecord
                 = RandomDefenseRecord.create(randomDefense, member, now, problems, randomDefense.getProblemCount());
@@ -119,7 +112,13 @@ class RandomDefenseProblemRecordTest {
                 .extracting("solvedTime")
                 .containsExactly(0L, 0L, 0L, 0L);
     }
-    private Member makeMember(String name) {
+    private static RandomDefense getRandomDefense() {
+        RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
+        RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
+        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4L, 120L, "브론즈 랜덤 디펜스");
+        return randomDefense;
+    }
+    private Member getMember(String name) {
         Member member = Member.create(name, name + "@gmail.com", GOOGLE, name, name);
         return memberRepository.save(member);
     }
