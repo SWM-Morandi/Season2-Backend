@@ -24,10 +24,13 @@ public class DailyTestProblems extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
-    public DailyTestProblems(DailyTest dailyTest, Problem problem) {
+    private DailyTestProblems(DailyTest dailyTest, Problem problem) {
         this.dailyTest = dailyTest;
         this.problem = problem;
         this.submitCount = 0L;
         this.solvedCount = 0L;
+    }
+    public static DailyTestProblems create(DailyTest dailyTest, Problem problem) {
+        return new DailyTestProblems(dailyTest, problem);
     }
 }

@@ -32,7 +32,7 @@ public class DailyTest extends ContentType {
         super(contentName);
         this.date = date;
         this.dailyTestProblemsList = problems.stream()
-                .map(problem -> new DailyTestProblems(this, problem))
+                .map(problem -> DailyTestProblems.create(this, problem))
                 .collect(Collectors.toList());
     }
     public static DailyTest create(LocalDateTime date, String contentName, List<Problem> problems) {

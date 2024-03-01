@@ -53,7 +53,7 @@ public class CustomDefense extends ContentType {
         this.defenseTier = defenseTier;
         this.member = member;
         this.customDefenseProblems = problems.stream()
-                .map(problem -> new CustomDefenseProblems(this, problem))
+                .map(problem -> CustomDefenseProblems.create(this, problem))
                 .collect(Collectors.toList());
         this.createDate = createDate;
     }
