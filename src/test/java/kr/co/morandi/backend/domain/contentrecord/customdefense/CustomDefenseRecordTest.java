@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.domain.contentrecord.customdefense;
 
+import kr.co.morandi.backend.domain.contentproblemrecord.ContentProblemRecord;
 import kr.co.morandi.backend.domain.contentproblemrecord.customdefense.CustomDefenseProblemRecord;
 import kr.co.morandi.backend.domain.contentproblemrecord.customdefense.CustomDefenseProblemRecordRepository;
 import kr.co.morandi.backend.domain.contenttype.customdefense.CustomDefense;
@@ -55,70 +56,145 @@ class CustomDefenseRecordTest {
         problemRepository.deleteAllInBatch();
         memberRepository.deleteAllInBatch();
     }
-    @DisplayName("사용자가 커스텀 디펜스 모드를 시작할 때, 시험 날짜는 시작한 시점과 같아야 한다.")
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어 졌을 때 시험 날짜는 시작한 시점과 같아야 한다.")
     @Test
     public void testDateIsEqualNow() {
         // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
-        LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
 
         // then
-        assertThat(customDefenseRecord.getTestDate()).isEqualTo(now);
+        assertThat(customDefenseRecord.getTestDate()).isEqualTo(startTime);
     }
-    @DisplayName("사용자가 커스텀 디펜스 모드를 시작할 때, 맞춘 문제 수는 0으로 설정되어야 한다.")
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어졌을 때 맞춘 문제 수는 0으로 설정되어야 한다.")
     @Test
     public void solvedCountIsZero() {
         // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
-        LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
 
         // then
         assertThat(customDefenseRecord.getSolvedCount()).isZero();
     }
 
-    @DisplayName("사용자가 커스텀 디펜스 모드를 시작할 때, 총 문제 수 기록은 커스텀 디펜스 문제 수와 같아야 한다.")
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어졌을 때 총 문제 수 기록은 커스텀 디펜스 문제 수와 같아야 한다.")
     @Test
     public void problemCountIsEqual() {
         // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
-        LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
 
         // then
         assertThat(customDefenseRecord.getProblemCount()).isEqualTo(customDefense.getProblemCount());
     }
-    @DisplayName("사용자가 커스텀 디펜스 모드를 시작할 때, 초기 전체 소요 시간은 0분 이어야 한다.")
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어졌을 때 초기 전체 소요 시간은 0분 이어야 한다.")
     @Test
     public void totalSolvedTimeIsZero() {
         // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
-        LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
 
         // then
         assertThat(customDefenseRecord.getTotalSolvedTime()).isZero();
     }
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어졌을 때 세부 문제 기록의 정답 여부는 모두 오답이어야 한다.")
+    @Test
+    void isSolvedFalse() {
+        // given
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
+        Member member = createMember("user");
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
-    private CustomDefense makeCustomDefense() {
-        Member member = makeMember("author");
+        // when
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
+
+        // then
+        assertThat(customDefenseProblemRecords)
+                .extracting("isSolved")
+                .containsExactlyInAnyOrder(false, false);
+    }
+
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어졌을 때 세부 문제 기록의 문제 기록의 소요 시간은 0분이어야 한다.")
+    @Test
+    void solvedTimeIsZero() {
+        // given
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
+        Member member = createMember("user");
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+
+        // when
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
+
+        // then
+        assertThat(customDefenseProblemRecords)
+                .extracting("solvedTime")
+                .containsExactlyInAnyOrder(0L, 0L);
+    }
+
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어졌을 때 세부 문제 기록의 제출 횟수는 0회 이어야 한다.")
+    @Test
+    void submitCountIsZero() {
+        // given
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
+        Member member = createMember("user");
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+
+        // when
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
+
+        // when & then
+        assertThat(customDefenseProblemRecords)
+                .extracting("submitCount")
+                .containsExactlyInAnyOrder(0L, 0L);
+    }
+
+    @DisplayName("커스텀 디펜스 모드 기록이 만들어졌을 때 세부 문제 기록의 문제 정답 코드는 null 값 이어야 한다.")
+    @Test
+    void solvedCodeIsNull() {
+        // given
+        CustomDefense customDefense = createCustomDefense();
+        List<Problem> problems = createCustomProblems(customDefense);
+        Member member = createMember("user");
+        LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
+
+        // when
+        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
+
+        // when & then
+        assertThat(customDefenseProblemRecords)
+                .extracting("solvedCode")
+                .containsExactlyInAnyOrder(null, null);
+    }
+
+    private CustomDefense createCustomDefense() {
+        Member member = createMember("author");
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
         List<Problem> problems = List.of(problem1, problem2);
@@ -133,20 +209,13 @@ class CustomDefenseRecordTest {
 
         return customDefense;
     }
-    private List<Problem> makeCustomProblems(CustomDefense customDefense) {
+    private List<Problem> createCustomProblems(CustomDefense customDefense) {
         List<CustomDefenseProblems> customDefenseProblems = customDefense.getCustomDefenseProblems();
         List<Problem> problems = customDefenseProblems.stream().map(CustomDefenseProblems::getProblem).collect(Collectors.toList());
         return problems;
     }
-    private Member makeMember(String name) {
+    private Member createMember(String name) {
         Member member = Member.create(name, name + "@gmail.com", GOOGLE, name, name);
         return memberRepository.save(member);
-    }
-    private CustomDefenseRecord makeCustomDefenseRecord(CustomDefense customDefense, Member member) {
-        List<Problem> problems = makeCustomProblems(customDefense);
-        LocalDateTime now = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, now, problems);
-        customDefenseRecordRepository.save(customDefenseRecord);
-        return customDefenseRecord;
     }
 }

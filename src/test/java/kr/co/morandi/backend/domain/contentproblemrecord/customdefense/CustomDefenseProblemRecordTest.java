@@ -59,69 +59,6 @@ class CustomDefenseProblemRecordTest {
         problemRepository.deleteAllInBatch();
         memberRepository.deleteAllInBatch();
     }
-    @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 정답 여부는 오답처리 되어있다.")
-    @Test
-    void isSolvedFalse() {
-        // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
-        Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
-        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
-
-        // when & then
-        assertThat(customDefenseProblemRecords)
-                .extracting("isSolved")
-                .containsExactlyInAnyOrder(false, false);
-    }
-
-    @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 각각의 문제 기록의 소요 시간은 0분이다.")
-    @Test
-    void solvedTimeIsZero() {
-        // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
-        Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
-        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
-
-        // then
-        assertThat(customDefenseProblemRecords)
-                .extracting("solvedTime")
-                .containsExactlyInAnyOrder(0L, 0L);
-    }
-
-    @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 각각의 문제 제출 횟수는 0회이다.")
-    @Test
-    void submitCountIsZero() {
-        // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
-        Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
-        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
-
-        // when & then
-        assertThat(customDefenseProblemRecords)
-                .extracting("submitCount")
-                .containsExactlyInAnyOrder(0L, 0L);
-    }
-
-    @DisplayName("사용자가 커스텀 랜덤 디펜스를 시작할 때, 각각의 문제 정답 코드는 null 값이다.")
-    @Test
-    void solvedCodeIsNull() {
-        // given
-        CustomDefense customDefense = makeCustomDefense();
-        List<Problem> problems = makeCustomProblems(customDefense);
-        Member member = makeMember("user");
-        CustomDefenseRecord customDefenseRecord = makeCustomDefenseRecord(customDefense, member, problems);
-        List<ContentProblemRecord> customDefenseProblemRecords = customDefenseRecord.getContentProblemRecords();
-
-        // when & then
-        assertThat(customDefenseProblemRecords)
-                .extracting("solvedCode")
-                .containsExactlyInAnyOrder(null, null);
-    }
     private CustomDefense makeCustomDefense() {
         Member member = makeMember("author");
         Problem problem1 = Problem.create(1L, B5, 0L);
