@@ -39,4 +39,14 @@ public abstract class ContentProblemRecord extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
+    protected ContentProblemRecord(Member member, Problem problem,
+                                ContentRecord contentRecord, ContentType contentType) {
+        this.isSolved = false;
+        this.submitCount = 0L;
+        this.solvedCode = null;
+        this.contentType = contentType;
+        this.contentRecord = contentRecord;
+        this.member = member;
+        this.problem = problem;
+    }
 }

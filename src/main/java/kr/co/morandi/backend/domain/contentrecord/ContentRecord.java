@@ -38,15 +38,14 @@ public abstract class ContentRecord extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "contentRecord", cascade = CascadeType.ALL)
     private List<ContentProblemRecord> contentProblemRecords = new ArrayList<>();
-
-    protected abstract ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord, Member member, Problem problem);
-
-    public ContentRecord(LocalDateTime testDate, ContentType contentType, Member member, List<Problem> problems) {
+    protected abstract ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
+                                                                       ContentRecord contentRecord, ContentType contentType);
+    protected ContentRecord(LocalDateTime testDate, ContentType contentType, Member member, List<Problem> problems) {
         this.testDate = testDate;
         this.contentType = contentType;
         this.member = member;
         this.contentProblemRecords = problems.stream()
-                .map(problem -> this.createContentProblemRecord(contentType, this, member, problem))
+                .map(problem -> this.createContentProblemRecord(member, problem,this, contentType))
                 .collect(Collectors.toList());
     }
 }

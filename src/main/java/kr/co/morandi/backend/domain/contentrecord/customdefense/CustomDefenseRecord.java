@@ -26,18 +26,9 @@ public class CustomDefenseRecord extends ContentRecord {
     private Integer solvedCount;
     private Integer problemCount;
     @Override
-    public ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord,
-                                                           Member member, Problem problem) {
-        return CustomDefenseProblemRecord.builder()
-                .isSolved(false)
-                .submitCount(0L)
-                .solvedCode(null)
-                .solvedTime(0L)
-                .contentType(contentType)
-                .contentRecord(contentRecord)
-                .member(member)
-                .problem(problem)
-                .build();
+    public ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
+                                                           ContentRecord contentRecord, ContentType contentType) {
+        return CustomDefenseProblemRecord.create(member, problem, contentRecord, contentType);
     }
     private CustomDefenseRecord(CustomDefense customDefense, Member member, LocalDateTime testDate,
                                 List<Problem> problems) {

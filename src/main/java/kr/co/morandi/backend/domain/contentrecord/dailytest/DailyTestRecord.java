@@ -32,16 +32,9 @@ public class DailyTestRecord extends ContentRecord {
         this.problemCount = problemCount;
     }
     @Override
-    protected ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord, Member member, Problem problem) {
-        return DailyTestProblemRecord.builder()
-                .isSolved(false)
-                .submitCount(0L)
-                .solvedCode(null)
-                .contentType(contentType)
-                .contentRecord(contentRecord)
-                .member(member)
-                .problem(problem)
-                .build();
+    protected ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
+                                                              ContentRecord contentRecord, ContentType contentType) {
+        return DailyTestProblemRecord.create(member, problem, contentRecord, contentType);
     }
     public static DailyTestRecord create(Long problemCount, LocalDateTime date, ContentType contentType,
                                          Member member, List<Problem> problems) {

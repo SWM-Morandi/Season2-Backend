@@ -37,18 +37,9 @@ public class RandomDefenseRecord extends ContentRecord {
         this.problemCount = problemCount;
     }
     @Override
-    protected ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord,
-                                                              Member member, Problem problem) {
-        return RandomDefenseProblemRecord.builder()
-                .submitCount(0L)
-                .solvedCode(null)
-                .isSolved(false)
-                .solvedTime(0L)
-                .contentType(contentType)
-                .contentRecord(contentRecord)
-                .member(member)
-                .problem(problem)
-                .build();
+    protected ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
+                                                              ContentRecord contentRecord, ContentType contentType) {
+        return RandomDefenseProblemRecord.create(member, problem, contentRecord, contentType);
     }
     public static RandomDefenseRecord create(RandomDefense randomDefense, Member member, LocalDateTime testDate,
                                              List<Problem> problems, Long problemCount) {

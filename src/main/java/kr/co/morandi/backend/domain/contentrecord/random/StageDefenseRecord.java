@@ -32,19 +32,9 @@ public class StageDefenseRecord extends ContentRecord {
         this.stageCount = stageCount;
     }
     @Override
-    protected ContentProblemRecord createContentProblemRecord(ContentType contentType, ContentRecord contentRecord,
-                                                              Member member, Problem problem) {
-        return StageDefenseProblemRecord.builder()
-                .isSolved(false)
-                .submitCount(0L)
-                .solvedCode(null)
-                .solvedTime(0L)
-                .stageNumber(1L)
-                .contentType(contentType)
-                .contentRecord(contentRecord)
-                .member(member)
-                .problem(problem)
-                .build();
+    protected ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
+                                                              ContentRecord contentRecord, ContentType contentType) {
+        return StageDefenseProblemRecord.create(member, problem, contentRecord, contentType);
     }
     public static StageDefenseRecord create(Long stageCount, ContentType contentType, LocalDateTime testDate,
                                             Member member, List<Problem> problems) {

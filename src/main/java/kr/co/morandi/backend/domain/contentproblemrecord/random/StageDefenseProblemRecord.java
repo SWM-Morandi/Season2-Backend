@@ -3,10 +3,16 @@ package kr.co.morandi.backend.domain.contentproblemrecord.random;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import kr.co.morandi.backend.domain.contentproblemrecord.ContentProblemRecord;
+import kr.co.morandi.backend.domain.contentrecord.ContentRecord;
+import kr.co.morandi.backend.domain.contenttype.ContentType;
+import kr.co.morandi.backend.domain.member.Member;
+import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @SuperBuilder
@@ -17,8 +23,16 @@ public class StageDefenseProblemRecord extends ContentProblemRecord {
     private Long solvedTime;
     private Long stageNumber;
 
-    private StageDefenseProblemRecord(Long solvedTime, Long stageNumber) {
-        this.solvedTime = solvedTime;
+    private StageDefenseProblemRecord(Long stageNumber, Member member, Problem problem,
+                                      ContentRecord contentRecord, ContentType contentType) {
+        super(member, problem, contentRecord, contentType);
+        this.solvedTime = 0L;
         this.stageNumber = stageNumber;
+    }
+    public static StageDefenseProblemRecord create(Member member, Problem problem,
+                                                   ContentRecord contentRecord, ContentType contentType) {
+        List<ContentProblemRecord> contentProblemRecords = contentRecord.getContentProblemRecords();
+        Long stageNumber = (long) ((contentProblemRecords == null) ? 0 : contentProblemRecords.size() + 1);
+        return new StageDefenseProblemRecord(stageNumber, member, problem, contentRecord, contentType);
     }
 }
