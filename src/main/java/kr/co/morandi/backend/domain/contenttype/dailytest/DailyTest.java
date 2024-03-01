@@ -28,7 +28,7 @@ public class DailyTest extends ContentType {
 
     @OneToMany(mappedBy = "dailyTest", cascade = CascadeType.ALL)
     List<DailyTestProblems> dailyTestProblemsList = new ArrayList<>();
-    public DailyTest(LocalDateTime date, String contentName, List<Problem> problems) {
+    private DailyTest(LocalDateTime date, String contentName, List<Problem> problems) {
         super(contentName);
         this.date = date;
         this.dailyTestProblemsList = problems.stream()

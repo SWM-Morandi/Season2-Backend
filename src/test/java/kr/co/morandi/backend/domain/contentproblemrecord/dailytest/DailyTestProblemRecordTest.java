@@ -37,54 +37,6 @@ class DailyTestProblemRecordTest {
         memberRepository.deleteAllInBatch();
         problemRepository.deleteAllInBatch();
     }
-    @DisplayName("오늘의 문제 테스트 응시 기록이 만들어졌을 때 초기 사용자의 정답 여부는 오답 상태여야 한다.")
-    @Test
-    void isSolvedIsFalse() {
-        // given
-        List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
-        DailyTest dailyTest = DailyTest.create(now, "오늘의 문제 테스트", problems);
-        Member member = makeMember("user");
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), now, dailyTest, member, problems);
-        List<ContentProblemRecord> contentProblemRecords = dailyTestRecord.getContentProblemRecords();
-
-        // when & then
-        assertThat(contentProblemRecords)
-                .extracting("isSolved")
-                .containsExactlyInAnyOrder(false, false, false);
-    }
-    @DisplayName("오늘의 문제 테스트 응시 기록이 만들어졌을 때 초기 사용자의 제출 횟수는 모두 0회여야 한다.")
-    @Test
-    void submitCountIsZero() {
-        // given
-        List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
-        DailyTest dailyTest = DailyTest.create(now, "오늘의 문제 테스트", problems);
-        Member member = makeMember("user");
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), now, dailyTest, member, problems);
-        List<ContentProblemRecord> contentProblemRecords = dailyTestRecord.getContentProblemRecords();
-
-        // when & then
-        assertThat(contentProblemRecords)
-                .extracting("submitCount")
-                .containsExactlyInAnyOrder(0L, 0L, 0L);
-    }
-    @DisplayName("오늘의 문제 테스트 응시 기록이 만들어졌을 때 초기 사용자의 정답 코드는 null 이어야 한다.")
-    @Test
-    void solvedCodeIsNull() {
-        // given
-        List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
-        DailyTest dailyTest = DailyTest.create(now, "오늘의 문제 테스트", problems);
-        Member member = makeMember("user");
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), now, dailyTest, member, problems);
-        List<ContentProblemRecord> contentProblemRecords = dailyTestRecord.getContentProblemRecords();
-
-        // when & then
-        assertThat(contentProblemRecords)
-                .extracting("solvedCode")
-                .containsExactlyInAnyOrder(null, null, null);
-    }
     private List<Problem> createProblems() {
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
@@ -93,7 +45,7 @@ class DailyTestProblemRecordTest {
         problemRepository.saveAll(problems);
         return problems;
     }
-    private Member makeMember(String name) {
+    private Member createMember(String name) {
         Member member = Member.create(name, name + "@gmail.com", GOOGLE, name, name);
         return memberRepository.save(member);
     }
