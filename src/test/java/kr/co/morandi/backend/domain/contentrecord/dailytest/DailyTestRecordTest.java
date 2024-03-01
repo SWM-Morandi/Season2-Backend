@@ -77,14 +77,27 @@ class DailyTestRecordTest {
         LocalDateTime createdTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         DailyTest dailyTest = DailyTest.create(createdTime, "오늘의 문제 테스트", problems);
         Member member = createMember("user");
-        LocalDateTime falseStartTime = LocalDateTime.of(2024, 3, 2, 0, 0, 0);
-        LocalDateTime trueStartTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 2, 0, 0, 0);
         // when & then
-        assertThatThrownBy(() -> DailyTestRecord.create(dailyTest.getProblemCount(), falseStartTime, dailyTest, member, problems))
+        assertThatThrownBy(() -> DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오늘의 문제 기록은 출제 시점으로부터 하루 이내에 생성되어야 합니다.");
+    }
+    @DisplayName("오늘의 문제 기록이 만들어진 시점이 문제가 출제된 시점에서 하루 이상 넘어가지 않으면 정상적으로 등록된다.")
+    @Test
+    void recordCreatedWithinOneDay2() {
+        // given
+        List<Problem> problems = createProblems();
+        LocalDateTime createdTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
+        DailyTest dailyTest = DailyTest.create(createdTime, "오늘의 문제 테스트", problems);
+        Member member = createMember("user");
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
 
-        assertNotNull(DailyTestRecord.create(dailyTest.getProblemCount(), trueStartTime, dailyTest, member, problems));
+        // when
+        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems);
+
+        // then
+        assertNotNull(dailyTestRecord);
     }
     @DisplayName("오늘의 문제 테스트 기록이 만들어졌을 때 세부 문제들의 정답 여부는 모두 오답 상태여야 한다.")
     @Test
