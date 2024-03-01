@@ -58,8 +58,6 @@ class RandomDefenseProblemRecordTest {
         Problem problem2 = Problem.create(2L, B4, 0L);
         Problem problem3 = Problem.create(3L, B3, 0L);
         Problem problem4 = Problem.create(3L, B2, 0L);
-        List<Problem> problems = List.of(problem1, problem2, problem3, problem4);
-        problemRepository.saveAll(problems);
-        return problems;
+        return problemRepository.saveAll(List.of(problem1, problem2, problem3, problem4));
     }
 }

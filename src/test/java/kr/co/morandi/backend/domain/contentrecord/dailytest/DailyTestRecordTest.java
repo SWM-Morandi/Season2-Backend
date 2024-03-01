@@ -146,9 +146,7 @@ class DailyTestRecordTest {
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
         Problem problem3 = Problem.create(3L, G5, 0L);
-        List<Problem> problems = List.of(problem1, problem2, problem3);
-        problemRepository.saveAll(problems);
-        return problems;
+        return problemRepository.saveAll(List.of(problem1, problem2, problem3));
     }
     private Member createMember(String name) {
         Member member = Member.create(name, name + "@gmail.com", GOOGLE, name, name);

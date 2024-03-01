@@ -45,7 +45,7 @@ public abstract class ContentRecord extends BaseEntity {
         this.contentType = contentType;
         this.member = member;
         this.contentProblemRecords = problems.stream()
-                .map(problem -> this.createContentProblemRecord(member, problem,this, contentType))
+                .map(problem -> this.createContentProblemRecord(member, problem, this, contentType))
                 .collect(Collectors.toList());
     }
 }
