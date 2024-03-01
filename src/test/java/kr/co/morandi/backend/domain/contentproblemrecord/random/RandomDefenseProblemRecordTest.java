@@ -6,7 +6,6 @@ import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
@@ -14,7 +13,6 @@ import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-@SpringBootTest
 @ActiveProfiles("test")
 class RandomDefenseProblemRecordTest {
     @DisplayName("RandomDefenseProblemRecord를 생성한다.")
