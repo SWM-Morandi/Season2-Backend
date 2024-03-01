@@ -24,20 +24,23 @@ import java.util.List;
 public class StageDefenseRecord extends ContentRecord {
     private Long totalSolvedTime;
     private Long stageCount;
-    private static final Long startNumber = 1L;
-    private StageDefenseRecord(Long stageCount, ContentType contentType, LocalDateTime testDate,
+
+    private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
+    private static final Long INITIAL_STAGE_NUMBER = 1L;
+    private static final Long INITIAL_STAGE_COUNT = 1L;
+    private StageDefenseRecord(ContentType contentType, LocalDateTime testDate,
                                Member member, List<Problem> problems) {
         super(testDate, contentType, member, problems);
-        this.totalSolvedTime = 0L;
-        this.stageCount = stageCount;
+        this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;
+        this.stageCount = INITIAL_STAGE_COUNT;
     }
     @Override
     protected ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
                                                               ContentRecord contentRecord, ContentType contentType) {
-        return StageDefenseProblemRecord.create(startNumber, member, problem, contentRecord, contentType);
+        return StageDefenseProblemRecord.create(INITIAL_STAGE_NUMBER, member, problem, contentRecord, contentType);
     }
-    public static StageDefenseRecord create(Long stageCount, ContentType contentType, LocalDateTime testDate,
-                                            Member member, List<Problem> problems) {
-        return new StageDefenseRecord(stageCount, contentType, testDate, member, problems);
+    public static StageDefenseRecord create(ContentType contentType, LocalDateTime testDate,
+                                            Member member, Problem problem) {
+        return new StageDefenseRecord(contentType, testDate, member, List.of(problem));
     }
 }
