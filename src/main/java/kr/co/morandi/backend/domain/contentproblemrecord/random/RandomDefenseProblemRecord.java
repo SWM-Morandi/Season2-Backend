@@ -25,7 +25,7 @@ public class RandomDefenseProblemRecord extends ContentProblemRecord {
         super(member, problem, contentRecord, contentType);
         this.solvedTime = 0L;
     }
-    public static ContentProblemRecord create(Member member, Problem problem,
+    public static RandomDefenseProblemRecord create(Member member, Problem problem,
                                               ContentRecord contentRecord, ContentType contentType) {
         return new RandomDefenseProblemRecord(member, problem, contentRecord, contentType);
     }
