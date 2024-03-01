@@ -24,7 +24,7 @@ import java.util.List;
 public class StageDefenseRecord extends ContentRecord {
     private Long totalSolvedTime;
     private Long stageCount;
-
+    private static final Long startNumber = 1L;
     private StageDefenseRecord(Long stageCount, ContentType contentType, LocalDateTime testDate,
                                Member member, List<Problem> problems) {
         super(testDate, contentType, member, problems);
@@ -34,7 +34,7 @@ public class StageDefenseRecord extends ContentRecord {
     @Override
     protected ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
                                                               ContentRecord contentRecord, ContentType contentType) {
-        return StageDefenseProblemRecord.create(member, problem, contentRecord, contentType);
+        return StageDefenseProblemRecord.create(startNumber, member, problem, contentRecord, contentType);
     }
     public static StageDefenseRecord create(Long stageCount, ContentType contentType, LocalDateTime testDate,
                                             Member member, List<Problem> problems) {

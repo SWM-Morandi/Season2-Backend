@@ -29,10 +29,8 @@ public class StageDefenseProblemRecord extends ContentProblemRecord {
         this.solvedTime = 0L;
         this.stageNumber = stageNumber;
     }
-    public static StageDefenseProblemRecord create(Member member, Problem problem,
+    public static StageDefenseProblemRecord create(Long stageNumber, Member member, Problem problem,
                                                    ContentRecord contentRecord, ContentType contentType) {
-        List<ContentProblemRecord> contentProblemRecords = contentRecord.getContentProblemRecords();
-        Long stageNumber = (long) ((contentProblemRecords == null) ? 1L : contentProblemRecords.size() + 1);
         return new StageDefenseProblemRecord(stageNumber, member, problem, contentRecord, contentType);
     }
 }
