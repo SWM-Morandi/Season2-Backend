@@ -1,52 +1,89 @@
 package kr.co.morandi.backend.domain.contentproblemrecord.dailytest;
 
-import kr.co.morandi.backend.domain.contentproblemrecord.ContentProblemRecord;
 import kr.co.morandi.backend.domain.contentrecord.dailytest.DailyTestRecord;
 import kr.co.morandi.backend.domain.contenttype.dailytest.DailyTest;
 import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.member.MemberRepository;
 import kr.co.morandi.backend.domain.problem.Problem;
-import kr.co.morandi.backend.domain.problem.ProblemRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
-@SpringBootTest
 @ActiveProfiles("test")
 class DailyTestProblemRecordTest {
+    @DisplayName("DailyTestProblemRecord를 생성한다.")
+    @Test
+    void create() {
+        // given
+        DailyTest dailyTest = mock(DailyTest.class);
+        DailyTestRecord dailyTestRecord = mock(DailyTestRecord.class);
+        Problem problem = createProblem();
+        Member member = createMember("test");
 
-    @Autowired
-    private ProblemRepository problemRepository;
+        // when
+        DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
 
-    @Autowired
-    private MemberRepository memberRepository;
-    @AfterEach
-    void tearDown() {
-        memberRepository.deleteAllInBatch();
-        problemRepository.deleteAllInBatch();
+        // then
+        assertThat(dailyTestProblemRecord).isNotNull()
+                .extracting("member", "problem", "contentType", "contentRecord")
+                .contains(member, problem, dailyTest, dailyTestRecord);
+
+
     }
-    private List<Problem> createProblems() {
-        Problem problem1 = Problem.create(1L, B5, 0L);
-        Problem problem2 = Problem.create(2L, S5, 0L);
-        Problem problem3 = Problem.create(3L, G5, 0L);
-        List<Problem> problems = List.of(problem1, problem2, problem3);
-        problemRepository.saveAll(problems);
-        return problems;
+    @DisplayName("DailyTestProblemRecord가 생성되면 isSolved는 false이다")
+    @Test
+    void initialIsSolvedFalse() {
+        // given
+        DailyTest dailyTest = mock(DailyTest.class);
+        DailyTestRecord dailyTestRecord = mock(DailyTestRecord.class);
+        Problem problem = createProblem();
+        Member member = createMember("test");
+
+        // when
+        DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
+
+        // then
+        assertThat(dailyTestProblemRecord.getIsSolved()).isFalse();
+    }
+    @DisplayName("DailyTestProblemRecord가 생성되면 submitCount는 0이다")
+    @Test
+    void initialSubmitCountIsZero() {
+        // given
+        DailyTest dailyTest = mock(DailyTest.class);
+        DailyTestRecord dailyTestRecord = mock(DailyTestRecord.class);
+        Problem problem = createProblem();
+        Member member = createMember("test");
+
+        // when
+        DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
+
+        // then
+        assertThat(dailyTestProblemRecord.getSubmitCount()).isZero();
+    }
+    @DisplayName("DailyTestProblemRecord가 생성되면 solvedCode는 null이다")
+    @Test
+    void initialSolvedCodeIsSetToNull() {
+        // given
+        DailyTest dailyTest = mock(DailyTest.class);
+        DailyTestRecord dailyTestRecord = mock(DailyTestRecord.class);
+        Problem problem = createProblem();
+        Member member = createMember("test");
+
+        // when
+        DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
+
+        // then
+        assertThat(dailyTestProblemRecord.getSolvedCode())
+                .isEqualTo(null);
+    }
+    private Problem createProblem() {
+        return Problem.create(1L, B5, 0L);
     }
     private Member createMember(String name) {
-        Member member = Member.create(name, name + "@gmail.com", GOOGLE, name, name);
-        return memberRepository.save(member);
+        return Member.create(name, name + "@gmail.com", GOOGLE, name, name);
     }
 }
