@@ -54,7 +54,7 @@ public class CustomDefense extends ContentType {
         this.member = member;
         this.customDefenseProblems = problems.stream()
                 .map(problem -> CustomDefenseProblems.create(this, problem))
-                .collect(Collectors.toList());
+                .toList();
         this.createDate = createDate;
     }
     public static CustomDefense create(List<Problem> problems, Member member, String contentName, String description, Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {

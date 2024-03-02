@@ -21,7 +21,7 @@ public class CustomDefenseProblemRecord extends ContentProblemRecord {
 
     private Long solvedTime;
 
-    private final static long INITIAL_SOLVED_TIME = 0L;
+    private static final long INITIAL_SOLVED_TIME = 0L;
     private CustomDefenseProblemRecord(Member member, Problem problem,
                                        ContentRecord contentRecord, ContentType contentType) {
         super(member, problem, contentRecord, contentType);

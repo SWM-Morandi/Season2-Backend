@@ -2,10 +2,10 @@ package kr.co.morandi.backend.domain.contenttype.dailytest;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.contenttype.customdefense.CustomDefenseProblems;
 import kr.co.morandi.backend.domain.problem.Problem;
-import lombok.*;
-import org.springframework.security.core.parameters.P;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter

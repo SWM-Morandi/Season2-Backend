@@ -34,7 +34,7 @@ public class DailyTest extends ContentType {
         this.date = date;
         this.dailyTestProblemsList = problems.stream()
                 .map(problem -> DailyTestProblems.create(this, problem))
-                .collect(Collectors.toList());
+                .toList();
         this.problemCount = problems.size();
     }
     public static DailyTest create(LocalDateTime date, String contentName, List<Problem> problems) {
