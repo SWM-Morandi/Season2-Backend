@@ -1,6 +1,5 @@
 package kr.co.morandi.backend.domain.contentrecord.random;
 
-import kr.co.morandi.backend.domain.contentproblemrecord.ContentProblemRecord;
 import kr.co.morandi.backend.domain.contenttype.random.randomcriteria.RandomCriteria;
 import kr.co.morandi.backend.domain.contenttype.random.randomstagedefense.RandomStageDefense;
 import kr.co.morandi.backend.domain.member.Member;
@@ -10,13 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B1;
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 @ActiveProfiles("test")
 class StageDefenseRecordTest {
@@ -25,6 +22,7 @@ class StageDefenseRecordTest {
     void stageCountIsOne() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
@@ -40,6 +38,7 @@ class StageDefenseRecordTest {
     void initialStageNumberIsSetToOne() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
@@ -57,6 +56,7 @@ class StageDefenseRecordTest {
     void totalSolvedTimeIsZero() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
@@ -72,6 +72,7 @@ class StageDefenseRecordTest {
     void testDateEqualNow() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
@@ -87,16 +88,16 @@ class StageDefenseRecordTest {
     void solvedTimeIsZero() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
 
         // when
         StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
-        List<ContentProblemRecord> contentProblemRecords = stageDefenseRecord.getContentProblemRecords();
 
         // then
-        assertThat(contentProblemRecords)
+        assertThat(stageDefenseRecord.getContentProblemRecords())
                 .extracting("solvedTime")
                 .containsExactly(0L);
     }
@@ -105,16 +106,16 @@ class StageDefenseRecordTest {
     void isSolvedIsFalse() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
 
         // when
         StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
-        List<ContentProblemRecord> contentProblemRecords = stageDefenseRecord.getContentProblemRecords();
 
         // then
-        assertThat(contentProblemRecords)
+        assertThat(stageDefenseRecord.getContentProblemRecords())
                 .extracting("isSolved")
                 .containsExactly(false);
     }
@@ -123,16 +124,16 @@ class StageDefenseRecordTest {
     void submitCountIsZero() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
 
         // when
         StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
-        List<ContentProblemRecord> contentProblemRecords = stageDefenseRecord.getContentProblemRecords();
 
         // then
-        assertThat(contentProblemRecords)
+        assertThat(stageDefenseRecord.getContentProblemRecords())
                 .extracting("submitCount")
                 .containsExactly(0L);
     }
@@ -141,16 +142,16 @@ class StageDefenseRecordTest {
     void solvedCodeIsNull() {
         // given
         RandomStageDefense randomStageDefense = createRandomStageDefense();
+
         Problem problem = Problem.create(1L, B5, 100L);
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
         Member member = createMember("user");
 
         // when
         StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
-        List<ContentProblemRecord> contentProblemRecords = stageDefenseRecord.getContentProblemRecords();
 
         // then
-        assertThat(contentProblemRecords)
+        assertThat(stageDefenseRecord.getContentProblemRecords())
                 .extracting("solvedCode")
                 .containsExactly((String)null);
     }
