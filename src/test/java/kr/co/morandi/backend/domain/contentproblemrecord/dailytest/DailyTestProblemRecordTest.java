@@ -14,6 +14,7 @@ import java.util.List;
 
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
+import static kr.co.morandi.backend.domain.problem.ProblemStatus.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -29,7 +30,7 @@ class DailyTestProblemRecordTest {
                                     .map(DailyTestProblems::getProblem)
                                     .findFirst()
                                     .orElse(null);
-        Member member = createMember("test");
+        Member member = createMember();
 
         // when
         DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
@@ -49,7 +50,7 @@ class DailyTestProblemRecordTest {
                                         .map(DailyTestProblems::getProblem)
                                         .findFirst()
                                         .orElse(null);
-        Member member = createMember("test");
+        Member member = createMember();
 
         // when
         DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
@@ -67,7 +68,7 @@ class DailyTestProblemRecordTest {
                                         .map(DailyTestProblems::getProblem)
                                         .findFirst()
                                         .orElse(null);
-        Member member = createMember("test");
+        Member member = createMember();
 
         // when
         DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
@@ -85,7 +86,7 @@ class DailyTestProblemRecordTest {
                                         .map(DailyTestProblems::getProblem)
                                         .findFirst()
                                         .orElse(null);
-        Member member = createMember("test");
+        Member member = createMember();
 
         // when
         DailyTestProblemRecord dailyTestProblemRecord = DailyTestProblemRecord.create(member, problem, dailyTestRecord, dailyTest);
@@ -101,12 +102,32 @@ class DailyTestProblemRecordTest {
     }
     private List<Problem> createProblem() {
         return List.of(
-                Problem.create(1L, B5, 0L),
-                Problem.create(2L, B5, 0L),
-                Problem.create(3L, B5, 0L)
+                Problem.builder()
+                        .baekjoonProblemId(1L)
+                        .problemTier(B5)
+                        .problemStatus(ACTIVE)
+                        .solvedCount(0L)
+                        .build(),
+                Problem.builder()
+                        .baekjoonProblemId(2L)
+                        .problemTier(B5)
+                        .problemStatus(ACTIVE)
+                        .solvedCount(0L)
+                        .build(),
+                Problem.builder()
+                        .baekjoonProblemId(3L)
+                        .problemTier(B5)
+                        .problemStatus(ACTIVE)
+                        .solvedCount(0L)
+                        .build()
         );
     }
-    private Member createMember(String name) {
-        return Member.create(name, name + "@gmail.com", GOOGLE, name, name);
+    private Member createMember() {
+        return Member.builder()
+                .email("user" + "@gmail.com")
+                .socialType(GOOGLE)
+                .nickname("nickname")
+                .description("description")
+                .build();
     }
 }

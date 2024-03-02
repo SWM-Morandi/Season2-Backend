@@ -9,15 +9,16 @@ import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("DailyTest")
 @Getter
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class DailyTest extends ContentType {
