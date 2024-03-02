@@ -16,20 +16,19 @@ public class RandomDefense extends ContentType {
     @Embedded
     private RandomCriteria randomCriteria;
 
-    private Long problemCount;
+    private Integer problemCount;
 
     private Long timeLimit;
-    private RandomDefense(RandomCriteria randomCriteria, Long problemCount, Long timeLimit, String contentName) {
+    private RandomDefense(RandomCriteria randomCriteria, Integer problemCount, Long timeLimit, String contentName) {
         super(contentName);
         this.randomCriteria = randomCriteria;
         this.problemCount = isValidProblemCount(problemCount);
         this.timeLimit = isValidTimeLimit(timeLimit);
     }
-    public static RandomDefense create(RandomCriteria randomCriteria, Long problemCount,
-                                       Long timeLimit, String contentName) {
+    public static RandomDefense create(RandomCriteria randomCriteria, Integer problemCount, Long timeLimit, String contentName) {
         return new RandomDefense(randomCriteria, problemCount, timeLimit, contentName);
     }
-    private Long isValidProblemCount(Long problemCount) {
+    private Integer isValidProblemCount(Integer problemCount) {
         if (problemCount <= 0) {
             throw new IllegalArgumentException("랜덤 디펜스 문제 수는 1문제 이상 이어야 합니다.");
         }

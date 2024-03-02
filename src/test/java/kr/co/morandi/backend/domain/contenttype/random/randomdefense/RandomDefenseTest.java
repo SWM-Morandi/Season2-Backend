@@ -30,13 +30,13 @@ class RandomDefenseTest {
         RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
 
         // when
-        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4L, 120L, "브론즈 랜덤 디펜스");
+        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4, 120L, "브론즈 랜덤 디펜스");
 
         // then
         assertThat(randomDefense)
                 .extracting("randomCriteria.DifficultyRange.startDifficulty", "randomCriteria.DifficultyRange.endDifficulty",
                         "problemCount", "timeLimit", "contentName", "RandomCriteria.minSolvedCount", "RandomCriteria.maxSolvedCount")
-                .containsExactly(B5, B1, 4L, 120L, "브론즈 랜덤 디펜스", 100L, 200L);
+                .containsExactly(B5, B1, 4, 120L, "브론즈 랜덤 디펜스", 100L, 200L);
     }
 
     @DisplayName("랜덤 디펜스를 생성할 때 시간 제한이 0분 이하로 설정되면 예외가 발생한다.")
@@ -47,7 +47,7 @@ class RandomDefenseTest {
         RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
 
         // when & then
-        assertThatThrownBy(() -> RandomDefense.create(randomCriteria, 4L, 0L, "브론즈 랜덤 디펜스"))
+        assertThatThrownBy(() -> RandomDefense.create(randomCriteria, 4, 0L, "브론즈 랜덤 디펜스"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("랜덤 디펜스 제한 시간은 0보다 커야 합니다.");
     }
@@ -59,7 +59,7 @@ class RandomDefenseTest {
         RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
 
         // when & then
-        assertThatThrownBy(() -> RandomDefense.create(randomCriteria, 0L, 120L, "브론즈 랜덤 디펜스"))
+        assertThatThrownBy(() -> RandomDefense.create(randomCriteria, 0, 120L, "브론즈 랜덤 디펜스"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("랜덤 디펜스 문제 수는 1문제 이상 이어야 합니다.");
     }

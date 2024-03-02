@@ -26,15 +26,17 @@ import java.util.List;
 @DiscriminatorValue("RandomDefenseRecord")
 public class RandomDefenseRecord extends ContentRecord {
     private Long totalSolvedTime;
-    private Long solvedCount;
-    private Long problemCount;
+    private Integer solvedCount;
+    private Integer problemCount;
 
+    private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
+    private static final Integer INITIAL_SOLVED_COUNT = 0;
     private RandomDefenseRecord(LocalDateTime testDate, RandomDefense randomDefense, Member member,
-                                List<Problem> problems, Long problemCount) {
+                                List<Problem> problems) {
         super(testDate, randomDefense, member, problems);
-        this.totalSolvedTime = 0L;
-        this.solvedCount = 0L;
-        this.problemCount = problemCount;
+        this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;
+        this.solvedCount = INITIAL_SOLVED_COUNT;
+        this.problemCount = problems.size();
     }
     @Override
     protected ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
@@ -42,7 +44,8 @@ public class RandomDefenseRecord extends ContentRecord {
         return RandomDefenseProblemRecord.create(member, problem, contentRecord, contentType);
     }
     public static RandomDefenseRecord create(RandomDefense randomDefense, Member member, LocalDateTime testDate,
-                                             List<Problem> problems, Long problemCount) {
-        return new RandomDefenseRecord(testDate, randomDefense, member, problems, problemCount);
+                                             List<Problem> problems) {
+
+        return new RandomDefenseRecord(testDate, randomDefense, member, problems);
     }
 }
