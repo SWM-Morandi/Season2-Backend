@@ -33,6 +33,21 @@ class RandomDefenseProblemRecordTest {
                 .contains(member, problem, randomDefense, randomDefenseRecord);
 
     }
+    @DisplayName("RandomDefenseProblemRecord가 생성되면 solvedTime은 0이다")
+    @Test
+    void initialSolvedTimeIsZero() {
+        // given
+        RandomDefense randomDefense = mock(RandomDefense.class);
+        RandomDefenseRecord randomDefenseRecord = mock(RandomDefenseRecord.class);
+        Problem problem = createProblem();
+        Member member = createMember("test");
+
+        // when
+        RandomDefenseProblemRecord randomDefenseProblemRecord = RandomDefenseProblemRecord.create(member, problem, randomDefenseRecord, randomDefense);
+
+        // then
+        assertThat(randomDefenseProblemRecord.getSolvedTime()).isZero();
+    }
     @DisplayName("RandomDefenseProblemRecord가 생성되면 isSolved는 false이다")
     @Test
     void initialIsSolvedFalse() {
