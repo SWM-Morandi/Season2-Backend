@@ -4,12 +4,14 @@ import kr.co.morandi.backend.domain.contentrecord.random.StageDefenseRecord;
 import kr.co.morandi.backend.domain.contenttype.random.randomstagedefense.RandomStageDefense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.problem.ProblemStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
+import static kr.co.morandi.backend.domain.problem.ProblemStatus.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -21,7 +23,7 @@ class StageDefenseProblemRecordTest {
         // given
         RandomStageDefense randomStageDefense = mock(RandomStageDefense.class);
         StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
-        Problem problem = Problem.create(1L, B5, 100L);
+        Problem problem = createProblem();
         Member member = createMember();
 
         // when
@@ -37,7 +39,7 @@ class StageDefenseProblemRecordTest {
         // given
         RandomStageDefense randomStageDefense = mock(RandomStageDefense.class);
         StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
-        Problem problem = Problem.create(1L, B5, 100L);
+        Problem problem = createProblem();
         Member member = createMember();
 
         // when
@@ -53,7 +55,7 @@ class StageDefenseProblemRecordTest {
         // given
         RandomStageDefense randomStageDefense = mock(RandomStageDefense.class);
         StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
-        Problem problem = Problem.create(1L, B5, 100L);
+        Problem problem = createProblem();
         Member member = createMember();
 
         // when
@@ -71,7 +73,7 @@ class StageDefenseProblemRecordTest {
         // given
         RandomStageDefense randomStageDefense = mock(RandomStageDefense.class);
         StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
-        Problem problem = Problem.create(1L, B5, 100L);
+        Problem problem = createProblem();
         Member member = createMember();
 
         // when
@@ -89,7 +91,7 @@ class StageDefenseProblemRecordTest {
         // given
         RandomStageDefense randomStageDefense = mock(RandomStageDefense.class);
         StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
-        Problem problem = Problem.create(1L, B5, 100L);
+        Problem problem = createProblem();
         Member member = createMember();
 
         // when
@@ -107,7 +109,7 @@ class StageDefenseProblemRecordTest {
         // given
         RandomStageDefense randomStageDefense = mock(RandomStageDefense.class);
         StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
-        Problem problem = Problem.create(1L, B5, 100L);
+        Problem problem = createProblem();
         Member member = createMember();
 
         // when
@@ -119,6 +121,19 @@ class StageDefenseProblemRecordTest {
                 .contains(member, problem, stageDefenseRecord, randomStageDefense);
     }
     private Member createMember() {
-        return Member.create("user", "user" + "@gmail.com", GOOGLE, "user", "user");
+        return Member.builder()
+                .email("user" + "@gmail.com")
+                .socialType(GOOGLE)
+                .nickname("nickname")
+                .description("description")
+                .build();
+    }
+    private Problem createProblem() {
+        return Problem.builder()
+                .baekjoonProblemId(1L)
+                .problemTier(B5)
+                .problemStatus(ACTIVE)
+                .solvedCount(0L)
+                .build();
     }
 }
