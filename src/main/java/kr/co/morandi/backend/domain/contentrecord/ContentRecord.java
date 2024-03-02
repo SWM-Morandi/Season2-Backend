@@ -11,10 +11,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -46,6 +46,6 @@ public abstract class ContentRecord extends BaseEntity {
         this.member = member;
         this.contentProblemRecords = problems.stream()
                 .map(problem -> this.createContentProblemRecord(member, problem, this, contentType))
-                .collect(Collectors.toList());
+                .toList();
     }
 }
