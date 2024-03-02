@@ -4,7 +4,6 @@ import kr.co.morandi.backend.domain.contentrecord.random.StageDefenseRecord;
 import kr.co.morandi.backend.domain.contenttype.random.randomstagedefense.RandomStageDefense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
-import kr.co.morandi.backend.domain.problem.ProblemStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
