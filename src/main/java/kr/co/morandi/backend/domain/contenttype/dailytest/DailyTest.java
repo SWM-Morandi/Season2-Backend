@@ -24,16 +24,18 @@ public class DailyTest extends ContentType {
 
     private LocalDateTime date;
 
-    private Long problemCount;
+    private Integer problemCount;
 
     @OneToMany(mappedBy = "dailyTest", cascade = CascadeType.ALL)
     List<DailyTestProblems> dailyTestProblemsList = new ArrayList<>();
+
     private DailyTest(LocalDateTime date, String contentName, List<Problem> problems) {
         super(contentName);
         this.date = date;
         this.dailyTestProblemsList = problems.stream()
                 .map(problem -> DailyTestProblems.create(this, problem))
                 .collect(Collectors.toList());
+        this.problemCount = problems.size();
     }
     public static DailyTest create(LocalDateTime date, String contentName, List<Problem> problems) {
         return new DailyTest(date, contentName, problems);

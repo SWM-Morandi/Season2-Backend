@@ -25,25 +25,25 @@ import java.util.List;
 @DiscriminatorValue("DailyTestRecord")
 public class DailyTestRecord extends ContentRecord {
     private Long solvedCount;
-    private Long problemCount;
+    private Integer problemCount;
 
-    private DailyTestRecord(Long problemCount, LocalDateTime date, ContentType contentType,
+    private DailyTestRecord(LocalDateTime date, ContentType contentType,
                             Member member, List<Problem> problems) {
         super(date, contentType, member, problems);
         this.solvedCount = 0L;
-        this.problemCount = problemCount;
+        this.problemCount = problems.size();
     }
     @Override
     protected ContentProblemRecord createContentProblemRecord(Member member, Problem problem,
                                                               ContentRecord contentRecord, ContentType contentType) {
         return DailyTestProblemRecord.create(member, problem, contentRecord, contentType);
     }
-    public static DailyTestRecord create(Long problemCount, LocalDateTime date, DailyTest dailyTest,
+    public static DailyTestRecord create(LocalDateTime date, DailyTest dailyTest,
                                          Member member, List<Problem> problems) {
 
         if (Duration.between(dailyTest.getDate(), date).toDays() >= 1)
             throw new IllegalArgumentException("오늘의 문제 기록은 출제 시점으로부터 하루 이내에 생성되어야 합니다.");
 
-        return new DailyTestRecord(problemCount, date, dailyTest, member, problems);
+        return new DailyTestRecord(date, dailyTest, member, problems);
     }
 }

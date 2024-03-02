@@ -31,7 +31,7 @@ class DailyTestRecordTest {
         List<Problem> problems = getProblemList(dailyTest);
 
         // when
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems);
+        DailyTestRecord dailyTestRecord = DailyTestRecord.create(startTime, dailyTest, member, problems);
 
         // then
         assertThat(dailyTestRecord.getSolvedCount()).isZero();
@@ -46,7 +46,7 @@ class DailyTestRecordTest {
         List<Problem> problems = getProblemList(dailyTest);
 
         // when
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems);
+        DailyTestRecord dailyTestRecord = DailyTestRecord.create(startTime, dailyTest, member, problems);
 
         // then
         assertThat(dailyTestRecord.getProblemCount()).isEqualTo(dailyTest.getProblemCount());
@@ -63,14 +63,15 @@ class DailyTestRecordTest {
     void recordCreateExceptionWhenOverOneDay() {
         // given
         LocalDateTime createdTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
-
         DailyTest dailyTest = createDailyTest(createdTime);
+
         Member member = createMember("user");
         List<Problem> problems = getProblemList(dailyTest);
 
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 2, 0, 0, 0);
+
         // when & then
-        assertThatThrownBy(() -> DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems))
+        assertThatThrownBy(() -> DailyTestRecord.create(startTime, dailyTest, member, problems))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오늘의 문제 기록은 출제 시점으로부터 하루 이내에 생성되어야 합니다.");
     }
@@ -79,15 +80,15 @@ class DailyTestRecordTest {
     void recordCreatedWithinOneDay() {
         // given
         LocalDateTime createdTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
-
         DailyTest dailyTest = createDailyTest(createdTime);
+
         Member member = createMember("user");
         List<Problem> problems = getProblemList(dailyTest);
 
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
 
         // when
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems);
+        DailyTestRecord dailyTestRecord = DailyTestRecord.create(startTime, dailyTest, member, problems);
 
         // then
         assertNotNull(dailyTestRecord);
@@ -102,7 +103,7 @@ class DailyTestRecordTest {
         List<Problem> problems = getProblemList(dailyTest);
 
         // when
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems);
+        DailyTestRecord dailyTestRecord = DailyTestRecord.create(startTime, dailyTest, member, problems);
         List<ContentProblemRecord> contentProblemRecords = dailyTestRecord.getContentProblemRecords();
 
         // then
@@ -120,7 +121,7 @@ class DailyTestRecordTest {
         List<Problem> problems = getProblemList(dailyTest);
 
         // when
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), startTime, dailyTest, member, problems);
+        DailyTestRecord dailyTestRecord = DailyTestRecord.create(startTime, dailyTest, member, problems);
         List<ContentProblemRecord> contentProblemRecords = dailyTestRecord.getContentProblemRecords();
 
         // then
@@ -138,7 +139,7 @@ class DailyTestRecordTest {
         List<Problem> problems = getProblemList(dailyTest);
 
         // when
-        DailyTestRecord dailyTestRecord = DailyTestRecord.create(dailyTest.getProblemCount(), startTime , dailyTest, member, problems);
+        DailyTestRecord dailyTestRecord = DailyTestRecord.create(startTime , dailyTest, member, problems);
         List<ContentProblemRecord> contentProblemRecords = dailyTestRecord.getContentProblemRecords();
 
         // then
