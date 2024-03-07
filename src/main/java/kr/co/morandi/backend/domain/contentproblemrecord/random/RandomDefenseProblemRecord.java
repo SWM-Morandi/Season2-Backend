@@ -20,11 +20,14 @@ import lombok.experimental.SuperBuilder;
 public class RandomDefenseProblemRecord extends ContentProblemRecord {
 
     private Long solvedTime;
+
+    private static final long INITIAL_SOLVED_TIME = 0L;
     private RandomDefenseProblemRecord(Member member, Problem problem,
                                        ContentRecord contentRecord, ContentType contentType) {
         super(member, problem, contentRecord, contentType);
-        this.solvedTime = 0L;
+        this.solvedTime = INITIAL_SOLVED_TIME;
     }
+
     public static RandomDefenseProblemRecord create(Member member, Problem problem,
                                               ContentRecord contentRecord, ContentType contentType) {
         return new RandomDefenseProblemRecord(member, problem, contentRecord, contentType);
