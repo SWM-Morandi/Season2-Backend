@@ -1,19 +1,15 @@
 package kr.co.morandi.backend.domain.contenttype.random.randomstagedefense;
 
 import kr.co.morandi.backend.domain.contenttype.random.randomcriteria.RandomCriteria;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B1;
 import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
 @ActiveProfiles("test")
 class RandomStageDefenseTest {
     @DisplayName("스테이지 모드를 처음 만들 때 정보가 올바르게 저장되어야 한다.")
