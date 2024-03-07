@@ -27,8 +27,7 @@ public class Member extends BaseEntity {
     private String description;
 
     @Builder
-    private Member(Long memberId, String nickname, String baekjoonId, String email, SocialType socialType, String profileImageURL, String description) {
-        this.memberId = memberId;
+    private Member(String nickname, String baekjoonId, String email, SocialType socialType, String profileImageURL, String description) {
         this.nickname = nickname;
         this.baekjoonId = baekjoonId;
         this.email = email;

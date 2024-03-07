@@ -18,17 +18,17 @@ public class CustomDefenseProblems extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
+
     private Long submitCount;
 
     private Long solvedCount;
 
-    public CustomDefenseProblems(CustomDefense customDefense, Problem problem) {
+    private CustomDefenseProblems(CustomDefense customDefense, Problem problem) {
         this.customDefense = customDefense;
         this.problem = problem;
         this.submitCount = 0L;
         this.solvedCount = 0L;
     }
-
     @Builder
     private CustomDefenseProblems(CustomDefense customDefense, Problem problem, Long submitCount, Long solvedCount) {
         this.customDefense = customDefense;
@@ -36,13 +36,7 @@ public class CustomDefenseProblems extends BaseEntity {
         this.submitCount = submitCount;
         this.solvedCount = solvedCount;
     }
-
     public static CustomDefenseProblems create(CustomDefense customDefense, Problem problem) {
-        return CustomDefenseProblems.builder()
-                .submitCount(0L)
-                .solvedCount(0L)
-                .customDefense(customDefense)
-                .problem(problem)
-                .build();
+        return new CustomDefenseProblems(customDefense, problem);
     }
 }
