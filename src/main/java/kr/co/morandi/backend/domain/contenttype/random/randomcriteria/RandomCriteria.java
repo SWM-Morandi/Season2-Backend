@@ -16,14 +16,12 @@ public class RandomCriteria {
     private DifficultyRange difficultyRange;
     private Long minSolvedCount;
     private Long maxSolvedCount;
-
     @Builder
     private RandomCriteria(DifficultyRange difficultyRange, Long minSolvedCount, Long maxSolvedCount) {
         this.difficultyRange = difficultyRange;
         this.minSolvedCount = minSolvedCount;
         this.maxSolvedCount = maxSolvedCount;
     }
-
     public static RandomCriteria of(DifficultyRange difficultyRange, Long minSolvedCount, Long maxSolvedCount) {
         if (minSolvedCount == null || maxSolvedCount == null)
             throw new IllegalArgumentException("Solved count must not be null");
@@ -32,14 +30,12 @@ public class RandomCriteria {
         if (minSolvedCount >= maxSolvedCount)
             throw new IllegalArgumentException("Min solved count must be less than or equal to max solved count");
 
-
         return RandomCriteria.builder()
                 .difficultyRange(difficultyRange)
                 .minSolvedCount(minSolvedCount)
                 .maxSolvedCount(maxSolvedCount)
                 .build();
     }
-
     @Embeddable
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)

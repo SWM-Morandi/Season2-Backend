@@ -43,7 +43,8 @@ public class CustomDefense extends ContentType {
     @OneToMany(mappedBy = "customDefense", cascade = CascadeType.ALL)
     private List<CustomDefenseProblems> customDefenseProblems = new ArrayList<>();
 
-    private CustomDefense(List<Problem> problems, Member member, String contentName, String description, Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
+    private CustomDefense(List<Problem> problems, Member member, String contentName, String description,
+                          Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
         super(contentName);
         this.problemCount = isValidProblemCount(problems.size());
         this.timeLimit = isValidTimeLimit(timeLimit);
@@ -52,12 +53,11 @@ public class CustomDefense extends ContentType {
         this.defenseTier = defenseTier;
         this.member = member;
         this.customDefenseProblems = problems.stream()
-                .map(problem -> new CustomDefenseProblems(this, problem))
-                .collect(Collectors.toList());
+                .map(problem -> CustomDefenseProblems.create(this, problem))
+                .toList();
         this.createDate = createDate;
     }
-
-    public static CustomDefense create(List<Problem> problems, Member member,String contentName,  String description, Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
+    public static CustomDefense create(List<Problem> problems, Member member, String contentName, String description, Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
         return new CustomDefense(problems, member, contentName, description, visibility, defenseTier, timeLimit, createDate);
     }
 

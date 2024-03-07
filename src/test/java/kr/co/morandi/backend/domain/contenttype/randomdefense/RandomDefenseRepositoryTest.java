@@ -23,12 +23,10 @@ class RandomDefenseRepositoryTest {
 
     @Autowired
     private RandomDefenseRepository randomDefenseRepository;
-
     @AfterEach
     void tearDown() {
         randomDefenseRepository.deleteAllInBatch();
     }
-
     @Test
     @DisplayName("저장된 랜덤 디펜스의 정보를 조회할 수 있다.")
     void findByContentName() {
@@ -42,9 +40,8 @@ class RandomDefenseRepositoryTest {
         // then
         assertThat(findRandomDefense)
                 .extracting("randomCriteria.maxSolvedCount", "randomCriteria.minSolvedCount", "timeLimit", "problemCount", "randomCriteria.difficultyRange.startDifficulty", "randomCriteria.difficultyRange.endDifficulty")
-                .containsExactly(200L, 100L, 1000L, 4L, B5, B1);
+                .containsExactly(200L, 100L, 1000L, 4, B5, B1);
     }
-
     @DisplayName("랜덤 디펜스들을 모두 조회하여 가져올 수 있다.")
     @Test
     void findAllRandomDefense(){
@@ -59,12 +56,11 @@ class RandomDefenseRepositoryTest {
         assertThat(findRandomDefenses).hasSize(3)
                 .extracting("randomCriteria.maxSolvedCount", "randomCriteria.minSolvedCount", "timeLimit", "problemCount", "randomCriteria.difficultyRange.startDifficulty", "randomCriteria.difficultyRange.endDifficulty")
                 .containsExactlyInAnyOrder(
-                        tuple(200L, 100L, 1000L, 4L, B5, B1),
-                        tuple(200L, 100L, 1000L, 4L, S5, S1),
-                        tuple(200L, 100L, 1000L, 4L, G5, G1)
+                        tuple(200L, 100L, 1000L, 4, B5, B1),
+                        tuple(200L, 100L, 1000L, 4, S5, S1),
+                        tuple(200L, 100L, 1000L, 4, G5, G1)
                 );
     }
-
     private List<RandomDefense> createRandomDefense() {
         RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
         RandomCriteria.DifficultyRange silverRange = RandomCriteria.DifficultyRange.of(S5, S1);
@@ -72,21 +68,21 @@ class RandomDefenseRepositoryTest {
 
         RandomDefense bronzeDefense = RandomDefense.builder()
                 .timeLimit(1000L)
-                .problemCount(4L)
+                .problemCount(4)
                 .contentName("브론즈 랜덤 디펜스")
                 .randomCriteria(RandomCriteria.of(bronzeRange,100L,200L))
                 .build();
 
         RandomDefense silverDefense = RandomDefense.builder()
                 .timeLimit(1000L)
-                .problemCount(4L)
+                .problemCount(4)
                 .contentName("실버 랜덤 디펜스")
                 .randomCriteria(RandomCriteria.of(silverRange,100L,200L))
                 .build();
 
         RandomDefense goldDefense = RandomDefense.builder()
                 .timeLimit(1000L)
-                .problemCount(4L)
+                .problemCount(4)
                 .contentName("골드 랜덤 디펜스")
                 .randomCriteria(RandomCriteria.of(goldRange,100L,200L))
                 .build();
