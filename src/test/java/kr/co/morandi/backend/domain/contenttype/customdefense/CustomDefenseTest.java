@@ -21,36 +21,17 @@ import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
 @ActiveProfiles("test")
 class CustomDefenseTest {
-
-    @Autowired
-    private ProblemRepository problemRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
-    private CustomDefenseProblemsRepository customDefenseProblemsRepository;
-
-    @AfterEach
-    void tearDown() {
-        customDefenseProblemsRepository.deleteAllInBatch();
-        problemRepository.deleteAllInBatch();
-        memberRepository.deleteAllInBatch();
-    }
     @DisplayName("커스텀 디펜스를 생성하면 등록 시간을 기록한다.")
     @Test
     void registeredWithDateTime() {
         // given
         Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
-        memberRepository.save(member);
 
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
         List<Problem> problems = List.of(problem1, problem2);
-        problemRepository.saveAll(problems);
 
         LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
 
@@ -66,12 +47,10 @@ class CustomDefenseTest {
     void createCustomDefenseWithContentName() {
         // given
         Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
-        memberRepository.save(member);
 
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
         List<Problem> problems = List.of(problem1, problem2);
-        problemRepository.saveAll(problems);
 
         LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
 
@@ -90,7 +69,6 @@ class CustomDefenseTest {
     void createCustomDefenseProblemCount() {
         // given
         Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
-        memberRepository.save(member);
 
         List<Problem> problems = createProblems();
 
@@ -114,7 +92,6 @@ class CustomDefenseTest {
     void createCustomDefenseWithoutProblem() {
         // given
         Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
-        memberRepository.save(member);
 
         List<Problem> problems = Collections.emptyList();
 
@@ -132,7 +109,6 @@ class CustomDefenseTest {
     void createCustomDefenseWithZeroTimeLimit() {
         // given
         Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
-        memberRepository.save(member);
 
         List<Problem> problems = createProblems();
 
@@ -149,7 +125,6 @@ class CustomDefenseTest {
     void createCustomDefenseWithNegativeTimeLimit() {
         // given
         Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
-        memberRepository.save(member);
 
         List<Problem> problems = createProblems();
 
@@ -166,9 +141,7 @@ class CustomDefenseTest {
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
         Problem problem3 = Problem.create(3L, G5, 0L);
-        List<Problem> problems = List.of(problem1, problem2, problem3);
-        problemRepository.saveAll(problems);
-        return problems;
+        return List.of(problem1, problem2, problem3);
     }
 
 }
