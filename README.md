@@ -1,0 +1,20 @@
+<p align="center">
+  <img src="https://github.com/SWM-Morandi/Backend/assets/51875177/117d05e4-6517-45db-9012-ae47dee04c77" width="220" height="100">
+</p>
+<h3 align="center">🎲 모두의 랜덤 디펜스</h3>
+<p align="center">IT 기업 코딩테스트를 실전처럼 대비하는 서비스</p>
+<p align="center"></p>
+
+<h3 align="left">😀 소개</h3>
+
+ - 현재 https://morandi.co.kr 에서 운영중입니다!
+ - 현재 버전을 유지보수 하면서 새로운 버전으로 업데이트를 진행하고 있습니다. (모랜디 시즌 2 버전)
+<img src="https://github.com/SWM-Morandi/Backend/assets/51875177/09f4a800-0136-487d-8a65-0be5265667a2">
+
+<br>
+
+<h3 align="left">📄 ERD</h3>
+
+- 현재 ERD 구조는 완성되었고 프로젝트 진행 중에 있습니다.
+
+<img src="https://github.com/SWM-Morandi/Season2-Backend/assets/51875177/15f10ed4-1c2b-4de9-acd3-dd471c956b44">
