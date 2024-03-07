@@ -1,27 +1,17 @@
 package kr.co.morandi.backend.domain.contenttype.random.randomdefense;
 
 import kr.co.morandi.backend.domain.contenttype.random.randomcriteria.RandomCriteria;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B1;
+import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.B5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringBootTest
 @ActiveProfiles("test")
 class RandomDefenseTest {
-
-    @Autowired
-    private RandomDefenseRepository randomDefenseRepository;
-    @AfterEach
-    void tearDown() {
-        randomDefenseRepository.deleteAllInBatch();
-    }
     @DisplayName("랜덤 디펜스를 생성할 때 등록한 정보가 올바르게 저장되어야 한다.")
     @Test
     void createRandomDefense() {
