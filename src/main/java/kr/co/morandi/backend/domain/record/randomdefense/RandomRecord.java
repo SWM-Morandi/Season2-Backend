@@ -3,9 +3,9 @@ package kr.co.morandi.backend.domain.record.randomdefense;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import kr.co.morandi.backend.domain.detail.Detail;
-import kr.co.morandi.backend.domain.detail.randomdefense.RandomDefenseProblemRecord;
 import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.defense.random.RandomDefense;
+import kr.co.morandi.backend.domain.detail.randomdefense.RandomDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import kr.co.morandi.backend.domain.record.Record;
@@ -38,7 +38,7 @@ public class RandomRecord extends Record {
     }
     @Override
     protected Detail createDetail(Member member, Problem problem, Record record, Defense defense) {
-        return RandomDefenseProblemRecord.create(member, problem, record, defense);
+        return RandomDetail.create(member, problem, record, defense);
     }
     public static RandomRecord create(RandomDefense randomDefense, Member member, LocalDateTime testDate,
                                              List<Problem> problems) {

@@ -12,15 +12,15 @@ import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
-class DailyDefenseProblemsTest {
+class DailyDefenseProblemTest {
     @DisplayName("오늘의 문제가 만들어졌을 때, 초기의 문제 제출횟수는 0이어야 한다.")
     @Test
     void submitCountIsZero() {
         // given
         List<Problem> problems = createProblems();
         LocalDateTime now = LocalDateTime.now();
-        DailyDefense DailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
-        List<DailyDefenseProblem> DailyDefenseProblemsList = DailyDefense.getDailyDefenseProblems();
+        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        List<DailyDefenseProblem> DailyDefenseProblemsList = dailyDefense.getDailyDefenseProblems();
 
         // when & then
         assertThat(DailyDefenseProblemsList)
@@ -34,8 +34,8 @@ class DailyDefenseProblemsTest {
         // given
         List<Problem> problems = createProblems();
         LocalDateTime now = LocalDateTime.now();
-        DailyDefense DailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
-        List<DailyDefenseProblem> DailyDefenseProblemsList = DailyDefense.getDailyDefenseProblemsList();
+        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        List<DailyDefenseProblem> DailyDefenseProblemsList = dailyDefense.getDailyDefenseProblems();
 
         // when & then
         assertThat(DailyDefenseProblemsList)

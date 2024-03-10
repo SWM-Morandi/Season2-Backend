@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.record.customdefense;
 
 import kr.co.morandi.backend.domain.defense.customdefense.CustomDefense;
-import kr.co.morandi.backend.domain.defense.customdefense.CustomDefenseProblems;
+import kr.co.morandi.backend.domain.defense.customdefense.CustomDefenseProblem;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
-class CustomDefenseRecordTest {
+class CustomRecordTest {
     @DisplayName("커스텀 디펜스 기록이 만들어 졌을 때 시험 날짜는 시작한 시점과 같아야 한다.")
     @Test
     void testDateIsEqualNow() {
@@ -31,7 +31,7 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // then
         assertThat(customDefenseRecord.getTestDate()).isEqualTo(startTime);
@@ -47,7 +47,7 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // then
         assertThat(customDefenseRecord.getSolvedCount()).isZero();
@@ -63,7 +63,7 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // then
         assertThat(customDefenseRecord.getProblemCount()).isEqualTo(customDefense.getProblemCount());
@@ -79,7 +79,7 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // then
         assertThat(customDefenseRecord.getTotalSolvedTime()).isZero();
@@ -95,10 +95,10 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // then
-        assertThat(customDefenseRecord.getContentProblemRecords())
+        assertThat(customDefenseRecord.getDetails())
                 .extracting("isSolved")
                 .containsExactlyInAnyOrder(
                         false,
@@ -116,10 +116,10 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // then
-        assertThat(customDefenseRecord.getContentProblemRecords())
+        assertThat(customDefenseRecord.getDetails())
                 .extracting("solvedTime")
                 .containsExactlyInAnyOrder(
                         0L,
@@ -137,10 +137,10 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // when & then
-        assertThat(customDefenseRecord.getContentProblemRecords())
+        assertThat(customDefenseRecord.getDetails())
                 .extracting("submitCount")
                 .containsExactlyInAnyOrder(
                         0L,
@@ -158,10 +158,10 @@ class CustomDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
         // when
-        CustomDefenseRecord customDefenseRecord = CustomDefenseRecord.create(customDefense, member, startTime, problems);
+        CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // when & then
-        assertThat(customDefenseRecord.getContentProblemRecords())
+        assertThat(customDefenseRecord.getDetails())
                 .extracting("solvedCode")
                 .containsExactlyInAnyOrder(
                         null,
@@ -182,10 +182,10 @@ class CustomDefenseRecordTest {
                 "custom_defense", OPEN, GOLD, 60L, now);
     }
     private List<Problem> getCustomDefenseProblems(CustomDefense customDefense) {
-        List<CustomDefenseProblems> customDefenseProblems = customDefense.getCustomDefenseProblems();
+        List<CustomDefenseProblem> customDefenseProblems = customDefense.getCustomDefenseProblems();
 
         return customDefenseProblems.stream()
-                .map(CustomDefenseProblems::getProblem)
+                .map(CustomDefenseProblem::getProblem)
                 .toList();
     }
     private Member createMember(String name) {

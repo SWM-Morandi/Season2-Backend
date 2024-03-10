@@ -4,6 +4,7 @@ import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria
 import kr.co.morandi.backend.domain.defense.stagedefense.StageDefense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.record.stagedefense.StageRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,7 +17,7 @@ import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
-class StageDefenseRecordTest {
+class StageRecordTest {
     @DisplayName("스테이지 기록이 만들어졌을 때 포함된 문제 수는 1개다.")
     @Test
     void stageCountIsOne() {
@@ -28,7 +29,7 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, startTime, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, startTime, member, problem);
 
         // then
         assertThat(stageDefenseRecord.getStageCount()).isOne();
@@ -44,10 +45,10 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, startTime, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, startTime, member, problem);
 
         // then
-        assertThat(stageDefenseRecord.getContentProblemRecords())
+        assertThat(stageDefenseRecord.getDetails())
                 .extracting("stageNumber")
                 .containsExactly(1L);
     }
@@ -62,7 +63,7 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, startTime, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, startTime, member, problem);
 
         // then
         assertThat(stageDefenseRecord.getTotalSolvedTime()).isZero();
@@ -78,7 +79,7 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, startTime, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, startTime, member, problem);
 
         // then
         assertThat(stageDefenseRecord.getTestDate()).isEqualTo(startTime);
@@ -94,10 +95,10 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, now, member, problem);
 
         // then
-        assertThat(stageDefenseRecord.getContentProblemRecords())
+        assertThat(stageDefenseRecord.getDetails())
                 .extracting("solvedTime")
                 .containsExactly(0L);
     }
@@ -112,10 +113,10 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, now, member, problem);
 
         // then
-        assertThat(stageDefenseRecord.getContentProblemRecords())
+        assertThat(stageDefenseRecord.getDetails())
                 .extracting("isSolved")
                 .containsExactly(false);
     }
@@ -130,10 +131,10 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, now, member, problem);
 
         // then
-        assertThat(stageDefenseRecord.getContentProblemRecords())
+        assertThat(stageDefenseRecord.getDetails())
                 .extracting("submitCount")
                 .containsExactly(0L);
     }
@@ -148,10 +149,10 @@ class StageDefenseRecordTest {
         Member member = createMember("user");
 
         // when
-        StageDefenseRecord stageDefenseRecord = StageDefenseRecord.create(randomStageDefense, now, member, problem);
+        StageRecord stageDefenseRecord = StageRecord.create(randomStageDefense, now, member, problem);
 
         // then
-        assertThat(stageDefenseRecord.getContentProblemRecords())
+        assertThat(stageDefenseRecord.getDetails())
                 .extracting("solvedCode")
                 .containsExactly((String)null);
     }

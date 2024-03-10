@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.detail.submit;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.domain.detail.ContentProblemRecord;
+import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,12 +22,12 @@ public class SubmitCode {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ContentProblemRecord contentProblemRecord;
+    private Detail detail;
 
     @Builder
-    private SubmitCode(String submitCodeLink, Member member, ContentProblemRecord contentProblemRecord) {
+    private SubmitCode(String submitCodeLink, Member member, Detail detail) {
         this.submitCodeLink = submitCodeLink;
         this.member = member;
-        this.contentProblemRecord = contentProblemRecord;
+        this.detail = detail;
     }
 }

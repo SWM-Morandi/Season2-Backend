@@ -1,10 +1,10 @@
 package kr.co.morandi.backend.domain.detail.customdefense;
 
-import kr.co.morandi.backend.domain.record.customdefense.CustomDefenseRecord;
 import kr.co.morandi.backend.domain.defense.customdefense.CustomDefense;
-import kr.co.morandi.backend.domain.defense.customdefense.CustomDefenseProblems;
+import kr.co.morandi.backend.domain.defense.customdefense.CustomDefenseProblem;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.record.customdefense.CustomRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 
 
 @ActiveProfiles("test")
-class CustomDefenseProblemRecordTest {
+class CustomDetailTest {
 
     @DisplayName("CustomDefenseProblemRecord를 생성할 수 있다.")
     @Test
@@ -31,18 +31,18 @@ class CustomDefenseProblemRecordTest {
         CustomDefense customDefense = createCustomDefense();
         Member member = createMember("member");
         Problem problem = customDefense.getCustomDefenseProblems().stream()
-                                                .map(CustomDefenseProblems::getProblem)
+                                                .map(CustomDefenseProblem::getProblem)
                                                 .findFirst()
                                                 .orElse(null);
 
-        CustomDefenseRecord customDefenseRecord = mock(CustomDefenseRecord.class);
+        CustomRecord customDefenseRecord = mock(CustomRecord.class);
 
         // when
-        CustomDefenseProblemRecord customDefenseProblemRecord = CustomDefenseProblemRecord.create(member, problem, customDefenseRecord, customDefense);
+        CustomDetail customDefenseProblemRecord = CustomDetail.create(member, problem, customDefenseRecord, customDefense);
 
         // then
         assertThat(customDefenseProblemRecord).isNotNull()
-                .extracting("member", "problem", "contentType", "contentRecord")
+                .extracting("member", "problem", "defense", "record")
                 .containsExactly(
                         member, problem, customDefense, customDefenseRecord
                 );
@@ -54,14 +54,14 @@ class CustomDefenseProblemRecordTest {
         CustomDefense customDefense = createCustomDefense();
         Member member = createMember("member");
         Problem problem = customDefense.getCustomDefenseProblems().stream()
-                .map(CustomDefenseProblems::getProblem)
+                .map(CustomDefenseProblem::getProblem)
                 .findFirst()
                 .orElse(null);
 
-        CustomDefenseRecord customDefenseRecord = mock(CustomDefenseRecord.class);
+        CustomRecord customDefenseRecord = mock(CustomRecord.class);
 
         // when
-        CustomDefenseProblemRecord customDefenseProblemRecord = CustomDefenseProblemRecord.create(member, problem, customDefenseRecord, customDefense);
+        CustomDetail customDefenseProblemRecord = CustomDetail.create(member, problem, customDefenseRecord, customDefense);
 
         // then
         assertThat(customDefenseProblemRecord.getSolvedTime())

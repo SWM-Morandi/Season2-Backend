@@ -1,8 +1,8 @@
-package kr.co.morandi.backend.domain.record.DailyDefense;
+package kr.co.morandi.backend.domain.record.dailydefense;
 
-import kr.co.morandi.backend.domain.detail.ContentProblemRecord;
 import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefenseProblem;
+import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
-class DailyDefenseRecordTest {
+class DailyRecordTest {
     @DisplayName("오늘의 문제 기록이 만들어졌을 때 푼 문제 수는 0문제 이어야 한다.")
     @Test
     void solvedCountIsZero() {
@@ -31,7 +31,7 @@ class DailyDefenseRecordTest {
         List<Problem> problems = getProblemList(DailyDefense);
 
         // when
-        DailyDefenseRecord DailyDefenseRecord = DailyDefenseRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
 
         // then
         assertThat(DailyDefenseRecord.getSolvedCount()).isZero();
@@ -46,12 +46,13 @@ class DailyDefenseRecordTest {
         List<Problem> problems = getProblemList(DailyDefense);
 
         // when
-        DailyDefenseRecord DailyDefenseRecord = DailyDefenseRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+
 
         // then
         assertThat(DailyDefenseRecord.getProblemCount()).isEqualTo(DailyDefense.getProblemCount());
-        assertThat(DailyDefenseRecord.getContentProblemRecords())
-                .extracting("problem", "contentRecord")
+        assertThat(DailyDefenseRecord.getDetails())
+                .extracting("problem", "record")
                 .containsExactlyInAnyOrder(
                         tuple(problems.get(0), DailyDefenseRecord),
                         tuple(problems.get(1), DailyDefenseRecord),
@@ -71,7 +72,7 @@ class DailyDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 2, 0, 0, 0);
 
         // when & then
-        assertThatThrownBy(() -> DailyDefenseRecord.create(startTime, DailyDefense, member, problems))
+        assertThatThrownBy(() -> DailyRecord.create(startTime, DailyDefense, member, problems))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오늘의 문제 기록은 출제 시점으로부터 하루 이내에 생성되어야 합니다.");
     }
@@ -88,7 +89,7 @@ class DailyDefenseRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
 
         // when
-        DailyDefenseRecord DailyDefenseRecord = DailyDefenseRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
 
         // then
         assertNotNull(DailyDefenseRecord);
@@ -103,8 +104,8 @@ class DailyDefenseRecordTest {
         List<Problem> problems = getProblemList(DailyDefense);
 
         // when
-        DailyDefenseRecord DailyDefenseRecord = DailyDefenseRecord.create(startTime, DailyDefense, member, problems);
-        List<ContentProblemRecord> contentProblemRecords = DailyDefenseRecord.getContentProblemRecords();
+        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
 
         // then
         assertThat(contentProblemRecords)
@@ -121,8 +122,8 @@ class DailyDefenseRecordTest {
         List<Problem> problems = getProblemList(DailyDefense);
 
         // when
-        DailyDefenseRecord DailyDefenseRecord = DailyDefenseRecord.create(startTime, DailyDefense, member, problems);
-        List<ContentProblemRecord> contentProblemRecords = DailyDefenseRecord.getContentProblemRecords();
+        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
 
         // then
         assertThat(contentProblemRecords)
@@ -139,16 +140,15 @@ class DailyDefenseRecordTest {
         List<Problem> problems = getProblemList(DailyDefense);
 
         // when
-        DailyDefenseRecord DailyDefenseRecord = DailyDefenseRecord.create(startTime , DailyDefense, member, problems);
-        List<ContentProblemRecord> contentProblemRecords = DailyDefenseRecord.getContentProblemRecords();
-
+        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
         // then
         assertThat(contentProblemRecords)
                 .extracting("solvedCode")
                 .containsExactlyInAnyOrder(null, null, null);
     }
     private List<Problem> getProblemList(DailyDefense DailyDefense) {
-        return DailyDefense.getDailyDefenseProblemsList().stream()
+        return DailyDefense.getDailyDefenseProblems().stream()
                 .map(DailyDefenseProblem::getProblem)
                 .toList();
     }

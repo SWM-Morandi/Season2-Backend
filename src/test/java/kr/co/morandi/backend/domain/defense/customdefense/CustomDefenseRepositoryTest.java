@@ -36,7 +36,7 @@ class CustomDefenseRepositoryTest {
     private MemberRepository memberRepository;
 
     @Autowired
-    private CustomDefenseProblemsRepository customDefenseProblemsRepository;
+    private CustomDefenseProblemRepository customDefenseProblemsRepository;
     @AfterEach
     void tearDown() {
         customDefenseProblemsRepository.deleteAllInBatch();

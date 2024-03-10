@@ -2,10 +2,10 @@ package kr.co.morandi.backend.domain.record.dailydefense;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import kr.co.morandi.backend.domain.detail.DailyDefense.DailyDefenseProblemRecord;
 import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefense;
+import kr.co.morandi.backend.domain.detail.dailydefense.DailyDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import kr.co.morandi.backend.domain.record.Record;
@@ -35,7 +35,7 @@ public class DailyRecord extends Record {
     }
     @Override
     protected Detail createDetail(Member member, Problem problem, Record record, Defense defense) {
-        return DailyDefenseProblemRecord.create(member, problem, record, defense);
+        return DailyDetail.create(member, problem, record, defense);
     }
     public static DailyRecord create(LocalDateTime date, DailyDefense DailyDefense,
                                          Member member, List<Problem> problems) {

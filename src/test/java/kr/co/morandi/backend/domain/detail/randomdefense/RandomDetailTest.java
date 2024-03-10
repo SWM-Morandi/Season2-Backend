@@ -1,9 +1,9 @@
 package kr.co.morandi.backend.domain.detail.randomdefense;
 
-import kr.co.morandi.backend.domain.record.randomdefense.RandomDefenseRecord;
 import kr.co.morandi.backend.domain.defense.random.RandomDefense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.record.randomdefense.RandomRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -14,22 +14,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 @ActiveProfiles("test")
-class RandomDefenseProblemRecordTest {
+class RandomDetailTest {
     @DisplayName("RandomDefenseProblemRecord를 생성한다.")
     @Test
     void create() {
         // given
         RandomDefense randomDefense = mock(RandomDefense.class);
-        RandomDefenseRecord randomDefenseRecord = mock(RandomDefenseRecord.class);
+        RandomRecord randomDefenseRecord = mock(RandomRecord.class);
         Problem problem = createProblem();
         Member member = createMember("test");
 
         // when
-        RandomDefenseProblemRecord randomDefenseProblemRecord = RandomDefenseProblemRecord.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord).isNotNull()
-                .extracting("member", "problem", "contentType", "contentRecord")
+                .extracting("member", "problem", "defense", "record")
                 .contains(member, problem, randomDefense, randomDefenseRecord);
 
     }
@@ -38,12 +38,12 @@ class RandomDefenseProblemRecordTest {
     void initialSolvedTimeIsZero() {
         // given
         RandomDefense randomDefense = mock(RandomDefense.class);
-        RandomDefenseRecord randomDefenseRecord = mock(RandomDefenseRecord.class);
+        RandomRecord randomDefenseRecord = mock(RandomRecord.class);
         Problem problem = createProblem();
         Member member = createMember("test");
 
         // when
-        RandomDefenseProblemRecord randomDefenseProblemRecord = RandomDefenseProblemRecord.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord.getSolvedTime()).isZero();
@@ -53,12 +53,12 @@ class RandomDefenseProblemRecordTest {
     void initialIsSolvedFalse() {
         // given
         RandomDefense randomDefense = mock(RandomDefense.class);
-        RandomDefenseRecord randomDefenseRecord = mock(RandomDefenseRecord.class);
+        RandomRecord randomDefenseRecord = mock(RandomRecord.class);
         Problem problem = createProblem();
         Member member = createMember("test");
 
         // when
-        RandomDefenseProblemRecord randomDefenseProblemRecord = RandomDefenseProblemRecord.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord.getIsSolved()).isFalse();
@@ -68,13 +68,12 @@ class RandomDefenseProblemRecordTest {
     void initialSubmitCountIsZero() {
         // given
         RandomDefense randomDefense = mock(RandomDefense.class);
-        RandomDefenseRecord randomDefenseRecord = mock(RandomDefenseRecord.class);
+        RandomRecord randomDefenseRecord = mock(RandomRecord.class);
         Problem problem = createProblem();
         Member member = createMember("test");
 
         // when
-        RandomDefenseProblemRecord randomDefenseProblemRecord = RandomDefenseProblemRecord.create(member, problem, randomDefenseRecord, randomDefense);
-
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
         // then
         assertThat(randomDefenseProblemRecord.getSubmitCount()).isZero();
     }
@@ -83,12 +82,12 @@ class RandomDefenseProblemRecordTest {
     void initialSolvedCodeIsSetToNull() {
         // given
         RandomDefense randomDefense = mock(RandomDefense.class);
-        RandomDefenseRecord randomDefenseRecord = mock(RandomDefenseRecord.class);
+        RandomRecord randomDefenseRecord = mock(RandomRecord.class);
         Problem problem = createProblem();
         Member member = createMember("test");
 
         // when
-        RandomDefenseProblemRecord randomDefenseProblemRecord = RandomDefenseProblemRecord.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord.getSolvedCode())

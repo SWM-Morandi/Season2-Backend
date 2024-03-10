@@ -1,10 +1,10 @@
-package kr.co.morandi.backend.domain.detail.DailyDefense;
+package kr.co.morandi.backend.domain.detail.dailydefense;
 
-import kr.co.morandi.backend.domain.record.DailyDefense.DailyDefenseRecord;
 import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.record.dailydefense.DailyRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,25 +19,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 @ActiveProfiles("test")
-class DailyDefenseProblemRecordTest {
+class DailyDetailTest {
     @DisplayName("DailyDefenseProblemRecord를 만들 수 있다.")
     @Test
     void create() {
         // given
         DailyDefense DailyDefense = createDailyDefense();
-        DailyDefenseRecord DailyDefenseRecord = mock(DailyDefenseRecord.class);
-        Problem problem = DailyDefense.getDailyDefenseProblemsList().stream()
+        DailyRecord DailyDefenseRecord = mock(DailyRecord.class);
+        Problem problem = DailyDefense.getDailyDefenseProblems().stream()
                                     .map(DailyDefenseProblem::getProblem)
                                     .findFirst()
                                     .orElse(null);
         Member member = createMember();
 
         // when
-        DailyDefenseProblemRecord DailyDefenseProblemRecord = DailyDefenseProblemRecord.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord).isNotNull()
-                .extracting("member", "problem", "contentType", "contentRecord")
+                .extracting("member", "problem", "defense", "record")
                 .contains(member, problem, DailyDefense, DailyDefenseRecord);
     }
     @DisplayName("DailyDefenseProblemRecord가 생성되면 isSolved는 false이다")
@@ -45,15 +45,15 @@ class DailyDefenseProblemRecordTest {
     void initialIsSolvedFalse() {
         // given
         DailyDefense DailyDefense = createDailyDefense();
-        DailyDefenseRecord DailyDefenseRecord = mock(DailyDefenseRecord.class);
-        Problem problem = DailyDefense.getDailyDefenseProblemsList().stream()
-                                        .map(DailyDefenseProblem::getProblem)
-                                        .findFirst()
-                                        .orElse(null);
+        DailyRecord DailyDefenseRecord = mock(DailyRecord.class);
+        Problem problem = DailyDefense.getDailyDefenseProblems().stream()
+                .map(DailyDefenseProblem::getProblem)
+                .findFirst()
+                .orElse(null);
         Member member = createMember();
 
         // when
-        DailyDefenseProblemRecord DailyDefenseProblemRecord = DailyDefenseProblemRecord.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord.getIsSolved()).isFalse();
@@ -63,15 +63,15 @@ class DailyDefenseProblemRecordTest {
     void initialSubmitCountIsZero() {
         // given
         DailyDefense DailyDefense = createDailyDefense();
-        DailyDefenseRecord DailyDefenseRecord = mock(DailyDefenseRecord.class);
-        Problem problem = DailyDefense.getDailyDefenseProblemsList().stream()
-                                        .map(DailyDefenseProblem::getProblem)
-                                        .findFirst()
-                                        .orElse(null);
+        DailyRecord DailyDefenseRecord = mock(DailyRecord.class);
+        Problem problem = DailyDefense.getDailyDefenseProblems().stream()
+                .map(DailyDefenseProblem::getProblem)
+                .findFirst()
+                .orElse(null);
         Member member = createMember();
 
         // when
-        DailyDefenseProblemRecord DailyDefenseProblemRecord = DailyDefenseProblemRecord.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord.getSubmitCount()).isZero();
@@ -81,15 +81,15 @@ class DailyDefenseProblemRecordTest {
     void initialSolvedCodeIsSetToNull() {
         // given
         DailyDefense DailyDefense = createDailyDefense();
-        DailyDefenseRecord DailyDefenseRecord = mock(DailyDefenseRecord.class);
-        Problem problem = DailyDefense.getDailyDefenseProblemsList().stream()
-                                        .map(DailyDefenseProblem::getProblem)
-                                        .findFirst()
-                                        .orElse(null);
+        DailyRecord DailyDefenseRecord = mock(DailyRecord.class);
+        Problem problem = DailyDefense.getDailyDefenseProblems().stream()
+                .map(DailyDefenseProblem::getProblem)
+                .findFirst()
+                .orElse(null);
         Member member = createMember();
 
         // when
-        DailyDefenseProblemRecord DailyDefenseProblemRecord = DailyDefenseProblemRecord.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord.getSolvedCode())

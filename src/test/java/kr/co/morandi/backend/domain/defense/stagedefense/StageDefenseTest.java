@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.random.randomstagedefense;
+package kr.co.morandi.backend.domain.defense.stagedefense;
 
 import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;
 import kr.co.morandi.backend.domain.defense.stagedefense.StageDefense;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
-class RandomStageDefenseTest {
+class StageDefenseTest {
     @DisplayName("스테이지 모드를 처음 만들 때 정보가 올바르게 저장되어야 한다.")
     @Test
     void createRamdomStageDefense() {

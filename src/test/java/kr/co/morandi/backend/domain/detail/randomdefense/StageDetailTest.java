@@ -1,10 +1,10 @@
 package kr.co.morandi.backend.domain.detail.randomdefense;
 
-import kr.co.morandi.backend.domain.detail.stagedefense.StageDefenseProblemRecord;
-import kr.co.morandi.backend.domain.record.randomdefense.StageDefenseRecord;
 import kr.co.morandi.backend.domain.defense.stagedefense.StageDefense;
+import kr.co.morandi.backend.domain.detail.stagedefense.StageDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.record.stagedefense.StageRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,18 +16,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 @ActiveProfiles("test")
-class StageDefenseProblemRecordTest {
+class StageDetailTest {
     @DisplayName("스테이지 문제 기록이 생성되면 초기 정답 시간은 0이다.")
     @Test
     void initialSolvedTimeIsZero() {
         // given
         StageDefense randomStageDefense = mock(StageDefense.class);
-        StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
+        StageRecord stageDefenseRecord = mock(StageRecord.class);
         Problem problem = createProblem();
         Member member = createMember();
 
         // when
-        StageDefenseProblemRecord stageDefenseProblemRecord = StageDefenseProblemRecord.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord.getSolvedTime()).isEqualTo(0L);
@@ -38,13 +38,12 @@ class StageDefenseProblemRecordTest {
     void createStageDefenseProblemRecordWithStageNumber() {
         // given
         StageDefense randomStageDefense = mock(StageDefense.class);
-        StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
+        StageRecord stageDefenseRecord = mock(StageRecord.class);
         Problem problem = createProblem();
         Member member = createMember();
 
         // when
-        StageDefenseProblemRecord stageDefenseProblemRecord = StageDefenseProblemRecord.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
-
+        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord.getStageNumber()).isEqualTo(1L);
 
@@ -54,12 +53,12 @@ class StageDefenseProblemRecordTest {
     void initialIsSolvedIsFalse() {
         // given
         StageDefense randomStageDefense = mock(StageDefense.class);
-        StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
+        StageRecord stageDefenseRecord = mock(StageRecord.class);
         Problem problem = createProblem();
         Member member = createMember();
 
         // when
-        StageDefenseProblemRecord stageDefenseProblemRecord = StageDefenseProblemRecord.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord)
@@ -72,13 +71,12 @@ class StageDefenseProblemRecordTest {
     void initialSubmitCountIsZero() {
         // given
         StageDefense randomStageDefense = mock(StageDefense.class);
-        StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
+        StageRecord stageDefenseRecord = mock(StageRecord.class);
         Problem problem = createProblem();
         Member member = createMember();
 
         // when
-        StageDefenseProblemRecord stageDefenseProblemRecord = StageDefenseProblemRecord.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
-
+        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord)
                 .extracting("submitCount")
@@ -90,12 +88,12 @@ class StageDefenseProblemRecordTest {
     void initialSolvedCodeIsNull() {
         // given
         StageDefense randomStageDefense = mock(StageDefense.class);
-        StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
+        StageRecord stageDefenseRecord = mock(StageRecord.class);
         Problem problem = createProblem();
         Member member = createMember();
 
         // when
-        StageDefenseProblemRecord stageDefenseProblemRecord = StageDefenseProblemRecord.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord)
@@ -108,16 +106,15 @@ class StageDefenseProblemRecordTest {
     void createStageDefenseProblemRecord() {
         // given
         StageDefense randomStageDefense = mock(StageDefense.class);
-        StageDefenseRecord stageDefenseRecord = mock(StageDefenseRecord.class);
+        StageRecord stageDefenseRecord = mock(StageRecord.class);
         Problem problem = createProblem();
         Member member = createMember();
 
         // when
-        StageDefenseProblemRecord stageDefenseProblemRecord = StageDefenseProblemRecord.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
-
+        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord)
-                .extracting("member", "problem", "contentRecord", "contentType")
+                .extracting("member", "problem", "record", "defense")
                 .contains(member, problem, stageDefenseRecord, randomStageDefense);
     }
     private Member createMember() {

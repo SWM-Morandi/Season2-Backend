@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.random.randomdefense;
+package kr.co.morandi.backend.domain.defense.randomdefense;
 
 import kr.co.morandi.backend.domain.defense.random.RandomDefense;
 import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;

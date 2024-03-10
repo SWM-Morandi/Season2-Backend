@@ -3,8 +3,8 @@ package kr.co.morandi.backend.domain.record.stagedefense;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import kr.co.morandi.backend.domain.detail.Detail;
-import kr.co.morandi.backend.domain.detail.stagedefense.StageDefenseProblemRecord;
 import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.detail.stagedefense.StageDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import kr.co.morandi.backend.domain.record.Record;
@@ -37,7 +37,7 @@ public class StageRecord extends Record {
     @Override
     protected Detail createDetail(Member member, Problem problem,
                                                 Record record, Defense defense) {
-        return StageDefenseProblemRecord.create(INITIAL_STAGE_NUMBER, member, problem, record, defense);
+        return StageDetail.create(INITIAL_STAGE_NUMBER, member, problem, record, defense);
     }
     public static StageRecord create(Defense defense, LocalDateTime testDate,
                                             Member member, Problem problem) {

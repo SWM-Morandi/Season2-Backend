@@ -17,18 +17,18 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DiscriminatorValue("StageDefenseProblemRecord")
-public class StageDefenseProblemRecord extends Detail {
+public class StageDetail extends Detail {
     private Long solvedTime;
     private Long stageNumber;
 
-    private StageDefenseProblemRecord(Long stageNumber, Member member, Problem problem,
+    private StageDetail(Long stageNumber, Member member, Problem problem,
                                       Record record, Defense defense) {
         super(member, problem, record, defense);
         this.solvedTime = 0L;
         this.stageNumber = stageNumber;
     }
-    public static StageDefenseProblemRecord create(Long stageNumber, Member member, Problem problem,
+    public static StageDetail create(Long stageNumber, Member member, Problem problem,
                                                    Record record, Defense defense) {
-        return new StageDefenseProblemRecord(stageNumber, member, problem, record, defense);
+        return new StageDetail(stageNumber, member, problem, record, defense);
     }
 }

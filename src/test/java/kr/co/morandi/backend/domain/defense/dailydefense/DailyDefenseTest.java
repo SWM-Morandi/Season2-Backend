@@ -21,10 +21,10 @@ class DailyDefenseTest {
         LocalDateTime now = LocalDateTime.now();
 
         // when
-        DailyDefense DailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
 
         // then
-        assertThat(DailyDefense.getAttemptCount()).isZero();
+        assertThat(dailyDefense.getAttemptCount()).isZero();
     }
     @DisplayName("오늘의 문제가 만들어진 시점에 등록된 날짜는 만들어진 시점과 같아야 한다.")
     @Test
@@ -34,10 +34,10 @@ class DailyDefenseTest {
         LocalDateTime now = LocalDateTime.now();
 
         // when
-        DailyDefense DailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
 
         // then
-        assertThat(DailyDefense.getDate()).isEqualTo(now);
+        assertThat(dailyDefense.getDate()).isEqualTo(now);
     }
     @DisplayName("오늘의 문제가 만들어진 이름은 일치해야한다.")
     @Test
@@ -47,10 +47,10 @@ class DailyDefenseTest {
         LocalDateTime now = LocalDateTime.now();
 
         // when
-        DailyDefense DailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
 
         // then
-        assertThat(DailyDefense.getContentName()).isEqualTo("오늘의 문제 테스트");
+        assertThat(dailyDefense.getContentName()).isEqualTo("오늘의 문제 테스트");
     }
     private List<Problem> createProblems() {
         Problem problem1 = Problem.create(1L, B5, 0L);

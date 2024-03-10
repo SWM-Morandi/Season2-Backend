@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.detail.DailyDefense;
+package kr.co.morandi.backend.domain.detail.dailydefense;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

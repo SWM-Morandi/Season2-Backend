@@ -16,7 +16,7 @@ import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
-class RandomDefenseRecordTest {
+class RandomRecordTest {
     @DisplayName("랜덤 디펜스 기록이 만들어졌을 때 맞춘 문제수는 0문제 이어야 한다.")
     @Test
     void solvedCountIsZero() {
@@ -28,7 +28,7 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
         assertThat(randomDefenseRecord.getSolvedCount()).isZero();
@@ -44,7 +44,7 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
         assertThat(randomDefenseRecord.getProblemCount()).isEqualTo(randomDefense.getProblemCount());
@@ -61,7 +61,7 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
         assertThat(randomDefenseRecord.getTotalSolvedTime()).isZero();
@@ -77,7 +77,7 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
         assertThat(randomDefenseRecord.getTestDate()).isEqualTo(now);
@@ -93,10 +93,10 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
-        assertThat(randomDefenseRecord.getContentProblemRecords())
+        assertThat(randomDefenseRecord.getDetails())
                 .extracting("isSolved")
                 .containsExactly(
                 false,
@@ -116,10 +116,10 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
-        assertThat(randomDefenseRecord.getContentProblemRecords())
+        assertThat(randomDefenseRecord.getDetails())
                 .extracting("submitCount")
                 .containsExactly(
                     0L,
@@ -139,11 +139,10 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord
-                = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
-        assertThat(randomDefenseRecord.getContentProblemRecords())
+        assertThat(randomDefenseRecord.getDetails())
                 .extracting("solvedCode")
                 .containsExactly(
                     null,
@@ -162,11 +161,10 @@ class RandomDefenseRecordTest {
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
         // when
-        RandomDefenseRecord randomDefenseRecord
-                = RandomDefenseRecord.create(randomDefense, member, now, problems);
+        RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
-        assertThat(randomDefenseRecord.getContentProblemRecords())
+        assertThat(randomDefenseRecord.getDetails())
                 .extracting("solvedTime")
                 .containsExactly(
                     0L,
