@@ -4,7 +4,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import kr.co.morandi.backend.domain.contenttype.ContentType;
+import kr.co.morandi.backend.domain.contenttype.Defense;
 import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +21,7 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DailyTest extends ContentType {
+public class DailyTest extends Defense {
 
     private LocalDateTime date;
 

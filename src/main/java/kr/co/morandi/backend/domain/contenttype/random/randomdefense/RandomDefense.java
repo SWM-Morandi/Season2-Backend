@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.contenttype.random.randomdefense;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.domain.contenttype.ContentType;
+import kr.co.morandi.backend.domain.contenttype.Defense;
 import kr.co.morandi.backend.domain.contenttype.random.randomcriteria.RandomCriteria;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RandomDefense extends ContentType {
+public class RandomDefense extends Defense {
 
     @Embedded
     private RandomCriteria randomCriteria;

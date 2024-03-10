@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.contenttype.customdefense;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.domain.contenttype.ContentType;
+import kr.co.morandi.backend.domain.contenttype.Defense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.AccessLevel;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CustomDefense extends ContentType {
+public class CustomDefense extends Defense {
 
     private LocalDateTime createDate;
 

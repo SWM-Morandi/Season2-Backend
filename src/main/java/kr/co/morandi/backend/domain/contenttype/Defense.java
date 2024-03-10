@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class ContentType extends BaseEntity {
+public abstract class Defense extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contentTypeId;
@@ -19,7 +19,7 @@ public abstract class ContentType extends BaseEntity {
     private String contentName;
 
     private Long attemptCount;
-    public ContentType(String contentName) {
+    public Defense(String contentName) {
         this.contentName = contentName;
         this.attemptCount = 0L;
     }
