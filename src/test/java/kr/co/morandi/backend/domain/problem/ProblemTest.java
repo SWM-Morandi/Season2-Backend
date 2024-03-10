@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 
-import static kr.co.morandi.backend.domain.contenttype.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.problem.ProblemStatus.INIT;
 import static org.assertj.core.api.Assertions.assertThat;
 

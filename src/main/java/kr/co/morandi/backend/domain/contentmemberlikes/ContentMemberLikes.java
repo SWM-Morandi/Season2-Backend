@@ -2,7 +2,7 @@ package kr.co.morandi.backend.domain.contentmemberlikes;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.contenttype.ContentType;
+import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -18,11 +18,11 @@ public class ContentMemberLikes extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
-    private ContentType contentType;
+    private Defense defense;
 
     @Builder
-    private ContentMemberLikes(Member member, ContentType contentType) {
+    private ContentMemberLikes(Member member, Defense defense) {
         this.member = member;
-        this.contentType = contentType;
+        this.defense = defense;
     }
 }
