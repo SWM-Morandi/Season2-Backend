@@ -2,10 +2,9 @@ package kr.co.morandi.backend.domain.problem;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.contenttype.tier.ProblemTier;
+import kr.co.morandi.backend.domain.defense.tier.ProblemTier;
 import lombok.*;
 
-import static kr.co.morandi.backend.domain.problem.ProblemStatus.HOLD;
 import static kr.co.morandi.backend.domain.problem.ProblemStatus.INIT;
 
 @Entity

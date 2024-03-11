@@ -2,7 +2,7 @@ package kr.co.morandi.backend.domain.bookmark;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.contenttype.ContentType;
+import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.member.Member;
 import lombok.*;
 
@@ -14,14 +14,14 @@ public class BookMark extends BaseEntity {
     private Long bookMarkId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ContentType contentType;
+    private Defense defense;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @Builder
-    private BookMark(ContentType contentType, Member member) {
-        this.contentType = contentType;
+    private BookMark(Defense defense, Member member) {
+        this.defense = defense;
         this.member = member;
     }
 }

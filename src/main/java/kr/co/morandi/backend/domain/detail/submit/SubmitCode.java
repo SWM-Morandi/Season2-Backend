@@ -1,28 +1,33 @@
-package kr.co.morandi.backend.domain.contentmemberlikes;
+package kr.co.morandi.backend.domain.detail.submit;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ContentMemberLikes extends BaseEntity {
+public class SubmitCode {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberLikesId;
+    private Long submitRecordId;
+
+    private String submitCodeLink;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    private Defense defense;
+    private Detail detail;
 
     @Builder
-    private ContentMemberLikes(Member member, Defense defense) {
+    private SubmitCode(String submitCodeLink, Member member, Detail detail) {
+        this.submitCodeLink = submitCodeLink;
         this.member = member;
-        this.defense = defense;
+        this.detail = detail;
     }
 }
