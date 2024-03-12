@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.detail.dailydefense;
 
-import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefense;
-import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefenseProblem;
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import kr.co.morandi.backend.domain.record.dailydefense.DailyRecord;
@@ -9,10 +9,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.B5;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.B5;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static kr.co.morandi.backend.domain.problem.ProblemStatus.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,8 +98,8 @@ class DailyDetailTest {
     }
 
     private DailyDefense createDailyDefense() {
-        LocalDateTime createDate = LocalDateTime.of(2023, 3, 5, 0, 0);
-        return DailyDefense.create(createDate, "3월 5일 문제", createProblem());
+        LocalDate createdDate = LocalDate.of(2024, 3, 1);
+        return DailyDefense.create(createdDate, "3월 5일 문제", createProblem());
     }
     private List<Problem> createProblem() {
         return List.of(

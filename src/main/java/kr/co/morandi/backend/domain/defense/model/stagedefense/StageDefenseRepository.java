@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.stagedefense;
+package kr.co.morandi.backend.domain.defense.model.stagedefense;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

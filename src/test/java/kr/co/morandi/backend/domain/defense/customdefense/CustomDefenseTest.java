@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.domain.defense.customdefense;
 
+import kr.co.morandi.backend.domain.defense.model.customdefense.CustomDefense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
@@ -10,9 +11,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.customdefense.DefenseTier.GOLD;
-import static kr.co.morandi.backend.domain.defense.customdefense.Visibility.OPEN;
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.model.customdefense.DefenseTier.GOLD;
+import static kr.co.morandi.backend.domain.defense.model.customdefense.Visibility.OPEN;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.*;
 

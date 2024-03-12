@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.domain.detail.randomdefense;
 
-import kr.co.morandi.backend.domain.defense.stagedefense.StageDefense;
+import kr.co.morandi.backend.domain.defense.model.stagedefense.StageDefense;
 import kr.co.morandi.backend.domain.detail.stagedefense.StageDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.B5;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.B5;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static kr.co.morandi.backend.domain.problem.ProblemStatus.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,10 +1,13 @@
-package kr.co.morandi.backend.domain.defense.stagedefense;
+package kr.co.morandi.backend.domain.defense.model.stagedefense;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.domain.defense.Defense;
-import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.defense.model.Defense;
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
+import kr.co.morandi.backend.domain.defense.model.random.randomcriteria.RandomCriteria;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import static kr.co.morandi.backend.domain.defense.model.DefenseType.STAGE;
 
 @Entity
 @DiscriminatorValue("StageDefense")
@@ -20,7 +23,7 @@ public class StageDefense extends Defense {
 
     private Long timeLimit;
     private StageDefense(RandomCriteria randomCriteria, Long timeLimit, String contentName) {
-        super(contentName);
+        super(contentName, STAGE);
         this.randomCriteria = randomCriteria;
         this.averageStage = 0.0;
         this.timeLimit = isValidTimeLimit(timeLimit);

@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.dailydefense;
+package kr.co.morandi.backend.domain.defense.model.dailydefense;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

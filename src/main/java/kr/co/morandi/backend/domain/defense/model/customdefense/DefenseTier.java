@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.customdefense;
+package kr.co.morandi.backend.domain.defense.model.customdefense;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

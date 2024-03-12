@@ -1,7 +1,7 @@
-package kr.co.morandi.backend.domain.defense.customdefense;
+package kr.co.morandi.backend.domain.defense.model.customdefense;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.defense.model.Defense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import lombok.AccessLevel;
@@ -13,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static kr.co.morandi.backend.domain.defense.model.DefenseType.CUSTOM;
 
 @Entity
 @DiscriminatorValue("CustomDefense")
@@ -44,7 +46,7 @@ public class CustomDefense extends Defense {
 
     private CustomDefense(List<Problem> problems, Member member, String contentName, String description,
                           Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
-        super(contentName);
+        super(contentName, CUSTOM);
         this.problemCount = isValidProblemCount(problems.size());
         this.timeLimit = isValidTimeLimit(timeLimit);
         this.description = description;

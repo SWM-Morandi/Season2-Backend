@@ -1,8 +1,8 @@
-package kr.co.morandi.backend.domain.defense.random.randomcriteria;
+package kr.co.morandi.backend.domain.defense.model.random.randomcriteria;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
-import kr.co.morandi.backend.domain.defense.tier.ProblemTier;
+import kr.co.morandi.backend.domain.defense.model.tier.ProblemTier;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

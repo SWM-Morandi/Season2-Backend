@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.record.dailydefense;
 
-import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefense;
-import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefenseProblem;
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
@@ -9,10 +9,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -63,8 +64,8 @@ class DailyRecordTest {
     @Test
     void recordCreateExceptionWhenOverOneDay() {
         // given
-        LocalDateTime createdTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
-        DailyDefense DailyDefense = createDailyDefense(createdTime);
+        LocalDate createdDate = LocalDate.of(2024, 3, 1);
+        DailyDefense DailyDefense = createDailyDefense(createdDate);
 
         Member member = createMember("user");
         List<Problem> problems = getProblemList(DailyDefense);
@@ -74,14 +75,14 @@ class DailyRecordTest {
         // when & then
         assertThatThrownBy(() -> DailyRecord.create(startTime, DailyDefense, member, problems))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("오늘의 문제 기록은 출제 시점으로부터 하루 이내에 생성되어야 합니다.");
+                .hasMessage("오늘의 문제 기록은 출제 날짜와 같은 날에 생성되어야 합니다.");
     }
     @DisplayName("오늘의 문제 기록이 만들어진 시점이 문제가 출제된 시점에서 하루 이상 넘어가지 않으면 정상적으로 등록된다.")
     @Test
     void recordCreatedWithinOneDay() {
         // given
-        LocalDateTime createdTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
-        DailyDefense DailyDefense = createDailyDefense(createdTime);
+        LocalDate createdDate = LocalDate.of(2024, 3, 1);
+        DailyDefense DailyDefense = createDailyDefense(createdDate);
 
         Member member = createMember("user");
         List<Problem> problems = getProblemList(DailyDefense);
@@ -154,12 +155,12 @@ class DailyRecordTest {
     }
     private DailyDefense createDailyDefense() {
         List<Problem> problems = createProblems();
-        LocalDateTime createdTime = LocalDateTime.of(2024, 3, 1, 0, 0, 0);
-        return DailyDefense.create(createdTime, "오늘의 문제 테스트", problems);
+        LocalDate createdDate = LocalDate.of(2024, 3, 1);
+        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
     }
-    private DailyDefense createDailyDefense(LocalDateTime createdTime) {
+    private DailyDefense createDailyDefense(LocalDate createdDate) {
         List<Problem> problems = createProblems();
-        return DailyDefense.create(createdTime, "오늘의 문제 테스트", problems);
+        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
     }
     private List<Problem> createProblems() {
         Problem problem1 = Problem.create(1L, B5, 0L);

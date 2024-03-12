@@ -2,9 +2,9 @@ package kr.co.morandi.backend.domain.record.customdefense;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.defense.model.Defense;
 import kr.co.morandi.backend.domain.detail.Detail;
-import kr.co.morandi.backend.domain.defense.customdefense.CustomDefense;
+import kr.co.morandi.backend.domain.defense.model.customdefense.CustomDefense;
 import kr.co.morandi.backend.domain.detail.customdefense.CustomDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;

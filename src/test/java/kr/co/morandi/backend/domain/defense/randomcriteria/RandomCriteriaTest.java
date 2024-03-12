@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.defense.randomcriteria;
 
-import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;
-import kr.co.morandi.backend.domain.defense.tier.ProblemTier;
+import kr.co.morandi.backend.domain.defense.model.random.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.defense.model.tier.ProblemTier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;

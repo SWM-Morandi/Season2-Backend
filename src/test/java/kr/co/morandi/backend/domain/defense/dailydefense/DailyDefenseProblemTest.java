@@ -1,14 +1,15 @@
 package kr.co.morandi.backend.domain.defense.dailydefense;
 
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
@@ -18,12 +19,13 @@ class DailyDefenseProblemTest {
     void submitCountIsZero() {
         // given
         List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
-        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
-        List<DailyDefenseProblem> DailyDefenseProblemsList = dailyDefense.getDailyDefenseProblems();
+        LocalDate createdDate = LocalDate.of(2024, 3, 1);
 
-        // when & then
-        assertThat(DailyDefenseProblemsList)
+        // when
+        DailyDefense dailyDefense = DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
+
+        // then
+        assertThat(dailyDefense.getDailyDefenseProblems())
                 .extracting("submitCount")
                 .containsExactlyInAnyOrder(0L, 0L, 0L);
     }
@@ -33,12 +35,13 @@ class DailyDefenseProblemTest {
     void solvedCountIsZero() {
         // given
         List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
-        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
-        List<DailyDefenseProblem> DailyDefenseProblemsList = dailyDefense.getDailyDefenseProblems();
+        LocalDate createdDate = LocalDate.of(2024, 3, 1);
 
-        // when & then
-        assertThat(DailyDefenseProblemsList)
+        // when
+        DailyDefense dailyDefense = DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
+
+        // then
+        assertThat(dailyDefense.getDailyDefenseProblems())
                 .extracting("solvedCount")
                 .containsExactlyInAnyOrder(0L, 0L, 0L);
     }

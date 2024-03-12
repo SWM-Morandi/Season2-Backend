@@ -1,9 +1,9 @@
 package kr.co.morandi.backend.domain.defense.randomdefense;
 
 
-import kr.co.morandi.backend.domain.defense.random.RandomDefense;
-import kr.co.morandi.backend.domain.defense.random.RandomDefenseRepository;
-import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.defense.model.random.RandomDefense;
+import kr.co.morandi.backend.domain.defense.model.random.RandomDefenseRepository;
+import kr.co.morandi.backend.domain.defense.model.random.randomcriteria.RandomCriteria;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 

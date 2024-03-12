@@ -2,9 +2,9 @@ package kr.co.morandi.backend.domain.record.dailydefense;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import kr.co.morandi.backend.domain.defense.model.Defense;
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.detail.Detail;
-import kr.co.morandi.backend.domain.defense.Defense;
-import kr.co.morandi.backend.domain.defense.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.detail.dailydefense.DailyDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,12 +36,13 @@ public class DailyRecord extends Record {
     protected Detail createDetail(Member member, Problem problem, Record record, Defense defense) {
         return DailyDetail.create(member, problem, record, defense);
     }
-    public static DailyRecord create(LocalDateTime date, DailyDefense DailyDefense,
+    public static DailyRecord create(LocalDateTime date, DailyDefense dailyDefense,
                                          Member member, List<Problem> problems) {
 
-        if (Duration.between(DailyDefense.getDate(), date).toDays() >= 1)
-            throw new IllegalArgumentException("오늘의 문제 기록은 출제 시점으로부터 하루 이내에 생성되어야 합니다.");
+        if (!date.toLocalDate().equals(dailyDefense.getDate())) {
+            throw new IllegalArgumentException("오늘의 문제 기록은 출제 날짜와 같은 날에 생성되어야 합니다.");
+        }
 
-        return new DailyRecord(date, DailyDefense, member, problems);
+        return new DailyRecord(date, dailyDefense, member, problems);
     }
 }

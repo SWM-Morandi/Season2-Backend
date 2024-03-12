@@ -3,7 +3,7 @@ package kr.co.morandi.backend.domain.detail.stagedefense;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import kr.co.morandi.backend.domain.detail.Detail;
-import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.defense.model.Defense;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import kr.co.morandi.backend.domain.record.Record;

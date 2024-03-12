@@ -2,7 +2,7 @@ package kr.co.morandi.backend.domain.contentmemberlikes;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.defense.model.Defense;
 import kr.co.morandi.backend.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;

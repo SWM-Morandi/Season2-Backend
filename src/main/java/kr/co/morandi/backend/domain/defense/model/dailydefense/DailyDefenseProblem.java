@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.dailydefense;
+package kr.co.morandi.backend.domain.defense.model.dailydefense;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;

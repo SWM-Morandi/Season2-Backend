@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.tier;
+package kr.co.morandi.backend.domain.defense.model.tier;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

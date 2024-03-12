@@ -1,5 +1,8 @@
 package kr.co.morandi.backend.domain.defense.customdefense;
 
+import kr.co.morandi.backend.domain.defense.model.customdefense.CustomDefense;
+import kr.co.morandi.backend.domain.defense.model.customdefense.CustomDefenseProblemRepository;
+import kr.co.morandi.backend.domain.defense.model.customdefense.CustomDefenseRepository;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.member.MemberRepository;
 import kr.co.morandi.backend.domain.problem.Problem;
@@ -14,10 +17,10 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.customdefense.DefenseTier.*;
-import static kr.co.morandi.backend.domain.defense.customdefense.Visibility.CLOSE;
-import static kr.co.morandi.backend.domain.defense.customdefense.Visibility.OPEN;
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.model.customdefense.DefenseTier.*;
+import static kr.co.morandi.backend.domain.defense.model.customdefense.Visibility.CLOSE;
+import static kr.co.morandi.backend.domain.defense.model.customdefense.Visibility.OPEN;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;

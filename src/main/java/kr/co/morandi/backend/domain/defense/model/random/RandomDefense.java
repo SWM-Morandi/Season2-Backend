@@ -1,10 +1,12 @@
-package kr.co.morandi.backend.domain.defense.random;
+package kr.co.morandi.backend.domain.defense.model.random;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.domain.defense.Defense;
-import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.defense.model.Defense;
+import kr.co.morandi.backend.domain.defense.model.random.randomcriteria.RandomCriteria;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import static kr.co.morandi.backend.domain.defense.model.DefenseType.RANDOM;
 
 @Entity
 @DiscriminatorValue("RandomDefense")
@@ -20,7 +22,7 @@ public class RandomDefense extends Defense {
 
     private Long timeLimit;
     private RandomDefense(RandomCriteria randomCriteria, Integer problemCount, Long timeLimit, String contentName) {
-        super(contentName);
+        super(contentName, RANDOM);
         this.randomCriteria = randomCriteria;
         this.problemCount = isValidProblemCount(problemCount);
         this.timeLimit = isValidTimeLimit(timeLimit);

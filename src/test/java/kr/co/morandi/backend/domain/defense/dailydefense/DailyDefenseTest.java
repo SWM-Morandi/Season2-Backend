@@ -1,14 +1,16 @@
 package kr.co.morandi.backend.domain.defense.dailydefense;
 
+import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
@@ -18,7 +20,7 @@ class DailyDefenseTest {
     void attemptCountIsZero() {
         // given
         List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDateTime.now().toLocalDate();
 
         // when
         DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
@@ -31,7 +33,7 @@ class DailyDefenseTest {
     void testDateEqualNow() {
         // given
         List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDateTime.now().toLocalDate();
 
         // when
         DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
@@ -44,7 +46,8 @@ class DailyDefenseTest {
     void contentNameIsEqual() {
         // given
         List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDateTime.now().toLocalDate();
+
 
         // when
         DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
