@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.service;
+package kr.co.morandi.backend.infrastructure.defense;
 
 import kr.co.morandi.backend.domain.defense.port.DailyDefensePort;
 import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;

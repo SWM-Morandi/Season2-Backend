@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.config;
+package kr.co.morandi.backend.infrastructure.config;
 
 import kr.co.morandi.backend.domain.algorithm.Algorithm;
 import kr.co.morandi.backend.domain.algorithm.AlgorithmRepository;
