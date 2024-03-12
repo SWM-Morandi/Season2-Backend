@@ -1,11 +1,8 @@
-package kr.co.morandi.backend.domain.defense.service;
+package kr.co.morandi.backend.domain.defense.model.dailydefense;
 
-import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
-import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefenseProblemRepository;
-import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefenseRepository;
+import kr.co.morandi.backend.domain.defense.model.Defense;
 import kr.co.morandi.backend.domain.problem.Problem;
 import kr.co.morandi.backend.domain.problem.ProblemRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,42 +15,31 @@ import java.util.List;
 import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ProblemGenerationServiceTest {
-
-    @Autowired
-    private ProblemGenerationService problemGenerationService;
-
-    @Autowired
-    private DailyDefenseRepository dailyDefenseRepository;
+class DailyDefenseProblemRepositoryTest {
 
     @Autowired
     private DailyDefenseProblemRepository dailyDefenseProblemRepository;
-
+    @Autowired
+    private DailyDefenseRepository dailyDefenseRepository;
     @Autowired
     private ProblemRepository problemRepository;
 
-    @AfterEach
-    void tearDown() {
-        dailyDefenseProblemRepository.deleteAllInBatch();
-        problemRepository.deleteAllInBatch();
-        dailyDefenseRepository.deleteAllInBatch();
-    }
-
-    @DisplayName("DailyDefense의 Problem목록을 가져올 수 있다.")
+    @DisplayName("defense 타입으로 DailyDefenseProblem을 가져올 수 있다.")
     @Test
-    void getDefenseProblems() {
+    void findAllProblemsContainsDefenseId() {
         // given
         LocalDate defenseDate = LocalDate.of(2021, 1, 1);
-        DailyDefense dailyDefense = createDailyDefense(defenseDate);
+        Defense defense = createDailyDefense(defenseDate);
 
         // when
-        List<Problem> defenseProblems = problemGenerationService.getDefenseProblems(dailyDefense);
+        List<Problem> dailyDefenseProblems = dailyDefenseProblemRepository.findAllProblemsContainsDefenseId(defense.getDefenseId());
 
         // then
-        assertThat(defenseProblems).hasSize(3)
+        assertThat(dailyDefenseProblems).hasSize(3)
                 .extracting("baekjoonProblemId", "problemTier", "solvedCount")
                 .containsExactlyInAnyOrder(
                         tuple(1L, B5, 0L),
@@ -62,7 +48,6 @@ class ProblemGenerationServiceTest {
                 );
 
     }
-
     private DailyDefense createDailyDefense(LocalDate date) {
         List<Problem> problems = createProblems();
         return dailyDefenseRepository.save(DailyDefense.create(date, "오늘의 문제 테스트", problems));
