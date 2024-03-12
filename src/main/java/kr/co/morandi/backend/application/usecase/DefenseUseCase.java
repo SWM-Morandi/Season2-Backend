@@ -1,5 +1,6 @@
-package kr.co.morandi.backend.domain.defense;
+package kr.co.morandi.backend.application.usecase;
 
+import kr.co.morandi.backend.domain.defense.port.DailyDefensePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

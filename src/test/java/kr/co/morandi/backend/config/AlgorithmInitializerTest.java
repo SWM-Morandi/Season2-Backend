@@ -2,6 +2,7 @@ package kr.co.morandi.backend.config;
 
 import kr.co.morandi.backend.domain.algorithm.Algorithm;
 import kr.co.morandi.backend.domain.algorithm.AlgorithmRepository;
+import kr.co.morandi.backend.infrastructure.config.AlgorithmInitializer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

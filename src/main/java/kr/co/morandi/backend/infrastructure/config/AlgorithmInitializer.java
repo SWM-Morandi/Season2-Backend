@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.config;
+package kr.co.morandi.backend.infrastructure.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
