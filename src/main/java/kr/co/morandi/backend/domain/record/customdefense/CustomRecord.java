@@ -29,8 +29,7 @@ public class CustomRecord extends Record {
     public Detail createDetail(Member member, Problem problem, Record record, Defense defense) {
         return CustomDetail.create(member, problem, record, defense);
     }
-    private CustomRecord(CustomDefense customDefense, Member member, LocalDateTime testDate,
-                                List<Problem> problems) {
+    private CustomRecord(CustomDefense customDefense, Member member, LocalDateTime testDate, List<Problem> problems) {
         super(testDate, customDefense, member, problems);
         this.totalSolvedTime = 0L;
         this.solvedCount = 0;
