@@ -38,8 +38,9 @@ public abstract class Record extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
     private List<Detail> details = new ArrayList<>();
-    protected abstract Detail createDetail(Member member, Problem problem,
-                                           Record record, Defense defense);
+
+    protected abstract Detail createDetail(Member member, Problem problem, Record record, Defense defense);
+
     protected Record(LocalDateTime testDate, Defense defense, Member member, List<Problem> problems) {
         this.testDate = testDate;
         this.defense = defense;

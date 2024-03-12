@@ -26,8 +26,7 @@ public class CustomRecord extends Record {
     private Integer solvedCount;
     private Integer problemCount;
     @Override
-    public Detail createDetail(Member member, Problem problem,
-                               Record record, Defense defense) {
+    public Detail createDetail(Member member, Problem problem, Record record, Defense defense) {
         return CustomDetail.create(member, problem, record, defense);
     }
     private CustomRecord(CustomDefense customDefense, Member member, LocalDateTime testDate,
@@ -37,8 +36,7 @@ public class CustomRecord extends Record {
         this.solvedCount = 0;
         this.problemCount = customDefense.getProblemCount();
     }
-    public static CustomRecord create(CustomDefense customDefense, Member member, LocalDateTime testDate,
-                                             List<Problem> problems) {
+    public static CustomRecord create(CustomDefense customDefense, Member member, LocalDateTime testDate, List<Problem> problems) {
         return new CustomRecord(customDefense, member, testDate, problems);
     }
 }

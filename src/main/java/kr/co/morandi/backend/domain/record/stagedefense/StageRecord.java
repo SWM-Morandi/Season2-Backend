@@ -28,19 +28,16 @@ public class StageRecord extends Record {
     private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
     private static final Long INITIAL_STAGE_NUMBER = 1L;
     private static final Long INITIAL_STAGE_COUNT = 1L;
-    private StageRecord(Defense defense, LocalDateTime testDate,
-                               Member member, List<Problem> problems) {
+    private StageRecord(Defense defense, LocalDateTime testDate, Member member, List<Problem> problems) {
         super(testDate, defense, member, problems);
         this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;
         this.stageCount = INITIAL_STAGE_COUNT;
     }
     @Override
-    protected Detail createDetail(Member member, Problem problem,
-                                                Record record, Defense defense) {
+    protected Detail createDetail(Member member, Problem problem, Record record, Defense defense) {
         return StageDetail.create(INITIAL_STAGE_NUMBER, member, problem, record, defense);
     }
-    public static StageRecord create(Defense defense, LocalDateTime testDate,
-                                            Member member, Problem problem) {
+    public static StageRecord create(Defense defense, LocalDateTime testDate, Member member, Problem problem) {
         return new StageRecord(defense, testDate, member, List.of(problem));
     }
 }

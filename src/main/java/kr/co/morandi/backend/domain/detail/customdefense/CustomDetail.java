@@ -26,8 +26,7 @@ public class CustomDetail extends Detail {
         super(member, problem, record, defense);
         this.solvedTime = INITIAL_SOLVED_TIME;
     }
-    public static CustomDetail create(Member member, Problem problem,
-                                                    Record record, Defense defense) {
+    public static CustomDetail create(Member member, Problem problem, Record record, Defense defense) {
         return new CustomDetail(member, problem, record, defense);
     }
 }

@@ -23,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("DailyDefenseRecord")
 public class DailyRecord extends Record {
+
     private Long solvedCount;
     private Integer problemCount;
 
@@ -36,8 +37,7 @@ public class DailyRecord extends Record {
     protected Detail createDetail(Member member, Problem problem, Record record, Defense defense) {
         return DailyDetail.create(member, problem, record, defense);
     }
-    public static DailyRecord create(LocalDateTime date, DailyDefense dailyDefense,
-                                         Member member, List<Problem> problems) {
+    public static DailyRecord create(LocalDateTime date, DailyDefense dailyDefense, Member member, List<Problem> problems) {
 
         if (!date.toLocalDate().equals(dailyDefense.getDate())) {
             throw new IllegalArgumentException("오늘의 문제 기록은 출제 날짜와 같은 날에 생성되어야 합니다.");
