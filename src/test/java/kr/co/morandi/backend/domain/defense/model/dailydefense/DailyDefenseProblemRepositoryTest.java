@@ -15,7 +15,6 @@ import java.util.List;
 import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -36,11 +35,11 @@ class DailyDefenseProblemRepositoryTest {
         Defense defense = createDailyDefense(defenseDate);
 
         // when
-        List<Problem> dailyDefenseProblems = dailyDefenseProblemRepository.findAllProblemsContainsDefenseId(defense.getDefenseId());
+        List<DailyDefenseProblem> dailyDefenseProblems = dailyDefenseProblemRepository.findAllProblemsContainsDefenseId(defense.getDefenseId());
 
         // then
         assertThat(dailyDefenseProblems).hasSize(3)
-                .extracting("baekjoonProblemId", "problemTier", "solvedCount")
+                .extracting("problem.baekjoonProblemId", "problem.problemTier", "problem.solvedCount")
                 .containsExactlyInAnyOrder(
                         tuple(1L, B5, 0L),
                         tuple(2L, S5, 0L),

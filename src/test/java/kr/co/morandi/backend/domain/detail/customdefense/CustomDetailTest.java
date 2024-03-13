@@ -38,7 +38,7 @@ class CustomDetailTest {
         CustomRecord customDefenseRecord = mock(CustomRecord.class);
 
         // when
-        CustomDetail customDefenseProblemRecord = CustomDetail.create(member, problem, customDefenseRecord, customDefense);
+        CustomDetail customDefenseProblemRecord = CustomDetail.create(member, 1L, problem, customDefenseRecord, customDefense);
 
         // then
         assertThat(customDefenseProblemRecord).isNotNull()
@@ -61,7 +61,7 @@ class CustomDetailTest {
         CustomRecord customDefenseRecord = mock(CustomRecord.class);
 
         // when
-        CustomDetail customDefenseProblemRecord = CustomDetail.create(member, problem, customDefenseRecord, customDefense);
+        CustomDetail customDefenseProblemRecord = CustomDetail.create(member, 1L, problem, customDefenseRecord, customDefense);
 
         // then
         assertThat(customDefenseProblemRecord.getSolvedTime())

@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static kr.co.morandi.backend.domain.defense.model.DefenseType.CUSTOM;
 
@@ -53,8 +54,9 @@ public class CustomDefense extends Defense {
         this.visibility = visibility;
         this.defenseTier = defenseTier;
         this.member = member;
+        AtomicLong problemNumber = new AtomicLong(1);
         this.customDefenseProblems = problems.stream()
-                .map(problem -> CustomDefenseProblem.create(this, problem))
+                .map(problem -> CustomDefenseProblem.create(this, problemNumber.getAndIncrement(), problem))
                 .toList();
         this.createDate = createDate;
     }

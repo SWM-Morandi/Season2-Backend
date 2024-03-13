@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class ProblemGenerationService {
+
     private final Map<DefenseType, ProblemGenerationStrategy> strategies;
+
     public ProblemGenerationService(List<ProblemGenerationStrategy> strategies) {
         this.strategies = strategies.stream()
                 .collect(Collectors.toMap(ProblemGenerationStrategy::getDefenseType, strategy -> strategy));
     }
-    public List<Problem> getDefenseProblems(Defense defense) {
+    public Map<Long, Problem> getDefenseProblems(Defense defense) {
         return strategies.get(defense.getType()).generateDefenseProblems(defense);
     }
 

@@ -10,6 +10,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.model.customdefense.DefenseTier.GOLD;
 import static kr.co.morandi.backend.domain.defense.model.customdefense.Visibility.OPEN;
@@ -25,7 +27,7 @@ class CustomRecordTest {
     void testDateIsEqualNow() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
 
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
@@ -41,7 +43,7 @@ class CustomRecordTest {
     void solvedCountIsZero() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
 
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
@@ -57,7 +59,7 @@ class CustomRecordTest {
     void problemCountIsEqual() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
 
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
@@ -73,7 +75,7 @@ class CustomRecordTest {
     void totalSolvedTimeIsZero() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
 
         Member member = Member.create("user", "user@gmail.com", GOOGLE, "user", "user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
@@ -89,7 +91,7 @@ class CustomRecordTest {
     void isSolvedFalse() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
 
         Member member = createMember("user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
@@ -111,7 +113,7 @@ class CustomRecordTest {
     void solvedTimeIsZero() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
         Member member = createMember("user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
@@ -132,7 +134,7 @@ class CustomRecordTest {
     void submitCountIsZero() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
         Member member = createMember("user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
@@ -153,7 +155,7 @@ class CustomRecordTest {
     void solvedCodeIsNull() {
         // given
         CustomDefense customDefense = createCustomDefense();
-        List<Problem> problems = getCustomDefenseProblems(customDefense);
+        Map<Long, Problem> problems = getCustomDefenseProblems(customDefense);
         Member member = createMember("user");
         LocalDateTime startTime = LocalDateTime.of(2024, 2, 26, 0, 0, 0, 0);
 
@@ -181,12 +183,11 @@ class CustomRecordTest {
         return CustomDefense.create(problems, member, "custom_defense",
                 "custom_defense", OPEN, GOLD, 60L, now);
     }
-    private List<Problem> getCustomDefenseProblems(CustomDefense customDefense) {
+    private Map<Long, Problem> getCustomDefenseProblems(CustomDefense customDefense) {
         List<CustomDefenseProblem> customDefenseProblems = customDefense.getCustomDefenseProblems();
 
         return customDefenseProblems.stream()
-                .map(CustomDefenseProblem::getProblem)
-                .toList();
+                .collect(Collectors.toMap(CustomDefenseProblem::getProblemNumber, CustomDefenseProblem::getProblem));
     }
     private Member createMember(String name) {
         return Member.create(name, name + "@gmail.com", GOOGLE, name, name);

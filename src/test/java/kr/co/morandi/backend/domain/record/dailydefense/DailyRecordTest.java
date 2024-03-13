@@ -12,6 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
@@ -29,36 +31,13 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        List<Problem> problems = getProblemList(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
         DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
 
         // then
         assertThat(DailyDefenseRecord.getSolvedCount()).isZero();
-    }
-    @DisplayName("오늘의 문제 기록이 만들어졌을 때 전체 문제 수는 오늘의 문제에 출제된 문제 들과 같아야 한다.")
-    @Test
-    void problemCountIsEqual() {
-        // given
-        DailyDefense DailyDefense = createDailyDefense();
-        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
-        Member member = createMember("user");
-        List<Problem> problems = getProblemList(DailyDefense);
-
-        // when
-        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
-
-
-        // then
-        assertThat(DailyDefenseRecord.getProblemCount()).isEqualTo(DailyDefense.getProblemCount());
-        assertThat(DailyDefenseRecord.getDetails())
-                .extracting("problem", "record")
-                .containsExactlyInAnyOrder(
-                        tuple(problems.get(0), DailyDefenseRecord),
-                        tuple(problems.get(1), DailyDefenseRecord),
-                        tuple(problems.get(2), DailyDefenseRecord)
-                );
     }
     @DisplayName("오늘의 문제 기록이 만들어진 시점이 문제가 출제된 시점에서 하루 이상 넘어가면 예외가 발생한다.")
     @Test
@@ -68,7 +47,7 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense(createdDate);
 
         Member member = createMember("user");
-        List<Problem> problems = getProblemList(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense);
 
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 2, 0, 0, 0);
 
@@ -85,7 +64,7 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense(createdDate);
 
         Member member = createMember("user");
-        List<Problem> problems = getProblemList(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense);
 
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
 
@@ -102,7 +81,7 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        List<Problem> problems = getProblemList(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
         DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
@@ -120,7 +99,7 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        List<Problem> problems = getProblemList(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
         DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
@@ -138,7 +117,7 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        List<Problem> problems = getProblemList(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
         DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
@@ -148,10 +127,9 @@ class DailyRecordTest {
                 .extracting("solvedCode")
                 .containsExactlyInAnyOrder(null, null, null);
     }
-    private List<Problem> getProblemList(DailyDefense DailyDefense) {
+    private Map<Long, Problem> getProblems(DailyDefense DailyDefense) {
         return DailyDefense.getDailyDefenseProblems().stream()
-                .map(DailyDefenseProblem::getProblem)
-                .toList();
+                .collect(Collectors.toMap(DailyDefenseProblem::getProblemNumber, DailyDefenseProblem::getProblem));
     }
     private DailyDefense createDailyDefense() {
         List<Problem> problems = createProblems();

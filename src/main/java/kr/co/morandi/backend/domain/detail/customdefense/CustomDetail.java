@@ -19,14 +19,16 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("CustomDefenseProblemRecord")
 public class CustomDetail extends Detail {
 
+    private Long problemNumber;
     private Long solvedTime;
 
     private static final long INITIAL_SOLVED_TIME = 0L;
-    private CustomDetail(Member member, Problem problem, Record record, Defense defense) {
+    private CustomDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
         super(member, problem, record, defense);
+        this.problemNumber = sequenceNumber;
         this.solvedTime = INITIAL_SOLVED_TIME;
     }
-    public static CustomDetail create(Member member, Problem problem, Record record, Defense defense) {
-        return new CustomDetail(member, problem, record, defense);
+    public static CustomDetail create(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
+        return new CustomDetail(member, sequenceNumber, problem, record, defense);
     }
 }

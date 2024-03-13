@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -29,7 +30,7 @@ public abstract class Defense extends BaseEntity {
     private DefenseType defenseType;
 
     //팩토리 메소드 패턴
-    public List<Problem> getDefenseProblems(ProblemGenerationService problemGenerationService) {
+    public Map<Long, Problem> getDefenseProblems(ProblemGenerationService problemGenerationService) {
         return problemGenerationService.getDefenseProblems(this);
     }
     public DefenseType getType() {

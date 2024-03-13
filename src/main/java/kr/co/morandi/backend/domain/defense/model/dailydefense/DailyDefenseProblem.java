@@ -20,6 +20,8 @@ public class DailyDefenseProblem extends BaseEntity {
 
     private Long solvedCount;
 
+    private Long problemNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private DailyDefense DailyDefense;
 
@@ -31,13 +33,14 @@ public class DailyDefenseProblem extends BaseEntity {
     private static final Long INITIAL_SOLVED_COUNT = 0L;
 
     @Builder
-    private DailyDefenseProblem(DailyDefense DailyDefense, Problem problem) {
+    private DailyDefenseProblem(DailyDefense DailyDefense, Problem problem, Long problemNumber) {
         this.DailyDefense = DailyDefense;
         this.problem = problem;
         this.submitCount = INITIAL_SUBMIT_COUNT;
         this.solvedCount = INITIAL_SOLVED_COUNT;
+        this.problemNumber = problemNumber;
     }
-    public static DailyDefenseProblem create(DailyDefense DailyDefense, Problem problem) {
-        return new DailyDefenseProblem(DailyDefense, problem);
+    public static DailyDefenseProblem create(DailyDefense DailyDefense, Problem problem, Long problemNumber) {
+        return new DailyDefenseProblem(DailyDefense, problem, problemNumber);
     }
 }

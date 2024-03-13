@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,11 +51,11 @@ class ProblemGenerationServiceTest {
         DailyDefense dailyDefense = createDailyDefense(defenseDate);
 
         // when
-        List<Problem> defenseProblems = problemGenerationService.getDefenseProblems(dailyDefense);
+        Map<Long, Problem> defenseProblems = problemGenerationService.getDefenseProblems(dailyDefense);
 
         // then
-        assertThat(defenseProblems).hasSize(3)
-                .extracting("baekjoonProblemId", "problemTier", "solvedCount")
+        assertThat(defenseProblems.values()).hasSize(3)
+                .extracting(Problem::getBaekjoonProblemId, Problem::getProblemTier, Problem::getSolvedCount)
                 .containsExactlyInAnyOrder(
                         tuple(1L, B5, 0L),
                         tuple(2L, S5, 0L),

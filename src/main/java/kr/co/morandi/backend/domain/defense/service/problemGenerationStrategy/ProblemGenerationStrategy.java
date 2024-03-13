@@ -4,10 +4,12 @@ import kr.co.morandi.backend.domain.defense.model.Defense;
 import kr.co.morandi.backend.domain.defense.model.DefenseType;
 import kr.co.morandi.backend.domain.problem.Problem;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ProblemGenerationStrategy {
-    List<Problem> generateDefenseProblems(Defense defense);
+
+    Map<Long, Problem> generateDefenseProblems(Defense defense);
+
     DefenseType getDefenseType();
 
    }

@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static kr.co.morandi.backend.domain.defense.model.DefenseType.DAILY;
 
@@ -36,8 +36,9 @@ public class DailyDefense extends Defense {
     private DailyDefense(LocalDate date, String contentName, List<Problem> problems) {
         super(contentName, DAILY);
         this.date = date;
+        AtomicLong problemNumber = new AtomicLong(1);
         this.DailyDefenseProblems = problems.stream()
-                .map(problem -> DailyDefenseProblem.create(this, problem))
+                .map(problem -> DailyDefenseProblem.create(this, problem, problemNumber.getAndIncrement()))
                 .toList();
         this.problemCount = problems.size();
     }

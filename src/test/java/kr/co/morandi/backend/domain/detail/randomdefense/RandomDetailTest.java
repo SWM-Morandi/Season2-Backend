@@ -25,7 +25,7 @@ class RandomDetailTest {
         Member member = createMember("test");
 
         // when
-        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, 1L, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord).isNotNull()
@@ -43,7 +43,7 @@ class RandomDetailTest {
         Member member = createMember("test");
 
         // when
-        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, 1L, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord.getSolvedTime()).isZero();
@@ -58,7 +58,7 @@ class RandomDetailTest {
         Member member = createMember("test");
 
         // when
-        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member,1L, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord.getIsSolved()).isFalse();
@@ -73,7 +73,7 @@ class RandomDetailTest {
         Member member = createMember("test");
 
         // when
-        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, 1L,  problem, randomDefenseRecord, randomDefense);
         // then
         assertThat(randomDefenseProblemRecord.getSubmitCount()).isZero();
     }
@@ -87,7 +87,7 @@ class RandomDetailTest {
         Member member = createMember("test");
 
         // when
-        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, problem, randomDefenseRecord, randomDefense);
+        RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, 1L, problem, randomDefenseRecord, randomDefense);
 
         // then
         assertThat(randomDefenseProblemRecord.getSolvedCode())

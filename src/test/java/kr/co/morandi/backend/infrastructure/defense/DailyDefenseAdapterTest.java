@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class DailyDefenseAdapterTest {
 
     @Autowired
-    private DailyDefensePort dailyDefenseAdapter;
+    private DailyDefensePort dailyDefensePort;
 
     @Autowired
     private DailyDefenseRepository dailyDefenseRepository;
@@ -52,7 +52,7 @@ class DailyDefenseAdapterTest {
         DailyDefense dailyDefense = createDailyDefense(date);
 
         // when
-        final DailyDefense findDailyDefense = dailyDefenseAdapter.findDailyDefense(DAILY, date);
+        final DailyDefense findDailyDefense = dailyDefensePort.findDailyDefense(DAILY, date);
 
         // then
         assertThat(findDailyDefense).isNotNull()
@@ -65,10 +65,12 @@ class DailyDefenseAdapterTest {
     @Test
     void exceptionWhenTodayDailyDefenseNotExists() {
         // given
-        LocalDate date = LocalDate.of(2021, 1, 1);
+        LocalDate createdDate = LocalDate.of(2021, 1, 1);
+        createDailyDefense(createdDate);
+        LocalDate date = LocalDate.of(2021, 1, 2);
 
         // when & then
-        assertThatThrownBy(() -> dailyDefenseAdapter.findDailyDefense(DAILY, date))
+        assertThatThrownBy(() -> dailyDefensePort.findDailyDefense(DAILY, date))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("DailyDefense가 존재하지 않습니다");
 
