@@ -10,7 +10,7 @@ public interface DailyDefenseProblemRepository extends JpaRepository<DailyDefens
           select ddp
           from DailyDefenseProblem as ddp
           left join fetch ddp.problem p
-          where ddp.DailyDefense.defenseId = :defenseId
+          where ddp.dailyDefense.defenseId = :defenseId
     """)
     List<DailyDefenseProblem> findAllProblemsContainsDefenseId(Long defenseId);
 }

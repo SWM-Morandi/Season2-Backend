@@ -30,7 +30,7 @@ public class DailyDefense extends Defense {
 
     private Integer problemCount;
 
-    @OneToMany(mappedBy = "DailyDefense", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "dailyDefense", cascade = CascadeType.ALL)
     List<DailyDefenseProblem> dailyDefenseProblems = new ArrayList<>();
 
     private DailyDefense(LocalDate date, String contentName, List<Problem> problems) {
