@@ -9,7 +9,6 @@ import java.util.Map;
 public interface ProblemGenerationStrategy {
 
     Map<Long, Problem> generateDefenseProblems(Defense defense);
-
     DefenseType getDefenseType();
 
-   }
+}

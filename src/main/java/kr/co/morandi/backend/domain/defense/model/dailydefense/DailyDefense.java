@@ -31,13 +31,13 @@ public class DailyDefense extends Defense {
     private Integer problemCount;
 
     @OneToMany(mappedBy = "DailyDefense", cascade = CascadeType.ALL)
-    List<DailyDefenseProblem> DailyDefenseProblems = new ArrayList<>();
+    List<DailyDefenseProblem> dailyDefenseProblems = new ArrayList<>();
 
     private DailyDefense(LocalDate date, String contentName, List<Problem> problems) {
         super(contentName, DAILY);
         this.date = date;
         AtomicLong problemNumber = new AtomicLong(1);
-        this.DailyDefenseProblems = problems.stream()
+        this.dailyDefenseProblems = problems.stream()
                 .map(problem -> DailyDefenseProblem.create(this, problem, problemNumber.getAndIncrement()))
                 .toList();
         this.problemCount = problems.size();
