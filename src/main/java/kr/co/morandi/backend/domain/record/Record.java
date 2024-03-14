@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -48,6 +49,6 @@ public abstract class Record extends BaseEntity {
         this.member = member;
         this.details = problems.entrySet().stream()
                 .map(problem -> this.createDetail(member, problem.getKey(), problem.getValue(), this, defense))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
