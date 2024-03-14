@@ -26,10 +26,10 @@ public class RandomRecord extends Record {
     private Long totalSolvedTime;
     private Integer solvedCount;
     private Integer problemCount;
-    private Long problemNumber;
 
     private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
     private static final Integer INITIAL_SOLVED_COUNT = 0;
+
     private RandomRecord(LocalDateTime testDate, RandomDefense randomDefense, Member member, Map<Long, Problem> problems) {
         super(testDate, randomDefense, member, problems);
         this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;

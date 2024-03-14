@@ -60,7 +60,6 @@ class DailyDefenseAdapterTest {
                 .contains(dailyDefense.getDate(), dailyDefense.getContentName(), dailyDefense.getProblemCount());
 
     }
-
     @DisplayName("DailyDefense가 존재하지 않을 때 예외를 던진다.")
     @Test
     void exceptionWhenTodayDailyDefenseNotExists() {

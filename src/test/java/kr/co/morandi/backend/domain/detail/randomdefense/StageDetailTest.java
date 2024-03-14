@@ -27,7 +27,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member,1L, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord.getSolvedTime()).isEqualTo(0L);
@@ -43,7 +43,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord.getStageNumber()).isEqualTo(1L);
 
@@ -58,7 +58,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord)
@@ -76,7 +76,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord)
                 .extracting("submitCount")
@@ -93,7 +93,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord)
@@ -111,7 +111,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord)
                 .extracting("member", "problem", "record", "defense")

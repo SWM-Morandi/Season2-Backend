@@ -21,14 +21,12 @@ public class StageDetail extends Detail {
     private Long solvedTime;
     private Long stageNumber;
 
-    private StageDetail(Long stageNumber, Member member, Problem problem,
-                                      Record record, Defense defense) {
+    private StageDetail(Member member, Long stageNumber, Problem problem, Record record, Defense defense) {
         super(member, problem, record, defense);
         this.solvedTime = 0L;
         this.stageNumber = stageNumber;
     }
-    public static StageDetail create(Long stageNumber, Member member, Problem problem,
-                                                   Record record, Defense defense) {
-        return new StageDetail(stageNumber, member, problem, record, defense);
+    public static StageDetail create(Member member, Long stageNumber, Problem problem, Record record, Defense defense) {
+        return new StageDetail(member, stageNumber, problem, record, defense);
     }
 }

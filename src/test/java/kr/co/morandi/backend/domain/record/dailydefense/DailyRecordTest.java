@@ -19,11 +19,11 @@ import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
 import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
 class DailyRecordTest {
+
     @DisplayName("오늘의 문제 기록이 만들어졌을 때 푼 문제 수는 0문제 이어야 한다.")
     @Test
     void solvedCountIsZero() {
@@ -34,11 +34,12 @@ class DailyRecordTest {
         Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
 
         // then
         assertThat(DailyDefenseRecord.getSolvedCount()).isZero();
     }
+
     @DisplayName("오늘의 문제 기록이 만들어진 시점이 문제가 출제된 시점에서 하루 이상 넘어가면 예외가 발생한다.")
     @Test
     void recordCreateExceptionWhenOverOneDay() {
@@ -52,7 +53,7 @@ class DailyRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 2, 0, 0, 0);
 
         // when & then
-        assertThatThrownBy(() -> DailyRecord.create(startTime, DailyDefense, member, problems))
+        assertThatThrownBy(() -> DailyRecord.tryDefense(startTime, DailyDefense, member, problems))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오늘의 문제 기록은 출제 날짜와 같은 날에 생성되어야 합니다.");
     }
@@ -69,7 +70,7 @@ class DailyRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
 
         // then
         assertNotNull(DailyDefenseRecord);
@@ -84,7 +85,7 @@ class DailyRecordTest {
         Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
         List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
 
         // then
@@ -102,7 +103,7 @@ class DailyRecordTest {
         Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
         List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
 
         // then
@@ -120,8 +121,9 @@ class DailyRecordTest {
         Map<Long, Problem> problems = getProblems(DailyDefense);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.create(startTime, DailyDefense, member, problems);
+        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
         List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
+
         // then
         assertThat(contentProblemRecords)
                 .extracting("solvedCode")

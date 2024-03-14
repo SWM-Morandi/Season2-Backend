@@ -34,7 +34,7 @@ class DailyDetailTest {
         Member member = createMember();
 
         // when
-        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, 1L, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord).isNotNull()
@@ -54,7 +54,7 @@ class DailyDetailTest {
         Member member = createMember();
 
         // when
-        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, 1L, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord.getIsSolved()).isFalse();
@@ -72,7 +72,7 @@ class DailyDetailTest {
         Member member = createMember();
 
         // when
-        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, 1L, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord.getSubmitCount()).isZero();
@@ -90,7 +90,7 @@ class DailyDetailTest {
         Member member = createMember();
 
         // when
-        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, problem, DailyDefenseRecord, DailyDefense);
+        DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, 1L, problem, DailyDefenseRecord, DailyDefense);
 
         // then
         assertThat(DailyDefenseProblemRecord.getSolvedCode())

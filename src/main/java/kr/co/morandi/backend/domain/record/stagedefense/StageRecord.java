@@ -36,7 +36,7 @@ public class StageRecord extends Record {
     }
     @Override
     protected Detail createDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
-        return StageDetail.create(INITIAL_STAGE_NUMBER, member, problem, record, defense);
+        return StageDetail.create(member, INITIAL_STAGE_NUMBER, problem, record, defense);
     }
     public static StageRecord create(Defense defense, LocalDateTime testDate, Member member, Problem problem) {
         return new StageRecord(defense, testDate, member, Map.of(INITIAL_STAGE_NUMBER, problem));
