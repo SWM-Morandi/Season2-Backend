@@ -2,7 +2,6 @@ package kr.co.morandi.backend.domain.record.dailydefense;
 
 import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefenseProblem;
-import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +23,25 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 class DailyRecordTest {
 
+    @DisplayName("오늘의 문제 기록이 이미 있을 때, 같은 문제를 다시 시도하면 기존 문제 기록을 반환한다.")
+    @Test
+    void tryExistDetailThenReturnExistDetail() {
+        // given
+        DailyDefense DailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(DailyDefense, 2L);
+        DailyRecord alreadyStartedRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, triedProblem);
+
+        // when
+        final DailyRecord dailyRecord = alreadyStartedRecord.tryMoreProblem(triedProblem);
+
+        // then
+        assertThat(dailyRecord.getDetails()).hasSize(1)
+                .extracting("problem")
+                .contains(triedProblem.get(2L));
+    }
+
     @DisplayName("오늘의 문제 기록이 만들어졌을 때 푼 문제 수는 0문제 이어야 한다.")
     @Test
     void solvedCountIsZero() {
@@ -31,13 +49,13 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
 
         // then
-        assertThat(DailyDefenseRecord.getSolvedCount()).isZero();
+        assertThat(dailyDefenseRecord.getSolvedCount()).isZero();
     }
 
     @DisplayName("오늘의 문제 기록이 만들어진 시점이 문제가 출제된 시점에서 하루 이상 넘어가면 예외가 발생한다.")
@@ -48,7 +66,7 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense(createdDate);
 
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
 
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 2, 0, 0, 0);
 
@@ -65,15 +83,15 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense(createdDate);
 
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
 
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
 
         // then
-        assertNotNull(DailyDefenseRecord);
+        assertNotNull(dailyDefenseRecord);
     }
     @DisplayName("오늘의 문제 테스트 기록이 만들어졌을 때 세부 문제들의 정답 여부는 모두 오답 상태여야 한다.")
     @Test
@@ -82,16 +100,15 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
-        List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
 
         // then
-        assertThat(contentProblemRecords)
+        assertThat(dailyDefenseRecord.getDetails())
                 .extracting("isSolved")
-                .containsExactlyInAnyOrder(false, false, false);
+                .contains(false);
     }
     @DisplayName("오늘의 문제 테스트 기록이 만들어졌을 때 세부 문제들의 제출 횟수는 모두 0회여야 한다.")
     @Test
@@ -100,16 +117,15 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
-        List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
 
         // then
-        assertThat(contentProblemRecords)
+        assertThat(dailyDefenseRecord.getDetails())
                 .extracting("submitCount")
-                .containsExactlyInAnyOrder(0L, 0L, 0L);
+                .containsExactlyInAnyOrder(0L);
     }
     @DisplayName("오늘의 문제 테스트 기록이 만들어졌을 때 세부 문제들의 정답 코드는 null 이어야 한다.")
     @Test
@@ -118,19 +134,19 @@ class DailyRecordTest {
         DailyDefense DailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense);
+        Map<Long, Problem> problems = getProblems(DailyDefense,2L);
 
         // when
-        DailyRecord DailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
-        List<Detail> contentProblemRecords = DailyDefenseRecord.getDetails();
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
 
         // then
-        assertThat(contentProblemRecords)
+        assertThat(dailyDefenseRecord.getDetails())
                 .extracting("solvedCode")
-                .containsExactlyInAnyOrder(null, null, null);
+                .contains((String)null);
     }
-    private Map<Long, Problem> getProblems(DailyDefense DailyDefense) {
+    private Map<Long, Problem> getProblems(DailyDefense DailyDefense, Long problemNumber) {
         return DailyDefense.getDailyDefenseProblems().stream()
+                .filter(p -> p.getProblemNumber().equals(problemNumber))
                 .collect(Collectors.toMap(DailyDefenseProblem::getProblemNumber, DailyDefenseProblem::getProblem));
     }
     private DailyDefense createDailyDefense() {

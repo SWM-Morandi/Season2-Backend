@@ -57,16 +57,16 @@ public class DailyRecord extends Record {
                 .collect(Collectors.toSet());
 
         // 시도하려는 문제들 중 이미 시도한 문제들을 제외한 문제들만 추가
-        final List<Detail> newProblems = problem.entrySet().stream()
+        final List<Detail> newDetails = problem.entrySet().stream()
                 .filter(entry -> !collect.contains(entry.getValue().getProblemId()))
                 .map(p -> createDetail(this.getMember(), p.getKey(), p.getValue(), this, this.getDefense()))
                 .toList();
 
         // 문제 추가
-        super.getDetails().addAll(newProblems);
+        super.getDetails().addAll(newDetails);
 
         // 새로운 문제 추가로 문제 수 증가
-        this.problemCount += newProblems.size();
+        this.problemCount += newDetails.size();
 
         return this;
     }
