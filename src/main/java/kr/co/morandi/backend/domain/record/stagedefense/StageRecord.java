@@ -21,7 +21,7 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("StageDefenseRecord")
-public class StageRecord extends Record {
+public class StageRecord extends Record<StageDetail> {
     private Long totalSolvedTime;
     private Long stageCount;
 
@@ -35,7 +35,7 @@ public class StageRecord extends Record {
         this.stageCount = INITIAL_STAGE_COUNT;
     }
     @Override
-    protected Detail createDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
+    protected StageDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<StageDetail> record, Defense defense) {
         return StageDetail.create(member, INITIAL_STAGE_NUMBER, problem, record, defense);
     }
     public static StageRecord create(Defense defense, LocalDateTime testDate, Member member, Problem problem) {

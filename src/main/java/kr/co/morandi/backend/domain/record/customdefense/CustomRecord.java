@@ -4,7 +4,6 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import kr.co.morandi.backend.domain.defense.model.Defense;
 import kr.co.morandi.backend.domain.defense.model.customdefense.CustomDefense;
-import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.detail.customdefense.CustomDetail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
@@ -22,12 +21,12 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DiscriminatorValue("CustomRecord")
-public class CustomRecord extends Record {
+public class CustomRecord extends Record<CustomDetail> {
     private Long totalSolvedTime;
     private Integer solvedCount;
     private Integer problemCount;
     @Override
-    public Detail createDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
+    public CustomDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<CustomDetail> record, Defense defense) {
         return CustomDetail.create(member, sequenceNumber, problem, record, defense);
     }
     private CustomRecord(CustomDefense customDefense, Member member, LocalDateTime testDate, Map<Long, Problem> problems) {

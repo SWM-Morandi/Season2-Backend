@@ -4,7 +4,6 @@ import kr.co.morandi.backend.domain.defense.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.domain.defense.port.DailyDefensePort;
 import kr.co.morandi.backend.domain.defense.port.record.DailyRecordPort;
 import kr.co.morandi.backend.domain.defense.service.ProblemGenerationService;
-import kr.co.morandi.backend.domain.detail.Detail;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.problem.Problem;
 import kr.co.morandi.backend.domain.record.dailydefense.DailyRecord;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.model.DefenseType.DAILY;

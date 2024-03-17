@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class Record extends BaseEntity {
+public abstract class Record<T extends Detail> extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long detailId;
@@ -38,10 +38,10 @@ public abstract class Record extends BaseEntity {
     private Member member;
 
     @Builder.Default
-    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL)
-    private List<Detail> details = new ArrayList<>();
+    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, targetEntity = Detail.class)
+    private List<T> details = new ArrayList<>();
 
-    protected abstract Detail createDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense);
+    protected abstract T createDetail(Member member, Long sequenceNumber, Problem problem, Record<T> record, Defense defense);
 
     protected Record(LocalDateTime testDate, Defense defense, Member member, Map<Long, Problem> problems) {
         this.testDate = testDate;

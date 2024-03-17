@@ -22,7 +22,7 @@ import java.util.Map;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("RandomDefenseRecord")
-public class RandomRecord extends Record {
+public class RandomRecord extends Record<RandomDetail> {
     private Long totalSolvedTime;
     private Integer solvedCount;
     private Integer problemCount;
@@ -37,7 +37,7 @@ public class RandomRecord extends Record {
         this.problemCount = problems.size();
     }
     @Override
-    protected Detail createDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
+    protected RandomDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<RandomDetail> record, Defense defense) {
         return RandomDetail.create(member, sequenceNumber, problem, record, defense);
     }
     public static RandomRecord create(RandomDefense randomDefense, Member member, LocalDateTime testDate, Map<Long, Problem> problems) {

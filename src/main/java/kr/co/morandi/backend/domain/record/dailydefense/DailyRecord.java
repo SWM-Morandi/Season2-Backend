@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("DailyDefenseRecord")
-public class DailyRecord extends Record {
+public class DailyRecord extends Record<DailyDetail> {
 
     private Long solvedCount;
     private Integer problemCount;
@@ -36,7 +36,7 @@ public class DailyRecord extends Record {
         this.problemCount = problems.size();
     }
     @Override
-    protected Detail createDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
+    protected DailyDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<DailyDetail> record, Defense defense) {
         return DailyDetail.create(member, sequenceNumber, problem, record, defense);
     }
 
@@ -57,7 +57,7 @@ public class DailyRecord extends Record {
                 .collect(Collectors.toSet());
 
         // 시도하려는 문제들 중 이미 시도한 문제들을 제외한 문제들만 추가
-        final List<Detail> newDetails = problem.entrySet().stream()
+        final List<DailyDetail> newDetails = problem.entrySet().stream()
                 .filter(entry -> !collect.contains(entry.getValue().getProblemId()))
                 .map(p -> createDetail(this.getMember(), p.getKey(), p.getValue(), this, this.getDefense()))
                 .toList();
