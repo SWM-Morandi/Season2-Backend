@@ -48,18 +48,22 @@ public class DailyDefenseService {
         }
 
         // 오늘의 문제 응시 기록을 찾아옵
-        Optional<DailyRecord> dailyRecord = dailyRecordPort.findDailyRecord(member, now.toLocalDate());
+        Optional<DailyRecord> maybeDailyRecord = dailyRecordPort.findDailyRecord(member, now.toLocalDate());
 
         // 만약 오늘의 DefenseRecord 기록이 있고, 문제 기록이 없으면 목록에 문제 추가
-        if(dailyRecord.isPresent()) {
-            DailyRecord record = dailyRecordPort.saveDailyRecord(dailyRecord.get().tryMoreProblem(tryProblem));
-            return record;
-            // Map에서 tryProblem 목록을 dailyRecord의 PK와 함께 반환
+        if(maybeDailyRecord.isPresent()) {
+            final DailyRecord dailyRecord = maybeDailyRecord.get();
+            dailyRecord.tryMoreProblem(tryProblem);
+            dailyRecordPort.saveDailyRecord(dailyRecord);
 
+            // Map에서 tryProblem 목록을 dailyRecord의 PK와 함께 반환
+            return dailyRecord;
         }
 
         // 기존 오늘의 DefenseRecord 기록이 없다면 새로 생성
-        return dailyRecordPort.saveDailyRecord(DailyRecord.tryDefense(now, dailyDefensePort.findDailyDefense(DAILY, now.toLocalDate()), member, tryProblem));
+        final DailyRecord dailyRecord = dailyRecordPort.saveDailyRecord(DailyRecord.tryDefense(now, dailyDefense, member, tryProblem));
 
+        // Map에서 tryProblem 목록을 dailyRecord의 PK와 함께 반환 구현할 것
+        return dailyRecord;
     }
 }

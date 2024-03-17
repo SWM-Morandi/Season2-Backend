@@ -49,7 +49,7 @@ public class DailyRecord extends Record {
         return new DailyRecord(date, dailyDefense, member, problems);
     }
 
-    public DailyRecord tryMoreProblem(Map<Long, Problem> problem) {
+    public void tryMoreProblem(Map<Long, Problem> problem) {
         // 이미 시도한 문제들의 problemId를 가져오고
         final Set<Long> collect = super.getDetails().stream()
                 .map(Detail::getProblem)
@@ -67,8 +67,6 @@ public class DailyRecord extends Record {
 
         // 새로운 문제 추가로 문제 수 증가
         this.problemCount += newDetails.size();
-
-        return this;
     }
 
 }

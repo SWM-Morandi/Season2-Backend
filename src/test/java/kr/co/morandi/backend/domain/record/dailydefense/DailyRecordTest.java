@@ -31,10 +31,10 @@ class DailyRecordTest {
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
         Map<Long, Problem> triedProblem = getProblems(DailyDefense, 2L);
-        DailyRecord alreadyStartedRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, triedProblem);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, triedProblem);
 
         // when
-        final DailyRecord dailyRecord = alreadyStartedRecord.tryMoreProblem(triedProblem);
+        dailyRecord.tryMoreProblem(triedProblem);
 
         // then
         assertThat(dailyRecord.getDetails()).hasSize(1)
