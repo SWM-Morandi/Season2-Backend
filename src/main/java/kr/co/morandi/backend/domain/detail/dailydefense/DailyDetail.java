@@ -21,11 +21,11 @@ public class DailyDetail extends Detail {
 
     Long problemNumber;
 
-    private DailyDetail(Member member, Long problemNumber, Problem problem, Record record, Defense defense) {
+    private DailyDetail(Member member, Long problemNumber, Problem problem, Record<?> record, Defense defense) {
         super(member, problem, record, defense);
         this.problemNumber = problemNumber;
     }
-    public static DailyDetail create(Member member, Long problemNumber, Problem problem, Record record, Defense defense) {
+    public static DailyDetail create(Member member, Long problemNumber, Problem problem, Record<?> record, Defense defense) {
         return new DailyDetail(member, problemNumber, problem, record, defense);
     }
 }

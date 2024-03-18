@@ -23,13 +23,13 @@ public class RandomDetail extends Detail {
     private Long solvedTime;
 
     private static final long INITIAL_SOLVED_TIME = 0L;
-    private RandomDetail(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
+    private RandomDetail(Member member, Long sequenceNumber, Problem problem, Record<?> record, Defense defense) {
         super(member, problem, record, defense);
         this.problemNumber = sequenceNumber;
         this.solvedTime = INITIAL_SOLVED_TIME;
     }
 
-    public static RandomDetail create(Member member, Long sequenceNumber, Problem problem, Record record, Defense defense) {
+    public static RandomDetail create(Member member, Long sequenceNumber, Problem problem, Record<?> record, Defense defense) {
         return new RandomDetail(member, sequenceNumber, problem, record, defense);
     }
 }
