@@ -1,15 +1,16 @@
 package kr.co.morandi.backend.domain.detail.randomdefense;
 
-import kr.co.morandi.backend.domain.defense.model.random.RandomDefense;
-import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.problem.Problem;
-import kr.co.morandi.backend.domain.record.randomdefense.RandomRecord;
+import kr.co.morandi.backend.domain.defense.random.model.RandomDefense;
+import kr.co.morandi.backend.domain.detail.randomdefense.model.RandomDetail;
+import kr.co.morandi.backend.domain.member.model.Member;
+import kr.co.morandi.backend.domain.problem.model.Problem;
+import kr.co.morandi.backend.domain.record.randomrecord.model.RandomRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.B5;
-import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
+import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 

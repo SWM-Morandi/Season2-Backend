@@ -6,8 +6,8 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Value;
 
-import kr.co.morandi.backend.domain.algorithm.Algorithm;
-import kr.co.morandi.backend.domain.algorithm.AlgorithmRepository;
+import kr.co.morandi.backend.domain.algorithm.model.Algorithm;
+import kr.co.morandi.backend.infrastructure.persistence.algorithm.AlgorithmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

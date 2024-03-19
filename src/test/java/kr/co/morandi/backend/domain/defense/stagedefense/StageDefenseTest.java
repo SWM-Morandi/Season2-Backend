@@ -1,13 +1,13 @@
 package kr.co.morandi.backend.domain.defense.stagedefense;
 
-import kr.co.morandi.backend.domain.defense.model.random.randomcriteria.RandomCriteria;
-import kr.co.morandi.backend.domain.defense.model.stagedefense.StageDefense;
+import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.defense.stagedefense.model.StageDefense;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.B1;
-import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.B5;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B1;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

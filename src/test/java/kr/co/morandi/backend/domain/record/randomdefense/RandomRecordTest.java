@@ -1,9 +1,10 @@
 package kr.co.morandi.backend.domain.record.randomdefense;
 
-import kr.co.morandi.backend.domain.defense.model.random.RandomDefense;
-import kr.co.morandi.backend.domain.defense.model.random.randomcriteria.RandomCriteria;
-import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.defense.random.model.RandomDefense;
+import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.member.model.Member;
+import kr.co.morandi.backend.domain.problem.model.Problem;
+import kr.co.morandi.backend.domain.record.randomrecord.model.RandomRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -11,8 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import static kr.co.morandi.backend.domain.defense.model.tier.ProblemTier.*;
-import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
+import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")

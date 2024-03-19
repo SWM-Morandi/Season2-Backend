@@ -2,9 +2,9 @@ package kr.co.morandi.backend.domain.detail;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.defense.model.Defense;
-import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.member.model.Member;
+import kr.co.morandi.backend.domain.problem.model.Problem;
 import kr.co.morandi.backend.domain.record.Record;
 import lombok.AccessLevel;
 import lombok.Getter;
