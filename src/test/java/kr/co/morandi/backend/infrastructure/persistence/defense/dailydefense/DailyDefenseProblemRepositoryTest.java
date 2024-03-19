@@ -5,6 +5,7 @@ import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefenseProblem;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import kr.co.morandi.backend.infrastructure.persistence.problem.ProblemRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ class DailyDefenseProblemRepositoryTest {
     private DailyDefenseRepository dailyDefenseRepository;
     @Autowired
     private ProblemRepository problemRepository;
+
+    @AfterEach
+    void tearDown() {
+        dailyDefenseProblemRepository.deleteAllInBatch();
+        dailyDefenseRepository.deleteAllInBatch();
+        problemRepository.deleteAllInBatch();
+    }
 
     @DisplayName("defense 타입으로 DailyDefenseProblem을 가져올 수 있다.")
     @Test

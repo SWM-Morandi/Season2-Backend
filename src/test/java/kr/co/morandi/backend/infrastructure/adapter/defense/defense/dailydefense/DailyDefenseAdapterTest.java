@@ -40,8 +40,8 @@ class DailyDefenseAdapterTest {
     @AfterEach
     void tearDown() {
         dailyDefenseProblemRepository.deleteAllInBatch();
-        problemRepository.deleteAllInBatch();
         dailyDefenseRepository.deleteAllInBatch();
+        problemRepository.deleteAllInBatch();
     }
 
     @DisplayName("DailyDefense를 찾을 수 있다.")
