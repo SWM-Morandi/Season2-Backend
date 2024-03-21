@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDateTime;
+
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B1;
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,6 +15,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
 class RandomDefenseTest {
+    @DisplayName("랜덤 디펜스 응시 시 끝나는 시간을 계산하면 시작 시간에 제한 시간을 더한 시간이어야 한다.")
+    @Test
+    void getEndTime() {
+        // given
+        RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
+        RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
+        RandomDefense randomDefense = RandomDefense.create(randomCriteria, 4, 120L, "브론즈 랜덤 디펜스");
+        LocalDateTime startTime = LocalDateTime.of(2021, 1, 1, 0, 0);
+
+        // when
+        final LocalDateTime endTime = randomDefense.getEndTime(startTime);
+
+        // then
+        assertThat(endTime)
+                .isEqualTo(startTime.plusMinutes(120L));
+    }
+
     @DisplayName("랜덤 디펜스를 생성할 때 등록한 정보가 올바르게 저장되어야 한다.")
     @Test
     void createRandomDefense() {

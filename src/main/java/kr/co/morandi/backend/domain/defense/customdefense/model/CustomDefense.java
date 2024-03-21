@@ -45,21 +45,11 @@ public class CustomDefense extends Defense {
     @OneToMany(mappedBy = "customDefense", cascade = CascadeType.ALL)
     private List<CustomDefenseProblem> customDefenseProblems = new ArrayList<>();
 
-    private CustomDefense(List<Problem> problems, Member member, String contentName, String description,
-                          Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
-        super(contentName, CUSTOM);
-        this.problemCount = isValidProblemCount(problems.size());
-        this.timeLimit = isValidTimeLimit(timeLimit);
-        this.description = description;
-        this.visibility = visibility;
-        this.defenseTier = defenseTier;
-        this.member = member;
-        AtomicLong problemNumber = new AtomicLong(1);
-        this.customDefenseProblems = problems.stream()
-                .map(problem -> CustomDefenseProblem.create(this, problemNumber.getAndIncrement(), problem))
-                .toList();
-        this.createDate = createDate;
+    @Override
+    public LocalDateTime getEndTime(LocalDateTime startTime) {
+        return startTime.plusMinutes(timeLimit);
     }
+
     public static CustomDefense create(List<Problem> problems, Member member, String contentName, String description, Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
         return new CustomDefense(problems, member, contentName, description, visibility, defenseTier, timeLimit, createDate);
     }
@@ -78,4 +68,19 @@ public class CustomDefense extends Defense {
         return problemCount;
     }
 
+    private CustomDefense(List<Problem> problems, Member member, String contentName, String description,
+                          Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
+        super(contentName, CUSTOM);
+        this.problemCount = isValidProblemCount(problems.size());
+        this.timeLimit = isValidTimeLimit(timeLimit);
+        this.description = description;
+        this.visibility = visibility;
+        this.defenseTier = defenseTier;
+        this.member = member;
+        AtomicLong problemNumber = new AtomicLong(1);
+        this.customDefenseProblems = problems.stream()
+                .map(problem -> CustomDefenseProblem.create(this, problemNumber.getAndIncrement(), problem))
+                .toList();
+        this.createDate = createDate;
+    }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import kr.co.morandi.backend.domain.defense.Defense;
+import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.service.ProblemGenerationService;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +13,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.DefenseType.DAILY;
 
@@ -33,6 +37,21 @@ public class DailyDefense extends Defense {
     @OneToMany(mappedBy = "dailyDefense", cascade = CascadeType.ALL)
     List<DailyDefenseProblem> dailyDefenseProblems = new ArrayList<>();
 
+    @Override
+    public LocalDateTime getEndTime(LocalDateTime startTime) {
+        //시작 날까지
+        return date.atStartOfDay().plusDays(1).minusSeconds(1);
+    }
+    public Map<Long, Problem> getTryingProblem(Long problemNumber, ProblemGenerationService problemGenerationService) {
+        Map<Long, Problem> tryProblem = this.getDefenseProblems(problemGenerationService).entrySet().stream()
+                .filter(p -> p.getKey().equals(problemNumber))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (tryProblem.isEmpty()) {
+            throw new IllegalArgumentException("해당 문제가 오늘의 문제 목록에 없습니다.");
+        }
+        return tryProblem;
+    }
+
     private DailyDefense(LocalDate date, String contentName, List<Problem> problems) {
         super(contentName, DAILY);
         this.date = date;
@@ -45,5 +64,6 @@ public class DailyDefense extends Defense {
     public static DailyDefense create(LocalDate date, String contentName, List<Problem> problems) {
         return new DailyDefense(date, contentName, problems);
     }
+
 
 }

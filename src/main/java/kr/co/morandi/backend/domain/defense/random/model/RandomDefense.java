@@ -6,6 +6,8 @@ import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCr
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 import static kr.co.morandi.backend.domain.defense.DefenseType.RANDOM;
 
 @Entity
@@ -21,6 +23,12 @@ public class RandomDefense extends Defense {
     private Integer problemCount;
 
     private Long timeLimit;
+
+    @Override
+    public LocalDateTime getEndTime(LocalDateTime startTime) {
+        return startTime.plusMinutes(timeLimit);
+    }
+
     private RandomDefense(RandomCriteria randomCriteria, Integer problemCount, Long timeLimit, String contentName) {
         super(contentName, RANDOM);
         this.randomCriteria = randomCriteria;

@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
@@ -28,6 +29,7 @@ public abstract class Defense extends BaseEntity {
 
     private DefenseType defenseType;
 
+    public abstract LocalDateTime getEndTime(LocalDateTime startTime);
     //팩토리 메소드 패턴
     public Map<Long, Problem> getDefenseProblems(ProblemGenerationService problemGenerationService) {
         return problemGenerationService.getDefenseProblems(this);

@@ -15,6 +15,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 class DailyDefenseTest {
+    @DisplayName("오늘의 문제를 응시할 때 끝나는 시간은 오늘의 문제 날짜 직전까지이다.")
+    @Test
+    void getEndTime() {
+        // given
+        List<Problem> problems = createProblems();
+        LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
+
+        // when
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problems);
+
+        // then
+        assertThat(dailyDefense.getEndTime(now))
+                .isEqualTo(now.toLocalDate().atTime(23, 59, 59));
+    }
     @DisplayName("오늘의 문제 세트가 만들어진 시점에서 시도한 사람의 수는 0명 이어야 한다.")
     @Test
     void attemptCountIsZero() {
