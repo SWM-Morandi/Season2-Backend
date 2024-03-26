@@ -27,6 +27,46 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ActiveProfiles("test")
 class DefenseSessionTest {
 
+    @DisplayName("문제 번호를 가지고 있는지 확인한다.")
+    @Test
+    void hasTriedProblem() {
+        // given
+        Member member = createMember();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        DailyDefense dailyDefense = createDailyDefense(startTime.toLocalDate());
+        Map<Long, Problem> problems = getProblems(dailyDefense, 1L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
+
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
+
+        // when
+        final boolean result = defenseSession.hasTriedProblem(1L);
+
+        // then
+        assertThat(result).isTrue();
+
+    }
+
+    @DisplayName("문제 번호를 가지고 있지 않으면 false를 반환한다.")
+    @Test
+    void hasNotTriedProblem() {
+        // given
+        Member member = createMember();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        DailyDefense dailyDefense = createDailyDefense(startTime.toLocalDate());
+        Map<Long, Problem> problems = getProblems(dailyDefense, 1L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
+
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
+
+        // when
+        final boolean result = defenseSession.hasTriedProblem(2L);
+
+        // then
+        assertThat(result).isFalse();
+
+    }
+
     @DisplayName("Session을 생성하면 TempCode까지 생성된다.")
     @Test
     void sessionWithTempCode() {
@@ -40,7 +80,7 @@ class DefenseSessionTest {
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // when
-        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord, problems.keySet(), startTime);
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
 
 
         // then
@@ -58,6 +98,7 @@ class DefenseSessionTest {
         assertThat(tempCode.getLanguage())
                 .isEqualTo(CPP);
     }
+
     @DisplayName("문제를 추가하면 Detail이 추가된다.")
     @Test
     void tryMoreProblem() {
@@ -70,7 +111,7 @@ class DefenseSessionTest {
 
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
-        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord, problems.keySet(), startTime);
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
 
         // when
         defenseSession.tryMoreProblem(3L, startTime.plusMinutes(1));
@@ -81,6 +122,7 @@ class DefenseSessionTest {
                 .containsExactlyInAnyOrder(2L, 3L);
 
     }
+
     @DisplayName("Record에 따라 시험 세션을 시작하면 마지막 접근 문제 번호가 가장 첫 번째 숫자로 저장된다.")
     @Test
     void startSessionWithRecord() {
@@ -94,11 +136,12 @@ class DefenseSessionTest {
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // when
-        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord, problems.keySet(), startTime);
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
 
         // then
         assertThat(defenseSession.getLastAccessProblemNumber()).isEqualTo(2L);
     }
+
     @DisplayName("문제 번호 없이 Session을 시작하려 하면 예외를 발생한다.")
     @Test
     void startSessionWithoutProblemNumber() {
@@ -112,7 +155,7 @@ class DefenseSessionTest {
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // when & then
-        assertThatThrownBy(() -> DefenseSession.startSession(member, dailyRecord, new HashSet<>(), startTime))
+        assertThatThrownBy(() -> DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), new HashSet<>(), startTime, dailyDefense.getEndTime(startTime)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("문제 번호가 없습니다.");
 
@@ -131,7 +174,7 @@ class DefenseSessionTest {
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // when
-        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord, problems.keySet(), startTime);
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
 
         // then
         assertThat(defenseSession).isNotNull();

@@ -2,11 +2,12 @@ package kr.co.morandi.backend.infrastructure.persistence.record.dailyrecord;
 
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefenseProblem;
-import kr.co.morandi.backend.domain.record.dailyrecord.model.DailyRecord;
-import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.domain.member.model.Member;
-import kr.co.morandi.backend.infrastructure.persistence.member.MemberRepository;
 import kr.co.morandi.backend.domain.problem.model.Problem;
+import kr.co.morandi.backend.domain.record.dailyrecord.model.DailyRecord;
+import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseProblemRepository;
+import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseRepository;
+import kr.co.morandi.backend.infrastructure.persistence.member.MemberRepository;
 import kr.co.morandi.backend.infrastructure.persistence.problem.ProblemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,6 +37,9 @@ class DailyRecordRepositoryTest {
     private DailyRecordRepository dailyRecordRepository;
 
     @Autowired
+    private DailyDefenseProblemRepository dailyDefenseProblemRepository;
+
+    @Autowired
     private DailyDefenseRepository dailyDefenseRepository;
 
     @Autowired
@@ -44,13 +48,37 @@ class DailyRecordRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
+
     @AfterEach
     void tearDown() {
         dailyRecordRepository.deleteAll();
-        dailyDefenseRepository.deleteAll();
+        dailyDefenseProblemRepository.deleteAllInBatch();
+        dailyDefenseRepository.deleteAllInBatch();
+        dailyRecordRepository.deleteAllInBatch();
         problemRepository.deleteAll();
         memberRepository.deleteAll();
     }
+
+    @DisplayName("원하는 recordId에 해당하는 DailyRecord가 존재할 때 찾아올 수 있다.")
+    @Test
+    void findDailyRecordWithRecordId() {
+        // given
+        LocalDateTime today = LocalDateTime.of(2021, 10, 1, 0, 0);
+
+        final Member member = createMember();
+        final DailyRecord dailyRecord = tryDailyDefense(today, member);
+
+        // when
+        Optional<DailyRecord> maybeDailyRecord = dailyRecordRepository.findDailyRecordByRecordId(member, dailyRecord.getRecordId(), today.toLocalDate());
+
+        // then
+        assertThat(maybeDailyRecord).isPresent()
+                .get()
+                .extracting("testDate", "problemCount")
+                .contains(today, 1);
+
+    }
+
 
     // TODO fetch join이 정상적으로 되는지 확인하는 테스트코드 작성
     @DisplayName("오늘 날짜에 해당하는 DailyRecord가 존재할 때 문제 리스트까지 함께 가져올 수 있다.")
@@ -84,22 +112,21 @@ class DailyRecordRepositoryTest {
         tryDailyDefense(today, member);
 
         // when
-        Optional<DailyRecord> foundDailyRecord = dailyRecordRepository.findDailyRecordByMemberAndDate(member, today.toLocalDate());
+        Optional<DailyRecord> maybeDailyRecord = dailyRecordRepository.findDailyRecordByMemberAndDate(member, today.toLocalDate());
 
         // then
-        assertThat(foundDailyRecord).isPresent()
+        assertThat(maybeDailyRecord).isPresent()
                 .get()
                 .extracting("testDate", "problemCount")
                 .contains(today, 1);
 
     }
 
-    private void tryDailyDefense(LocalDateTime today, Member member) {
+    private DailyRecord tryDailyDefense(LocalDateTime today, Member member) {
         final DailyDefense dailyDefense = createDailyDefense(today.toLocalDate());
-        dailyDefenseRepository.save(dailyDefense);
 
         DailyRecord dailyRecord = DailyRecord.tryDefense(today, dailyDefense, member, getProblem(dailyDefense, 2L));
-        dailyRecordRepository.save(dailyRecord);
+        return dailyRecordRepository.save(dailyRecord);
     }
 
     private Map<Long, Problem> getProblem(DailyDefense dailyDefense, Long problemNumber) {
@@ -110,7 +137,7 @@ class DailyRecordRepositoryTest {
 
     private DailyDefense createDailyDefense(LocalDate createdDate) {
         List<Problem> problems = createProblems();
-        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
+        return dailyDefenseRepository.save(DailyDefense.create(createdDate, "오늘의 문제 테스트", problems));
     }
     private List<Problem> createProblems() {
         Problem problem1 = Problem.create(1L, B5, 0L);

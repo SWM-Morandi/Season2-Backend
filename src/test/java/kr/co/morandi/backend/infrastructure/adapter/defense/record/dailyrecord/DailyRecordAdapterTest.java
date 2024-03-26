@@ -44,9 +44,6 @@ class DailyRecordAdapterTest {
     private DailyRecordRepository dailyRecordRepository;
 
     @Autowired
-    private DailyDefenseService dailyDefenseService;
-
-    @Autowired
     private ProblemRepository problemRepository;
 
     @Autowired

@@ -8,6 +8,7 @@ import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.service.ProblemGenerationService;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -34,6 +35,7 @@ public class DailyDefense extends Defense {
 
     private Integer problemCount;
 
+    @Builder.Default
     @OneToMany(mappedBy = "dailyDefense", cascade = CascadeType.ALL)
     List<DailyDefenseProblem> dailyDefenseProblems = new ArrayList<>();
 

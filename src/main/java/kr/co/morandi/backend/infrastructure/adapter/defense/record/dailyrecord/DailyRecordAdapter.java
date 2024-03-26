@@ -25,4 +25,8 @@ public class DailyRecordAdapter implements DailyRecordPort {
         return dailyRecordRepository.findDailyRecordByMemberAndDate(member, date);
 
     }
+    @Override
+    public Optional<DailyRecord> findDailyRecord(Member member, Long recordId, LocalDate date) {
+        return dailyRecordRepository.findDailyRecordByRecordId(member, recordId, date);
+    }
 }

@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.domain.exammanagement.sessiondetail.model;
 
 import jakarta.persistence.*;
+import kr.co.morandi.backend.domain.BaseEntity;
 import kr.co.morandi.backend.domain.exammanagement.session.model.DefenseSession;
 import kr.co.morandi.backend.domain.exammanagement.tempcode.model.Language;
 import kr.co.morandi.backend.domain.exammanagement.tempcode.model.TempCode;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SessionDetail {
+public class SessionDetail extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sessionDetailId;
@@ -50,6 +51,10 @@ public class SessionDetail {
         return tempCode;
     }
 
+    /*
+    * 만약 없는 언어로 tempCode를 update하려고 했더라도
+    * addTempCode를 호출해서 추가하고, 예외를 반환하지 않는다.
+    * */
     public void updateTempCode(Language language, String code) {
         this.lastAccessLanguage = language;
         final Optional<TempCode> tempCode = getTempCodes().stream()

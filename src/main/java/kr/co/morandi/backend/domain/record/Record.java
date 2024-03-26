@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public abstract class Record<T extends Detail> extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long detailId;
+    private Long recordId;
 
     private LocalDateTime testDate;
 

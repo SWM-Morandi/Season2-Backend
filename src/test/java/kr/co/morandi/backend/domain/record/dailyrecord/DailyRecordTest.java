@@ -24,6 +24,23 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 class DailyRecordTest {
 
+    @DisplayName("오늘의 문제 기록에서 세부 문제의 정답 여부를 확인할 수 있다.")
+    @Test
+    void isSolvedProblem() {
+        // given
+        DailyDefense DailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(DailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, triedProblem);
+
+        // when
+        final boolean solvedProblem = dailyRecord.isSolvedProblem(2L);
+
+        // then
+        assertThat(solvedProblem).isFalse();
+
+    }
     @DisplayName("오늘의 문제 기록이 이미 있을 때, 같은 문제를 다시 시도하면 기존 문제 기록을 반환한다.")
     @Test
     void tryExistDetailThenReturnExistDetail() {

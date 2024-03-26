@@ -19,4 +19,16 @@ public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> 
             and CAST(dr.testDate as localdate) = :date
      """)
     Optional<DailyRecord> findDailyRecordByMemberAndDate(Member member, LocalDate date);
+
+    @Query("""
+            select dr
+            from DailyRecord dr
+            left join fetch dr.details d
+            left join fetch d.problem
+            where dr.member = :member
+            and dr.recordId = :recordId
+            and CAST(dr.testDate as localdate) = :date
+     """)
+    Optional<DailyRecord> findDailyRecordByRecordId(Member member, Long recordId, LocalDate date);
+
 }

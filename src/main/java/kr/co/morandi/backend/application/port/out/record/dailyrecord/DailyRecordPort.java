@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface DailyRecordPort {
     DailyRecord saveDailyRecord(DailyRecord dailyRecord);
     Optional<DailyRecord> findDailyRecord(Member member, LocalDate date);
+    Optional<DailyRecord> findDailyRecord(Member member, Long recordId, LocalDate date);
+
+
 }

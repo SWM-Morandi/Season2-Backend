@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.domain.exammanagement.tempcode.model;
 
 import jakarta.persistence.*;
+import kr.co.morandi.backend.domain.BaseEntity;
 import kr.co.morandi.backend.domain.exammanagement.sessiondetail.model.SessionDetail;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TempCode {
+public class TempCode extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tempCodeId;

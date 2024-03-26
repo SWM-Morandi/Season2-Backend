@@ -30,10 +30,10 @@ public class DailyRecord extends Record<DailyDetail> {
     private Long solvedCount;
     private Integer problemCount;
 
-    private DailyRecord(LocalDateTime date, Defense defense, Member member, Map<Long, Problem> problems) {
-        super(date, defense, member, problems);
-        this.solvedCount = 0L;
-        this.problemCount = problems.size();
+    public boolean isSolvedProblem(Long problemNumber) {
+        return super.getDetails().stream()
+                .anyMatch(detail -> detail.getProblemNumber().equals(problemNumber)
+                        && detail.getIsSolved());
     }
     @Override
     protected DailyDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<DailyDetail> record, Defense defense) {
@@ -67,6 +67,11 @@ public class DailyRecord extends Record<DailyDetail> {
 
         // 새로운 문제 추가로 문제 수 증가
         this.problemCount += newDetails.size();
+    }
+    private DailyRecord(LocalDateTime date, Defense defense, Member member, Map<Long, Problem> problems) {
+        super(date, defense, member, problems);
+        this.solvedCount = 0L;
+        this.problemCount = problems.size();
     }
 
 }
