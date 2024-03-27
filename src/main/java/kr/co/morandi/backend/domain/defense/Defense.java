@@ -27,6 +27,7 @@ public abstract class Defense extends BaseEntity {
 
     private Long attemptCount;
 
+    @Enumerated(EnumType.STRING)
     private DefenseType defenseType;
 
     public abstract LocalDateTime getEndTime(LocalDateTime startTime);
