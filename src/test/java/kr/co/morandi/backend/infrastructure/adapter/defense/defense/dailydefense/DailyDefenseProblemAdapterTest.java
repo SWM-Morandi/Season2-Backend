@@ -3,6 +3,7 @@ package kr.co.morandi.backend.infrastructure.adapter.defense.defense.dailydefens
 import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCriteria;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import kr.co.morandi.backend.infrastructure.persistence.problem.ProblemRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ class DailyDefenseProblemAdapterTest {
 
     @Autowired
     private DailyDefenseProblemAdapter dailyDefenseProblemAdapter;
+
+    @AfterEach
+    void tearDown() {
+        problemRepository.deleteAllInBatch();
+    }
 
     @DisplayName("오늘의 문제에 포함되는 문제들을 의도하는 조건대로 출제할 수 있다.")
     @Test
