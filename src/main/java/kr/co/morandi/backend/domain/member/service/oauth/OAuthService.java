@@ -1,6 +1,7 @@
-package kr.co.morandi.backend.domain.oauth;
+package kr.co.morandi.backend.domain.member.service.oauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import kr.co.morandi.backend.domain.member.oauth.UserDto;
 
 public interface OAuthService {
     String getType();

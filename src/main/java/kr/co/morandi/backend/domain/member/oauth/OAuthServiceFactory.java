@@ -1,5 +1,6 @@
-package kr.co.morandi.backend.domain.oauth;
+package kr.co.morandi.backend.domain.member.oauth;
 
+import kr.co.morandi.backend.domain.member.service.oauth.OAuthService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

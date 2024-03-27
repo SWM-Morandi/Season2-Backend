@@ -1,14 +1,12 @@
 package kr.co.morandi.backend.config.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.co.morandi.backend.config.security.JwtProvider;
 import kr.co.morandi.backend.config.security.JwtValidator;
-import kr.co.morandi.backend.domain.oauth.OAuthUserDetailsService;
+import kr.co.morandi.backend.domain.member.service.oauth.OAuthUserDetailsService;
 import kr.co.morandi.backend.global.exception.MorandiException;
 import kr.co.morandi.backend.global.exception.errorcode.AuthErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +25,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtProvider jwtProvider;
     private final JwtValidator jwtValidator;
     private final OAuthUserDetailsService oAuthUserDetailsService;
-    private final ObjectMapper objectMapper;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {

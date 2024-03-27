@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.oauth;
+package kr.co.morandi.backend.domain.member.service.oauth;
 
 import kr.co.morandi.backend.config.security.OAuthDetails;
 import kr.co.morandi.backend.domain.member.Member;

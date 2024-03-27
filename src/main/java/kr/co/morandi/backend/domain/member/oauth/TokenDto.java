@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.oauth;
+package kr.co.morandi.backend.domain.member.oauth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

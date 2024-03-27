@@ -2,7 +2,7 @@ package kr.co.morandi.backend.config.security;
 
 import io.jsonwebtoken.*;
 import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.oauth.TokenDto;
+import kr.co.morandi.backend.domain.member.oauth.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

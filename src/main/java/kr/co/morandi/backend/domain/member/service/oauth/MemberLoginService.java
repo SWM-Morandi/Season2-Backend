@@ -1,8 +1,10 @@
-package kr.co.morandi.backend.domain.oauth;
+package kr.co.morandi.backend.domain.member.service.oauth;
 
 import kr.co.morandi.backend.config.security.JwtProvider;
 import kr.co.morandi.backend.domain.member.Member;
 import kr.co.morandi.backend.domain.member.MemberRepository;
+import kr.co.morandi.backend.domain.member.oauth.TokenDto;
+import kr.co.morandi.backend.domain.member.oauth.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
