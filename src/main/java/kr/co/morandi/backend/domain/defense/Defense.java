@@ -2,7 +2,7 @@ package kr.co.morandi.backend.domain.defense;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
-import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.service.ProblemGenerationService;
+import kr.co.morandi.backend.domain.defense.problemgenerationstrategy.service.ProblemGenerationService;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -38,7 +38,7 @@ public abstract class Defense extends BaseEntity {
     public DefenseType getType() {
         return defenseType;
     }
-    public Defense(String contentName, DefenseType defenseType) {
+    protected Defense(String contentName, DefenseType defenseType) {
         this.contentName = contentName;
         this.attemptCount = 0L;
         this.defenseType = defenseType;

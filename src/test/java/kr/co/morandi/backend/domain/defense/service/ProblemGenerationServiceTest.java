@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.defense.service;
 
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
-import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.service.ProblemGenerationService;
+import kr.co.morandi.backend.domain.defense.problemgenerationstrategy.service.ProblemGenerationService;
 import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseProblemRepository;
 import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.domain.problem.model.Problem;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;

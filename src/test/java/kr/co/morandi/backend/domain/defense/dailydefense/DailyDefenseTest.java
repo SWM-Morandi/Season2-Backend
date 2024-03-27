@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.domain.defense.dailydefense;
 
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
-import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.service.ProblemGenerationService;
+import kr.co.morandi.backend.domain.defense.problemgenerationstrategy.service.ProblemGenerationService;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

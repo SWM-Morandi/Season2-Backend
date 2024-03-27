@@ -3,7 +3,7 @@ package kr.co.morandi.backend.domain.defense.dailydefense.service;
 import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.defense.DefenseType;
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefenseProblem;
-import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.ProblemGenerationStrategy;
+import kr.co.morandi.backend.domain.defense.problemgenerationstrategy.ProblemGenerationStrategy;
 import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseProblemRepository;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import lombok.RequiredArgsConstructor;

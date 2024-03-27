@@ -4,7 +4,7 @@ import kr.co.morandi.backend.application.port.out.defense.dailydefense.DailyDefe
 import kr.co.morandi.backend.application.port.out.exammanagement.session.DefenseSessionPort;
 import kr.co.morandi.backend.application.port.out.record.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
-import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.service.ProblemGenerationService;
+import kr.co.morandi.backend.domain.defense.problemgenerationstrategy.service.ProblemGenerationService;
 import kr.co.morandi.backend.domain.exammanagement.management.request.StartDailyDefenseServiceRequest;
 import kr.co.morandi.backend.domain.exammanagement.management.response.DefenseProblemResponse;
 import kr.co.morandi.backend.domain.exammanagement.management.response.StartDailyDefenseServiceResponse;
@@ -103,7 +103,7 @@ public class DailyDefenseManagementService {
                             .build();
 
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

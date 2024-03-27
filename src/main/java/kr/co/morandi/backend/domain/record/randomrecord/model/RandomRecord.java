@@ -36,8 +36,8 @@ public class RandomRecord extends Record<RandomDetail> {
         this.problemCount = problems.size();
     }
     @Override
-    protected RandomDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<RandomDetail> record, Defense defense) {
-        return RandomDetail.create(member, sequenceNumber, problem, record, defense);
+    protected RandomDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<RandomDetail> records, Defense defense) {
+        return RandomDetail.create(member, sequenceNumber, problem, records, defense);
     }
     public static RandomRecord create(RandomDefense randomDefense, Member member, LocalDateTime testDate, Map<Long, Problem> problems) {
         return new RandomRecord(testDate, randomDefense, member, problems);

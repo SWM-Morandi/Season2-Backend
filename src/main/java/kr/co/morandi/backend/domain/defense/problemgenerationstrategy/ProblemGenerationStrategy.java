@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.domain.defense.problemGenerationStrategy;
+package kr.co.morandi.backend.domain.defense.problemgenerationstrategy;
 
 import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.defense.DefenseType;

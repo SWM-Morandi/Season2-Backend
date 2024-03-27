@@ -28,6 +28,6 @@ public enum ProblemTier {
 
         return VALUES.stream()
                 .filter(tier -> tier.tier >= start.tier && tier.tier <= end.tier)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

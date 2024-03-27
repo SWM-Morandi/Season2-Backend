@@ -34,8 +34,8 @@ public class StageRecord extends Record<StageDetail> {
         this.stageCount = INITIAL_STAGE_COUNT;
     }
     @Override
-    protected StageDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<StageDetail> record, Defense defense) {
-        return StageDetail.create(member, INITIAL_STAGE_NUMBER, problem, record, defense);
+    protected StageDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<StageDetail> records, Defense defense) {
+        return StageDetail.create(member, INITIAL_STAGE_NUMBER, problem, records, defense);
     }
     public static StageRecord create(Defense defense, LocalDateTime testDate, Member member, Problem problem) {
         return new StageRecord(defense, testDate, member, Map.of(INITIAL_STAGE_NUMBER, problem));

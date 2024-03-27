@@ -41,7 +41,7 @@ public abstract class Record<T extends Detail> extends BaseEntity {
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, targetEntity = Detail.class)
     private List<T> details = new ArrayList<>();
 
-    protected abstract T createDetail(Member member, Long sequenceNumber, Problem problem, Record<T> record, Defense defense);
+    protected abstract T createDetail(Member member, Long sequenceNumber, Problem problem, Record<T> records, Defense defense);
 
     protected Record(LocalDateTime testDate, Defense defense, Member member, Map<Long, Problem> problems) {
         this.testDate = testDate;

@@ -36,8 +36,8 @@ public class DailyRecord extends Record<DailyDetail> {
                         && detail.getIsSolved());
     }
     @Override
-    protected DailyDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<DailyDetail> record, Defense defense) {
-        return DailyDetail.create(member, sequenceNumber, problem, record, defense);
+    protected DailyDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<DailyDetail> records, Defense defense) {
+        return DailyDetail.create(member, sequenceNumber, problem, records, defense);
     }
 
     public static DailyRecord tryDefense(LocalDateTime date, DailyDefense dailyDefense, Member member, Map<Long, Problem> problems) {

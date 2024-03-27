@@ -43,12 +43,12 @@ public abstract class Detail extends BaseEntity {
     private static final Long INITIAL_SUBMIT_COUNT = 0L;
     private static final Boolean INITIAL_IS_SOLVED = false;
 
-    protected Detail(Member member, Problem problem, Record<?> record, Defense defense) {
+    protected Detail(Member member, Problem problem, Record<?> records, Defense defense) {
         this.isSolved = INITIAL_IS_SOLVED;
         this.submitCount = INITIAL_SUBMIT_COUNT;
         this.solvedCode = null;
         this.defense = defense;
-        this.record = record;
+        this.record = records;
         this.member = member;
         this.problem = problem;
     }

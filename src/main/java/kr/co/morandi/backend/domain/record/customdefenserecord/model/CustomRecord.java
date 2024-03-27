@@ -26,8 +26,8 @@ public class CustomRecord extends Record<CustomDetail> {
     private Integer solvedCount;
     private Integer problemCount;
     @Override
-    public CustomDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<CustomDetail> record, Defense defense) {
-        return CustomDetail.create(member, sequenceNumber, problem, record, defense);
+    public CustomDetail createDetail(Member member, Long sequenceNumber, Problem problem, Record<CustomDetail> records, Defense defense) {
+        return CustomDetail.create(member, sequenceNumber, problem, records, defense);
     }
     private CustomRecord(CustomDefense customDefense, Member member, LocalDateTime testDate, Map<Long, Problem> problems) {
         super(testDate, customDefense, member, problems);

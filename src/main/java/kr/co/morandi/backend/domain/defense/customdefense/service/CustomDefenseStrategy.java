@@ -2,7 +2,7 @@ package kr.co.morandi.backend.domain.defense.customdefense.service;
 
 import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.defense.DefenseType;
-import kr.co.morandi.backend.domain.defense.problemGenerationStrategy.ProblemGenerationStrategy;
+import kr.co.morandi.backend.domain.defense.problemgenerationstrategy.ProblemGenerationStrategy;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import org.springframework.stereotype.Component;
 

@@ -40,7 +40,7 @@ public class DailyDefenseProblem extends BaseEntity {
         this.solvedCount = INITIAL_SOLVED_COUNT;
         this.problemNumber = problemNumber;
     }
-    public static DailyDefenseProblem create(DailyDefense DailyDefense, Problem problem, Long problemNumber) {
-        return new DailyDefenseProblem(DailyDefense, problem, problemNumber);
+    public static DailyDefenseProblem create(DailyDefense dailyDefense, Problem problem, Long problemNumber) {
+        return new DailyDefenseProblem(dailyDefense, problem, problemNumber);
     }
 }

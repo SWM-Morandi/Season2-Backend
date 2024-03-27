@@ -1,15 +1,14 @@
 package kr.co.morandi.backend.infrastructure.adapter.defense.record.dailyrecord;
 
+import kr.co.morandi.backend.application.port.out.record.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefenseProblem;
-import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseRepository;
-import kr.co.morandi.backend.application.port.out.record.dailyrecord.DailyRecordPort;
-import kr.co.morandi.backend.domain.defense.dailydefense.service.DailyDefenseService;
 import kr.co.morandi.backend.domain.member.model.Member;
-import kr.co.morandi.backend.infrastructure.persistence.member.MemberRepository;
 import kr.co.morandi.backend.domain.problem.model.Problem;
-import kr.co.morandi.backend.infrastructure.persistence.problem.ProblemRepository;
 import kr.co.morandi.backend.domain.record.dailyrecord.model.DailyRecord;
+import kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense.DailyDefenseRepository;
+import kr.co.morandi.backend.infrastructure.persistence.member.MemberRepository;
+import kr.co.morandi.backend.infrastructure.persistence.problem.ProblemRepository;
 import kr.co.morandi.backend.infrastructure.persistence.record.dailyrecord.DailyRecordRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
