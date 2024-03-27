@@ -3,6 +3,10 @@ package kr.co.morandi.backend.domain.defense.tier.model;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @RequiredArgsConstructor
 public enum ProblemTier {
@@ -15,4 +19,15 @@ public enum ProblemTier {
     R5(26),R4(27),R3(28),R2(29),R1(30);
 
     private final int tier;
+
+    private static final List<ProblemTier> VALUES = Arrays.asList(values());
+
+    public static List<ProblemTier> tierRangeOf(ProblemTier start, ProblemTier end) {
+        if (start.tier > end.tier)
+            throw new IllegalArgumentException("시작 티어가 끝 티어보다 높을 수 없습니다.");
+
+        return VALUES.stream()
+                .filter(tier -> tier.tier >= start.tier && tier.tier <= end.tier)
+                .collect(Collectors.toList());
+    }
 }
