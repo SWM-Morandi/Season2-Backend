@@ -38,7 +38,8 @@ public class DailyDefenseGenerationService {
 
         final LocalDate targetDate = requestTime.plusDays(1L).toLocalDate();
 
-        final DailyDefense dailyDefense = DailyDefense.create(targetDate, String.format(POSTFIX, targetDate.getMonthValue(), targetDate.getDayOfMonth()), dailyDefenseProblem);
+        final DailyDefense dailyDefense = DailyDefense.create(targetDate,
+                String.format(POSTFIX, targetDate.getMonthValue(), targetDate.getDayOfMonth()), dailyDefenseProblem);
 
         dailyDefensePort.saveDailyDefense(dailyDefense);
 
