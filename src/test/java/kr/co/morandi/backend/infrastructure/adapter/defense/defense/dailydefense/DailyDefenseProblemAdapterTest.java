@@ -40,33 +40,14 @@ class DailyDefenseProblemAdapterTest {
 
     @AfterEach
     void tearDown() {
+        dailyDefenseProblemRepository.deleteAllInBatch();
+        dailyDefenseRepository.deleteAllInBatch();
         problemRepository.deleteAllInBatch();
     }
 
     @DisplayName("오늘의 문제로 출제된 적이 있는 문제는 출제되지 않는다.")
     @Test
     void getDailyDefenseProblemWithAlreadySolved() {
-        // given
-        createProblems();
-        RandomCriteria randomCriteria1 = RandomCriteria.builder()
-                .minSolvedCount(500L)
-                .maxSolvedCount(1500L)
-                .difficultyRange(RandomCriteria.DifficultyRange.of(B5, B1))
-                .build();
-        RandomCriteria randomCriteria2 = RandomCriteria.builder()
-                .minSolvedCount(1500L)
-                .maxSolvedCount(2500L)
-                .difficultyRange(RandomCriteria.DifficultyRange.of(S5, S1))
-                .build();
-
-        // when
-
-        // then
-
-    }
-    @DisplayName("오늘의 문제에 포함되는 문제들을 의도하는 조건대로 출제할 수 있다.")
-    @Test
-    void getDailyDefenseProblem() {
         // given
         createProblems();
         RandomCriteria randomCriteria1 = RandomCriteria.builder()
@@ -83,7 +64,8 @@ class DailyDefenseProblemAdapterTest {
         final Map<Long, Problem> dailyDefenseProblem = dailyDefenseProblemAdapter.getDailyDefenseProblem(request);
 
         LocalDate yesterday = LocalDate.of(2021, 1, 1);
-        DailyDefense.create(yesterday, "어제 오늘의 문제", dailyDefenseProblem);
+        final DailyDefense dailyDefense = DailyDefense.create(yesterday, "어제 오늘의 문제", dailyDefenseProblem);
+        dailyDefenseRepository.save(dailyDefense);
 
         Map<Long, RandomCriteria> newRequest = Map.of(1L, randomCriteria2);
 
@@ -94,8 +76,38 @@ class DailyDefenseProblemAdapterTest {
         // then
         assertThat(dailyDefenseProblem2).hasSize(1);
 
-        // 같은 범위에 2개의 문제가 있는데, 출제
+        // 같은 범위에 2개의 문제가 있는데, 출제되면 서로 다른 문제가 출제될 테니깐
         assertThat(dailyDefenseProblem.get(1L).getProblemTier()).isNotEqualTo(dailyDefenseProblem2.get(1L).getProblemTier());
+    }
+    @DisplayName("오늘의 문제에 포함되는 문제들을 의도하는 조건대로 출제할 수 있다.")
+    @Test
+    void getDailyDefenseProblem() {
+        // given
+        createProblems();
+        RandomCriteria randomCriteria1 = RandomCriteria.builder()
+                .minSolvedCount(500L)
+                .maxSolvedCount(1500L)
+                .difficultyRange(RandomCriteria.DifficultyRange.of(B5, B1))
+                .build();
+        RandomCriteria randomCriteria2 = RandomCriteria.builder()
+                .minSolvedCount(1500L)
+                .maxSolvedCount(2500L)
+                .difficultyRange(RandomCriteria.DifficultyRange.of(S5, S1))
+                .build();
+
+        Map<Long, RandomCriteria> request = Map.of(1L, randomCriteria1, 2L, randomCriteria2);
+
+        // when
+        final Map<Long, Problem> dailyDefenseProblem = dailyDefenseProblemAdapter.getDailyDefenseProblem(request);
+
+        // then
+        assertThat(dailyDefenseProblem).hasSize(2);
+        assertThat(dailyDefenseProblem.entrySet())
+                .extracting(Map.Entry::getKey, entry -> entry.getValue().getProblemTier(), entry -> entry.getValue().getSolvedCount())
+                .containsExactlyInAnyOrder(
+                        tuple(2L, S5, 2000L),
+                        tuple(1L, B5, 1000L)
+                );
     }
 
     private void createProblems() {
