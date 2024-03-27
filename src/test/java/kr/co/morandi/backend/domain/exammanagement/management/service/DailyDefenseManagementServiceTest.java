@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.DefenseType.DAILY;
@@ -221,15 +222,11 @@ class DailyDefenseManagementServiceTest {
 
     }
 
-    private Map<Long, Problem> getProblem(DailyDefense dailyDefense, Long problemNumber) {
-        return dailyDefense.getDailyDefenseProblems().stream()
-                .filter(problem -> Objects.equals(problem.getProblemNumber(), problemNumber))
-                .collect(Collectors.toMap(DailyDefenseProblem::getProblemNumber, DailyDefenseProblem::getProblem));
-    }
-
     private DailyDefense createDailyDefense(LocalDate createdDate, String contentName) {
-        List<Problem> problems = createProblems();
-        return dailyDefenseRepository.save(DailyDefense.create(createdDate, contentName, problems));
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+        return dailyDefenseRepository.save(DailyDefense.create(createdDate, contentName, problemMap));
     }
     private List<Problem> createProblems() {
         Problem problem1 = Problem.create(1000L, B5, 0L);

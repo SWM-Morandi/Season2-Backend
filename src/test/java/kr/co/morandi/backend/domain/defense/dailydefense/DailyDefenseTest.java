@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,13 +28,15 @@ class DailyDefenseTest {
     void getTryingProblem() {
         // given
         LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
-        List<Problem> problems = createProblems();
-        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problems);
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+        final DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
 
         Map<Long, Problem> expectedProblems = Map.of(
-                1L, problems.get(0),
-                2L, problems.get(1),
-                3L, problems.get(2)
+                1L, problemMap.get(1L),
+                2L, problemMap.get(2L),
+                3L, problemMap.get(3L)
         );
         final ProblemGenerationService problemGenerationService = mock(ProblemGenerationService.class);
 
@@ -45,7 +49,7 @@ class DailyDefenseTest {
         assertThat(tryingProblem.entrySet()).isNotEmpty()
                 .extracting(Map.Entry::getKey, Map.Entry::getValue)
                 .containsExactlyInAnyOrder(
-                        tuple(1L, problems.get(0))
+                        tuple(1L, problemMap.get(1L))
                 );
 
     }
@@ -53,11 +57,14 @@ class DailyDefenseTest {
     @Test
     void getEndTime() {
         // given
-        List<Problem> problems = createProblems();
         LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
 
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+
         // when
-        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
 
         // then
         assertThat(dailyDefense.getEndTime(now))
@@ -67,11 +74,14 @@ class DailyDefenseTest {
     @Test
     void attemptCountIsZero() {
         // given
-        List<Problem> problems = createProblems();
-        LocalDate now = LocalDateTime.now().toLocalDate();
+        LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
+
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
 
         // when
-        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
 
         // then
         assertThat(dailyDefense.getAttemptCount()).isZero();
@@ -80,11 +90,14 @@ class DailyDefenseTest {
     @Test
     void testDateEqualNow() {
         // given
-        List<Problem> problems = createProblems();
-        LocalDate now = LocalDateTime.now().toLocalDate();
+        LocalDate now = LocalDate.of(2021, 1, 1);
+
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
 
         // when
-        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problemMap);
 
         // then
         assertThat(dailyDefense.getDate()).isEqualTo(now);
@@ -93,12 +106,14 @@ class DailyDefenseTest {
     @Test
     void contentNameIsEqual() {
         // given
-        List<Problem> problems = createProblems();
-        LocalDate now = LocalDateTime.now().toLocalDate();
+        LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
 
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
 
         // when
-        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
 
         // then
         assertThat(dailyDefense.getContentName()).isEqualTo("오늘의 문제 테스트");

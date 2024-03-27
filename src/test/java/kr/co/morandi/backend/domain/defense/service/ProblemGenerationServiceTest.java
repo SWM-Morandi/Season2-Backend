@@ -14,8 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,8 +69,12 @@ class ProblemGenerationServiceTest {
     }
 
     private DailyDefense createDailyDefense(LocalDate date) {
-        List<Problem> problems = createProblems();
-        return dailyDefenseRepository.save(DailyDefense.create(date, "오늘의 문제 테스트", problems));
+
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+
+        return dailyDefenseRepository.save(DailyDefense.create(date, "오늘의 문제 테스트", problemMap));
     }
 
     private List<Problem> createProblems() {

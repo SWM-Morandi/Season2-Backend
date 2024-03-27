@@ -12,6 +12,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
 import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
@@ -99,7 +102,10 @@ class DailyDetailTest {
 
     private DailyDefense createDailyDefense() {
         LocalDate createdDate = LocalDate.of(2024, 3, 1);
-        return DailyDefense.create(createdDate, "3월 5일 문제", createProblem());
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblem().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problemMap);
     }
     private List<Problem> createProblem() {
         return List.of(

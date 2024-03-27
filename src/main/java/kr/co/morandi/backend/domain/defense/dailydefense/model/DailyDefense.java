@@ -54,16 +54,16 @@ public class DailyDefense extends Defense {
         return tryProblem;
     }
 
-    private DailyDefense(LocalDate date, String contentName, List<Problem> problems) {
+    private DailyDefense(LocalDate date, String contentName, Map<Long, Problem> problems) {
         super(contentName, DAILY);
         this.date = date;
-        AtomicLong problemNumber = new AtomicLong(1);
-        this.dailyDefenseProblems = problems.stream()
-                .map(problem -> DailyDefenseProblem.create(this, problem, problemNumber.getAndIncrement()))
+        this.dailyDefenseProblems = problems.entrySet().stream()
+                .map(problem -> DailyDefenseProblem.create(this, problem.getValue(), problem.getKey()))
                 .toList();
+
         this.problemCount = problems.size();
     }
-    public static DailyDefense create(LocalDate date, String contentName, List<Problem> problems) {
+    public static DailyDefense create(LocalDate date, String contentName, Map<Long, Problem> problems) {
         return new DailyDefense(date, contentName, problems);
     }
 

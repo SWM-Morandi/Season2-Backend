@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
@@ -136,8 +137,10 @@ class DailyRecordRepositoryTest {
     }
 
     private DailyDefense createDailyDefense(LocalDate createdDate) {
-        List<Problem> problems = createProblems();
-        return dailyDefenseRepository.save(DailyDefense.create(createdDate, "오늘의 문제 테스트", problems));
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+        return dailyDefenseRepository.save(DailyDefense.create(createdDate, "오늘의 문제 테스트", problemMap));
     }
     private List<Problem> createProblems() {
         Problem problem1 = Problem.create(1L, B5, 0L);

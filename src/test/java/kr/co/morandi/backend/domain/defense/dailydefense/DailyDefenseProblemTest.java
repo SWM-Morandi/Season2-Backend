@@ -7,7 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,11 +22,14 @@ class DailyDefenseProblemTest {
     @Test
     void submitCountIsZero() {
         // given
-        List<Problem> problems = createProblems();
-        LocalDate createdDate = LocalDate.of(2024, 3, 1);
+        LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
+
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
 
         // when
-        DailyDefense dailyDefense = DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
 
         // then
         assertThat(dailyDefense.getDailyDefenseProblems())
@@ -34,11 +41,14 @@ class DailyDefenseProblemTest {
     @Test
     void solvedCountIsZero() {
         // given
-        List<Problem> problems = createProblems();
-        LocalDate createdDate = LocalDate.of(2024, 3, 1);
+        LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
+
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
 
         // when
-        DailyDefense dailyDefense = DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
 
         // then
         assertThat(dailyDefense.getDailyDefenseProblems())

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
@@ -168,13 +169,17 @@ class DailyRecordTest {
                 .collect(Collectors.toMap(DailyDefenseProblem::getProblemNumber, DailyDefenseProblem::getProblem));
     }
     private DailyDefense createDailyDefense() {
-        List<Problem> problems = createProblems();
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
         LocalDate createdDate = LocalDate.of(2024, 3, 1);
-        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
+        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problemMap);
     }
     private DailyDefense createDailyDefense(LocalDate createdDate) {
-        List<Problem> problems = createProblems();
-        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problems);
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+        return DailyDefense.create(createdDate, "오늘의 문제 테스트", problemMap);
     }
     private List<Problem> createProblems() {
         Problem problem1 = Problem.create(1L, B5, 0L);
