@@ -17,9 +17,13 @@ public class DailyDefenseAdapter implements DailyDefensePort {
 
     @Override
     public DailyDefense findDailyDefense(DefenseType defenseType, LocalDate date) {
-        return dailyDefenseRepository.findDailyDefenseByDefenseTypeAndDate(defenseType, date)
+        return dailyDefenseRepository.findDailyDefenseByTypeAndDate(defenseType, date)
                 .orElseThrow(() -> new IllegalArgumentException("DailyDefense가 존재하지 않습니다"));
     }
 
+    @Override
+    public DailyDefense saveDailyDefense(DailyDefense dailyDefense) {
+        return dailyDefenseRepository.save(dailyDefense);
+    }
 
 }

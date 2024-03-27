@@ -7,4 +7,6 @@ import java.time.LocalDate;
 
 public interface DailyDefensePort {
     DailyDefense findDailyDefense(DefenseType defenseType, LocalDate date);
+
+    DailyDefense saveDailyDefense(DailyDefense dailyDefense);
 }
