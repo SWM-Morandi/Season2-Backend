@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.problem_information.domain.model.problem;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.global.model.BaseEntity;
+import kr.co.morandi.backend.common.model.BaseEntity;
 import kr.co.morandi.backend.problem_information.domain.model.algorithm.Algorithm;
 import lombok.*;
 

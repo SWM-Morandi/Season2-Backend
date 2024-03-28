@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.member_management.domain.model.member;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.global.model.BaseEntity;
+import kr.co.morandi.backend.common.model.BaseEntity;
 import lombok.*;
 
 @Entity

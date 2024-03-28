@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.global.config;
+package kr.co.morandi.backend.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

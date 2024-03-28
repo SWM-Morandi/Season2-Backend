@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.global.model;
+package kr.co.morandi.backend.common.model;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import kr.co.morandi.backend.global.model.BaseEntity;
+import kr.co.morandi.backend.common.model.BaseEntity;
 import lombok.*;
 
 @Entity

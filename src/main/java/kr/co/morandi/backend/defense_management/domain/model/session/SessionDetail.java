@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.defense_management.domain.model.session;
 
 import jakarta.persistence.*;
-import kr.co.morandi.backend.global.model.BaseEntity;
+import kr.co.morandi.backend.common.model.BaseEntity;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.TempCode;
 import lombok.AccessLevel;
