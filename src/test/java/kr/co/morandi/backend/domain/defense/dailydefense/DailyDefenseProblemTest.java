@@ -1,14 +1,19 @@
 package kr.co.morandi.backend.domain.defense.dailydefense;
 
-import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
+import kr.co.morandi.backend.domain.problem.model.Problem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
@@ -17,13 +22,17 @@ class DailyDefenseProblemTest {
     @Test
     void submitCountIsZero() {
         // given
-        List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
-        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
-        List<DailyDefenseProblem> DailyDefenseProblemsList = dailyDefense.getDailyDefenseProblems();
+        LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
 
-        // when & then
-        assertThat(DailyDefenseProblemsList)
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+
+        // when
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
+
+        // then
+        assertThat(dailyDefense.getDailyDefenseProblems())
                 .extracting("submitCount")
                 .containsExactlyInAnyOrder(0L, 0L, 0L);
     }
@@ -32,13 +41,17 @@ class DailyDefenseProblemTest {
     @Test
     void solvedCountIsZero() {
         // given
-        List<Problem> problems = createProblems();
-        LocalDateTime now = LocalDateTime.now();
-        DailyDefense dailyDefense = DailyDefense.create(now, "오늘의 문제 테스트", problems);
-        List<DailyDefenseProblem> DailyDefenseProblemsList = dailyDefense.getDailyDefenseProblems();
+        LocalDateTime now = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
 
-        // when & then
-        assertThat(DailyDefenseProblemsList)
+        AtomicLong problemNumber = new AtomicLong(1L);
+        Map<Long, Problem> problemMap = createProblems().stream()
+                .collect(Collectors.toMap(p-> problemNumber.getAndIncrement(), problem -> problem));
+
+        // when
+        DailyDefense dailyDefense = DailyDefense.create(now.toLocalDate(), "오늘의 문제 테스트", problemMap);
+
+        // then
+        assertThat(dailyDefense.getDailyDefenseProblems())
                 .extracting("solvedCount")
                 .containsExactlyInAnyOrder(0L, 0L, 0L);
     }

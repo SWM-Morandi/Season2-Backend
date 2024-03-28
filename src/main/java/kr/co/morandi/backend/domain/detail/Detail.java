@@ -3,8 +3,8 @@ package kr.co.morandi.backend.domain.detail;
 import jakarta.persistence.*;
 import kr.co.morandi.backend.domain.BaseEntity;
 import kr.co.morandi.backend.domain.defense.Defense;
-import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.member.model.Member;
+import kr.co.morandi.backend.domain.problem.model.Problem;
 import kr.co.morandi.backend.domain.record.Record;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -32,7 +32,7 @@ public abstract class Detail extends BaseEntity {
     private Defense defense;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Record record;
+    private Record<?> record;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
@@ -43,13 +43,12 @@ public abstract class Detail extends BaseEntity {
     private static final Long INITIAL_SUBMIT_COUNT = 0L;
     private static final Boolean INITIAL_IS_SOLVED = false;
 
-    protected Detail(Member member, Problem problem,
-                                Record record, Defense defense) {
+    protected Detail(Member member, Problem problem, Record<?> records, Defense defense) {
         this.isSolved = INITIAL_IS_SOLVED;
         this.submitCount = INITIAL_SUBMIT_COUNT;
         this.solvedCode = null;
         this.defense = defense;
-        this.record = record;
+        this.record = records;
         this.member = member;
         this.problem = problem;
     }

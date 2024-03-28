@@ -1,17 +1,17 @@
 package kr.co.morandi.backend.domain.detail.randomdefense;
 
-import kr.co.morandi.backend.domain.defense.stagedefense.StageDefense;
-import kr.co.morandi.backend.domain.detail.stagedefense.StageDetail;
-import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.problem.Problem;
-import kr.co.morandi.backend.domain.record.stagedefense.StageRecord;
+import kr.co.morandi.backend.domain.defense.stagedefense.model.StageDefense;
+import kr.co.morandi.backend.domain.detail.stagedefense.model.StageDetail;
+import kr.co.morandi.backend.domain.member.model.Member;
+import kr.co.morandi.backend.domain.problem.model.Problem;
+import kr.co.morandi.backend.domain.record.stagerecord.model.StageRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.B5;
-import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
-import static kr.co.morandi.backend.domain.problem.ProblemStatus.ACTIVE;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
+import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
+import static kr.co.morandi.backend.domain.problem.model.ProblemStatus.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -27,7 +27,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member,1L, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord.getSolvedTime()).isEqualTo(0L);
@@ -43,7 +43,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord.getStageNumber()).isEqualTo(1L);
 
@@ -58,7 +58,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord)
@@ -76,7 +76,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord)
                 .extracting("submitCount")
@@ -93,7 +93,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
 
         // then
         assertThat(stageDefenseProblemRecord)
@@ -111,7 +111,7 @@ class StageDetailTest {
         Member member = createMember();
 
         // when
-        StageDetail stageDefenseProblemRecord = StageDetail.create(1L, member, problem, stageDefenseRecord, randomStageDefense);
+        StageDetail stageDefenseProblemRecord = StageDetail.create(member, 1L, problem, stageDefenseRecord, randomStageDefense);
         // then
         assertThat(stageDefenseProblemRecord)
                 .extracting("member", "problem", "record", "defense")

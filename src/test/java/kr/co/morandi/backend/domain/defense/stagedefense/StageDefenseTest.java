@@ -1,18 +1,38 @@
 package kr.co.morandi.backend.domain.defense.stagedefense;
 
-import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;
-import kr.co.morandi.backend.domain.defense.stagedefense.StageDefense;
+import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.defense.stagedefense.model.StageDefense;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.B1;
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.B5;
+import java.time.LocalDateTime;
+
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B1;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
 class StageDefenseTest {
+    @DisplayName("스테이지 모드를 시작할 때 끝나는 시간은 시작 시간에 제한 시간을 더한 값이어야 한다.")
+    @Test
+    void getEndTime() {
+        // given
+        RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);
+        RandomCriteria randomCriteria = RandomCriteria.of(bronzeRange, 100L, 200L);
+        StageDefense randomStageDefense = StageDefense.create(randomCriteria, 120L, "브론즈 스테이지 모드");
+        LocalDateTime startTime = LocalDateTime.of(2021, 1, 1, 0, 0, 0);
+
+        // when
+        final LocalDateTime endTime = randomStageDefense.getEndTime(startTime);
+
+        // then
+        assertThat(endTime)
+                .isEqualTo(startTime.plusMinutes(120L));
+
+    }
+
     @DisplayName("스테이지 모드를 처음 만들 때 정보가 올바르게 저장되어야 한다.")
     @Test
     void createRamdomStageDefense() {
