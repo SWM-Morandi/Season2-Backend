@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.infrastructure.persistence.defensemanagement.session;
 
 import kr.co.morandi.backend.domain.defense.DefenseType;
-import kr.co.morandi.backend.domain.exammanagement.session.model.DefenseSession;
+import kr.co.morandi.backend.domain.defensemanagement.session.model.DefenseSession;
 import kr.co.morandi.backend.domain.member.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

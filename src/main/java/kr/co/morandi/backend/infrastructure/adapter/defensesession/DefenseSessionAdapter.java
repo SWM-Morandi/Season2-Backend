@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.infrastructure.adapter.defensesession;
 
-import kr.co.morandi.backend.application.port.out.exammanagement.session.DefenseSessionPort;
-import kr.co.morandi.backend.domain.exammanagement.session.model.DefenseSession;
+import kr.co.morandi.backend.application.port.out.defensemanagement.defensesession.DefenseSessionPort;
+import kr.co.morandi.backend.domain.defensemanagement.session.model.DefenseSession;
 import kr.co.morandi.backend.domain.member.model.Member;
 import kr.co.morandi.backend.infrastructure.persistence.defensemanagement.session.DefenseSessionRepository;
 import lombok.RequiredArgsConstructor;

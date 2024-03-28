@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.web.defensemanagement.dailydefense.dto.request;
 
-import kr.co.morandi.backend.domain.exammanagement.management.request.StartDailyDefenseServiceRequest;
+import kr.co.morandi.backend.domain.defensemanagement.management.request.StartDailyDefenseServiceRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
