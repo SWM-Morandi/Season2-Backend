@@ -6,12 +6,8 @@ import kr.co.morandi.backend.application.port.out.record.dailyrecord.DailyRecord
 import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
 import kr.co.morandi.backend.domain.defense.problemgenerationstrategy.service.ProblemGenerationService;
 import kr.co.morandi.backend.domain.exammanagement.management.request.StartDailyDefenseServiceRequest;
-import kr.co.morandi.backend.domain.exammanagement.management.response.DefenseProblemResponse;
 import kr.co.morandi.backend.domain.exammanagement.management.response.StartDailyDefenseServiceResponse;
 import kr.co.morandi.backend.domain.exammanagement.session.model.DefenseSession;
-import kr.co.morandi.backend.domain.exammanagement.sessiondetail.model.SessionDetail;
-import kr.co.morandi.backend.domain.exammanagement.tempcode.model.Language;
-import kr.co.morandi.backend.domain.exammanagement.tempcode.model.TempCode;
 import kr.co.morandi.backend.domain.member.model.Member;
 import kr.co.morandi.backend.domain.problem.model.Problem;
 import kr.co.morandi.backend.domain.record.dailyrecord.model.DailyRecord;
@@ -20,10 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.domain.defense.DefenseType.DAILY;
 
@@ -66,12 +60,7 @@ public class DailyDefenseManagementService {
         final DefenseSession savedDefenseSession = defenseSessionPort.saveDefenseSession(defenseSession);
 
         // 문제 목록을 DefenseProblemResponse DTO로 변환
-        final List<DefenseProblemResponse> defenseProblemResponses = createDefenseProblemResponses(tryProblem, savedDefenseSession, dailyRecord);
-
-        return StartDailyDefenseServiceResponse.of(savedDefenseSession.getDefenseSessionId(),
-                dailyDefense,
-                savedDefenseSession.getLastAccessDateTime(),
-                defenseProblemResponses);
+        return StartDailyDefenseServiceResponse.from(tryProblem, dailyDefense, savedDefenseSession, dailyRecord);
     }
     private DefenseSession createNewSession(Member member, LocalDateTime now, DailyDefense dailyDefense, Map<Long, Problem> tryProblem) {
         DailyRecord dailyRecord = DailyRecord.tryDefense(now, dailyDefense, member, tryProblem);
@@ -81,29 +70,5 @@ public class DailyDefenseManagementService {
         return DefenseSession.startSession(member, recordId, dailyDefense.getDefenseType(), tryProblem.keySet(), now, dailyDefense.getEndTime(now));
     }
 
-    private List<DefenseProblemResponse> createDefenseProblemResponses(Map<Long, Problem> tryProblem, DefenseSession defenseSession, DailyRecord dailyRecord) {
-        return tryProblem.entrySet().stream()
-                .map(entry -> {
-                    final Long problemNumber = entry.getKey();
-                    final Problem problem = entry.getValue();
-                    final boolean isCorrect = dailyRecord.isSolvedProblem(problemNumber);
-
-                    final SessionDetail sessionDetail = defenseSession.getSessionDetail(problemNumber);
-
-                    final Language lastAccessLanguage = sessionDetail.getLastAccessLanguage();
-                    final TempCode tempCode = sessionDetail.getTempCode(lastAccessLanguage);
-
-                    return DefenseProblemResponse.builder()
-                            .problemId(problem.getProblemId())
-                            .baekjoonProblemId(problem.getBaekjoonProblemId())
-                            .problemNumber(problemNumber)
-                            .isCorrect(isCorrect)
-                            .tempCode(tempCode.getCode())
-                            .tempCodeLanguage(lastAccessLanguage)
-                            .build();
-
-                })
-                .toList();
-    }
 
 }

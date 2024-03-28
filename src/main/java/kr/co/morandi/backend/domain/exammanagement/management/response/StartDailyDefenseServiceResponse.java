@@ -1,7 +1,10 @@
 package kr.co.morandi.backend.domain.exammanagement.management.response;
 
-import kr.co.morandi.backend.domain.defense.Defense;
 import kr.co.morandi.backend.domain.defense.DefenseType;
+import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
+import kr.co.morandi.backend.domain.exammanagement.session.model.DefenseSession;
+import kr.co.morandi.backend.domain.problem.model.Problem;
+import kr.co.morandi.backend.domain.record.dailyrecord.model.DailyRecord;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,16 +24,16 @@ public class StartDailyDefenseServiceResponse {
     private LocalDateTime lastAccessTime;
     private List<DefenseProblemResponse> defenseProblems;
 
-    public static StartDailyDefenseServiceResponse of(Long defenseSessionId,
-                                                      Defense defense,
-                                                      LocalDateTime lastAccessTime,
-                                                      List<DefenseProblemResponse> defenseProblems) {
+    public static StartDailyDefenseServiceResponse from(Map<Long, Problem> tryProblem,
+                                                        DailyDefense dailyDefense,
+                                                        DefenseSession defenseSession,
+                                                        DailyRecord dailyRecord) {
         return StartDailyDefenseServiceResponse.builder()
-                .defenseSessionId(defenseSessionId)
-                .contentName(defense.getContentName())
-                .defenseType(defense.getDefenseType())
-                .lastAccessTime(lastAccessTime)
-                .defenseProblems(defenseProblems)
+                .defenseSessionId(defenseSession.getDefenseSessionId())
+                .contentName(dailyDefense.getContentName())
+                .defenseType(dailyDefense.getDefenseType())
+                .lastAccessTime(defenseSession.getLastAccessDateTime())
+                .defenseProblems(DefenseProblemResponse.fromDailyDefense(tryProblem, defenseSession, dailyRecord))
                 .build();
     }
 
