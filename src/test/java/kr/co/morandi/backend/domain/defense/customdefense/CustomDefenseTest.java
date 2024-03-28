@@ -1,7 +1,8 @@
 package kr.co.morandi.backend.domain.defense.customdefense;
 
-import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.defense.customdefense.model.CustomDefense;
+import kr.co.morandi.backend.domain.member.model.Member;
+import kr.co.morandi.backend.domain.problem.model.Problem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -10,14 +11,39 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.customdefense.DefenseTier.GOLD;
-import static kr.co.morandi.backend.domain.defense.customdefense.Visibility.OPEN;
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
-import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
+import static kr.co.morandi.backend.domain.defense.customdefense.model.DefenseTier.GOLD;
+import static kr.co.morandi.backend.domain.defense.customdefense.model.Visibility.OPEN;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
+import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.StatusResultMatchersExtensionsKt.isEqualTo;
 
 @ActiveProfiles("test")
 class CustomDefenseTest {
+    @DisplayName("커스텀 디펜스를 시작할 떄 끝나는 시간을 계산하면 시작 시간에 제한 시간을 더한 값이다.")
+    @Test
+    void getEndTime() {
+        // given
+        Member member = Member.create("test1", "test1", GOOGLE, "test1", "test1");
+
+        Problem problem1 = Problem.create(1L, B5, 0L);
+        Problem problem2 = Problem.create(2L, S5, 0L);
+        List<Problem> problems = List.of(problem1, problem2);
+
+        LocalDateTime now = LocalDateTime.of(2024, 2, 21, 0, 0, 0, 0);
+
+        CustomDefense customDefense = CustomDefense.create(problems, member, "커스텀 디펜스1", "커스텀 디펜스1 설명", OPEN, GOLD, 60L, now);
+
+
+        // when
+        final LocalDateTime endTime = customDefense.getEndTime(now);
+
+
+        // then
+        assertThat(endTime)
+                .isEqualTo(now.plusMinutes(60L));
+    }
+
     @DisplayName("커스텀 디펜스를 생성하면 등록 시간을 기록한다.")
     @Test
     void registeredWithDateTime() {

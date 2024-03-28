@@ -1,18 +1,19 @@
 package kr.co.morandi.backend.domain.record.randomdefense;
 
-import kr.co.morandi.backend.domain.defense.random.randomcriteria.RandomCriteria;
-import kr.co.morandi.backend.domain.defense.random.RandomDefense;
-import kr.co.morandi.backend.domain.member.Member;
-import kr.co.morandi.backend.domain.problem.Problem;
+import kr.co.morandi.backend.domain.defense.random.model.RandomDefense;
+import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.domain.member.model.Member;
+import kr.co.morandi.backend.domain.problem.model.Problem;
+import kr.co.morandi.backend.domain.record.randomrecord.model.RandomRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
 
-import static kr.co.morandi.backend.domain.defense.tier.ProblemTier.*;
-import static kr.co.morandi.backend.domain.member.SocialType.GOOGLE;
+import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
+import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
@@ -22,7 +23,7 @@ class RandomRecordTest {
     void solvedCountIsZero() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
 
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
@@ -38,7 +39,7 @@ class RandomRecordTest {
     void problemCountIsEqual() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
 
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
@@ -55,7 +56,7 @@ class RandomRecordTest {
     void totalSolvedTimeIsZero() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
 
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
@@ -71,7 +72,7 @@ class RandomRecordTest {
     void testDateIsEqualTestDate() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
 
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
@@ -87,7 +88,7 @@ class RandomRecordTest {
     void isSolvedIsFalse() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
 
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
@@ -110,7 +111,7 @@ class RandomRecordTest {
     void submitCountIsZero() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
 
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
@@ -133,7 +134,7 @@ class RandomRecordTest {
     void solvedCodeIsNull() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
 
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
@@ -156,7 +157,7 @@ class RandomRecordTest {
     void solvedTimeIsZero() {
         // given
         RandomDefense randomDefense = createRandomDefense();
-        List<Problem> problems = getProblemsByRandom();
+        Map<Long, Problem> problems = getProblemsByRandom();
         Member member = createMember("user");
         LocalDateTime now = LocalDateTime.of(2024, 3, 1, 0,0,0);
 
@@ -181,11 +182,17 @@ class RandomRecordTest {
     private Member createMember(String name) {
         return Member.create(name, name + "@gmail.com", GOOGLE, name, name);
     }
-    private List<Problem> getProblemsByRandom() {
+    private Map<Long, Problem> getProblemsByRandom() {
         Problem problem1 = Problem.create(1L, B5, 0L);
         Problem problem2 = Problem.create(2L, S5, 0L);
         Problem problem3 = Problem.create(3L, G5, 0L);
         Problem problem4 = Problem.create(4L, P5, 0L);
-        return List.of(problem1, problem2, problem3, problem4);
+
+        return Map.of(
+                1L, problem1,
+                2L, problem2,
+                3L, problem3,
+                4L, problem4
+        );
     }
 }
