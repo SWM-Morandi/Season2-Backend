@@ -1,14 +1,14 @@
 package kr.co.morandi.backend.domain.problem;
 
-import kr.co.morandi.backend.domain.problem.model.Problem;
-import kr.co.morandi.backend.domain.problem.model.ProblemStatus;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import kr.co.morandi.backend.problem_information.domain.model.problem.ProblemStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
-import static kr.co.morandi.backend.domain.problem.model.ProblemStatus.INIT;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
+import static kr.co.morandi.backend.problem_information.domain.model.problem.ProblemStatus.INIT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")

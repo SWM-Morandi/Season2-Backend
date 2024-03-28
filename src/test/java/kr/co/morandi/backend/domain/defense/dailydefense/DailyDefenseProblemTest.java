@@ -1,19 +1,18 @@
 package kr.co.morandi.backend.domain.defense.dailydefense;
 
-import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
-import kr.co.morandi.backend.domain.problem.model.Problem;
+import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")

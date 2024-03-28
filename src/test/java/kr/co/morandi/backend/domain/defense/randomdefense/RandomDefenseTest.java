@@ -1,15 +1,15 @@
 package kr.co.morandi.backend.domain.defense.randomdefense;
 
-import kr.co.morandi.backend.domain.defense.random.model.RandomDefense;
-import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCriteria;
+import kr.co.morandi.backend.defense_information.domain.model.randomdefense.model.RandomDefense;
+import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B1;
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.B1;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.B5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

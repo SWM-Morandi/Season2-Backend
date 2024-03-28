@@ -1,19 +1,19 @@
 package kr.co.morandi.backend.domain.record.stagerecord;
 
-import kr.co.morandi.backend.domain.defense.random.model.randomcriteria.RandomCriteria;
-import kr.co.morandi.backend.domain.defense.stagedefense.model.StageDefense;
-import kr.co.morandi.backend.domain.member.model.Member;
-import kr.co.morandi.backend.domain.problem.model.Problem;
-import kr.co.morandi.backend.domain.record.stagerecord.model.StageRecord;
+import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
+import kr.co.morandi.backend.defense_information.domain.model.stagedefense.model.StageDefense;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import kr.co.morandi.backend.defense_record.domain.model.stagedefense_record.StageRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B1;
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
-import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.B1;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.B5;
+import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")

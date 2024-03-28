@@ -1,10 +1,12 @@
 package kr.co.morandi.backend.infrastructure.persistence.defense.dailydefense;
 
-import kr.co.morandi.backend.domain.defense.Defense;
-import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
-import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefenseProblem;
-import kr.co.morandi.backend.domain.problem.model.Problem;
-import kr.co.morandi.backend.infrastructure.persistence.problem.ProblemRepository;
+import kr.co.morandi.backend.defense_information.domain.model.defense.Defense;
+import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
+import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
+import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
+import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.*;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 

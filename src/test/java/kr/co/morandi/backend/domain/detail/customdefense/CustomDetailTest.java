@@ -1,11 +1,11 @@
 package kr.co.morandi.backend.domain.detail.customdefense;
 
-import kr.co.morandi.backend.domain.defense.customdefense.model.CustomDefense;
-import kr.co.morandi.backend.domain.defense.customdefense.model.CustomDefenseProblem;
-import kr.co.morandi.backend.domain.detail.customdefense.model.CustomDetail;
-import kr.co.morandi.backend.domain.member.model.Member;
-import kr.co.morandi.backend.domain.problem.model.Problem;
-import kr.co.morandi.backend.domain.record.customdefenserecord.model.CustomRecord;
+import kr.co.morandi.backend.defense_information.domain.model.customdefense.CustomDefense;
+import kr.co.morandi.backend.defense_information.domain.model.customdefense.CustomDefenseProblem;
+import kr.co.morandi.backend.defense_record.domain.model.customdefense_record.CustomDetail;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import kr.co.morandi.backend.defense_record.domain.model.customdefense_record.CustomRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -13,11 +13,11 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static kr.co.morandi.backend.domain.defense.customdefense.model.DefenseTier.GOLD;
-import static kr.co.morandi.backend.domain.defense.customdefense.model.Visibility.OPEN;
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.S5;
-import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.DefenseTier.GOLD;
+import static kr.co.morandi.backend.defense_information.domain.model.customdefense.Visibility.OPEN;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.B5;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.S5;
+import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 

@@ -1,11 +1,11 @@
 package kr.co.morandi.backend.infrastructure.adapter.defensesession;
 
-import kr.co.morandi.backend.application.port.out.defensemanagement.defensesession.DefenseSessionPort;
-import kr.co.morandi.backend.domain.defensemanagement.session.model.DefenseSession;
-import kr.co.morandi.backend.domain.member.model.Member;
-import kr.co.morandi.backend.infrastructure.persistence.defensemanagement.session.DefenseSessionRepository;
-import kr.co.morandi.backend.infrastructure.persistence.defensemanagement.sessiondetail.SessionDetailRepository;
-import kr.co.morandi.backend.infrastructure.persistence.member.MemberRepository;
+import kr.co.morandi.backend.defense_management.application.outputport.session.DefenseSessionPort;
+import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
+import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.SessionDetailRepository;
+import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
-import static kr.co.morandi.backend.domain.defense.DefenseType.DAILY;
-import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType.DAILY;
+import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest

@@ -1,11 +1,11 @@
 package kr.co.morandi.backend.domain.detail.dailydefense;
 
-import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefense;
-import kr.co.morandi.backend.domain.defense.dailydefense.model.DailyDefenseProblem;
-import kr.co.morandi.backend.domain.detail.dailydefense.model.DailyDetail;
-import kr.co.morandi.backend.domain.member.model.Member;
-import kr.co.morandi.backend.domain.problem.model.Problem;
-import kr.co.morandi.backend.domain.record.dailyrecord.model.DailyRecord;
+import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
+import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
+import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyDetail;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
-import static kr.co.morandi.backend.domain.defense.tier.model.ProblemTier.B5;
-import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
-import static kr.co.morandi.backend.domain.problem.model.ProblemStatus.ACTIVE;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.B5;
+import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
+import static kr.co.morandi.backend.problem_information.domain.model.problem.ProblemStatus.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 

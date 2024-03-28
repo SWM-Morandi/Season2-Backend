@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.infrastructure.persistence.member;
 
-import kr.co.morandi.backend.domain.member.model.Member;
-import kr.co.morandi.backend.infrastructure.persistence.member.MemberRepository;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
-import static kr.co.morandi.backend.domain.member.model.SocialType.GOOGLE;
+import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
