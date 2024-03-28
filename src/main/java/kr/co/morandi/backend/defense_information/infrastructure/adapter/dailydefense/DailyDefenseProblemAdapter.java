@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.defense_information.infrastructure.adapter.dailydefense;
 
-import kr.co.morandi.backend.defense_information.application.outputport.dailydefense.DailyDefenseProblemPort;
+import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefenseProblemPort;
 import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
 import kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;

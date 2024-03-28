@@ -1,8 +1,8 @@
 package kr.co.morandi.backend.defense_management.application.service.session;
 
-import kr.co.morandi.backend.defense_information.application.outputport.dailydefense.DailyDefensePort;
-import kr.co.morandi.backend.defense_management.application.outputport.session.DefenseSessionPort;
-import kr.co.morandi.backend.defense_record.application.outputport.dailyrecord.DailyRecordPort;
+import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
+import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
+import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;

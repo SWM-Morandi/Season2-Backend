@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.application.port.out.defensemanagement.defensesession;
 
-import kr.co.morandi.backend.defense_management.application.outputport.session.DefenseSessionPort;
+import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;

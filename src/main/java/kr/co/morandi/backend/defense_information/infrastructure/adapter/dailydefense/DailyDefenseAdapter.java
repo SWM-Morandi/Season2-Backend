@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.defense_information.infrastructure.adapter.dailydefense;
 
-import kr.co.morandi.backend.defense_information.application.outputport.dailydefense.DailyDefensePort;
+import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
 import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;

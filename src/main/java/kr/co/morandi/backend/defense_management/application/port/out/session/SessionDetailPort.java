@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.application.outputport.session;
+package kr.co.morandi.backend.defense_management.application.port.out.session;
 
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_management.domain.model.session.SessionDetail;

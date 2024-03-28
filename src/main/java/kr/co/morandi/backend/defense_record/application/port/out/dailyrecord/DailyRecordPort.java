@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_record.application.outputport.dailyrecord;
+package kr.co.morandi.backend.defense_record.application.port.out.dailyrecord;
 
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;

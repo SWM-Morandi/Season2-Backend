@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_information.application.outputport.dailydefense;
+package kr.co.morandi.backend.defense_information.application.port.out.dailydefense;
 
 import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;

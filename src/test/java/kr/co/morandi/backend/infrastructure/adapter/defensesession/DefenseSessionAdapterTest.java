@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.infrastructure.adapter.defensesession;
 
-import kr.co.morandi.backend.defense_management.application.outputport.session.DefenseSessionPort;
+import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;

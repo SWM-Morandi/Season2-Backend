@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.domain.defense.dailydefense.service;
 
-import kr.co.morandi.backend.defense_information.application.outputport.dailydefense.DailyDefensePort;
+import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.dailydefense.DailyDefenseGenerationService;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;

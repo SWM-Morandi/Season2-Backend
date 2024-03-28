@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.infrastructure.adapter.defense.record.dailyrecord;
 
-import kr.co.morandi.backend.defense_record.application.outputport.dailyrecord.DailyRecordPort;
+import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
