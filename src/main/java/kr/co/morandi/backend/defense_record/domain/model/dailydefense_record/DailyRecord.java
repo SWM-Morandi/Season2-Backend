@@ -29,6 +29,22 @@ public class DailyRecord extends Record<DailyDetail> {
     private Long solvedCount;
     private Integer problemCount;
 
+    public void solveProblem(Long problemNumber, String code) {
+        super.getDetails().stream()
+                .filter(detail -> detail.getProblemNumber().equals(problemNumber))
+                .findFirst()
+                .ifPresent(detail -> {
+                    detail.solveProblem(code);
+                    this.solvedCount++;
+                });
+    }
+
+    public Set<Long> getSolvedProblemNumbers() {
+        return super.getDetails().stream()
+                .filter(DailyDetail::getIsSolved)
+                .map(DailyDetail::getProblemNumber)
+                .collect(Collectors.toSet());
+    }
     public boolean isSolvedProblem(Long problemNumber) {
         return super.getDetails().stream()
                 .anyMatch(detail -> detail.getProblemNumber().equals(problemNumber)
@@ -71,6 +87,7 @@ public class DailyRecord extends Record<DailyDetail> {
         super(date, defense, member, problems);
         this.solvedCount = 0L;
         this.problemCount = problems.size();
+        defense.increaseAttemptCount();
     }
 
 }
