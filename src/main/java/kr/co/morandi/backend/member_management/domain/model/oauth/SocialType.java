@@ -1,8 +1,7 @@
-package kr.co.morandi.backend.member_management.domain.model.member;
+package kr.co.morandi.backend.member_management.domain.model.oauth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
 @Getter
 @RequiredArgsConstructor
 public enum SocialType {

@@ -1,7 +1,5 @@
 package kr.co.morandi.backend.member_management.domain.model.member;
 
-import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
