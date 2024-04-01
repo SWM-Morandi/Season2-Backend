@@ -1,6 +1,5 @@
 package kr.co.morandi.backend.member_management.domain.service.oauth.google;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.AuthErrorCode;
@@ -32,7 +31,7 @@ public class GoogleService implements OAuthService {
     @Value("${oauth2.google.client-secret}")
     private String googleClientSecret;
 
-    @Value("${oauth2.google.redirect-url}")
+    @Value("${oauth2.google.redirect-callback-url}")
     private String googleClientRedirectUrl;
 
     @Value("${oauth2.google.api-token-url}")
@@ -90,7 +89,6 @@ public class GoogleService implements OAuthService {
                 .toEntity(String.class);
 
         ResponseEntity<String> responseEntity = responseEntityMono.block();
-
         try {
             GoogleUserDto googleUserDto = objectMapper.readValue(responseEntity.getBody(), GoogleUserDto.class);
             googleUserDto.setType(SocialType.GOOGLE);

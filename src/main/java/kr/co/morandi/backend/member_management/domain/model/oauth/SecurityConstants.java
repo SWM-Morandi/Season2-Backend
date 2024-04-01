@@ -2,7 +2,6 @@ package kr.co.morandi.backend.member_management.domain.model.oauth;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -45,7 +44,7 @@ public class SecurityConstants {
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
             return keyFactory.generatePrivate(keySpec);
         }
-        catch (NoSuchAlgorithmException | InvalidKeySpecException e){
+        catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
     }
@@ -59,7 +58,7 @@ public class SecurityConstants {
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
             return keyFactory.generatePublic(keySpec);
         }
-        catch (NoSuchAlgorithmException | InvalidKeySpecException e){
+        catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
     }

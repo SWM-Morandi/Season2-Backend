@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.member_management.domain.service.member;
 
-import kr.co.morandi.backend.member_management.application.port.out.member.CreateMemberPort;
+import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.domain.model.oauth.TokenDto;
 import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
@@ -16,10 +16,10 @@ public class MemberLoginService {
 
     private final JwtProvider jwtProvider;
 
-    private final CreateMemberPort createMemberPort;
+    private final MemberPort memberPort;
 
     public TokenDto loginMember(UserDto userDto) {
-        Member member = createMemberPort.createMember(userDto.getEmail(), userDto.getSocialType());
+        Member member = memberPort.createMember(userDto.getEmail(), userDto.getType());
         return jwtProvider.getTokens(member);
     }
 }

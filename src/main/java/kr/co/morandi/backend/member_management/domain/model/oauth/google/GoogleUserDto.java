@@ -16,6 +16,7 @@ public class GoogleUserDto implements UserDto {
     private String id;
     private String email;
     private String verified_email;
+    private String hd;
     private String name;
     private String given_name;
     private String family_name;
@@ -24,7 +25,7 @@ public class GoogleUserDto implements UserDto {
     private SocialType type;
 
     @Override
-    public SocialType getSocialType() {
+    public SocialType getType() {
         return type;
     }
 
