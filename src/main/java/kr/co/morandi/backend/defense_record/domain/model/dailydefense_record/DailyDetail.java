@@ -21,6 +21,7 @@ public class DailyDetail extends Detail {
 
     Long problemNumber;
 
+
     private DailyDetail(Member member, Long problemNumber, Problem problem, Record<?> records, Defense defense) {
         super(member, problem, records, defense);
         this.problemNumber = problemNumber;

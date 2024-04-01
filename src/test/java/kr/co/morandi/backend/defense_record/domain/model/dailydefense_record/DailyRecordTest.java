@@ -21,11 +21,67 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Pro
 import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
 class DailyRecordTest {
 
+    @DisplayName("오늘의 문제를 정답처리 하면 푼 total 문제 수가 증가하고, 푼 시간이 기록된다.")
+    @Test
+    void solveProblem() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+
+        // when
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+
+
+        // then
+        assertThat(dailyRecord)
+                .extracting("totalSolvedTime", "solvedCount")
+                .contains(
+                        15 * 60L, 1L
+                );
+        assertThat(dailyRecord.getDetails()).hasSize(1)
+                .extracting("isSolved", "solvedTime")
+                .contains(
+                        tuple(true, 15 * 60L)
+                );
+    }
+
+    @DisplayName("이미 정답처리된 문제를 정답 solved하려하면 바뀌지 않는다.")
+    @Test
+    void solveProblemWhenAlreadySolved() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+
+        // when
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 20, 0));
+
+
+
+        // then
+        assertThat(dailyRecord)
+                .extracting("totalSolvedTime", "solvedCount")
+                .contains(
+                        15 * 60L, 1L
+                );
+        assertThat(dailyRecord.getDetails()).hasSize(1)
+                .extracting("isSolved", "solvedTime")
+                .contains(
+                        tuple(true, 15 * 60L)
+                );
+    }
     @DisplayName("풀어낸 문제들에 대한 문제번호 목록을 반환할 수 있다.")
     @Test
     void getSolvedProblemNumbers() {
@@ -36,7 +92,7 @@ class DailyRecordTest {
         Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
         dailyRecord.tryMoreProblem(getProblems(dailyDefense, 3L));
-        dailyRecord.solveProblem(2L, "solvedCode");
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
 
         // when
         final Set<Long> solvedProblemNumbers = dailyRecord.getSolvedProblemNumbers();

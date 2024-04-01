@@ -7,5 +7,4 @@ import java.time.LocalDateTime;
 
 public interface DailyDefenseUseCase {
     DailyDefenseInfoResponse getDailyDefenseInfo(Member member, LocalDateTime requestDateTime);
-    void getDailyDefenseTopRank();
 }

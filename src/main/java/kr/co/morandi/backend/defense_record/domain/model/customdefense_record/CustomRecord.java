@@ -21,7 +21,7 @@ import java.util.Map;
 @Getter
 @DiscriminatorValue("CustomRecord")
 public class CustomRecord extends Record<CustomDetail> {
-    private Long totalSolvedTime;
+
     private Integer solvedCount;
     private Integer problemCount;
     @Override
@@ -30,7 +30,6 @@ public class CustomRecord extends Record<CustomDetail> {
     }
     private CustomRecord(CustomDefense customDefense, Member member, LocalDateTime testDate, Map<Long, Problem> problems) {
         super(testDate, customDefense, member, problems);
-        this.totalSolvedTime = 0L;
         this.solvedCount = 0;
         this.problemCount = customDefense.getProblemCount();
     }

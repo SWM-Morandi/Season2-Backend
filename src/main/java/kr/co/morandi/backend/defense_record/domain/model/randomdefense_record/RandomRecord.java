@@ -21,16 +21,14 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("RandomDefenseRecord")
 public class RandomRecord extends Record<RandomDetail> {
-    private Long totalSolvedTime;
+
     private Integer solvedCount;
     private Integer problemCount;
 
-    private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
     private static final Integer INITIAL_SOLVED_COUNT = 0;
 
     private RandomRecord(LocalDateTime testDate, RandomDefense randomDefense, Member member, Map<Long, Problem> problems) {
         super(testDate, randomDefense, member, problems);
-        this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;
         this.solvedCount = INITIAL_SOLVED_COUNT;
         this.problemCount = problems.size();
     }

@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
@@ -39,16 +41,25 @@ public abstract class Detail extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
 
+    private Long solvedTime;
+
     private static final Long INITIAL_SUBMIT_COUNT = 0L;
+    private static final Long INITIAL_SOLVED_TIME = 0L;
     private static final Boolean INITIAL_IS_SOLVED = false;
 
-    public void solveProblem(String solvedCode) {
+    public boolean solveProblem(String solvedCode, Long solvedTime) {
+        if(this.isSolved) {
+            return false;
+        }
         this.isSolved = true;
         this.solvedCode = solvedCode;
+        this.solvedTime = solvedTime;
+        return true;
     }
     protected Detail(Member member, Problem problem, Record<?> records, Defense defense) {
         this.isSolved = INITIAL_IS_SOLVED;
         this.submitCount = INITIAL_SUBMIT_COUNT;
+        this.solvedTime = INITIAL_SOLVED_TIME;
         this.solvedCode = null;
         this.defense = defense;
         this.record = records;

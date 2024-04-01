@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +30,18 @@ public class DailyRecord extends Record<DailyDetail> {
     private Long solvedCount;
     private Integer problemCount;
 
-    public void solveProblem(Long problemNumber, String code) {
+    public void solveProblem(Long problemNumber, String code, LocalDateTime solvedAt) {
         super.getDetails().stream()
                 .filter(detail -> detail.getProblemNumber().equals(problemNumber))
                 .findFirst()
                 .ifPresent(detail -> {
-                    detail.solveProblem(code);
-                    this.solvedCount++;
+
+                    Long solvedTime = calculateSolvedTime(solvedAt);
+
+                    if(detail.solveProblem(code, solvedTime)) {
+                        ++this.solvedCount;
+                        super.addTotalSolvedTime(solvedTime);
+                    }
                 });
     }
 
@@ -90,4 +96,7 @@ public class DailyRecord extends Record<DailyDetail> {
         defense.increaseAttemptCount();
     }
 
+    private long calculateSolvedTime(LocalDateTime solvedAt) {
+        return Duration.between(super.getTestDate(), solvedAt).getSeconds();
+    }
 }

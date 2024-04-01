@@ -91,7 +91,7 @@ class DailyDefenseUseCaseImplTest {
         LocalDateTime requestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
 
         final DailyRecord dailyRecord = createDailyRecord(dailyDefense, member, 2L, requestTime);
-        dailyRecord.solveProblem(2L, "example");
+        dailyRecord.solveProblem(2L, "example", requestTime.plusHours(1));
         dailyRecordPort.saveDailyRecord(dailyRecord);
 
         // when

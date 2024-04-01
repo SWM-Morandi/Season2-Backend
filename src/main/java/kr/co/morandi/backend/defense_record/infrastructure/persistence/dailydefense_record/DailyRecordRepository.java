@@ -2,10 +2,12 @@ package kr.co.morandi.backend.defense_record.infrastructure.persistence.dailydef
 
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> {
@@ -30,5 +32,14 @@ public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> 
             and CAST(dr.testDate as localdate) = :date
      """)
     Optional<DailyRecord> findDailyRecordByRecordId(Member member, Long recordId, LocalDate date);
-
+    /*
+    * Paging 처리이기 때문에 fetch join을 사용하지 않는다.
+    * */
+    @Query("""
+            select dr
+            from DailyRecord dr
+            where CAST(dr.testDate as localdate) = :requestDate
+            order by dr.solvedCount desc, dr.totalSolvedTime asc, dr.recordId asc
+     """)
+    List<DailyRecord> getDailyRecordsRankByDate(LocalDate requestDate, Pageable pageable);
 }

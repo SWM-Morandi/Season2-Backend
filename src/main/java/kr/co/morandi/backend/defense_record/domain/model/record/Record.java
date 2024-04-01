@@ -40,12 +40,20 @@ public abstract class Record<T extends Detail> extends BaseEntity {
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, targetEntity = Detail.class)
     private List<T> details = new ArrayList<>();
 
+    private Long totalSolvedTime;
+
+    private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
+
+    public void addTotalSolvedTime(Long totalSolvedTime) {
+        this.totalSolvedTime += totalSolvedTime;
+    }
     protected abstract T createDetail(Member member, Long sequenceNumber, Problem problem, Record<T> records, Defense defense);
 
     protected Record(LocalDateTime testDate, Defense defense, Member member, Map<Long, Problem> problems) {
         this.testDate = testDate;
         this.defense = defense;
         this.member = member;
+        this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;
         this.details = problems.entrySet().stream()
                 .map(problem -> this.createDetail(member, problem.getKey(), problem.getValue(), this, defense))
                 .collect(Collectors.toCollection(ArrayList::new));

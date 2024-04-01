@@ -38,9 +38,4 @@ public class DailyDefenseUseCaseImpl implements DailyDefenseUseCase {
 
         return DailyDefenseInfoResponse.fromNonAttempted(dailyDefense);
     }
-
-    @Override
-    public void getDailyDefenseTopRank() {
-
-    }
 }
