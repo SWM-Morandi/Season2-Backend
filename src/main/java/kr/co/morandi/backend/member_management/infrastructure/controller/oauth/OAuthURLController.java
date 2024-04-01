@@ -15,7 +15,6 @@ public class OAuthURLController {
     private String googleRedirectUrl;
     @GetMapping("/google")
     public String googleRedirect() {
-        System.out.println("url : " + googleRedirectUrl);
         return "redirect:" + googleRedirectUrl;
     }
 }
