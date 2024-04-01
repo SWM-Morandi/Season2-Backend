@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_record.application;
+package kr.co.morandi.backend.defense_record.application.service;
 
 import kr.co.morandi.backend.defense_record.application.dto.DailyDefenseRankPageResponse;
 import kr.co.morandi.backend.defense_record.application.dto.DailyDetailRankResponse;
@@ -30,7 +30,7 @@ public class DailyRecordRankUseCaseImpl implements DailyRecordRankUseCase {
 
         // 등수 계산
         // TODO 동점자 처리 필요
-        AtomicLong initialRank = new AtomicLong(page * size + 1);
+        AtomicLong initialRank = new AtomicLong((long) page * size + 1);
 
         final List<DailyRecordRankResponse> dailyRecordRanks = dailyRecords.stream()
                 .map(dr -> {
