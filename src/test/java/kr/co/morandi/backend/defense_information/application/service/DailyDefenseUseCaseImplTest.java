@@ -86,6 +86,7 @@ class DailyDefenseUseCaseImplTest {
     @Test
     void getDailyDefenseInfoWithMemberAndRecord() {
         // given
+
         final DailyDefense dailyDefense = createDailyDefense(LocalDate.of(2021, 10, 1), "오늘의 문제 테스트");
         Member member = createMember();
         LocalDateTime requestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
