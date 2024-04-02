@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.defense_information.application.service;
 
 import kr.co.morandi.backend.defense_information.application.dto.response.DailyDefenseInfoResponse;
+import kr.co.morandi.backend.defense_information.application.mapper.dailydefense.DailyDefenseInfoMapper;
 import kr.co.morandi.backend.defense_information.application.port.in.DailyDefenseUseCase;
 import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
@@ -32,10 +33,10 @@ public class DailyDefenseUseCaseImpl implements DailyDefenseUseCase {
             Optional<DailyRecord> maybeDailyRecord = dailyRecordPort.findDailyRecord(member, requestDateTime.toLocalDate());
             if(maybeDailyRecord.isPresent()) {
                 DailyRecord dailyRecord = maybeDailyRecord.get();
-                return DailyDefenseInfoResponse.ofAttempted(dailyDefense, dailyRecord);
+                return DailyDefenseInfoMapper.ofAttempted(dailyDefense, dailyRecord);
             }
         }
 
-        return DailyDefenseInfoResponse.fromNonAttempted(dailyDefense);
+        return DailyDefenseInfoMapper.fromNonAttempted(dailyDefense);
     }
 }

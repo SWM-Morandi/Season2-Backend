@@ -1,5 +1,6 @@
-package kr.co.morandi.backend.defense_information.application.dto.response;
+package kr.co.morandi.backend.defense_information.application.mapper.dailydefense;
 
+import kr.co.morandi.backend.defense_information.application.dto.response.DailyDefenseInfoResponse;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
@@ -23,7 +24,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 
 
 @ActiveProfiles("test")
-class DailyDefenseInfoResponseTest {
+class DailyDefenseInfoMapperTest {
 
     @DisplayName("시도한 적이 있는 DailyDefense Response DTO를 반환할 수 있다.")
     @Test
@@ -32,7 +33,7 @@ class DailyDefenseInfoResponseTest {
         DailyDefense dailyDefense = createDailyDefense();
 
         // when
-        DailyDefenseInfoResponse response = DailyDefenseInfoResponse.fromNonAttempted(dailyDefense);
+        DailyDefenseInfoResponse response = DailyDefenseInfoMapper.fromNonAttempted(dailyDefense);
 
         // then
         assertThat(response)
@@ -62,7 +63,7 @@ class DailyDefenseInfoResponseTest {
 
 
         // when
-        DailyDefenseInfoResponse response = DailyDefenseInfoResponse.ofAttempted(dailyDefense, dailyRecord);
+        DailyDefenseInfoResponse response = DailyDefenseInfoMapper.ofAttempted(dailyDefense, dailyRecord);
 
         // then
         assertThat(response)
