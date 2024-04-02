@@ -2,7 +2,7 @@ package kr.co.morandi.backend.defense_management.application.service.dailydefens
 
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
-import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseServiceResponse;
+import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.application.service.session.DailyDefenseManagementService;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -101,7 +101,7 @@ class DailyDefenseManagementServiceTest {
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 2, 12, 0, 0);
 
         // when
-        final StartDailyDefenseServiceResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member, retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member, retryRequestTime);
 
 
         // then
@@ -139,7 +139,7 @@ class DailyDefenseManagementServiceTest {
 
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
         // when
-        final StartDailyDefenseServiceResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member, retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member, retryRequestTime);
 
         // then
         assertAll(
@@ -173,7 +173,7 @@ class DailyDefenseManagementServiceTest {
 
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
         // when
-        final StartDailyDefenseServiceResponse response = dailyDefenseManagementService.startDailyDefense(request, member, retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member, retryRequestTime);
 
         // then
         assertAll(
@@ -203,7 +203,7 @@ class DailyDefenseManagementServiceTest {
                 .build();
 
         // when
-        final StartDailyDefenseServiceResponse response = dailyDefenseManagementService.startDailyDefense(request, member, requestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member, requestTime);
 
         // then
 

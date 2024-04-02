@@ -1,12 +1,13 @@
 package kr.co.morandi.backend.defense_management.application.service.session;
 
 import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
+import kr.co.morandi.backend.defense_management.application.mapper.session.StartDailyDefenseMapper;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
-import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseServiceResponse;
+import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -32,7 +33,7 @@ public class DailyDefenseManagementService {
     private final DefenseSessionPort defenseSessionPort;
 
     @Transactional
-    public StartDailyDefenseServiceResponse startDailyDefense(StartDailyDefenseServiceRequest request, Member member, LocalDateTime requestTime) {
+    public StartDailyDefenseResponse startDailyDefense(StartDailyDefenseServiceRequest request, Member member, LocalDateTime requestTime) {
         Long problemNumber = request.getProblemNumber();
 
         // 세션이랑 세션 Detail을 찾아서 응시 기록이 있는지 살펴보기
@@ -60,7 +61,7 @@ public class DailyDefenseManagementService {
         final DefenseSession savedDefenseSession = defenseSessionPort.saveDefenseSession(defenseSession);
 
         // 문제 목록을 DefenseProblemResponse DTO로 변환
-        return StartDailyDefenseServiceResponse.from(tryProblem, dailyDefense, savedDefenseSession, dailyRecord);
+        return StartDailyDefenseMapper.of(tryProblem, dailyDefense, savedDefenseSession, dailyRecord);
     }
     private DefenseSession createNewSession(Member member, LocalDateTime now, DailyDefense dailyDefense, Map<Long, Problem> tryProblem) {
         DailyRecord dailyRecord = DailyRecord.tryDefense(now, dailyDefense, member, tryProblem);
