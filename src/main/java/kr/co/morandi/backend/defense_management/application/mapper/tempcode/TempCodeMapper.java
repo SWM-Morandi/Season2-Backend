@@ -31,12 +31,10 @@ public class TempCodeMapper {
         Map<Language, TempCodeResponse> tempCodeMap = new HashMap<>(intialTempCodeMap);
 
         // tempCode를 순회하면서 tempCodeMap에 해당 언어의 TempCodeResponse를 넣어준다.
-        tempCodes.forEach(tempCode -> {
-            tempCodeMap.replace(tempCode.getLanguage(), TempCodeResponse.builder()
-                    .language(tempCode.getLanguage())
-                    .code(tempCode.getCode())
-                    .build());
-        });
+        tempCodes.forEach(tempCode -> tempCodeMap.replace(tempCode.getLanguage(), TempCodeResponse.builder()
+                .language(tempCode.getLanguage())
+                .code(tempCode.getCode())
+                .build()));
 
         return new HashSet<>(tempCodeMap.values());
     }
