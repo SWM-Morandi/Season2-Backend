@@ -8,11 +8,14 @@ import kr.co.morandi.backend.defense_management.domain.model.session.SessionDeta
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DefenseProblemMapper {
 
     public static List<DefenseProblemResponse> of(Map<Long, Problem> tryProblem, DefenseSession defenseSession, DailyRecord dailyRecord) {

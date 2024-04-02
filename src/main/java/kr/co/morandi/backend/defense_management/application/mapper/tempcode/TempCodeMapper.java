@@ -3,10 +3,14 @@ package kr.co.morandi.backend.defense_management.application.mapper.tempcode;
 import kr.co.morandi.backend.defense_management.application.response.tempcode.TempCodeResponse;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.TempCode;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TempCodeMapper {
     private static final Map<Language, TempCodeResponse> intialTempCodeMap =
             Arrays.stream(Language.values())

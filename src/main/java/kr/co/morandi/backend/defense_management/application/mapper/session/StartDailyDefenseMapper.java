@@ -6,9 +6,12 @@ import kr.co.morandi.backend.defense_management.application.response.session.Sta
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StartDailyDefenseMapper {
 
     public static StartDailyDefenseResponse of(Map<Long, Problem> tryProblem,
