@@ -15,17 +15,21 @@ public class MemberAdapter implements MemberPort {
 
     private final MemberRepository memberRepository;
     @Override
-    public Member createMember(String email, SocialType type) {
+    public Member saveMember(Member member) {
+        return memberRepository.save(member);
+    }
+    @Override
+    public Member findMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new MorandiException(AuthErrorCode.MEMBER_NOT_FOUND));
+    }
+    @Override
+    public Member findMemberByEmail(String email, SocialType type) {
         return memberRepository.findByEmail(email)
                 .orElseGet(() -> memberRepository.save(
                         Member.builder()
                                 .email(email)
                                 .socialType(type)
                                 .build()));
-    }
-    @Override
-    public Member findMember(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(() -> new MorandiException(AuthErrorCode.MEMBER_NOT_FOUND));
     }
 }

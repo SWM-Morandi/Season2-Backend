@@ -4,6 +4,7 @@ import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.domain.model.oauth.SocialType;
 
 public interface MemberPort {
-    Member createMember(String email, SocialType type);
-    Member findMember(Long memberId);
+    Member saveMember(Member member);
+    Member findMemberById(Long memberId);
+    Member findMemberByEmail(String email, SocialType type);
 }

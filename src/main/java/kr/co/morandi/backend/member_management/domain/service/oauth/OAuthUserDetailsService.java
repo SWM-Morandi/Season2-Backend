@@ -16,7 +16,7 @@ public class OAuthUserDetailsService implements UserDetailsService {
     private final MemberPort memberPort;
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
-        Member member = memberPort.findMember(Long.parseLong(memberId));
+        Member member = memberPort.findMemberById(Long.parseLong(memberId));
         return new OAuthDetails(memberId, member.getBaekjoonId());
     }
 }
