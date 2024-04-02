@@ -5,6 +5,5 @@ import jakarta.servlet.http.Cookie;
 import kr.co.morandi.backend.member_management.domain.model.oauth.TokenDto;
 
 public interface LoginUseCase {
-    TokenDto login(String type, String authenticationCode);
-    Cookie getCookie(String accessToken);
+    Cookie generateLoginCookie(String type, String authenticationCode);
 }

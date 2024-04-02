@@ -17,19 +17,24 @@ public class LoginService implements LoginUseCase {
     private final OAuthServiceFactory oAuthServiceFactory;
 
     private final MemberLoginService memberLoginService;
+    private static int COOKIE_AGE = 24 * 60 * 60;
     @Override
-    public TokenDto login(String type, String authenticationCode) {
+    public Cookie generateLoginCookie(String type, String authenticationCode) {
         OAuthService oAuthService = oAuthServiceFactory.getServiceByType(type);
-        String accessToken = oAuthService.getAccessToken(authenticationCode);
-        UserDto userDto = oAuthService.getUserInfo(accessToken);
-        return memberLoginService.loginMember(userDto);
+        String oAuthAccessToken = oAuthService.getAccessToken(authenticationCode);
+        UserDto userDto = oAuthService.getUserInfo(oAuthAccessToken);
+        TokenDto tokenDto = memberLoginService.loginMember(userDto);
+
+        String accessToken = tokenDto.getAccessToken();
+        Cookie jwtCookie = getCookie(accessToken);
+        return jwtCookie;
     }
-    public Cookie getCookie(String accessToken) {
+    private static Cookie getCookie(String accessToken) {
         Cookie jwtCookie = new Cookie("accessToken", accessToken);
         jwtCookie.setHttpOnly(true);
         jwtCookie.setDomain("localhost");
         jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(24 * 60 * 60);
+        jwtCookie.setMaxAge(COOKIE_AGE);
         return jwtCookie;
     }
 }

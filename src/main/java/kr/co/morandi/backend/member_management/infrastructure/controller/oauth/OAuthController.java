@@ -26,10 +26,7 @@ public class OAuthController {
     public ResponseEntity<String> OAuthLogin(@PathVariable String type,
                                              @RequestParam String code,
                                              HttpServletResponse response) {
-        String accessToken = loginUseCase.login(type, code).getAccessToken();
-        Cookie cookie = loginUseCase.getCookie(accessToken);
-        response.addCookie(cookie);
-
+        response.addCookie(loginUseCase.generateLoginCookie(type, code));
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(redirectUrl))
                 .build();
