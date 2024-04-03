@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DailyDefenseProblemInfoResponse {
 
     private Long problemNumber;
@@ -17,6 +16,8 @@ public class DailyDefenseProblemInfoResponse {
     private ProblemTier difficulty;
     private Long solvedCount;
     private Long submitCount;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean isSolved;
 
     @Builder
@@ -30,3 +31,5 @@ public class DailyDefenseProblemInfoResponse {
         this.isSolved = isSolved;
     }
 }
+
+
