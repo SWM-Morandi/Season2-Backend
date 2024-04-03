@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class GoogleUserDto implements UserDto {
 
@@ -27,6 +25,9 @@ public class GoogleUserDto implements UserDto {
     @Override
     public SocialType getType() {
         return type;
+    }
+    public void setSocialType(SocialType type) {
+        this.type = type;
     }
 
     @Override

@@ -93,7 +93,7 @@ public class GoogleService implements OAuthService {
                 .retrieve()
                 .bodyToMono(GoogleUserDto.class)
                 .block();
-        googleUserDto.setType(SocialType.GOOGLE);
+        googleUserDto.setSocialType(SocialType.GOOGLE);
         return googleUserDto;
     }
 }
