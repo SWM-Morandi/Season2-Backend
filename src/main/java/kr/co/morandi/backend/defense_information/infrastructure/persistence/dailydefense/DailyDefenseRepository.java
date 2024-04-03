@@ -14,6 +14,7 @@ public interface DailyDefenseRepository extends JpaRepository<DailyDefense, Long
         SELECT dd
         from DailyDefense dd
         left join fetch dd.dailyDefenseProblems ddp
+        left join fetch ddp.problem
         where dd.defenseType = :defenseType
         and dd.date = :date
     """)
