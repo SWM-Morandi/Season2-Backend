@@ -2,10 +2,8 @@ package kr.co.morandi.backend.member_management.domain.model.oauth.google;
 
 import kr.co.morandi.backend.member_management.domain.model.oauth.SocialType;
 import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor

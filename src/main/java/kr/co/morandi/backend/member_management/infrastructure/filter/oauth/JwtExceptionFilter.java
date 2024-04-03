@@ -12,6 +12,7 @@ import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,15 @@ import java.io.IOException;
 public class JwtExceptionFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
+
+    @Value("${oauth2.cookie.domain}")
+    private String domain;
+
+    @Value("${oauth2.cookie.path}")
+    private String path;
+
+    @Value("${oauth2.signup-url}")
+    private String signupPath;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -35,10 +45,10 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             if (e.getErrorCode().getHttpStatus() == (HttpStatus.UNAUTHORIZED)) {
                 Cookie cookie = new Cookie("accessToken", null);
                 cookie.setMaxAge(0);
-                cookie.setDomain("morandi.co.kr");
-                cookie.setPath("/");
+                cookie.setDomain(domain);
+                cookie.setPath(path);
                 response.addCookie(cookie);
-                response.sendRedirect("http://morandi.co.kr/signup");
+                response.sendRedirect(signupPath);
             }
             setErrorResponse(response, e.getErrorCode());
         } catch (Exception e) {
