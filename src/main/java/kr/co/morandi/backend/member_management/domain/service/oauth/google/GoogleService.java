@@ -44,57 +44,56 @@ public class GoogleService implements OAuthService {
     private String type;
 
     private final WebClient webClient;
-
-    private final ObjectMapper objectMapper;
     @Override
     public String getType() {
         return type;
     }
     @Override
     public String getAccessToken(String authorizationCode) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        LinkedMultiValueMap<String, String> params = getParams(authorizationCode);
+        TokenResponseDto tokenResponseDto = getTokenResponseDto(params);
+        String accessToken = tokenResponseDto.getAccess_token();
+        return accessToken;
+    }
+    private LinkedMultiValueMap<String, String> getParams(String authorizationCode) {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("code", authorizationCode);
         params.add("client_id", googleClientId);
         params.add("client_secret", googleClientSecret);
         params.add("grant_type", "authorization_code");
         params.add("redirect_uri", googleClientRedirectUrl);
-
-        Mono<ResponseEntity<String>> responseEntityMono = webClient.post()
+        return params;
+    }
+    private TokenResponseDto getTokenResponseDto(LinkedMultiValueMap<String, String> params) {
+        TokenResponseDto tokenResponseDto = webClient.post()
                 .uri(googleApiTokenUrl)
-                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromValue(params))
                 .retrieve()
-                .toEntity(String.class);
-
-        ResponseEntity<String> responseEntity = responseEntityMono.block();
-        try {
-            String accessToken = objectMapper.readValue(responseEntity.getBody(), TokenResponseDto.class).getAccess_token();
-            return accessToken;
-        } catch (Exception e) {
-            throw new MorandiException(AuthErrorCode.TOKEN_NOT_FOUND);
-        }
+                .bodyToMono(TokenResponseDto.class)
+                .block();
+        return tokenResponseDto;
     }
 
     @Override
     public UserDto getUserInfo(String accessToken) {
+        HttpHeaders headers = getBearerHeader(accessToken);
+        GoogleUserDto googleUserDto = getGoogleUserDto(headers);
+        return googleUserDto;
+    }
+    private HttpHeaders getBearerHeader(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
-
-        Mono<ResponseEntity<String>> responseEntityMono = webClient.get()
+        return headers;
+    }
+    private GoogleUserDto getGoogleUserDto(HttpHeaders headers) {
+        GoogleUserDto googleUserDto = webClient.get()
                 .uri(googleUserInfoUrl)
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
-                .toEntity(String.class);
-
-        ResponseEntity<String> responseEntity = responseEntityMono.block();
-        try {
-            GoogleUserDto googleUserDto = objectMapper.readValue(responseEntity.getBody(), GoogleUserDto.class);
-            googleUserDto.setType(SocialType.GOOGLE);
-            return googleUserDto;
-        } catch (Exception e) {
-            throw new MorandiException(AuthErrorCode.SSO_USERINFO);
-        }
+                .bodyToMono(GoogleUserDto.class)
+                .block();
+        googleUserDto.setType(SocialType.GOOGLE);
+        return googleUserDto;
     }
 }
