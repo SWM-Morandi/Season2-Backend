@@ -15,6 +15,7 @@ public enum MemberErrorCode implements ErrorCode {
     DUPLICATED_BOJ_ID(HttpStatus.CONFLICT,"이미 등록된 백준 아이디입니다.");
 
     private final HttpStatus httpStatus;
+
     private final String message;
 
 

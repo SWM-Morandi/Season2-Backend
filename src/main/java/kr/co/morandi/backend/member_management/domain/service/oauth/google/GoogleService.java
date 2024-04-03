@@ -1,8 +1,5 @@
 package kr.co.morandi.backend.member_management.domain.service.oauth.google;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.common.exception.errorcode.AuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.oauth.SocialType;
 import kr.co.morandi.backend.member_management.domain.model.oauth.TokenResponseDto;
 import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
@@ -13,12 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor

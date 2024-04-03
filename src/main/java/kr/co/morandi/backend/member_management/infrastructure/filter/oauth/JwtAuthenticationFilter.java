@@ -6,7 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.common.exception.errorcode.AuthErrorCode;
+import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthUserDetailsService;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.JwtValidator;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
         else {
-            throw new MorandiException(AuthErrorCode.INVALID_TOKEN);
+            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         }
     }
     private boolean isIgnoredURI(String uri) {
@@ -64,6 +64,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
             return accessToken.substring(7);
         }
-        throw new MorandiException(AuthErrorCode.TOKEN_NOT_FOUND);
+        throw new MorandiException(OAuthErrorCode.TOKEN_NOT_FOUND);
     }
 }

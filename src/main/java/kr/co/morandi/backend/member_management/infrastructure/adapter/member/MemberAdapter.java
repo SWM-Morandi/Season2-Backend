@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.member_management.infrastructure.adapter.member;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.common.exception.errorcode.AuthErrorCode;
+import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.domain.model.oauth.SocialType;
@@ -21,7 +21,7 @@ public class MemberAdapter implements MemberPort {
     @Override
     public Member findMemberById(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new MorandiException(AuthErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new MorandiException(OAuthErrorCode.MEMBER_NOT_FOUND));
     }
     @Override
     public Member findMemberByEmail(String email, SocialType type) {

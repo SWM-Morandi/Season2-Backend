@@ -7,7 +7,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.common.exception.errorcode.AuthErrorCode;
+import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +52,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             }
             setErrorResponse(response, e.getErrorCode());
         } catch (Exception e) {
-            setErrorResponse(response, AuthErrorCode.UNKNOWN_ERROR);
+            setErrorResponse(response, OAuthErrorCode.UNKNOWN_ERROR);
         }
     }
     private ErrorResponse makeErrorResponse(ErrorCode errorCode) {

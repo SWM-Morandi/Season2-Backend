@@ -28,28 +28,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Value("${oauth2.signup-url}")
     private String signupPath;
     @ExceptionHandler(MorandiException.class)
-    public ResponseEntity<?> MorandiExceptionHandler(MorandiException e) {
-        String message = e.getMessage();
+    public ResponseEntity<ErrorResponse> MorandiExceptionHandler(MorandiException e) {
         if (e.getErrorCode().getHttpStatus() == HttpStatus.UNAUTHORIZED) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(URI.create(signupPath));
-
-            Cookie cookie = new Cookie("accessToken", null);
-            cookie.setMaxAge(0); // 쿠키 삭제
-            cookie.setPath(path);
-            cookie.setDomain(domain);
-
-            headers.add("Set-Cookie", cookie.toString());
+            HttpHeaders headers = createUnauthorizedHeaders();
             return new ResponseEntity<>(headers, HttpStatus.FOUND);
         }
-        return handleExceptionInternal(e.getErrorCode(), message);
+        return handleExceptionInternal(e.getErrorCode());
     }
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleAllException(Exception e) {
+    public ResponseEntity<ErrorResponse> handleAllException() {
         ErrorCode errorCode = CommonErrorCode.INTERNAL_SERVER_ERROR;
         return handleExceptionInternal(errorCode);
     }
-    private ResponseEntity<?> handleExceptionInternal(ErrorCode errorCode) {
+    private HttpHeaders createUnauthorizedHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(signupPath));
+        Cookie cookie = new Cookie("accessToken", null);
+        cookie.setMaxAge(0); // 쿠키 삭제
+        cookie.setPath(path);
+        cookie.setDomain(domain);
+        headers.add("Set-Cookie", cookie.toString());
+        return headers;
+    }
+    private ResponseEntity<ErrorResponse> handleExceptionInternal(ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(makeErrorResponse(errorCode));
     }
@@ -57,16 +58,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ErrorResponse.builder()
                 .code(errorCode.name())
                 .message(errorCode.getMessage())
-                .build();
-    }
-    private ResponseEntity<Object> handleExceptionInternal(ErrorCode errorCode, String message) {
-        return ResponseEntity.status(errorCode.getHttpStatus())
-                .body(makeErrorResponse(errorCode, message));
-    }
-    private ErrorResponse makeErrorResponse(ErrorCode errorCode, String message) {
-        return ErrorResponse.builder()
-                .code(errorCode.name())
-                .message(message)
                 .build();
     }
 }

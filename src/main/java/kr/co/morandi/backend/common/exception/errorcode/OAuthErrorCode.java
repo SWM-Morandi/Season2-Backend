@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
 @Getter
-public enum AuthErrorCode implements ErrorCode {
+public enum OAuthErrorCode implements ErrorCode {
+
     MEMBER_DUPLICATED(HttpStatus.CONFLICT, "이미 가입된 사용자입니다."),
     MEMBER_NOT_FOUND(HttpStatus.UNAUTHORIZED,"사용자를 찾을 수 없습니다"),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED,"유효하지 않은 인증 정보입니다."),
@@ -21,9 +22,6 @@ public enum AuthErrorCode implements ErrorCode {
     BAEKJOON_ID_NULL(HttpStatus.UNPROCESSABLE_ENTITY,"백준 ID는 크롬 익스텐션을 통해 필수로 등록해야합니다. " ),//상태코드 422 에외처리
     INVALID_SOCIAL_TYPE(HttpStatus.BAD_REQUEST,"지원되지 않는 OAuth provider 입니다.");
 
-
     private final HttpStatus httpStatus;
     private final String message;
-
-
 }
