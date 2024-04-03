@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.domain.model.oauth;
+package kr.co.morandi.backend.member_management.domain.model.oauth.security;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

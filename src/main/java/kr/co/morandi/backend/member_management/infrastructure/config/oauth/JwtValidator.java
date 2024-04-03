@@ -3,7 +3,7 @@ package kr.co.morandi.backend.member_management.infrastructure.config.oauth;
 import io.jsonwebtoken.*;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
-import kr.co.morandi.backend.member_management.domain.model.oauth.SecurityConstants;
+import kr.co.morandi.backend.member_management.domain.model.oauth.security.SecurityConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

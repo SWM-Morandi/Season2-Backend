@@ -1,11 +1,9 @@
-package kr.co.morandi.backend.member_management.domain.model.oauth;
+package kr.co.morandi.backend.member_management.domain.model.oauth.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-public class TokenResponseDto {
+public class TokenResponse {
 
     public String token_type;
 

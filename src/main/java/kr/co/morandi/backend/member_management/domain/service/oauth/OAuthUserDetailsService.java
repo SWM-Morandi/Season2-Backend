@@ -2,7 +2,7 @@ package kr.co.morandi.backend.member_management.domain.service.oauth;
 
 import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthDetails;
+import kr.co.morandi.backend.member_management.domain.model.oauth.security.OAuthDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

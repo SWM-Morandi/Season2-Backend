@@ -2,8 +2,8 @@ package kr.co.morandi.backend.member_management.application.service;
 
 import jakarta.servlet.http.Cookie;
 import kr.co.morandi.backend.member_management.application.port.in.oauth.LoginUseCase;
-import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthServiceFactory;
-import kr.co.morandi.backend.member_management.domain.model.oauth.TokenDto;
+import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthServiceFactory;
+import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
 import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
 import kr.co.morandi.backend.member_management.domain.service.member.MemberLoginService;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthService;
@@ -30,7 +30,7 @@ public class LoginService implements LoginUseCase {
         OAuthService oAuthService = oAuthServiceFactory.getServiceByType(type);
         String oAuthAccessToken = oAuthService.getAccessToken(authenticationCode);
         UserDto userDto = oAuthService.getUserInfo(oAuthAccessToken);
-        TokenDto tokenDto = memberLoginService.loginMember(userDto);
+        AuthenticationToken tokenDto = memberLoginService.loginMember(userDto);
 
         String accessToken = tokenDto.getAccessToken();
         Cookie jwtCookie = getCookie(accessToken);

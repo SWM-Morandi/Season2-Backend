@@ -27,6 +27,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Value("${oauth2.signup-url}")
     private String signupPath;
+
     @ExceptionHandler(MorandiException.class)
     public ResponseEntity<ErrorResponse> MorandiExceptionHandler(MorandiException e) {
         if (e.getErrorCode().getHttpStatus() == HttpStatus.UNAUTHORIZED) {

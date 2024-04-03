@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.member_management.domain.service.oauth.google;
 
 import kr.co.morandi.backend.member_management.domain.model.oauth.SocialType;
-import kr.co.morandi.backend.member_management.domain.model.oauth.TokenResponseDto;
+import kr.co.morandi.backend.member_management.domain.model.oauth.response.TokenResponse;
 import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
 import kr.co.morandi.backend.member_management.domain.model.oauth.google.GoogleUserDto;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthService;
@@ -46,8 +46,8 @@ public class GoogleService implements OAuthService {
     @Override
     public String getAccessToken(String authorizationCode) {
         LinkedMultiValueMap<String, String> params = getParams(authorizationCode);
-        TokenResponseDto tokenResponseDto = getTokenResponseDto(params);
-        String accessToken = tokenResponseDto.getAccess_token();
+        TokenResponse tokenResponse = getTokenResponse(params);
+        String accessToken = tokenResponse.getAccess_token();
         return accessToken;
     }
     private LinkedMultiValueMap<String, String> getParams(String authorizationCode) {
@@ -59,15 +59,15 @@ public class GoogleService implements OAuthService {
         params.add("redirect_uri", googleClientRedirectUrl);
         return params;
     }
-    private TokenResponseDto getTokenResponseDto(LinkedMultiValueMap<String, String> params) {
-        TokenResponseDto tokenResponseDto = webClient.post()
+    private TokenResponse getTokenResponse(LinkedMultiValueMap<String, String> params) {
+        TokenResponse tokenResponse = webClient.post()
                 .uri(googleApiTokenUrl)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromValue(params))
                 .retrieve()
-                .bodyToMono(TokenResponseDto.class)
+                .bodyToMono(TokenResponse.class)
                 .block();
-        return tokenResponseDto;
+        return tokenResponse;
     }
 
     @Override

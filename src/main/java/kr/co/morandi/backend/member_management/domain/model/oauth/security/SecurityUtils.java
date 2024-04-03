@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.domain.model.oauth;
+package kr.co.morandi.backend.member_management.domain.model.oauth.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

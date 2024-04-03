@@ -2,8 +2,8 @@ package kr.co.morandi.backend.member_management.application.config.oauth;
 
 import io.jsonwebtoken.Jwts;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.domain.model.oauth.SecurityConstants;
-import kr.co.morandi.backend.member_management.domain.model.oauth.TokenDto;
+import kr.co.morandi.backend.member_management.domain.model.oauth.security.SecurityConstants;
+import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,11 @@ import java.util.Date;
 public class JwtProvider {
 
     private final SecurityConstants securityConstants;
-    public TokenDto getTokens(Member member) {
+    public AuthenticationToken getTokens(Member member) {
         String accessToken = generateAccessToken(member.getMemberId(), "USER");
         String refreshToken = generateRefreshToken(member.getMemberId());
 
-        return TokenDto.builder()
+        return AuthenticationToken.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();

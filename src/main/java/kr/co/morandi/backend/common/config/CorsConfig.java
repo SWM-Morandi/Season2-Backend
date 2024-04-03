@@ -14,15 +14,8 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080",
-                "http://morandi.co.kr",
-                "https://morandi.co.kr",
-                "http://api.morandi.co.kr",
-                "https://api.morandi.co.kr",
-                "chrome-extension://ljkmahbkojffhjdjkghaljooajocajnf",
-                "chrome-extension://cmblaiddbfchipealeopkbbnboifeedc",
-                "chrome-extension://ckepgfjakcdkjpabldbamcfcjhcdojih",
-                "chrome-extension://lfhcfibdigjcendabogbkpcofcgkhfep"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "http://morandi.co.kr",
+                "https://morandi.co.kr", "http://api.morandi.co.kr", "https://api.morandi.co.kr"));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));

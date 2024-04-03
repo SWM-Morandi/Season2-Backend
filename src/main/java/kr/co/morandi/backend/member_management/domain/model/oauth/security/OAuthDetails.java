@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.domain.model.oauth;
+package kr.co.morandi.backend.member_management.domain.model.oauth.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +11,7 @@ import java.util.Collections;
 public class OAuthDetails implements UserDetails {
 
     private String memberId;
+
     private String baekjoonId;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
