@@ -21,6 +21,6 @@ public class MemberLoginService {
     public AuthenticationToken loginMember(UserDto userDto) {
         Member member = memberPort.findMemberByEmail(userDto.getEmail(), userDto.getType());
         Member savedMember = memberPort.saveMember(member);
-        return jwtProvider.getTokens(savedMember);
+        return jwtProvider.getAuthenticationToken(savedMember);
     }
 }

@@ -1,9 +1,10 @@
 package kr.co.morandi.backend.member_management.domain.model.oauth.security;
 
+import kr.co.morandi.backend.common.exception.MorandiException;
+import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -22,9 +23,9 @@ public class SecurityConstants {
 
     private final PrivateKey privateKey;
 
-    public final Long JWT_EXPIRATION = 604800000L;
+    public final Long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 24 * 7 * 1000L;
 
-    public final Long REFRESH_TOKEN_EXPIRATION = 2592000000L;
+    public final Long REFRESH_TOKEN_EXPIRATION = 60 * 60 * 24 * 30 * 1000L;
     public SecurityConstants(@Value("${security.publicKey}") String publicKey,
                              @Value("${security.privateKey}") String privateKey) {
         this.publicKey = convertPEMToPublicKey(decoding(publicKey));
@@ -34,33 +35,34 @@ public class SecurityConstants {
         byte[] decoded = Base64.getDecoder().decode(key);
         return new String(decoded, StandardCharsets.UTF_8);
     }
-    private PrivateKey convertPEMToPrivateKey(String pemPrivateKey) {
-        String privateKeyPEM = pemPrivateKey.replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replaceAll("\\s", "");
-        byte[] encoded = Base64.getDecoder().decode(privateKeyPEM);
+    public PublicKey convertPEMToPublicKey(String publicKeyPemFile) {
+        String publicKeyPEM = extractPemKeyContent(publicKeyPemFile);
+        byte[] encodedKey = Base64.getDecoder().decode(publicKeyPEM);
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encodedKey);
+            return keyFactory.generatePublic(keySpec);
+        }
+        catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private PrivateKey convertPEMToPrivateKey(String privateKeyPemFile) {
+        String privateKeyPEM = extractPemKeyContent(privateKeyPemFile);
+        byte[] encodedKey = Base64.getDecoder().decode(privateKeyPEM);
+        try {
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encodedKey);
             return keyFactory.generatePrivate(keySpec);
         }
         catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
     }
-    public PublicKey convertPEMToPublicKey(String pemPublicKey) {
-        String publicKeyPEM = pemPublicKey.replace("-----BEGIN PUBLIC KEY-----", "")
+    private String extractPemKeyContent(String pemKey) {
+        return pemKey.replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace("-----END PUBLIC KEY-----", "")
                 .replaceAll("\\s", "");
-        byte[] encoded = Base64.getDecoder().decode(publicKeyPEM);
-        try {
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
-            return keyFactory.generatePublic(keySpec);
-        }
-        catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
 
