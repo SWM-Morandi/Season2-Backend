@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.member_management.application.service;
 
 import jakarta.servlet.http.Cookie;
-import kr.co.morandi.backend.member_management.application.port.in.oauth.LoginUseCase;
+import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthServiceFactory;
 import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
 import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LoginService implements LoginUseCase {
+public class LoginService implements AuthenticationUseCase {
 
     private final OAuthServiceFactory oAuthServiceFactory;
 
@@ -30,9 +30,9 @@ public class LoginService implements LoginUseCase {
         OAuthService oAuthService = oAuthServiceFactory.getServiceByType(type);
         String oAuthAccessToken = oAuthService.getAccessToken(authenticationCode);
         UserDto userDto = oAuthService.getUserInfo(oAuthAccessToken);
-        AuthenticationToken tokenDto = memberLoginService.loginMember(userDto);
+        AuthenticationToken authenticationToken = memberLoginService.loginMember(userDto);
 
-        String accessToken = tokenDto.getAccessToken();
+        String accessToken = authenticationToken.getAccessToken();
         Cookie jwtCookie = getCookie(accessToken);
         return jwtCookie;
     }

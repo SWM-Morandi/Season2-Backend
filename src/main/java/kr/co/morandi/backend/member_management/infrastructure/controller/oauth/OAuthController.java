@@ -1,8 +1,7 @@
 package kr.co.morandi.backend.member_management.infrastructure.controller.oauth;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.co.morandi.backend.member_management.application.port.in.oauth.LoginUseCase;
+import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +17,7 @@ import java.net.URI;
 @Slf4j
 public class OAuthController {
 
-    private final LoginUseCase loginUseCase;
+    private final AuthenticationUseCase authenticationUseCase;
 
     @Value("${morandi.redirect-url}")
     private String redirectUrl;
@@ -26,7 +25,7 @@ public class OAuthController {
     public ResponseEntity<String> OAuthLogin(@PathVariable String type,
                                              @RequestParam String code,
                                              HttpServletResponse response) {
-        response.addCookie(loginUseCase.generateLoginCookie(type, code));
+        response.addCookie(authenticationUseCase.generateLoginCookie(type, code));
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create(redirectUrl))
                 .build();
