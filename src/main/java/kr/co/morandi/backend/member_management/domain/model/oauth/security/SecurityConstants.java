@@ -1,7 +1,4 @@
 package kr.co.morandi.backend.member_management.domain.model.oauth.security;
-
-import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,7 +33,7 @@ public class SecurityConstants {
         return new String(decoded, StandardCharsets.UTF_8);
     }
     public PublicKey convertPEMToPublicKey(String publicKeyPemFile) {
-        String publicKeyPEM = extractPemKeyContent(publicKeyPemFile);
+        String publicKeyPEM = extractPublicPemKeyContent(publicKeyPemFile);
         byte[] encodedKey = Base64.getDecoder().decode(publicKeyPEM);
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -48,7 +45,7 @@ public class SecurityConstants {
         }
     }
     private PrivateKey convertPEMToPrivateKey(String privateKeyPemFile) {
-        String privateKeyPEM = extractPemKeyContent(privateKeyPemFile);
+        String privateKeyPEM = extractPrivatePemKeyContent(privateKeyPemFile);
         byte[] encodedKey = Base64.getDecoder().decode(privateKeyPEM);
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -59,9 +56,15 @@ public class SecurityConstants {
             throw new RuntimeException(e);
         }
     }
-    private String extractPemKeyContent(String pemKey) {
+    private String extractPublicPemKeyContent(String pemKey) {
         return pemKey.replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace("-----END PUBLIC KEY-----", "")
+                .replaceAll("\\s", "");
+    }
+
+    private String extractPrivatePemKeyContent(String pemKey) {
+        return pemKey.replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s", "");
     }
 }

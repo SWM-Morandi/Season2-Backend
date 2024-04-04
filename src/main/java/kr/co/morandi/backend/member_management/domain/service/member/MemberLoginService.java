@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -17,10 +19,10 @@ public class MemberLoginService {
     private final JwtProvider jwtProvider;
 
     private final MemberPort memberPort;
-
     public AuthenticationToken loginMember(UserDto userDto) {
-        Member member = memberPort.findMemberByEmail(userDto.getEmail(), userDto.getType());
-        Member savedMember = memberPort.saveMember(member);
-        return jwtProvider.getAuthenticationToken(savedMember);
+        Optional<Member> maybeMember = memberPort.findMemberByEmail(userDto.getEmail());
+        Member member = maybeMember.isPresent()
+                ? maybeMember.get() : memberPort.saveMemberByEmail(userDto.getEmail(), userDto.getType());
+        return jwtProvider.getAuthenticationToken(member);
     }
 }

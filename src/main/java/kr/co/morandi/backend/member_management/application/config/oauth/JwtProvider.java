@@ -2,8 +2,8 @@ package kr.co.morandi.backend.member_management.application.config.oauth;
 
 import io.jsonwebtoken.Jwts;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.domain.model.oauth.Role;
-import kr.co.morandi.backend.member_management.domain.model.oauth.TokenType;
+import kr.co.morandi.backend.member_management.domain.model.oauth.constants.Role;
+import kr.co.morandi.backend.member_management.domain.model.oauth.constants.TokenType;
 import kr.co.morandi.backend.member_management.domain.model.oauth.security.SecurityConstants;
 import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
 import lombok.RequiredArgsConstructor;

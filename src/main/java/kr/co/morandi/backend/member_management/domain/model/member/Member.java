@@ -2,7 +2,7 @@ package kr.co.morandi.backend.member_management.domain.model.member;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.common.model.BaseEntity;
-import kr.co.morandi.backend.member_management.domain.model.oauth.SocialType;
+import kr.co.morandi.backend.member_management.domain.model.oauth.constants.SocialType;
 import lombok.*;
 
 @Entity
@@ -26,9 +26,9 @@ public class Member extends BaseEntity {
     private String profileImageURL;
 
     private String description;
-
     @Builder
-    private Member(String nickname, String baekjoonId, String email, SocialType socialType, String profileImageURL, String description) {
+    private Member(String nickname, String baekjoonId, String email,
+                   SocialType socialType, String profileImageURL, String description) {
         this.nickname = nickname;
         this.baekjoonId = baekjoonId;
         this.email = email;
@@ -36,14 +36,20 @@ public class Member extends BaseEntity {
         this.profileImageURL = profileImageURL;
         this.description = description;
     }
-
-    public static Member create(String nickname, String email, SocialType socialType, String profileImageURL, String description) {
+    public static Member create(String nickname, String email, SocialType socialType,
+                                String profileImageURL, String description) {
         return Member.builder()
                 .nickname(nickname)
                 .email(email)
                 .socialType(socialType)
                 .profileImageURL(profileImageURL)
                 .description(description)
+                .build();
+    }
+    public static Member create(String email, SocialType socialType) {
+        return Member.builder()
+                .email(email)
+                .socialType(socialType)
                 .build();
     }
 }

@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.member_management.domain.service.oauth.google;
 
-import kr.co.morandi.backend.member_management.domain.model.oauth.SocialType;
+import kr.co.morandi.backend.member_management.domain.model.oauth.constants.SocialType;
 import kr.co.morandi.backend.member_management.domain.model.oauth.response.TokenResponse;
 import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
 import kr.co.morandi.backend.member_management.domain.model.oauth.google.GoogleUserDto;
