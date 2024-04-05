@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthUserDetailsService;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.JwtValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+
+import static kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager.*;
 
 @Component
 @RequiredArgsConstructor
@@ -50,10 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
     private boolean isIgnoredURI(String uri) {
-        return uri.startsWith("/oauths/") ||
-                uri.startsWith("/swagger-ui/") ||
-                uri.startsWith("/v3/api-docs/") ||
-                uri.startsWith("/swagger-resources/");
+        Matcher matcher = PATTERN.matcher(uri);
+        return matcher.find();
     }
     private String getJwtFromRequest(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, "accessToken");
