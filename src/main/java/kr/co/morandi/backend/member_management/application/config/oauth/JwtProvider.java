@@ -58,7 +58,4 @@ public class JwtProvider {
     private PrivateKey getPrivateKey() {
         return securityConstants.getPrivateKey();
     }
-    private PublicKey getPublicKey() {
-        return securityConstants.getPublicKey();
-    }
 }

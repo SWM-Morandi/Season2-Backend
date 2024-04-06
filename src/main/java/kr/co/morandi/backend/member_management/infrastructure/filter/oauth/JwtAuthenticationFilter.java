@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthUserDetailsService;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.JwtValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String accessToken = getJwtFromRequest(request);
 
-        if (StringUtils.hasText(accessToken) && jwtValidator.validateToken(accessToken)) {
+        if (validateToken(accessToken)) {
             Long memberId = jwtValidator.getUserIdFromToken(accessToken);
             UserDetails userDetails = oAuthUserDetailsService.loadUserByUsername(memberId.toString());
             Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -52,6 +51,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         else {
             throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         }
+    }
+    private boolean validateToken(String accessToken) {
+        return StringUtils.hasText(accessToken) && jwtValidator.validateToken(accessToken);
     }
     private boolean isIgnoredURI(String uri) {
         Matcher matcher = PATTERN.matcher(uri);

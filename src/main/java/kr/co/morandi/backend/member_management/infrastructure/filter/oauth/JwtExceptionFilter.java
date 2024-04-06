@@ -36,17 +36,13 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
     @Value("${oauth2.signup-url}")
     private String signupPath;
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws IOException {
         try {
             filterChain.doFilter(request, response);
         } catch (MorandiException e) {
-            if (e.getErrorCode().getHttpStatus() == (HttpStatus.UNAUTHORIZED)) {
-                Cookie cookie = new Cookie("accessToken", null);
-                cookie.setMaxAge(0);
-                cookie.setDomain(domain);
-                cookie.setPath(path);
+            if (isAuthError(e)) {
+                Cookie cookie = getCookie();
                 response.addCookie(cookie);
                 response.sendRedirect(signupPath);
             }
@@ -55,13 +51,16 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             setErrorResponse(response, OAuthErrorCode.UNKNOWN_ERROR);
         }
     }
-    private ErrorResponse makeErrorResponse(ErrorCode errorCode) {
-        return ErrorResponse.builder()
-                .code(errorCode.name())
-                .message(errorCode.getMessage())
-                .build();
+    private boolean isAuthError(MorandiException e) {
+        return e.getErrorCode().getHttpStatus() == (HttpStatus.UNAUTHORIZED);
     }
-
+    private Cookie getCookie() {
+        Cookie cookie = new Cookie("accessToken", null);
+        cookie.setMaxAge(0);
+        cookie.setDomain(domain);
+        cookie.setPath(path);
+        return cookie;
+    }
     private void setErrorResponse(HttpServletResponse response, ErrorCode errorCode)    {
         response.setStatus(errorCode.getHttpStatus().value());
         response.setCharacterEncoding("UTF-8");
@@ -72,5 +71,11 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+    private ErrorResponse makeErrorResponse(ErrorCode errorCode) {
+        return ErrorResponse.builder()
+                .code(errorCode.name())
+                .message(errorCode.getMessage())
+                .build();
     }
 }

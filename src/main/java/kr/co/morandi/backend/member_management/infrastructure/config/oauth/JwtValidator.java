@@ -21,7 +21,6 @@ public class JwtValidator {
     public boolean validateToken(String accessToken) {
         return parseTokenToJws(accessToken).isPresent();
     }
-
     private Jws<Claims> getJws(String accessToken) {
         return parseTokenToJws(accessToken).orElseThrow(
                 () -> new MorandiException(OAuthErrorCode.INVALID_TOKEN));
@@ -41,19 +40,14 @@ public class JwtValidator {
                     .parseClaimsJws(accessToken);
             return Optional.of(claimsJws);
         } catch (ExpiredJwtException e) {
-            log.info("만료된 JWT Token");
             throw new MorandiException(OAuthErrorCode.EXPIRED_TOKEN);
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("유효하지 않은 JWT signature");
             throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         } catch (UnsupportedJwtException e) {
-            log.info("지원되지 않는 토큰");
             throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         } catch (IllegalArgumentException e) {
-            log.info("IllegalArgumentException");
-
+            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         }
-        throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
     }
     private PublicKey getPublicKey() {
         return securityConstants.getPublicKey();

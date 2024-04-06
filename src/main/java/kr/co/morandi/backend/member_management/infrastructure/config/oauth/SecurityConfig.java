@@ -29,8 +29,9 @@ public class SecurityConfig {
                 .httpBasic(HttpBasicConfigurer::disable)
                 .csrf(CsrfConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeRequests(authorize -> authorize.requestMatchers("/oauths/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/oauths/**","/swagger-ui/**", "/swagger-resources/**",
+                                "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
