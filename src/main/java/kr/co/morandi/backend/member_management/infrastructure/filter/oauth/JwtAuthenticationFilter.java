@@ -7,68 +7,54 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
-import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthUserDetailsService;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.JwtValidator;
+import kr.co.morandi.backend.member_management.application.config.oauth.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-
-import static kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager.*;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtValidator jwtValidator;
-    private final OAuthUserDetailsService oAuthUserDetailsService;
+    private final JwtProvider jwtProvider;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
-        if (isIgnoredURI(request.getRequestURI())) {
+        if (jwtProvider.isIgnoredURI(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String accessToken = getJwtFromRequest(request);
+        String accessToken = jwtProvider.getJwtFromRequest(request);
+        String refreshToken = getRefreshToken(request.getCookies());
 
-        if (validateToken(accessToken)) {
-            Long memberId = jwtValidator.getUserIdFromToken(accessToken);
-            UserDetails userDetails = oAuthUserDetailsService.loadUserByUsername(memberId.toString());
-            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        if (jwtProvider.validateAccessToken(accessToken)) {
+            setAuthentication(accessToken);
             filterChain.doFilter(request, response);
-        }
-        else {
-            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
+        } else if (jwtProvider.validateRefreshToken(refreshToken)) {
+            accessToken = jwtProvider.reissueAccessToken(refreshToken);
+            setAuthentication(accessToken);
+            filterChain.doFilter(request, response);
+        } else {
+            throw new MorandiException(OAuthErrorCode.EXPIRED_TOKEN);
         }
     }
-    private boolean validateToken(String accessToken) {
-        return StringUtils.hasText(accessToken) && jwtValidator.validateToken(accessToken);
+    private void setAuthentication(String accessToken) {
+        Authentication authentication = jwtProvider.getAuthentication(accessToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-    private boolean isIgnoredURI(String uri) {
-        Matcher matcher = PATTERN.matcher(uri);
-        return matcher.find();
-    }
-    private String getJwtFromRequest(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, "accessToken");
-        if (cookie != null) {
-            return cookie.getValue();
+    private String getRefreshToken(Cookie[] cookies) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("refreshToken"))
+                return cookie.getValue();
         }
-        String accessToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
-            return accessToken.substring(7);
-        }
-        throw new MorandiException(OAuthErrorCode.TOKEN_NOT_FOUND);
+        return null;
     }
 }

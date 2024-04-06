@@ -1,7 +1,9 @@
 package kr.co.morandi.backend.member_management.application.port.in.oauth;
 
 import jakarta.servlet.http.Cookie;
+import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
 
 public interface AuthenticationUseCase {
-    Cookie generateLoginCookie(String type, String authenticationCode);
+    AuthenticationToken getAuthenticationToken(String type, String authenticationCode);
+    Cookie getCookie(String refreshToken);
 }

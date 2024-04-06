@@ -20,9 +20,9 @@ public class SecurityConstants {
 
     private final PrivateKey privateKey;
 
-    public final Long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 24 * 7 * 1000L;
+    public final Long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 3 * 1000L; // 3 hours
 
-    public final Long REFRESH_TOKEN_EXPIRATION = 60 * 60 * 24 * 30 * 1000L;
+    public final Long REFRESH_TOKEN_EXPIRATION = 60 * 60 * 24 * 7 * 1000L; // 7 days
     public SecurityConstants(@Value("${security.publicKey}") String publicKey,
                              @Value("${security.privateKey}") String privateKey) {
         this.publicKey = convertPEMToPublicKey(decoding(publicKey));

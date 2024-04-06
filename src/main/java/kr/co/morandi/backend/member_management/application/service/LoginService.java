@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.member_management.application.service;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthServiceFactory;
 import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
@@ -26,18 +27,16 @@ public class LoginService implements AuthenticationUseCase {
     @Value("${oauth2.cookie.path}")
     private String path;
     @Override
-    public Cookie generateLoginCookie(String type, String authenticationCode) {
+    public AuthenticationToken getAuthenticationToken(String type, String authenticationCode) {
         OAuthService oAuthService = oAuthServiceFactory.getServiceByType(type);
         String oAuthAccessToken = oAuthService.getAccessToken(authenticationCode);
         UserDto userDto = oAuthService.getUserInfo(oAuthAccessToken);
         AuthenticationToken authenticationToken = memberLoginService.loginMember(userDto);
-
-        String accessToken = authenticationToken.getAccessToken();
-        Cookie jwtCookie = getCookie(accessToken);
-        return jwtCookie;
+        return authenticationToken;
     }
-    private Cookie getCookie(String accessToken) {
-        Cookie jwtCookie = new Cookie("accessToken", accessToken);
+    @Override
+    public Cookie getCookie(String refreshToken) {
+        Cookie jwtCookie = new Cookie("refreshToken", refreshToken);
         jwtCookie.setHttpOnly(true);
         jwtCookie.setDomain(domain);
         jwtCookie.setPath(path);
