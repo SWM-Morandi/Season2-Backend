@@ -18,7 +18,7 @@ public class LoginService implements AuthenticationUseCase {
     private final OAuthServiceFactory oAuthServiceFactory;
 
     private final MemberLoginService memberLoginService;
-    private static int COOKIE_AGE = 24 * 60 * 60;
+    private static int COOKIE_AGE = 60 * 60 * 24;
 
     @Value("${oauth2.cookie.domain}")
     private String domain;

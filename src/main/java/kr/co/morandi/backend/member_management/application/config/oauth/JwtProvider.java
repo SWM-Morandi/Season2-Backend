@@ -22,7 +22,7 @@ public class JwtProvider {
     private final SecurityConstants securityConstants;
     public AuthenticationToken getAuthenticationToken(Member member) {
         String accessToken = generateAccessToken(member.getMemberId(), Role.USER);
-        String refreshToken = generateRefreshToken(member.getMemberId());
+        String refreshToken = generateRefreshToken(member.getMemberId(), Role.USER);
         return AuthenticationToken.create(accessToken, refreshToken);
     }
     private String generateAccessToken(Long id, Role role) {
@@ -30,18 +30,18 @@ public class JwtProvider {
         final Date accessTokenExpiresIn = new Date(issuedAt.getTime() + securityConstants.ACCESS_TOKEN_EXPIRATION);
         return buildAccessToken(id, issuedAt, accessTokenExpiresIn, role);
     }
-    private String generateRefreshToken(Long id) {
+    private String generateRefreshToken(Long id, Role role) {
         final Date issuedAt = new Date();
         final Date refreshTokenExpiresIn = new Date(issuedAt.getTime() + securityConstants.REFRESH_TOKEN_EXPIRATION);
-        return buildRefreshToken(id, issuedAt, refreshTokenExpiresIn);
+        return buildRefreshToken(id, issuedAt, refreshTokenExpiresIn, role);
     }
     private String buildAccessToken(Long id, Date issuedAt, Date expiresIn, Role role) {
         final PrivateKey encodedKey = getPrivateKey();
         return jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.ACCESS_TOKEN);
     }
-    private String buildRefreshToken(Long id, Date issuedAt, Date expiresIn) {
+    private String buildRefreshToken(Long id, Date issuedAt, Date expiresIn, Role role) {
         final PrivateKey encodedKey = getPrivateKey();
-        return jwtCreate(id, issuedAt, expiresIn, Role.ADMIN, encodedKey, TokenType.REFRESH_TOKEN);
+        return jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.REFRESH_TOKEN);
     }
     private String jwtCreate(Long id, Date issuedAt, Date expiresIn, Role role,
                              PrivateKey encodedKey, TokenType tokenType) {

@@ -31,21 +31,13 @@ public class JwtValidator {
     }
 
     private Optional<Jws<Claims>> parseTokenToJws(String accessToken) {
-        if (accessToken == null) {
-            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
-        }
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(getPublicKey())
                     .build()
                     .parseClaimsJws(accessToken);
             return Optional.of(claimsJws);
-        } catch (ExpiredJwtException e) {
-            throw new MorandiException(OAuthErrorCode.EXPIRED_TOKEN);
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
-        } catch (UnsupportedJwtException e) {
-            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
-        } catch (IllegalArgumentException e) {
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException
+                 | UnsupportedJwtException | IllegalArgumentException e ) {
             throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         }
     }
