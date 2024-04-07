@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.common.exception.errorcode;
 
+import kr.co.morandi.backend.common.exception.errorcode.global.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

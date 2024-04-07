@@ -3,7 +3,7 @@ package kr.co.morandi.backend.common.exception.handler;
 import jakarta.servlet.http.Cookie;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.CommonErrorCode;
-import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
+import kr.co.morandi.backend.common.exception.errorcode.global.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

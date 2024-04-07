@@ -1,7 +1,6 @@
 package kr.co.morandi.backend.common.exception;
 
-import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
-import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
+import kr.co.morandi.backend.common.exception.errorcode.global.ErrorCode;
 import lombok.Getter;
 @Getter
 public class MorandiException extends RuntimeException {

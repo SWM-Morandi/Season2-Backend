@@ -2,13 +2,12 @@ package kr.co.morandi.backend.member_management.infrastructure.filter.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
-import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
+import kr.co.morandi.backend.common.exception.errorcode.global.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

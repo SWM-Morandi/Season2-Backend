@@ -66,8 +66,9 @@ public class JwtProvider {
         return refreshToken;
     }
     private void saveRefreshTokenToRedis(Long id, String refreshToken) {
+        String key = "refreshToken_memberId:" + id;
         redisTemplate.opsForValue().set(
-                id.toString(), // key
+                key, // key
                 refreshToken, // value
                 securityConstants.REFRESH_TOKEN_EXPIRATION, // timeout
                 TimeUnit.MILLISECONDS); // unit
@@ -105,7 +106,8 @@ public class JwtProvider {
     public boolean validateRefreshToken(String refreshToken) {
         Long memberId = getMemberIdFromToken(refreshToken);
         ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
-        Optional<String> maybeStoredToken = Optional.of(valueOps.get(memberId.toString()));
+        String key = "refreshToken_memberId:" + memberId.toString();
+        Optional<String> maybeStoredToken = Optional.of(valueOps.get(key));
         if (maybeStoredToken.isEmpty())
             return false;
         return refreshToken.equals(maybeStoredToken.get());
