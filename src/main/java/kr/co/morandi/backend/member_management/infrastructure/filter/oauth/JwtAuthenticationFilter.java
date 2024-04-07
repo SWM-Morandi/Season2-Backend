@@ -35,10 +35,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String accessToken = jwtProvider.getJwtFromRequest(request);
         String refreshToken = getRefreshToken(request.getCookies());
 
-        if (jwtProvider.validateAccessToken(accessToken)) {
+        if (jwtProvider.validateToken(accessToken)) {
             setAuthentication(accessToken);
             filterChain.doFilter(request, response);
-        } else if (jwtProvider.validateRefreshToken(refreshToken)) {
+        } else if (jwtProvider.validateToken(refreshToken)) {
             accessToken = jwtProvider.reissueAccessToken(refreshToken);
             setAuthentication(accessToken);
             filterChain.doFilter(request, response);

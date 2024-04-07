@@ -37,8 +37,6 @@ public class JwtProvider {
 
     private final SecurityConstants securityConstants;
 
-    private final RedisTemplate<String, String> redisTemplate;
-
     private final OAuthUserDetailsService oAuthUserDetailsService;
     public AuthenticationToken getAuthenticationToken(Member member) {
         String accessToken = generateAccessToken(member.getMemberId(), Role.USER);
@@ -62,16 +60,7 @@ public class JwtProvider {
     private String buildRefreshToken(Long id, Date issuedAt, Date expiresIn, Role role) {
         final PrivateKey encodedKey = getPrivateKey();
         String refreshToken = jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.REFRESH_TOKEN);
-        saveRefreshTokenToRedis(id, refreshToken);
         return refreshToken;
-    }
-    private void saveRefreshTokenToRedis(Long id, String refreshToken) {
-        String key = "refreshToken_memberId:" + id;
-        redisTemplate.opsForValue().set(
-                key, // key
-                refreshToken, // value
-                securityConstants.REFRESH_TOKEN_EXPIRATION, // timeout
-                TimeUnit.MILLISECONDS); // unit
     }
     private String jwtCreate(Long id, Date issuedAt, Date expiresIn, Role role,
                              PrivateKey encodedKey, TokenType tokenType) {
@@ -88,29 +77,20 @@ public class JwtProvider {
     private PrivateKey getPrivateKey() {
         return securityConstants.getPrivateKey();
     }
-    public boolean validateAccessToken(String accessToken) {
-        if (!StringUtils.hasText(accessToken))
+    public boolean validateToken(String token) {
+        if (!StringUtils.hasText(token))
             throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         try {
             Jwts.parserBuilder()
                     .setSigningKey(securityConstants.getPublicKey())
                     .build()
-                    .parseClaimsJws(accessToken);
+                    .parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException e) {
             return false;
         } catch (JwtException e) {
             throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         }
-    }
-    public boolean validateRefreshToken(String refreshToken) {
-        Long memberId = getMemberIdFromToken(refreshToken);
-        ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
-        String key = "refreshToken_memberId:" + memberId.toString();
-        Optional<String> maybeStoredToken = Optional.of(valueOps.get(key));
-        if (maybeStoredToken.isEmpty())
-            return false;
-        return refreshToken.equals(maybeStoredToken.get());
     }
 
     public String reissueAccessToken(String refreshToken) {
