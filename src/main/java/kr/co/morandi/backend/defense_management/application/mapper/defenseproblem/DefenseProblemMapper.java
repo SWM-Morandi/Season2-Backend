@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.defense_management.application.mapper.defenseproblem;
 
 import kr.co.morandi.backend.defense_management.application.mapper.tempcode.TempCodeMapper;
+import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
 import kr.co.morandi.backend.defense_management.application.response.session.DefenseProblemResponse;
 import kr.co.morandi.backend.defense_management.application.response.tempcode.TempCodeResponse;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
@@ -18,7 +19,10 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DefenseProblemMapper {
 
-    public static List<DefenseProblemResponse> of(Map<Long, Problem> tryProblem, DefenseSession defenseSession, DailyRecord dailyRecord) {
+    public static List<DefenseProblemResponse> of(Map<Long, Problem> tryProblem,
+                                                  DefenseSession defenseSession,
+                                                  DailyRecord dailyRecord,
+                                                  Map<Long, ProblemContent> problemContents) {
         return tryProblem.entrySet().stream()
                 .map(entry -> {
                     final Long problemNumber = entry.getKey();
@@ -36,6 +40,7 @@ public class DefenseProblemMapper {
                             .problemNumber(problemNumber)
                             .isCorrect(isCorrect)
                             .lastAccessLanguage(lastAccessLanguage)
+                            .content(problemContents.get(problemNumber))
                             .tempCodes(tempCodeResponses)
                             .build();
                 })

@@ -3,6 +3,8 @@ package kr.co.morandi.backend.defense_management.application.service.session;
 import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
 import kr.co.morandi.backend.defense_management.application.mapper.session.StartDailyDefenseMapper;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
+import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent.ProblemContentAdapter;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
@@ -32,6 +34,8 @@ public class DailyDefenseManagementService {
     private final ProblemGenerationService problemGenerationService;
     private final DefenseSessionPort defenseSessionPort;
 
+    private final ProblemContentAdapter problemContentAdapter;
+
     @Transactional
     public StartDailyDefenseResponse startDailyDefense(StartDailyDefenseServiceRequest request, Member member, LocalDateTime requestTime) {
         Long problemNumber = request.getProblemNumber();
@@ -60,9 +64,26 @@ public class DailyDefenseManagementService {
 
         final DefenseSession savedDefenseSession = defenseSessionPort.saveDefenseSession(defenseSession);
 
+        // 문제 내용 가져오기
+        final Map<Long, ProblemContent> problemContent = getProblemContents(tryProblem);
+
         // 문제 목록을 DefenseProblemResponse DTO로 변환
-        return StartDailyDefenseMapper.of(tryProblem, dailyDefense, savedDefenseSession, dailyRecord);
+        return StartDailyDefenseMapper.of(tryProblem, dailyDefense, savedDefenseSession, dailyRecord, problemContent);
     }
+
+    /*
+    *  백준 문제 ID 목록을 받아서 문제 내용을 가져오는 메소드
+    * */
+    private Map<Long, ProblemContent> getProblemContents(Map<Long, Problem> tryProblem) {
+        return problemContentAdapter.getProblemContents(tryProblem.values()
+                .stream()
+                .map(Problem::getBaekjoonProblemId)
+                .toList());
+    }
+
+    /*
+    *  세션이 존재하지 않을 경우 새롭게 시험을 시작하는 메소드
+    * */
     private DefenseSession createNewSession(Member member, LocalDateTime now, DailyDefense dailyDefense, Map<Long, Problem> tryProblem) {
         DailyRecord dailyRecord = DailyRecord.tryDefense(now, dailyDefense, member, tryProblem);
         DailyRecord savedDailyRecord = dailyRecordPort.saveDailyRecord(dailyRecord);

@@ -18,19 +18,19 @@ public class DefenseProblemResponse {
     private Long problemId;
     private Long problemNumber;
     private Long baekjoonProblemId;
-    private ProblemContent problemContent;
+    private ProblemContent content;
     private boolean isCorrect;
     private Language lastAccessLanguage;
     private Set<TempCodeResponse> tempCodes;
 
     @Builder
     private DefenseProblemResponse(Long problemId, Long problemNumber, Long baekjoonProblemId,
-                                   ProblemContent problemContent, boolean isCorrect, Language lastAccessLanguage,
+                                   ProblemContent content, boolean isCorrect, Language lastAccessLanguage,
                                    Set<TempCodeResponse> tempCodes) {
         this.problemId = problemId;
         this.problemNumber = problemNumber;
         this.baekjoonProblemId = baekjoonProblemId;
-        this.problemContent = problemContent;
+        this.content = content;
         this.isCorrect = isCorrect;
         this.lastAccessLanguage = lastAccessLanguage;
         this.tempCodes = tempCodes;

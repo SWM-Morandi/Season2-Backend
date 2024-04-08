@@ -2,8 +2,10 @@ package kr.co.morandi.backend.defense_management.application.service.dailydefens
 
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
+import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.application.service.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent.ProblemContentAdapter;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
@@ -15,10 +17,17 @@ import kr.co.morandi.backend.member_management.infrastructure.persistence.member
 import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
 import kr.co.morandi.backend.defense_record.infrastructure.persistence.dailydefense_record.DailyRecordRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
@@ -34,9 +43,11 @@ import static kr.co.morandi.backend.member_management.domain.model.member.Social
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.anyList;
 
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 class DailyDefenseManagementServiceTest {
 
@@ -66,6 +77,29 @@ class DailyDefenseManagementServiceTest {
 
     @Autowired
     private SessionDetailRepository sessionDetailRepository;
+
+    @MockBean
+    private ProblemContentAdapter problemContentAdapter;
+
+    @BeforeEach
+    void setUp() {
+        Map<Long, ProblemContent> problemContentMap = Map.of(
+                1L, ProblemContent.builder()
+                        .baekjoonProblemId(1000L)
+                        .title("test")
+                        .build(),
+                2L, ProblemContent.builder()
+                        .baekjoonProblemId(2000L)
+                        .title("test2")
+                        .build(),
+                3L, ProblemContent.builder()
+                        .baekjoonProblemId(3000L)
+                        .title("test3")
+                        .build()
+        );
+        Mockito.when(problemContentAdapter.getProblemContents(anyList()))
+                .thenReturn(problemContentMap);
+    }
 
     @AfterEach
     void tearDown() {

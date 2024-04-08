@@ -24,9 +24,12 @@ public class ProblemContent {
     private String additionalTimeLimit;
     private String additionalJudgeInfo;
 
+    // 오류 날 경우 error 필드만 반환됨
+    private String error;
+
 
     @Builder
-    private ProblemContent(Long baekjoonProblemId, String title, String memoryLimit, String timeLimit, String description, String input, String output, List<SampleData> samples, String hint, List<Subtask> subtasks, String problemLimit, String additionalTimeLimit, String additionalJudgeInfo) {
+    private ProblemContent(Long baekjoonProblemId, String title, String memoryLimit, String timeLimit, String description, String input, String output, List<SampleData> samples, String hint, List<Subtask> subtasks, String problemLimit, String additionalTimeLimit, String additionalJudgeInfo, String error) {
         this.baekjoonProblemId = baekjoonProblemId;
         this.title = title;
         this.memoryLimit = memoryLimit;
@@ -40,5 +43,6 @@ public class ProblemContent {
         this.problemLimit = problemLimit;
         this.additionalTimeLimit = additionalTimeLimit;
         this.additionalJudgeInfo = additionalJudgeInfo;
+        this.error = error;
     }
 }
