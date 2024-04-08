@@ -8,8 +8,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,27 +29,23 @@ class ProblemContentAdapterTest {
 
     private ProblemContentAdapter problemContentAdapter;
 
-    private MockWebServer mockWebServer;
+
+    private ExchangeFunction exchangeFunction;
 
     @BeforeEach
     void setUp() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        mockWebServer = new MockWebServer();
-        mockWebServer.start();
-        String mockServerUrl = mockWebServer.url("/")
-                .toString();
+
+        exchangeFunction = Mockito.mock(ExchangeFunction.class);
 
         WebClient webClient = WebClient.builder()
-                .baseUrl(mockServerUrl)
+                .exchangeFunction(exchangeFunction)
                 .build();
 
         problemContentAdapter = new ProblemContentAdapter(webClient, objectMapper);
     }
 
-    @AfterEach
-    void tearDown() throws IOException {
-        mockWebServer.shutdown();
-    }
+
 
     @DisplayName("문제 번호 리스트를 받아서 해당 문제 번호의 문제 정보를 반환한다.")
     @Test
@@ -52,20 +53,21 @@ class ProblemContentAdapterTest {
         // given
         List<Long> list = List.of(1000L, 1001L);
 
-        mockWebServer.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("""
-                           [
-                               {
-                                    "baekjoonProblemId": 1000,
-                                    "title": "A+B",
-                                },
-                               {
-                                    "baekjoonProblemId": 1001,
-                                    "title": "A-B",
-                                }
-                            ]""")
-                .addHeader("Content-Type", "application/json"));
+        Mockito.when(exchangeFunction.exchange(Mockito.any()))
+                .thenReturn(Mono.just(ClientResponse.create(HttpStatus.OK)
+                        .header("Content-Type", "application/json")
+                        .body("""
+                        [
+                            {
+                                "baekjoonProblemId": 1000,
+                                "title": "A+B"
+                            },
+                            {
+                                "baekjoonProblemId": 1001,
+                                "title": "A-B"
+                            }
+                        ]""")
+                        .build()));
 
 
         // when
@@ -87,23 +89,26 @@ class ProblemContentAdapterTest {
     void getProblemContentsContainsInvalidBaekjoonProblemId() {
         // given
         List<Long> list = List.of(1000L, 1001L, 999L);
-        mockWebServer.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("""
-                           [
-                               {
-                                    "baekjoonProblemId": 1000,
-                                    "title": "A+B",
-                                },
-                               {
-                                    "baekjoonProblemId": 1001,
-                                    "title": "A-B",
-                                },
-                                {
-                                    "error" : "problem/999.json not exist"
-                                }
-                            ]""")
-                .addHeader("Content-Type", "application/json"));
+
+        Mockito.when(exchangeFunction.exchange(Mockito.any()))
+                .thenReturn(Mono.just(ClientResponse.create(HttpStatus.OK)
+                        .header("Content-Type", "application/json")
+                        .body("""
+                                [
+                                    {
+                                        "baekjoonProblemId": 1000,
+                                        "title": "A+B"
+                                    },
+                                    {
+                                        "baekjoonProblemId": 1001,
+                                        "title": "A-B"
+                                    },
+                                    {
+                                        "error" : "problem/999.json not exist"
+                                    }
+                                ]""")
+                        .build()));
+
 
         // when
         final Map<Long, ProblemContent> result = problemContentAdapter.getProblemContents(list);
