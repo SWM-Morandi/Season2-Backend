@@ -5,6 +5,7 @@ import kr.co.morandi.backend.defense_management.application.mapper.session.Start
 import kr.co.morandi.backend.problem_information.application.port.out.problemcontent.ProblemContentPort;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent.ProblemContentAdapter;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
