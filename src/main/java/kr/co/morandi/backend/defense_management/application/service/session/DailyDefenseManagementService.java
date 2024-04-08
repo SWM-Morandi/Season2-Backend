@@ -2,9 +2,9 @@ package kr.co.morandi.backend.defense_management.application.service.session;
 
 import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
 import kr.co.morandi.backend.defense_management.application.mapper.session.StartDailyDefenseMapper;
+import kr.co.morandi.backend.defense_management.application.port.out.problemcontent.ProblemContentPort;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
-import kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent.ProblemContentAdapter;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
@@ -34,7 +34,7 @@ public class DailyDefenseManagementService {
     private final ProblemGenerationService problemGenerationService;
     private final DefenseSessionPort defenseSessionPort;
 
-    private final ProblemContentAdapter problemContentAdapter;
+    private final ProblemContentPort problemContentPort;
 
     @Transactional
     public StartDailyDefenseResponse startDailyDefense(StartDailyDefenseServiceRequest request, Member member, LocalDateTime requestTime) {
@@ -75,7 +75,7 @@ public class DailyDefenseManagementService {
     *  백준 문제 ID 목록을 받아서 문제 내용을 가져오는 메소드
     * */
     private Map<Long, ProblemContent> getProblemContents(Map<Long, Problem> tryProblem) {
-        return problemContentAdapter.getProblemContents(tryProblem.values()
+        return problemContentPort.getProblemContents(tryProblem.values()
                 .stream()
                 .map(Problem::getBaekjoonProblemId)
                 .toList());
