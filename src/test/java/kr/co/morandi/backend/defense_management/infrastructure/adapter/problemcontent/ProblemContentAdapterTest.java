@@ -2,9 +2,6 @@ package kr.co.morandi.backend.defense_management.infrastructure.adapter.problemc
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
