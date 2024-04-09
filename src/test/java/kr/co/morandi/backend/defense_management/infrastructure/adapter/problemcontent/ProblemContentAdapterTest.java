@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +25,10 @@ class ProblemContentAdapterTest {
 
     private ProblemContentAdapter problemContentAdapter;
 
-
     private ExchangeFunction exchangeFunction;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         ObjectMapper objectMapper = new ObjectMapper();
 
         exchangeFunction = Mockito.mock(ExchangeFunction.class);
