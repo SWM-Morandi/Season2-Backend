@@ -1,5 +1,9 @@
 package kr.co.morandi.backend.defense_record.application.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TimeFormatHelper {
 
     public static String solvedTimeToString(Long solvedTime) {
