@@ -8,7 +8,9 @@ import kr.co.morandi.backend.defense_management.application.response.problemcont
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,6 +43,9 @@ public class ProblemContentAdapter implements ProblemContentPort {
                 .uri(String.format(PROBLEM_CONTENTS_API_URL, baekjoonProblemIdsParam))
                 .retrieve()
                 .bodyToMono(String.class)
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
+                        .maxBackoff(Duration.ofSeconds(5))
+                        .jitter(0.5))
                 .block();
 
         return parseResponse(responseBody);
