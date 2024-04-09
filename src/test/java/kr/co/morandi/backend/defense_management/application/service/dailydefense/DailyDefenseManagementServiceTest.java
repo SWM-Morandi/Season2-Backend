@@ -2,10 +2,10 @@ package kr.co.morandi.backend.defense_management.application.service.dailydefens
 
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
-import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.application.service.session.DailyDefenseManagementService;
-import kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent.ProblemContentAdapter;
+import kr.co.morandi.backend.problem_information.infrastructure.adapter.problemcontent.ProblemContentAdapter;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
@@ -21,10 +21,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

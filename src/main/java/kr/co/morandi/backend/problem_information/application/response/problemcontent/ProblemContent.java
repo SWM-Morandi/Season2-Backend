@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.application.response.problemcontent;
+package kr.co.morandi.backend.problem_information.application.response.problemcontent;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

@@ -2,7 +2,7 @@ package kr.co.morandi.backend.defense_management.application.mapper.session;
 
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_management.application.mapper.defenseproblem.DefenseProblemMapper;
-import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;

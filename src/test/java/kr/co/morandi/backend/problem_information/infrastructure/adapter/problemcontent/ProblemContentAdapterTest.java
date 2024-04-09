@@ -1,7 +1,8 @@
-package kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent;
+package kr.co.morandi.backend.problem_information.infrastructure.adapter.problemcontent;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.infrastructure.adapter.problemcontent.ProblemContentAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

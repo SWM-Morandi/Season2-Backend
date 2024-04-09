@@ -1,9 +1,8 @@
 package kr.co.morandi.backend.defense_management.application.response.session;
 
-import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
 import kr.co.morandi.backend.defense_management.application.response.tempcode.TempCodeResponse;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
-import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

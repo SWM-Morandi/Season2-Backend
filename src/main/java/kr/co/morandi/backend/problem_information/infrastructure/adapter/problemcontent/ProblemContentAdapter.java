@@ -1,10 +1,10 @@
-package kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent;
+package kr.co.morandi.backend.problem_information.infrastructure.adapter.problemcontent;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.co.morandi.backend.defense_management.application.port.out.problemcontent.ProblemContentPort;
-import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.application.port.out.problemcontent.ProblemContentPort;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

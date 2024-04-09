@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.defense_management.application.mapper.defenseproblem;
 
 import kr.co.morandi.backend.defense_management.application.mapper.tempcode.TempCodeMapper;
-import kr.co.morandi.backend.defense_management.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
 import kr.co.morandi.backend.defense_management.application.response.session.DefenseProblemResponse;
 import kr.co.morandi.backend.defense_management.application.response.tempcode.TempCodeResponse;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
