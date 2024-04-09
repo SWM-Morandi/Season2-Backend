@@ -28,7 +28,7 @@ public class TempCodeMapper {
     public static Set<TempCodeResponse> createTempCodeResponses(Set<TempCode> tempCodes) {
 
         // 기본 코드를 가지고 있는 Map을 만들어서
-        Map<Language, TempCodeResponse> tempCodeMap = new HashMap<>(intialTempCodeMap);
+        Map<Language, TempCodeResponse> tempCodeMap = new EnumMap<>(intialTempCodeMap);
 
         // tempCode를 순회하면서 tempCodeMap에 해당 언어의 TempCodeResponse를 넣어준다.
         tempCodes.forEach(tempCode -> tempCodeMap.replace(tempCode.getLanguage(), TempCodeResponse.builder()
