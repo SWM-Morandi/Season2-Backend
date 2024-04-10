@@ -2,21 +2,16 @@ package kr.co.morandi.backend.member_management.infrastructure.filter.oauth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.application.config.oauth.JwtProvider;
-import kr.co.morandi.backend.member_management.application.config.security.AuthenticationProvider;
+import kr.co.morandi.backend.member_management.infrastructure.security.AuthenticationProvider;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.WebUtils;
-
 import java.io.IOException;
 
 @Component

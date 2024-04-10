@@ -1,8 +1,7 @@
 package kr.co.morandi.backend.member_management.infrastructure.persistence.member;
 
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.domain.model.oauth.constants.SocialType;
-import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.SocialType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

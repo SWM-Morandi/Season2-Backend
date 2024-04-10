@@ -1,7 +1,7 @@
-package kr.co.morandi.backend.member_management.domain.model.oauth.google;
+package kr.co.morandi.backend.member_management.infrastructure.oauth.google;
 
-import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthUserInfo;
-import kr.co.morandi.backend.member_management.domain.model.oauth.constants.SocialType;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.OAuthUserInfo;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.SocialType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

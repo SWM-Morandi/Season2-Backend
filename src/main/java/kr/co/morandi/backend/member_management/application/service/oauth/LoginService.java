@@ -1,15 +1,11 @@
-package kr.co.morandi.backend.member_management.application.service;
+package kr.co.morandi.backend.member_management.application.service.oauth;
 
-import jakarta.servlet.http.Cookie;
 import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
-import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthUserInfo;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.OAuthUserInfo;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthServiceFactory;
-import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.response.AuthenticationToken;
 import kr.co.morandi.backend.member_management.domain.service.member.MemberLoginService;
-import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthService;
-import kr.co.morandi.backend.member_management.infrastructure.config.CookieUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service

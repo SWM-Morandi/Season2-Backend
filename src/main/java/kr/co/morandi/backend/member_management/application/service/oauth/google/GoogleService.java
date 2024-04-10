@@ -1,10 +1,10 @@
-package kr.co.morandi.backend.member_management.domain.service.oauth.google;
+package kr.co.morandi.backend.member_management.application.service.oauth.google;
 
-import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthUserInfo;
-import kr.co.morandi.backend.member_management.domain.model.oauth.constants.SocialType;
-import kr.co.morandi.backend.member_management.domain.model.oauth.response.TokenResponse;
-import kr.co.morandi.backend.member_management.domain.model.oauth.google.GoogleOAuthUserInfo;
-import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthService;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.OAuthUserInfo;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.SocialType;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.response.TokenResponse;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.google.GoogleOAuthUserInfo;
+import kr.co.morandi.backend.member_management.application.service.oauth.OAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

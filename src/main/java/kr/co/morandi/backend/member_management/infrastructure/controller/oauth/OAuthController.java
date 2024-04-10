@@ -2,8 +2,7 @@ package kr.co.morandi.backend.member_management.infrastructure.controller.oauth;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
-import kr.co.morandi.backend.member_management.domain.model.oauth.constants.TokenType;
-import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.response.AuthenticationToken;
 import kr.co.morandi.backend.member_management.infrastructure.config.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static kr.co.morandi.backend.member_management.domain.model.oauth.constants.TokenType.REFRESH_TOKEN;
+import static kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType.REFRESH_TOKEN;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.domain.model.oauth.constants;
+package kr.co.morandi.backend.member_management.infrastructure.oauth.constants;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

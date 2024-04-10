@@ -1,9 +1,9 @@
-package kr.co.morandi.backend.member_management.application.config.security;
+package kr.co.morandi.backend.member_management.infrastructure.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import kr.co.morandi.backend.member_management.domain.model.oauth.security.SecurityConstants;
+import kr.co.morandi.backend.member_management.infrastructure.security.SecurityConstants;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
