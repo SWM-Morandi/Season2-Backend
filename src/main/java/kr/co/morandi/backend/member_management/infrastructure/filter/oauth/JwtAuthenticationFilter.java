@@ -45,13 +45,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (jwtProvider.validateToken(accessToken)) {
             authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);
-        } else if (jwtProvider.validateToken(refreshToken)) {
+        }
+        if (jwtProvider.validateToken(refreshToken)) {
             accessToken = jwtProvider.reissueAccessToken(refreshToken);
             authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);
-        } else {
-            throw new MorandiException(OAuthErrorCode.EXPIRED_TOKEN);
         }
+        throw new MorandiException(OAuthErrorCode.EXPIRED_TOKEN);
     }
 
 }
