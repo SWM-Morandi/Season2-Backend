@@ -19,12 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
-
 import java.security.PrivateKey;
 import java.util.Date;
-import java.util.regex.Matcher;
-
-import static kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager.PATTERN;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -32,8 +28,6 @@ import static kr.co.morandi.backend.member_management.infrastructure.config.oaut
 public class JwtProvider {
 
     private final SecurityConstants securityConstants;
-
-    private final OAuthUserDetailsService oAuthUserDetailsService;
     public AuthenticationToken getAuthenticationToken(Member member) {
         String accessToken = generateAccessToken(member.getMemberId(), Role.USER);
         String refreshToken = generateRefreshToken(member.getMemberId(), Role.USER);
@@ -50,13 +44,28 @@ public class JwtProvider {
         return buildRefreshToken(id, issuedAt, refreshTokenExpiresIn, role);
     }
     private String buildAccessToken(Long id, Date issuedAt, Date expiresIn, Role role) {
-        final PrivateKey encodedKey = getPrivateKey();
+        final PrivateKey encodedKey = securityConstants.getPrivateKey();
         return jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.ACCESS_TOKEN);
     }
     private String buildRefreshToken(Long id, Date issuedAt, Date expiresIn, Role role) {
-        final PrivateKey encodedKey = getPrivateKey();
+        final PrivateKey encodedKey = securityConstants.getPrivateKey();
         String refreshToken = jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.REFRESH_TOKEN);
         return refreshToken;
+    }
+    public String getAccessToken(HttpServletRequest request) {
+        String accessToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
+            return accessToken.substring(7);
+        }
+        throw new MorandiException(OAuthErrorCode.TOKEN_NOT_FOUND);
+    }
+    public String getRefreshToken(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, "refreshToken");
+        return cookie.getValue();
+    }
+    public String reissueAccessToken(String refreshToken) {
+        Long memberId = getMemberIdFromToken(refreshToken);
+        return generateAccessToken(memberId, Role.USER);
     }
     private String jwtCreate(Long id, Date issuedAt, Date expiresIn, Role role,
                              PrivateKey encodedKey, TokenType tokenType) {
@@ -69,9 +78,6 @@ public class JwtProvider {
                 .setExpiration(expiresIn)
                 .signWith(encodedKey)
                 .compact();
-    }
-    private PrivateKey getPrivateKey() {
-        return securityConstants.getPrivateKey();
     }
     public boolean validateToken(String token) {
         if (!StringUtils.hasText(token))
@@ -88,36 +94,11 @@ public class JwtProvider {
             throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
         }
     }
-
-    public String reissueAccessToken(String refreshToken) {
-        Long memberId = getMemberIdFromToken(refreshToken);
-        return generateAccessToken(memberId, Role.USER);
-    }
-    public Authentication getAuthentication(String accessToken) {
-        Long memberId = getMemberIdFromToken(accessToken);
-        UserDetails userDetails = oAuthUserDetailsService.loadUserByUsername(memberId.toString());
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-    }
     private Long getMemberIdFromToken(String token) {
         Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(securityConstants.getPublicKey())
                 .build()
                 .parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
         return Long.parseLong(claims.getSubject());
-    }
-    public boolean isIgnoredURI(String uri) {
-        Matcher matcher = PATTERN.matcher(uri);
-        return matcher.find();
-    }
-    public String getJwtFromRequest(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, "accessToken");
-        if (cookie != null) {
-            return cookie.getValue();
-        }
-        String accessToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
-            return accessToken.substring(7);
-        }
-        throw new MorandiException(OAuthErrorCode.TOKEN_NOT_FOUND);
     }
 }

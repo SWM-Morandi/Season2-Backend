@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.application.config.oauth.JwtProvider;
+import kr.co.morandi.backend.member_management.application.config.security.AuthenticationProvider;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,32 +25,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
 
+    private final AuthenticationProvider authenticationProvider;
+
+    private final IgnoredURIManager isIgnoredURIManager;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        if (jwtProvider.isIgnoredURI(request.getRequestURI())) {
+        if (isIgnoredURIManager.isIgnoredURI(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String accessToken = jwtProvider.getJwtFromRequest(request);
-        String refreshToken = String.valueOf(WebUtils.getCookie(request, "refreshToken"));
+        String accessToken = jwtProvider.getAccessToken(request);
+        String refreshToken = jwtProvider.getRefreshToken(request);
 
         if (jwtProvider.validateToken(accessToken)) {
-            setAuthentication(accessToken);
+            authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);
         } else if (jwtProvider.validateToken(refreshToken)) {
             accessToken = jwtProvider.reissueAccessToken(refreshToken);
-            setAuthentication(accessToken);
+            authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);
         } else {
             throw new MorandiException(OAuthErrorCode.EXPIRED_TOKEN);
         }
     }
-    private void setAuthentication(String accessToken) {
-        Authentication authentication = jwtProvider.getAuthentication(accessToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+
 }
