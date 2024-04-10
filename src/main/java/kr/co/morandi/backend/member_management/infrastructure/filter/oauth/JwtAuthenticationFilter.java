@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
 
@@ -33,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String accessToken = jwtProvider.getJwtFromRequest(request);
-        String refreshToken = getRefreshToken(request.getCookies());
+        String refreshToken = String.valueOf(WebUtils.getCookie(request, "refreshToken"));
 
         if (jwtProvider.validateToken(accessToken)) {
             setAuthentication(accessToken);
@@ -49,12 +50,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void setAuthentication(String accessToken) {
         Authentication authentication = jwtProvider.getAuthentication(accessToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
-    private String getRefreshToken(Cookie[] cookies) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("refreshToken"))
-                return cookie.getValue();
-        }
-        return null;
     }
 }

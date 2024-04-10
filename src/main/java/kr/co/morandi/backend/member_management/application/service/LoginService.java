@@ -1,7 +1,6 @@
 package kr.co.morandi.backend.member_management.application.service;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
 import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthUserInfo;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthServiceFactory;
