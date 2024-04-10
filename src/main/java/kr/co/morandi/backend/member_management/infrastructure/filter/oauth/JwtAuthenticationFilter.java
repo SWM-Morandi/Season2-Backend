@@ -42,11 +42,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String accessToken = jwtProvider.getAccessToken(request);
         String refreshToken = jwtProvider.getRefreshToken(request);
 
-        if (jwtProvider.validateToken(accessToken)) {
+        if (jwtProvider.validateToken(accessToken)) { // accessToken이 유효할 경우
             authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);
         }
-        if (jwtProvider.validateToken(refreshToken)) {
+        if (jwtProvider.validateToken(refreshToken)) { // refreshToken이 유효할 경우
             accessToken = jwtProvider.reissueAccessToken(refreshToken);
             authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);
