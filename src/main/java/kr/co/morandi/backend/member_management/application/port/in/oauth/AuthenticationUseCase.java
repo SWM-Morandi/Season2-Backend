@@ -5,5 +5,4 @@ import kr.co.morandi.backend.member_management.domain.model.oauth.response.Authe
 
 public interface AuthenticationUseCase {
     AuthenticationToken getAuthenticationToken(String type, String authenticationCode);
-    Cookie getCookie(String refreshToken);
 }

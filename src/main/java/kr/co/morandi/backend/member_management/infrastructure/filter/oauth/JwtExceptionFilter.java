@@ -9,6 +9,8 @@ import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
 import kr.co.morandi.backend.common.exception.errorcode.global.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
+import kr.co.morandi.backend.member_management.domain.model.oauth.constants.TokenType;
+import kr.co.morandi.backend.member_management.infrastructure.config.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static kr.co.morandi.backend.member_management.domain.model.oauth.constants.TokenType.REFRESH_TOKEN;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -26,11 +30,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
 
-    @Value("${oauth2.cookie.domain}")
-    private String domain;
-
-    @Value("${oauth2.cookie.path}")
-    private String path;
+    private final CookieUtils cookieUtils;
 
     @Value("${oauth2.signup-url}")
     private String signupPath;
@@ -41,7 +41,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (MorandiException e) {
             if (isAuthError(e)) {
-                Cookie cookie = getCookie();
+                Cookie cookie = cookieUtils.getCookie(REFRESH_TOKEN, null,0);
                 response.addCookie(cookie);
                 response.sendRedirect(signupPath);
             }
@@ -52,13 +52,6 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
     }
     private boolean isAuthError(MorandiException e) {
         return e.getErrorCode().getHttpStatus() == (HttpStatus.UNAUTHORIZED);
-    }
-    private Cookie getCookie() {
-        Cookie cookie = new Cookie("accessToken", null);
-        cookie.setMaxAge(0);
-        cookie.setDomain(domain);
-        cookie.setPath(path);
-        return cookie;
     }
     private void setErrorResponse(HttpServletResponse response, ErrorCode errorCode)    {
         response.setStatus(errorCode.getHttpStatus().value());

@@ -10,12 +10,8 @@ import kr.co.morandi.backend.member_management.domain.model.oauth.constants.Role
 import kr.co.morandi.backend.member_management.domain.model.oauth.constants.TokenType;
 import kr.co.morandi.backend.member_management.domain.model.oauth.security.SecurityConstants;
 import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
-import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
