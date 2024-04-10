@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.common.exception.errorcode.global;
+package kr.co.morandi.backend.common.exception.errorcode;
 
 import org.springframework.http.HttpStatus;
 

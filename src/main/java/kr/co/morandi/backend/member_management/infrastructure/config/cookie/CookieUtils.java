@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.config;
+package kr.co.morandi.backend.member_management.infrastructure.config.cookie;
 
 import jakarta.servlet.http.Cookie;
 import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType;

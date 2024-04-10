@@ -1,10 +1,10 @@
-package kr.co.morandi.backend.member_management.application.config.oauth;
+package kr.co.morandi.backend.member_management.infrastructure.config.oauth;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
+import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.Role;
 import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType;

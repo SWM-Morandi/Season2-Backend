@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.member_management.infrastructure.adapter.member;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.common.exception.errorcode.OAuthErrorCode;
+import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.SocialType;
