@@ -13,8 +13,6 @@ import kr.co.morandi.backend.member_management.domain.model.oauth.response.Authe
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,8 +22,6 @@ import org.springframework.web.util.WebUtils;
 
 import java.security.PrivateKey;
 import java.util.Date;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import static kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager.PATTERN;

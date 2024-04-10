@@ -3,9 +3,9 @@ package kr.co.morandi.backend.member_management.application.service;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
+import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthUserInfo;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthServiceFactory;
 import kr.co.morandi.backend.member_management.domain.model.oauth.response.AuthenticationToken;
-import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
 import kr.co.morandi.backend.member_management.domain.service.member.MemberLoginService;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthService;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class LoginService implements AuthenticationUseCase {
     public AuthenticationToken getAuthenticationToken(String type, String authenticationCode) {
         OAuthService oAuthService = oAuthServiceFactory.getServiceByType(type);
         String oAuthAccessToken = oAuthService.getAccessToken(authenticationCode);
-        UserDto userDto = oAuthService.getUserInfo(oAuthAccessToken);
-        AuthenticationToken authenticationToken = memberLoginService.loginMember(userDto);
+        OAuthUserInfo oAuthUserInfo = oAuthService.getUserInfo(oAuthAccessToken);
+        AuthenticationToken authenticationToken = memberLoginService.loginMember(oAuthUserInfo);
         return authenticationToken;
     }
     @Override

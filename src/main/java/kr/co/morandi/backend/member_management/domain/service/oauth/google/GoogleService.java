@@ -1,9 +1,9 @@
 package kr.co.morandi.backend.member_management.domain.service.oauth.google;
 
+import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthUserInfo;
 import kr.co.morandi.backend.member_management.domain.model.oauth.constants.SocialType;
 import kr.co.morandi.backend.member_management.domain.model.oauth.response.TokenResponse;
-import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
-import kr.co.morandi.backend.member_management.domain.model.oauth.google.GoogleUserDto;
+import kr.co.morandi.backend.member_management.domain.model.oauth.google.GoogleOAuthUserInfo;
 import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -71,9 +71,9 @@ public class GoogleService implements OAuthService {
     }
 
     @Override
-    public UserDto getUserInfo(String accessToken) {
+    public OAuthUserInfo getUserInfo(String accessToken) {
         HttpHeaders headers = getBearerHeader(accessToken);
-        GoogleUserDto googleUserDto = getGoogleUserDto(headers);
+        GoogleOAuthUserInfo googleUserDto = getGoogleUserDto(headers);
         return googleUserDto;
     }
     private HttpHeaders getBearerHeader(String accessToken) {
@@ -81,12 +81,12 @@ public class GoogleService implements OAuthService {
         headers.add("Authorization", "Bearer " + accessToken);
         return headers;
     }
-    private GoogleUserDto getGoogleUserDto(HttpHeaders headers) {
-        GoogleUserDto googleUserDto = webClient.get()
+    private GoogleOAuthUserInfo getGoogleUserDto(HttpHeaders headers) {
+        GoogleOAuthUserInfo googleUserDto = webClient.get()
                 .uri(googleUserInfoUrl)
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
-                .bodyToMono(GoogleUserDto.class)
+                .bodyToMono(GoogleOAuthUserInfo.class)
                 .block();
         googleUserDto.setSocialType(SocialType.GOOGLE);
         return googleUserDto;

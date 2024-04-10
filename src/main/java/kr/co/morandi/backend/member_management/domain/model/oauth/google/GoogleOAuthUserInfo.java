@@ -1,13 +1,13 @@
 package kr.co.morandi.backend.member_management.domain.model.oauth.google;
 
+import kr.co.morandi.backend.member_management.domain.model.oauth.OAuthUserInfo;
 import kr.co.morandi.backend.member_management.domain.model.oauth.constants.SocialType;
-import kr.co.morandi.backend.member_management.domain.model.oauth.UserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GoogleUserDto implements UserDto {
+public class GoogleOAuthUserInfo implements OAuthUserInfo {
 
     private String id;
     private String email;
