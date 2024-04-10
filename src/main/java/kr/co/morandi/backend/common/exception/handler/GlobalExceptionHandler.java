@@ -5,25 +5,28 @@ import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.handler.exception.CommonErrorCode;
 import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
+import kr.co.morandi.backend.member_management.infrastructure.config.cookie.CookieUtils;
+import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import java.net.URI;
 
+import static kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType.REFRESH_TOKEN;
+
 @RestControllerAdvice
+@RequiredArgsConstructor
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @Value("${oauth2.cookie.domain}")
-    private String domain;
-
-    @Value("${oauth2.cookie.path}")
-    private String path;
+    private final CookieUtils cookieUtils;
 
     @Value("${oauth2.signup-url}")
     private String signupPath;
@@ -44,10 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private HttpHeaders createUnauthorizedHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(signupPath));
-        Cookie cookie = new Cookie("accessToken", null);
-        cookie.setMaxAge(0); // 쿠키 삭제
-        cookie.setPath(path);
-        cookie.setDomain(domain);
+        Cookie cookie = cookieUtils.getCookie(REFRESH_TOKEN, null, 0);
         headers.add("Set-Cookie", cookie.toString());
         return headers;
     }
