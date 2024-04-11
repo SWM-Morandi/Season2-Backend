@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.domain.service.security;
+package kr.co.morandi.backend.member_management.application.service.security;
 
 import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;

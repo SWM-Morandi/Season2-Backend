@@ -3,7 +3,7 @@ package kr.co.morandi.backend.member_management.infrastructure.config.security.u
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import kr.co.morandi.backend.member_management.domain.service.security.OAuthUserDetailsService;
+import kr.co.morandi.backend.member_management.application.service.security.OAuthUserDetailsService;
 import kr.co.morandi.backend.member_management.infrastructure.config.jwt.utils.SecretKeyProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
