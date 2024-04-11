@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.domain.service.oauth;
+package kr.co.morandi.backend.member_management.application.model.oauth;
 
 import kr.co.morandi.backend.member_management.application.service.oauth.OAuthService;
 import org.springframework.stereotype.Component;

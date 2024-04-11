@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.config.security;
+package kr.co.morandi.backend.member_management.infrastructure.config.security.utils;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

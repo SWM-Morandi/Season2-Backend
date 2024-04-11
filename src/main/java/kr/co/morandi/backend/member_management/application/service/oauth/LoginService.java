@@ -1,10 +1,10 @@
 package kr.co.morandi.backend.member_management.application.service.oauth;
 
 import kr.co.morandi.backend.member_management.application.port.in.oauth.AuthenticationUseCase;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.OAuthUserInfo;
-import kr.co.morandi.backend.member_management.domain.service.oauth.OAuthServiceFactory;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.response.AuthenticationToken;
-import kr.co.morandi.backend.member_management.domain.service.member.MemberLoginService;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.OAuthUserInfo;
+import kr.co.morandi.backend.member_management.application.model.oauth.OAuthServiceFactory;
+import kr.co.morandi.backend.member_management.infrastructure.config.jwt.response.AuthenticationToken;
+import kr.co.morandi.backend.member_management.application.service.jwt.MemberLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

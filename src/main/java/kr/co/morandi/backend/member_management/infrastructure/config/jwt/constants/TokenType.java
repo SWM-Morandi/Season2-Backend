@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants;
+package kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants;
 
 import lombok.AllArgsConstructor;
 

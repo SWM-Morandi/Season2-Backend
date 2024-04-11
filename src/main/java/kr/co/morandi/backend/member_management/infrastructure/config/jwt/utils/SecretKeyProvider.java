@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.config.security;
+package kr.co.morandi.backend.member_management.infrastructure.config.jwt.utils;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,16 +14,13 @@ import java.util.Base64;
 
 @Component
 @Getter
-public class SecurityConstants {
+public class SecretKeyProvider {
 
     private final PublicKey publicKey;
 
     private final PrivateKey privateKey;
 
-    public final Long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 3 * 1000L; // 3 hours
-
-    public final Long REFRESH_TOKEN_EXPIRATION = 60 * 60 * 24 * 7 * 1000L; // 7 days
-    public SecurityConstants(@Value("${security.publicKey}") String publicKey,
+    public SecretKeyProvider(@Value("${security.publicKey}") String publicKey,
                              @Value("${security.privateKey}") String privateKey) {
         this.publicKey = convertPEMToPublicKey(decoding(publicKey));
         this.privateKey = convertPEMToPrivateKey(decoding(privateKey));

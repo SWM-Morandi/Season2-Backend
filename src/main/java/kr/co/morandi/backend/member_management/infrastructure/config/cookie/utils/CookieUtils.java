@@ -1,7 +1,7 @@
-package kr.co.morandi.backend.member_management.infrastructure.config.cookie;
+package kr.co.morandi.backend.member_management.infrastructure.config.cookie.utils;
 
 import jakarta.servlet.http.Cookie;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.TokenType;
+import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.TokenType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

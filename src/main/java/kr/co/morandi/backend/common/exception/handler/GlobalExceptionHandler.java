@@ -5,7 +5,7 @@ import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.exception.handler.exception.CommonErrorCode;
 import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
-import kr.co.morandi.backend.member_management.infrastructure.config.cookie.CookieUtils;
+import kr.co.morandi.backend.member_management.infrastructure.config.cookie.utils.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import java.net.URI;
 
-import static kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.TokenType.REFRESH_TOKEN;
+import static kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.TokenType.REFRESH_TOKEN;
 
 @RestControllerAdvice
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.config.oauth;
+package kr.co.morandi.backend.member_management.infrastructure.config.jwt.utils;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.Cookie;
@@ -6,10 +6,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.Role;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.TokenType;
-import kr.co.morandi.backend.member_management.infrastructure.config.security.SecurityConstants;
-import kr.co.morandi.backend.member_management.infrastructure.config.oauth.response.AuthenticationToken;
+import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.Role;
+import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.TokenType;
+import kr.co.morandi.backend.member_management.infrastructure.config.jwt.response.AuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,10 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-    private final SecurityConstants securityConstants;
+    private final Long ACCESS_TOKEN_EXPIRATION = 60 * 60 * 3 * 1000L; // 3 hours
+    private final Long REFRESH_TOKEN_EXPIRATION = 60 * 60 * 24 * 7 * 1000L; // 7 days
+
+    private final SecretKeyProvider secretKeyProvider;
     public AuthenticationToken getAuthenticationToken(Member member) {
         String accessToken = generateAccessToken(member.getMemberId(), Role.USER);
         String refreshToken = generateRefreshToken(member.getMemberId(), Role.USER);
@@ -31,20 +33,20 @@ public class JwtProvider {
     }
     private String generateAccessToken(Long id, Role role) {
         final Date issuedAt = new Date();
-        final Date accessTokenExpiresIn = new Date(issuedAt.getTime() + securityConstants.ACCESS_TOKEN_EXPIRATION);
+        final Date accessTokenExpiresIn = new Date(issuedAt.getTime() + ACCESS_TOKEN_EXPIRATION);
         return buildAccessToken(id, issuedAt, accessTokenExpiresIn, role);
     }
     private String generateRefreshToken(Long id, Role role) {
         final Date issuedAt = new Date();
-        final Date refreshTokenExpiresIn = new Date(issuedAt.getTime() + securityConstants.REFRESH_TOKEN_EXPIRATION);
+        final Date refreshTokenExpiresIn = new Date(issuedAt.getTime() + REFRESH_TOKEN_EXPIRATION);
         return buildRefreshToken(id, issuedAt, refreshTokenExpiresIn, role);
     }
     private String buildAccessToken(Long id, Date issuedAt, Date expiresIn, Role role) {
-        final PrivateKey encodedKey = securityConstants.getPrivateKey();
+        final PrivateKey encodedKey = secretKeyProvider.getPrivateKey();
         return jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.ACCESS_TOKEN);
     }
     private String buildRefreshToken(Long id, Date issuedAt, Date expiresIn, Role role) {
-        final PrivateKey encodedKey = securityConstants.getPrivateKey();
+        final PrivateKey encodedKey = secretKeyProvider.getPrivateKey();
         String refreshToken = jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.REFRESH_TOKEN);
         return refreshToken;
     }
@@ -76,7 +78,7 @@ public class JwtProvider {
                 .compact();
     }
     private Long getMemberIdFromToken(String token) {
-        Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(securityConstants.getPublicKey())
+        Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(secretKeyProvider.getPublicKey())
                 .build()
                 .parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
