@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.oauth.response;
+package kr.co.morandi.backend.member_management.infrastructure.config.oauth.response;
 
 import lombok.Getter;
 

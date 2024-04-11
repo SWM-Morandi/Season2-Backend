@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.config.oauth;
+package kr.co.morandi.backend.member_management.infrastructure.config.security;
 
 import kr.co.morandi.backend.member_management.infrastructure.filter.oauth.JwtAuthenticationFilter;
 import kr.co.morandi.backend.member_management.infrastructure.filter.oauth.JwtExceptionFilter;

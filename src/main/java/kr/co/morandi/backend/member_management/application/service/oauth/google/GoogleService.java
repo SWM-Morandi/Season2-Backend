@@ -1,9 +1,9 @@
 package kr.co.morandi.backend.member_management.application.service.oauth.google;
 
-import kr.co.morandi.backend.member_management.infrastructure.oauth.OAuthUserInfo;
-import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.SocialType;
-import kr.co.morandi.backend.member_management.infrastructure.oauth.response.TokenResponse;
-import kr.co.morandi.backend.member_management.infrastructure.oauth.google.GoogleOAuthUserInfo;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.OAuthUserInfo;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.SocialType;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.response.TokenResponse;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.google.GoogleOAuthUserInfo;
 import kr.co.morandi.backend.member_management.application.service.oauth.OAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

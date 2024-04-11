@@ -6,20 +6,18 @@ import kr.co.morandi.backend.common.exception.handler.exception.CommonErrorCode;
 import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
 import kr.co.morandi.backend.common.exception.response.ErrorResponse;
 import kr.co.morandi.backend.member_management.infrastructure.config.cookie.CookieUtils;
-import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import java.net.URI;
 
-import static kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType.REFRESH_TOKEN;
+import static kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.TokenType.REFRESH_TOKEN;
 
 @RestControllerAdvice
 @RequiredArgsConstructor

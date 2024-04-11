@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.JwtProvider;
-import kr.co.morandi.backend.member_management.infrastructure.security.AuthenticationProvider;
+import kr.co.morandi.backend.member_management.infrastructure.config.security.AuthenticationProvider;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.IgnoredURIManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

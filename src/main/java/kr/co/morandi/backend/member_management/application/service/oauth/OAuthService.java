@@ -1,5 +1,5 @@
 package kr.co.morandi.backend.member_management.application.service.oauth;
-import kr.co.morandi.backend.member_management.infrastructure.oauth.OAuthUserInfo;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.OAuthUserInfo;
 
 public interface OAuthService {
     String getType();

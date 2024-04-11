@@ -20,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static kr.co.morandi.backend.member_management.infrastructure.oauth.constants.TokenType.REFRESH_TOKEN;
+import static kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.TokenType.REFRESH_TOKEN;
 
 @Component
 @RequiredArgsConstructor

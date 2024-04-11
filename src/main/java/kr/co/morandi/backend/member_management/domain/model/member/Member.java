@@ -2,7 +2,7 @@ package kr.co.morandi.backend.member_management.domain.model.member;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.common.model.BaseEntity;
-import kr.co.morandi.backend.member_management.infrastructure.oauth.constants.SocialType;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.SocialType;
 import lombok.*;
 
 @Entity

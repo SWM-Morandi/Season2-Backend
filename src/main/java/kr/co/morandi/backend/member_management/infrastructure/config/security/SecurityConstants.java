@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.security;
+package kr.co.morandi.backend.member_management.infrastructure.config.security;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
