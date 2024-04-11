@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.morandi.backend.common.exception.MorandiException;
+import kr.co.morandi.backend.member_management.infrastructure.config.oauth.JwtValidator;
 import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.JwtProvider;
 import kr.co.morandi.backend.member_management.infrastructure.config.security.AuthenticationProvider;
@@ -19,6 +20,8 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
+
+    private final JwtValidator jwtValidator;
 
     private final AuthenticationProvider authenticationProvider;
 
@@ -37,11 +40,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String accessToken = jwtProvider.getAccessToken(request);
         String refreshToken = jwtProvider.getRefreshToken(request);
 
-        if (jwtProvider.validateToken(accessToken)) { // accessToken이 유효할 경우
+        if (jwtValidator.validateToken(accessToken)) { // accessToken이 유효할 경우
             authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);
         }
-        if (jwtProvider.validateToken(refreshToken)) { // refreshToken이 유효할 경우
+        if (jwtValidator.validateToken(refreshToken)) { // refreshToken이 유효할 경우
             accessToken = jwtProvider.reissueAccessToken(refreshToken);
             authenticationProvider.setAuthentication(accessToken);
             filterChain.doFilter(request, response);

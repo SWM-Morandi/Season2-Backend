@@ -75,21 +75,6 @@ public class JwtProvider {
                 .signWith(encodedKey)
                 .compact();
     }
-    public boolean validateToken(String token) {
-        if (!StringUtils.hasText(token))
-            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
-        try {
-            Jwts.parserBuilder()
-                    .setSigningKey(securityConstants.getPublicKey())
-                    .build()
-                    .parseClaimsJws(token);
-            return true;
-        } catch (ExpiredJwtException e) {
-            return false;
-        } catch (JwtException e) {
-            throw new MorandiException(OAuthErrorCode.INVALID_TOKEN);
-        }
-    }
     private Long getMemberIdFromToken(String token) {
         Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(securityConstants.getPublicKey())
                 .build()
