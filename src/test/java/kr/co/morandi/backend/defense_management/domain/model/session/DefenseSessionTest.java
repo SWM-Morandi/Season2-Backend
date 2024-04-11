@@ -4,7 +4,7 @@ import kr.co.morandi.backend.defense_information.domain.model.dailydefense.Daily
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.TempCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.SocialType;
+import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import org.junit.jupiter.api.DisplayName;

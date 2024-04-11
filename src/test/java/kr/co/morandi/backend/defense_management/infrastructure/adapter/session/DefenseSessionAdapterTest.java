@@ -5,7 +5,7 @@ import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSess
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.SessionDetailRepository;
-import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.SocialType;
+import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;

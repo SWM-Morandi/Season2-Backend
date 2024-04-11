@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.Role;
+import kr.co.morandi.backend.member_management.domain.model.member.Role;
 import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.TokenType;
 import kr.co.morandi.backend.member_management.infrastructure.config.jwt.response.AuthenticationToken;
 import lombok.RequiredArgsConstructor;
