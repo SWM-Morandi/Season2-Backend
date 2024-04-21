@@ -94,7 +94,13 @@ public class GoogleService implements OAuthService {
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
                 .bodyToMono(GoogleOAuthUserInfo.class)
+                .retry(3)
                 .block();
+
+        if(googleUserDto == null) {
+            throw new MorandiException(OAuthErrorCode.GOOGLE_OAUTH_ERROR);
+        }
+
         googleUserDto.setSocialType(SocialType.GOOGLE);
         return googleUserDto;
     }
