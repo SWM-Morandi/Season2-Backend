@@ -5,6 +5,7 @@ import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSess
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.SessionDetailRepository;
+import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import static kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType.DAILY;
-import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -70,7 +70,7 @@ class DefenseSessionAdapterTest {
 
 
     private Member createMember() {
-        return memberRepository.save(Member.create("test", "test" + "@gmail.com", GOOGLE, "test", "test"));
+        return memberRepository.save(Member.create("test", "test" + "@gmail.com", SocialType.GOOGLE, "test", "test"));
     }
 
 }

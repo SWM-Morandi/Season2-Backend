@@ -25,9 +25,9 @@ public class Member extends BaseEntity {
     private String profileImageURL;
 
     private String description;
-
     @Builder
-    private Member(String nickname, String baekjoonId, String email, SocialType socialType, String profileImageURL, String description) {
+    private Member(String nickname, String baekjoonId, String email,
+                   SocialType socialType, String profileImageURL, String description) {
         this.nickname = nickname;
         this.baekjoonId = baekjoonId;
         this.email = email;
@@ -35,14 +35,20 @@ public class Member extends BaseEntity {
         this.profileImageURL = profileImageURL;
         this.description = description;
     }
-
-    public static Member create(String nickname, String email, SocialType socialType, String profileImageURL, String description) {
+    public static Member create(String nickname, String email, SocialType socialType,
+                                String profileImageURL, String description) {
         return Member.builder()
                 .nickname(nickname)
                 .email(email)
                 .socialType(socialType)
                 .profileImageURL(profileImageURL)
                 .description(description)
+                .build();
+    }
+    public static Member create(String email, SocialType socialType) {
+        return Member.builder()
+                .email(email)
+                .socialType(socialType)
                 .build();
     }
 }

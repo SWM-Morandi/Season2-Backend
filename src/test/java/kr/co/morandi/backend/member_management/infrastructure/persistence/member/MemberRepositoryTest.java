@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.member_management.infrastructure.persistence.member;
 
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
+import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
-
-import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -31,7 +29,7 @@ class MemberRepositoryTest {
     void existsByNickname() {
         // given
         String nickname = "test";
-        Member member = Member.create(nickname,  "test@test.com", GOOGLE, "testImageUrl", "testDescription");
+        Member member = Member.create(nickname,  "test@test.com", SocialType.GOOGLE, "testImageUrl", "testDescription");
         memberRepository.save(member);
 
         // when
@@ -58,10 +56,10 @@ class MemberRepositoryTest {
     void test() {
         // given
         String nickname = "test";
-        Member originMember = Member.create(nickname,  "test@test.com", GOOGLE, "testImageUrl", "testDescription");
+        Member originMember = Member.create(nickname,  "test@test.com", SocialType.GOOGLE, "testImageUrl", "testDescription");
         memberRepository.save(originMember);
 
-        Member newMember = Member.create(nickname,  "test2@test.com", GOOGLE, "testImageUrl", "testDescription");
+        Member newMember = Member.create(nickname,  "test2@test.com", SocialType.GOOGLE, "testImageUrl", "testDescription");
         // when & then
         assertThatThrownBy(() -> memberRepository.save(newMember))
                 .isInstanceOf(DataIntegrityViolationException.class);

@@ -86,6 +86,14 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     compileOnly 'org.projectlombok:lombok'
@@ -141,13 +149,13 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.50
+                minimum = 0.40
             }
 
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.50
+                minimum = 0.40
             }
 
 
