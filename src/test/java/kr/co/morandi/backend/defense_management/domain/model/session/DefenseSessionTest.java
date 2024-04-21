@@ -2,10 +2,9 @@ package kr.co.morandi.backend.defense_management.domain.model.session;
 
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
-import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
-import kr.co.morandi.backend.defense_management.domain.model.session.SessionDetail;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.TempCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
 import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.CPP;
-import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -183,7 +181,7 @@ class DefenseSessionTest {
     }
 
     private Member createMember() {
-        return Member.create("nickname", "email", GOOGLE, "imageURL", "description");
+        return Member.create("nickname", "email", SocialType.GOOGLE, "imageURL", "description");
     }
     private DailyDefense createDailyDefense(LocalDate createdDate) {
         AtomicLong problemNumber = new AtomicLong(1L);
