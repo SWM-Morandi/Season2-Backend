@@ -1,10 +1,12 @@
 package kr.co.morandi.backend.member_management.application.service.oauth.google;
 
+import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.OAuthUserInfo;
 import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.response.TokenResponse;
 import kr.co.morandi.backend.member_management.infrastructure.config.oauth.constants.google.GoogleOAuthUserInfo;
 import kr.co.morandi.backend.member_management.application.service.oauth.OAuthService;
+import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,12 +47,12 @@ public class GoogleService implements OAuthService {
     }
     @Override
     public String getAccessToken(String authorizationCode) {
-        LinkedMultiValueMap<String, String> params = getParams(authorizationCode);
+        LinkedMultiValueMap<String, String> params = buildParams(authorizationCode);
         TokenResponse tokenResponse = getTokenResponse(params);
-        String accessToken = tokenResponse.getAccess_token();
-        return accessToken;
+
+        return tokenResponse.getAccess_token();
     }
-    private LinkedMultiValueMap<String, String> getParams(String authorizationCode) {
+    private LinkedMultiValueMap<String, String> buildParams(String authorizationCode) {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("code", authorizationCode);
         params.add("client_id", googleClientId);
@@ -60,21 +62,26 @@ public class GoogleService implements OAuthService {
         return params;
     }
     private TokenResponse getTokenResponse(LinkedMultiValueMap<String, String> params) {
-        TokenResponse tokenResponse = webClient.post()
+        TokenResponse tokenResponse =  webClient.post()
                 .uri(googleApiTokenUrl)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromValue(params))
                 .retrieve()
                 .bodyToMono(TokenResponse.class)
+                .retry(3)
                 .block();
+
+        if(tokenResponse == null) {
+            throw new MorandiException(OAuthErrorCode.GOOGLE_OAUTH_ERROR);
+        }
+
         return tokenResponse;
     }
 
     @Override
     public OAuthUserInfo getUserInfo(String accessToken) {
         HttpHeaders headers = getBearerHeader(accessToken);
-        GoogleOAuthUserInfo googleUserDto = getGoogleUserDto(headers);
-        return googleUserDto;
+        return getGoogleUserDto(headers);
     }
     private HttpHeaders getBearerHeader(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
