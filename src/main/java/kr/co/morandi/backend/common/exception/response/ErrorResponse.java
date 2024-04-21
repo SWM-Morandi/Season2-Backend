@@ -1,18 +1,25 @@
 package kr.co.morandi.backend.common.exception.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.validation.FieldError;
-
-import java.util.List;
 
 @Getter
-@AllArgsConstructor
-@Builder
 public class ErrorResponse {
-    private String code;
-    private String message;
+
+    private final String code;
+    private final String message;
+
+    public static ErrorResponse of(ErrorCode errorCode) {
+        return ErrorResponse.builder()
+                .code(errorCode.name())
+                .message(errorCode.getMessage())
+                .build();
+    }
+    @Builder
+    private ErrorResponse(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 }

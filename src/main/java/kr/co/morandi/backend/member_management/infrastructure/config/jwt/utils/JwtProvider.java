@@ -26,11 +26,33 @@ public class JwtProvider {
     private final Long REFRESH_TOKEN_EXPIRATION = 60 * 60 * 24 * 7 * 1000L; // 7 days
 
     private final SecretKeyProvider secretKeyProvider;
+
     public AuthenticationToken getAuthenticationToken(Member member) {
         String accessToken = generateAccessToken(member.getMemberId(), Role.USER);
         String refreshToken = generateRefreshToken(member.getMemberId(), Role.USER);
         return AuthenticationToken.create(accessToken, refreshToken);
     }
+
+    public String parseAccessToken(HttpServletRequest request) {
+        String accessToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
+            return accessToken.substring(7);
+        }
+        throw new MorandiException(OAuthErrorCode.ACCESS_TOKEN_NOT_FOUND);
+    }
+    public String parseRefreshToken(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, "REFRESH_TOKEN");
+        if(cookie==null)
+            throw new MorandiException(OAuthErrorCode.REFRESH_TOKEN_NOT_FOUND);
+
+        return cookie.getValue();
+    }
+    public String reissueAccessToken(String refreshToken) {
+        Long memberId = getMemberIdFromToken(refreshToken);
+
+        return generateAccessToken(memberId, Role.USER);
+    }
+
     private String generateAccessToken(Long id, Role role) {
         final Date issuedAt = new Date();
         final Date accessTokenExpiresIn = new Date(issuedAt.getTime() + ACCESS_TOKEN_EXPIRATION);
@@ -47,24 +69,10 @@ public class JwtProvider {
     }
     private String buildRefreshToken(Long id, Date issuedAt, Date expiresIn, Role role) {
         final PrivateKey encodedKey = secretKeyProvider.getPrivateKey();
-        String refreshToken = jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.REFRESH_TOKEN);
-        return refreshToken;
+
+        return jwtCreate(id, issuedAt, expiresIn, role, encodedKey, TokenType.REFRESH_TOKEN);
     }
-    public String getAccessToken(HttpServletRequest request) {
-        String accessToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
-            return accessToken.substring(7);
-        }
-        throw new MorandiException(OAuthErrorCode.TOKEN_NOT_FOUND);
-    }
-    public String getRefreshToken(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, "refreshToken");
-        return cookie.getValue();
-    }
-    public String reissueAccessToken(String refreshToken) {
-        Long memberId = getMemberIdFromToken(refreshToken);
-        return generateAccessToken(memberId, Role.USER);
-    }
+
     private String jwtCreate(Long id, Date issuedAt, Date expiresIn, Role role,
                              PrivateKey encodedKey, TokenType tokenType) {
         return Jwts.builder()

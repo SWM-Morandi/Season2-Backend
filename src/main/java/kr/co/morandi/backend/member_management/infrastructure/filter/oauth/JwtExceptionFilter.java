@@ -33,19 +33,33 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
     @Value("${oauth2.signup-url}")
     private String signupPath;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws IOException {
         try {
+            /*
+            * 다음 필터인 JwtAuthenticationFilter에서 발생한 예외를 처리하기 위해 필터를 실행한다.
+            * */
             filterChain.doFilter(request, response);
         } catch (MorandiException e) {
+            /*
+            * JwtAuthenticationFilter에서 발생한 예외가 인증 오류인 경우, refreshToken을 제거하고 로그인 페이지로 리다이렉트한다.
+            * */
             if (isAuthError(e)) {
-                Cookie cookie = cookieUtils.getCookie(REFRESH_TOKEN, null,0);
+                Cookie cookie = cookieUtils.removeCookie(REFRESH_TOKEN,null);
                 response.addCookie(cookie);
                 response.sendRedirect(signupPath);
             }
+
+            /*
+            * JwtAuthenticationFilter에서 발생한 예외가 인증 오류가 아닌 경우, 예외에 해당하는 오류 응답을 반환한다.
+             */
             setErrorResponse(response, e.getErrorCode());
         } catch (Exception e) {
+            /*
+            * JwtAuthenticationFilter에서 발생한 예외가 MorandiException이 아닌 경우, 알 수 없는 오류 응답을 반환한다.
+            * */
             setErrorResponse(response, OAuthErrorCode.UNKNOWN_ERROR);
         }
     }
@@ -56,17 +70,14 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         response.setStatus(errorCode.getHttpStatus().value());
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        ErrorResponse errorResponse = makeErrorResponse(errorCode);
+
+        ErrorResponse errorResponse = ErrorResponse.of(errorCode);
+
         try {
             response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
         } catch (IOException e){
-            e.printStackTrace();
+            log.error("IOException occurred while writing error response", e);
         }
     }
-    private ErrorResponse makeErrorResponse(ErrorCode errorCode) {
-        return ErrorResponse.builder()
-                .code(errorCode.name())
-                .message(errorCode.getMessage())
-                .build();
-    }
+
 }

@@ -10,7 +10,7 @@ import org.springframework.util.StreamUtils;
 import java.io.*;
 
 public class CachedBodyHttpServletWrapper extends HttpServletRequestWrapper {
-    private byte[] cachedBody;
+    private final byte[] cachedBody;
 
     public CachedBodyHttpServletWrapper(HttpServletRequest request) throws IOException {
         super(request);
@@ -28,9 +28,9 @@ public class CachedBodyHttpServletWrapper extends HttpServletRequestWrapper {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(this.cachedBody);
         return new BufferedReader(new InputStreamReader(byteArrayInputStream, "UTF-8"));
     }
-    public class CachedBodyServletInputStream extends ServletInputStream {
+    public static class CachedBodyServletInputStream extends ServletInputStream {
 
-        private InputStream cachedBodyInputStream;
+        private final InputStream cachedBodyInputStream;
 
         public CachedBodyServletInputStream(byte[] cachedBody) {
             this.cachedBodyInputStream = new ByteArrayInputStream(cachedBody);

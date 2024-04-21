@@ -13,10 +13,23 @@ public class CookieUtils {
 
     @Value("${oauth2.cookie.path}")
     private String path;
-    public Cookie getCookie(TokenType type, String value, Integer age) {
+
+    private final int COOKIE_AGE = 60 * 60 * 24 * 10;
+    private final Integer COOKIE_REMOVE_AGE = 0;
+
+    public Cookie getCookie(TokenType type, String value) {
         Cookie cookie = new Cookie(type.name(), value);
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(age);
+        cookie.setMaxAge(COOKIE_AGE);
+        cookie.setDomain(domain);
+        cookie.setPath(path);
+        return cookie;
+    }
+
+    public Cookie removeCookie(TokenType type, String value) {
+        Cookie cookie = new Cookie(type.name(), value);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(COOKIE_REMOVE_AGE);
         cookie.setDomain(domain);
         cookie.setPath(path);
         return cookie;
