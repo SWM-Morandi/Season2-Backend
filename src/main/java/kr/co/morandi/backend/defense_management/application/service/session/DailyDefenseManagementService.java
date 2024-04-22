@@ -1,20 +1,19 @@
 package kr.co.morandi.backend.defense_management.application.service.session;
 
 import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
-import kr.co.morandi.backend.defense_management.application.mapper.session.StartDailyDefenseMapper;
-import kr.co.morandi.backend.problem_information.application.port.out.problemcontent.ProblemContentPort;
-import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
-import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
-import kr.co.morandi.backend.defense_management.infrastructure.adapter.problemcontent.ProblemContentAdapter;
-import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
+import kr.co.morandi.backend.defense_management.application.mapper.session.StartDailyDefenseMapper;
+import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
-import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.problem_information.application.port.out.problemcontent.ProblemContentPort;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
