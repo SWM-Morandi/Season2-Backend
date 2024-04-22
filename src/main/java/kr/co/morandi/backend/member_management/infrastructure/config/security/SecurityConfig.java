@@ -6,7 +6,7 @@ import kr.co.morandi.backend.member_management.infrastructure.filter.oauth.Reque
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -34,6 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/oauths/**","/swagger-ui/**", "/swagger-resources/**",
                                 "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/daily-record/rankings/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/daily-defense/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
