@@ -30,16 +30,28 @@ public class DailyDefenseUseCaseImpl implements DailyDefenseUseCase {
     @Override
     public DailyDefenseInfoResponse getDailyDefenseInfo(Long memberId, LocalDateTime requestDateTime) {
         final DailyDefense dailyDefense = dailyDefensePort.findDailyDefense(DAILY, requestDateTime.toLocalDate());
-
-        if(memberId != null) {
-            final Member member = memberPort.findMemberById(memberId);
-            Optional<DailyRecord> maybeDailyRecord = dailyRecordPort.findDailyRecord(member, requestDateTime.toLocalDate());
-            if(maybeDailyRecord.isPresent()) {
-                DailyRecord dailyRecord = maybeDailyRecord.get();
-                return DailyDefenseInfoMapper.ofAttempted(dailyDefense, dailyRecord);
-            }
+        /*
+        * 비로그인 상태인 경우
+        * */
+        if(memberId == null) {
+            return DailyDefenseInfoMapper.fromNonAttempted(dailyDefense);
         }
+        /*
+        * 로그인 상태인 경우
+        * */
+        final Member member = memberPort.findMemberById(memberId);
+        Optional<DailyRecord> maybeDailyRecord = dailyRecordPort.findDailyRecord(member, requestDateTime.toLocalDate());
 
+        /*
+        * 시험 기록이 존재하는 경우
+        * */
+        if(maybeDailyRecord.isPresent()) {
+            DailyRecord dailyRecord = maybeDailyRecord.get();
+            return DailyDefenseInfoMapper.ofAttempted(dailyDefense, dailyRecord);
+        }
+        /*
+        * 시험 응시 기록이 없는 경우
+        * */
         return DailyDefenseInfoMapper.fromNonAttempted(dailyDefense);
     }
 }
