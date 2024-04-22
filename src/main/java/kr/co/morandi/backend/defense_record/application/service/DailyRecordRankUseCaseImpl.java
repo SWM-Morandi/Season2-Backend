@@ -8,6 +8,7 @@ import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.Dai
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyDetail;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ public class DailyRecordRankUseCaseImpl implements DailyRecordRankUseCase {
     // TODO 공통 등수 로직 부분 빠짐
     @Override
     public DailyDefenseRankPageResponse getDailyRecordRank(LocalDateTime requestTime, int page, int size) {
-        final List<DailyRecord> dailyRecords = dailyRecordPort.findDailyRecordRank(requestTime.toLocalDate(), page, size);
+        final Page<DailyRecord> dailyRecords = dailyRecordPort.findDailyRecordRank(requestTime.toLocalDate(), page, size);
 
         // 등수 계산
         // TODO 동점자 처리 필요
@@ -48,7 +49,7 @@ public class DailyRecordRankUseCaseImpl implements DailyRecordRankUseCase {
                 })
                 .toList();
 
-        return DailyDefenseRankPageResponse.of(dailyRecordRanks, page, size);
+        return DailyDefenseRankPageResponse.of(dailyRecordRanks, dailyRecords.getTotalPages(), page);
     }
 
 

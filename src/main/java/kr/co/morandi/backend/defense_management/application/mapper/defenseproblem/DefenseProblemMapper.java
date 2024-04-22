@@ -40,7 +40,7 @@ public class DefenseProblemMapper {
                             .problemNumber(problemNumber)
                             .isCorrect(isCorrect)
                             .lastAccessLanguage(lastAccessLanguage)
-                            .content(problemContents.get(problemNumber))
+                            .content(problemContents.get(problem.getBaekjoonProblemId()))
                             .tempCodes(tempCodeResponses)
                             .build();
                 })

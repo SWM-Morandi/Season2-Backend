@@ -27,6 +27,7 @@ public class SessionDetail extends BaseEntity {
 
     private Long problemNumber;
 
+    @Enumerated(EnumType.STRING)
     private Language lastAccessLanguage;
 
     public static final Language INITIAL_LANGUAGE = Language.CPP;

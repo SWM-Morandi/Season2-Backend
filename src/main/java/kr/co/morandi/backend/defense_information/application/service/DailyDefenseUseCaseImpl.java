@@ -7,6 +7,7 @@ import kr.co.morandi.backend.defense_information.application.port.out.dailydefen
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,16 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 @RequiredArgsConstructor
 public class DailyDefenseUseCaseImpl implements DailyDefenseUseCase {
 
+    private final MemberPort memberPort;
     private final DailyDefensePort dailyDefensePort;
     private final DailyRecordPort dailyRecordPort;
 
     @Override
-    public DailyDefenseInfoResponse getDailyDefenseInfo(Member member, LocalDateTime requestDateTime) {
+    public DailyDefenseInfoResponse getDailyDefenseInfo(Long memberId, LocalDateTime requestDateTime) {
         final DailyDefense dailyDefense = dailyDefensePort.findDailyDefense(DAILY, requestDateTime.toLocalDate());
 
-        if(member != null) {
+        if(memberId != null) {
+            final Member member = memberPort.findMemberById(memberId);
             Optional<DailyRecord> maybeDailyRecord = dailyRecordPort.findDailyRecord(member, requestDateTime.toLocalDate());
             if(maybeDailyRecord.isPresent()) {
                 DailyRecord dailyRecord = maybeDailyRecord.get();

@@ -96,7 +96,7 @@ class DailyDefenseUseCaseImplTest {
         dailyRecordPort.saveDailyRecord(dailyRecord);
 
         // when
-        final DailyDefenseInfoResponse response = dailyDefenseUseCase.getDailyDefenseInfo(member, requestTime);
+        final DailyDefenseInfoResponse response = dailyDefenseUseCase.getDailyDefenseInfo(member.getMemberId(), requestTime);
 
         // then
         assertAll(

@@ -5,6 +5,7 @@ import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import kr.co.morandi.backend.defense_record.infrastructure.persistence.dailydefense_record.DailyRecordRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class DailyRecordAdapter implements DailyRecordPort {
     *   조회 시간 별 DailyDefense 등수 조회
     * */
     @Override
-    public List<DailyRecord> findDailyRecordRank(LocalDate requestDate, Integer page, Integer size) {
+    public Page<DailyRecord> findDailyRecordRank(LocalDate requestDate, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return dailyRecordRepository.getDailyRecordsRankByDate(requestDate, pageable);
     }

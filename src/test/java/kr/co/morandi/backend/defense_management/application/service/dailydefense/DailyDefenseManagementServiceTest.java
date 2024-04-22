@@ -124,7 +124,7 @@ class DailyDefenseManagementServiceTest {
         StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(1L)
                 .build();
-        dailyDefenseManagementService.startDailyDefense(request, member, requestTime);
+        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
 
         StartDailyDefenseServiceRequest retryRequest = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(2L)
@@ -133,7 +133,7 @@ class DailyDefenseManagementServiceTest {
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 2, 12, 0, 0);
 
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member, retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member.getMemberId(), retryRequestTime);
 
 
         // then
@@ -163,7 +163,7 @@ class DailyDefenseManagementServiceTest {
         StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(1L)
                 .build();
-        dailyDefenseManagementService.startDailyDefense(request, member, requestTime);
+        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
 
         StartDailyDefenseServiceRequest retryRequest = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(2L)
@@ -171,7 +171,7 @@ class DailyDefenseManagementServiceTest {
 
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member, retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member.getMemberId(), retryRequestTime);
 
         // then
         assertAll(
@@ -200,12 +200,12 @@ class DailyDefenseManagementServiceTest {
         StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(2L)
                 .build();
-        dailyDefenseManagementService.startDailyDefense(request, member, requestTime);
+        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
 
 
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member, retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), retryRequestTime);
 
         // then
         assertAll(
@@ -235,7 +235,7 @@ class DailyDefenseManagementServiceTest {
                 .build();
 
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member, requestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
 
         // then
 

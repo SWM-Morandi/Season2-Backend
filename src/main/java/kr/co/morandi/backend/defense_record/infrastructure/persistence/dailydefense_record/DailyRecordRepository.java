@@ -2,6 +2,7 @@ package kr.co.morandi.backend.defense_record.infrastructure.persistence.dailydef
 
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -41,5 +42,5 @@ public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> 
             where CAST(dr.testDate as localdate) = :requestDate
             order by dr.solvedCount desc, dr.totalSolvedTime asc, dr.recordId asc
      """)
-    List<DailyRecord> getDailyRecordsRankByDate(LocalDate requestDate, Pageable pageable);
+    Page<DailyRecord> getDailyRecordsRankByDate(LocalDate requestDate, Pageable pageable);
 }

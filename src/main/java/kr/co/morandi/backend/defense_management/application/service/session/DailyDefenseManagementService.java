@@ -10,6 +10,7 @@ import kr.co.morandi.backend.defense_management.application.response.session.Sta
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.application.port.out.problemcontent.ProblemContentPort;
 import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
@@ -33,12 +34,14 @@ public class DailyDefenseManagementService {
     private final DailyRecordPort dailyRecordPort;
     private final ProblemGenerationService problemGenerationService;
     private final DefenseSessionPort defenseSessionPort;
+    private final MemberPort memberPort;
 
     private final ProblemContentPort problemContentPort;
 
     @Transactional
-    public StartDailyDefenseResponse startDailyDefense(StartDailyDefenseServiceRequest request, Member member, LocalDateTime requestTime) {
+    public StartDailyDefenseResponse startDailyDefense(StartDailyDefenseServiceRequest request, Long memberId, LocalDateTime requestTime) {
         Long problemNumber = request.getProblemNumber();
+        Member member = memberPort.findMemberById(memberId);
 
         // 세션이랑 세션 Detail을 찾아서 응시 기록이 있는지 살펴보기
         final Optional<DefenseSession> maybeDefenseSession = defenseSessionPort.findTodaysDailyDefenseSession(member, requestTime);

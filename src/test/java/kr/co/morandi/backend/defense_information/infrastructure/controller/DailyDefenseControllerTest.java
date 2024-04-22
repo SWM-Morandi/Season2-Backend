@@ -42,7 +42,6 @@ class DailyDefenseControllerTest {
 
     @DisplayName("DailyDefense 정보를 로그인하지 않은 상태에서 가져올 수 있다.")
     @Test
-//    @WithMockUser
     void getDailyDefenseInfo() throws Exception {
         // given
         when(dailyDefenseUseCase.getDailyDefenseInfo(any(), any()))
