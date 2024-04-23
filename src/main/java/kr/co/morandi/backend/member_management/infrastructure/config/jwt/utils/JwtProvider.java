@@ -38,13 +38,12 @@ public class JwtProvider {
         if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {
             return accessToken.substring(7);
         }
-        throw new MorandiException(OAuthErrorCode.ACCESS_TOKEN_NOT_FOUND);
+        return null;
     }
     public String parseRefreshToken(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, "REFRESH_TOKEN");
         if(cookie==null)
-            throw new MorandiException(OAuthErrorCode.REFRESH_TOKEN_NOT_FOUND);
-
+            return null;
         return cookie.getValue();
     }
     public String reissueAccessToken(String refreshToken) {

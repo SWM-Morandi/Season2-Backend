@@ -1,21 +1,22 @@
 package kr.co.morandi.backend.member_management.infrastructure.config.security;
 
-import kr.co.morandi.backend.member_management.infrastructure.filter.oauth.JwtAuthenticationFilter;
-import kr.co.morandi.backend.member_management.infrastructure.filter.oauth.JwtExceptionFilter;
-import kr.co.morandi.backend.member_management.infrastructure.filter.oauth.RequestCachingFilter;
+import kr.co.morandi.backend.member_management.infrastructure.security.filter.entrypoint.JwtAuthenticationEntryPoint;
+import kr.co.morandi.backend.member_management.infrastructure.security.filter.oauth.JwtAuthenticationFilter;
+import kr.co.morandi.backend.member_management.infrastructure.security.filter.oauth.JwtExceptionFilter;
+import kr.co.morandi.backend.member_management.infrastructure.security.filter.oauth.RequestCachingFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import static org.springframework.http.HttpMethod.GET;
 
 @EnableWebSecurity
 @Configuration
@@ -26,6 +27,7 @@ public class SecurityConfig {
     private final JwtExceptionFilter jwtExceptionFilter;
     private final RequestCachingFilter requestCachingFilter;
     private final CorsConfigurationSource corsConfigurationSource;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
@@ -36,10 +38,13 @@ public class SecurityConfig {
                         .requestMatchers("/oauths/**","/swagger-ui/**", "/swagger-resources/**",
                                 "/v3/api-docs/**").permitAll()
                         .requestMatchers("/daily-record/rankings/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/daily-defense/**").permitAll()
+                        .requestMatchers(GET, "/daily-defense/**").permitAll()
                         .anyRequest().authenticated())
+                .exceptionHandling((exceptionHandling) -> exceptionHandling
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                )
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class)
                 .addFilterBefore(requestCachingFilter, JwtExceptionFilter.class);
 

@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.filter.oauth;
+package kr.co.morandi.backend.member_management.infrastructure.security.filter.oauth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

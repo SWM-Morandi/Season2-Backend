@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.member_management.infrastructure.filter.oauth;
+package kr.co.morandi.backend.member_management.infrastructure.security.filter.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -31,16 +31,15 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
     private final CookieUtils cookieUtils;
 
-    @Value("${oauth2.signup-url}")
-    private String signupPath;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
                                     FilterChain filterChain) throws IOException {
+        /*
+         * 다음 필터인 JwtAuthenticationFilter에서 발생한 예외를 처리하기 위해 필터를 실행한다.
+         * */
         try {
-            /*
-            * 다음 필터인 JwtAuthenticationFilter에서 발생한 예외를 처리하기 위해 필터를 실행한다.
-            * */
             filterChain.doFilter(request, response);
         } catch (MorandiException e) {
             /*
@@ -49,7 +48,6 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             if (isAuthError(e)) {
                 Cookie cookie = cookieUtils.removeCookie(REFRESH_TOKEN,null);
                 response.addCookie(cookie);
-                response.sendRedirect(signupPath);
             }
 
             /*
@@ -64,7 +62,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         }
     }
     private boolean isAuthError(MorandiException e) {
-        return e.getErrorCode().getHttpStatus() == (HttpStatus.UNAUTHORIZED);
+        return e.getErrorCode().getHttpStatus() == (HttpStatus.UNAUTHORIZED) || e.getErrorCode().getHttpStatus() == HttpStatus.FORBIDDEN;
     }
     private void setErrorResponse(HttpServletResponse response, ErrorCode errorCode)    {
         response.setStatus(errorCode.getHttpStatus().value());
@@ -75,7 +73,8 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
         try {
             response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
-        } catch (IOException e){
+            response.getWriter().flush();
+        } catch (IOException e) {
             log.error("IOException occurred while writing error response", e);
         }
     }
