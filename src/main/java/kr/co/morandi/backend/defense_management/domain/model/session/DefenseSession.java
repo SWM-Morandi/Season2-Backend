@@ -1,10 +1,13 @@
 package kr.co.morandi.backend.defense_management.domain.model.session;
 
 import jakarta.persistence.*;
+import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.model.BaseEntity;
 import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType;
+import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -47,6 +50,13 @@ public class DefenseSession extends BaseEntity {
 
     private static final Long INITIAL_ACCESS_PROBLEM_NUMBER = 1L;
 
+    public boolean terminateSession() {
+        if(examStatus == ExamStatus.COMPLETED) {
+            throw new MorandiException(SessionErrorCode.SESSION_ALREADY_ENDED);
+        }
+        examStatus = ExamStatus.COMPLETED;
+        return true;
+    }
     public SessionDetail getSessionDetail(Long problemNumber) {
         return getSessionDetails().stream()
                 .filter(detail -> Objects.equals(detail.getProblemNumber(), problemNumber))
@@ -75,6 +85,8 @@ public class DefenseSession extends BaseEntity {
                                               LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return new DefenseSession(member, recordId, defenseType, problemNumbers, startDateTime, endDateTime);
     }
+
+    @Builder
     private DefenseSession(Member member, Long recordId, DefenseType defenseType, Set<Long> problemNumbers,
                            LocalDateTime startDateTime, LocalDateTime endDateTime) {
         if(problemNumbers==null || problemNumbers.isEmpty())

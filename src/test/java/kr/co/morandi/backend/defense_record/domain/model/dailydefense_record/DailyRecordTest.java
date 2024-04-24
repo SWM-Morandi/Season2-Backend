@@ -1,10 +1,10 @@
 package kr.co.morandi.backend.defense_record.domain.model.dailydefense_record;
 
+import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
-import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,6 +27,40 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 class DailyRecordTest {
 
+    @DisplayName("시험 기록(Record)를 종료하면 종료 상태로 변경된다.")
+    @Test
+    void terminateDefense() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+
+
+        // when
+        final boolean result = dailyRecord.terminteDefense();
+
+        // then
+        assertThat(result).isTrue();
+
+    }
+
+    @DisplayName("시험 기록(Record)가 종료된 상태에서 다시 종료하려고 하면 false를 반환한다.")
+    @Test
+    void terminateDefenseWhenAlreadyTerminated() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+        dailyRecord.terminteDefense();
+
+        // when & then
+        assertThatThrownBy(() -> dailyRecord.terminteDefense())
+                .isInstanceOf(MorandiException.class);
+    }
     @DisplayName("오늘의 문제를 정답처리 하면 푼 total 문제 수가 증가하고, 푼 시간이 기록된다.")
     @Test
     void solveProblem() {

@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_record.infrastructure.adapter.dailydefense;
+package kr.co.morandi.backend.defense_record.infrastructure.adapter.dailyrecord;
 
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Component
