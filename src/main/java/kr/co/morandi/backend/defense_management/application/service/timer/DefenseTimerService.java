@@ -23,7 +23,7 @@ public class DefenseTimerService {
         long delay = Duration.between(defenseSession.getStartDateTime(), defenseSession.getEndDateTime()).toMillis();
 
         final ScheduledFuture<?> schedule = scheduler.schedule(() -> {
-            sessionService.terminateDefense(defenseSession.getDefenseSessionId());
+            defenseSession.terminateDefense(sessionService);
             defenseSessionTimer.remove(defenseSession.getDefenseSessionId());
         }, delay, TimeUnit.MILLISECONDS);
 

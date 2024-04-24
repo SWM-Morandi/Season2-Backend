@@ -5,6 +5,7 @@ import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.model.BaseEntity;
 import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType;
 import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
+import kr.co.morandi.backend.defense_management.domain.service.SessionService;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -50,6 +51,10 @@ public class DefenseSession extends BaseEntity {
 
     private static final Long INITIAL_ACCESS_PROBLEM_NUMBER = 1L;
 
+    public void terminateDefense(SessionService sessionService) {
+        sessionService.terminateDefense(this.getDefenseSessionId());
+    }
+
     public boolean terminateSession() {
         if(examStatus == ExamStatus.COMPLETED) {
             throw new MorandiException(SessionErrorCode.SESSION_ALREADY_ENDED);
@@ -57,6 +62,7 @@ public class DefenseSession extends BaseEntity {
         examStatus = ExamStatus.COMPLETED;
         return true;
     }
+
     public SessionDetail getSessionDetail(Long problemNumber) {
         return getSessionDetails().stream()
                 .filter(detail -> Objects.equals(detail.getProblemNumber(), problemNumber))

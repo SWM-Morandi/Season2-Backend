@@ -8,7 +8,6 @@ import kr.co.morandi.backend.defense_record.application.port.out.record.RecordPo
 import kr.co.morandi.backend.defense_record.domain.error.RecordErrorCode;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,6 @@ public class SessionService {
     private final DefenseSessionPort defenseSessionPort;
     private final RecordPort recordPort;
 
-    @Async
     @Transactional
     public void terminateDefense(Long sessionId) {
         final DefenseSession defenseSession = defenseSessionPort.findDefenseSessionById(sessionId)
