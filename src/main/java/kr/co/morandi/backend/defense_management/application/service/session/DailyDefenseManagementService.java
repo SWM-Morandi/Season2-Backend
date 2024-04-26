@@ -7,7 +7,7 @@
     import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
     import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
     import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
-    import kr.co.morandi.backend.defense_management.application.service.timer.DefenseTimerService;
+    import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
     import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
     import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
     import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
@@ -17,6 +17,7 @@
     import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
     import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
     import lombok.RequiredArgsConstructor;
+    import org.springframework.context.ApplicationEventPublisher;
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@
         private final DefenseSessionPort defenseSessionPort;
         private final MemberPort memberPort;
         private final ProblemContentPort problemContentPort;
-        private final DefenseTimerService defenseTimerService;
+        private final ApplicationEventPublisher publisher;
 
         @Transactional
         public StartDailyDefenseResponse startDailyDefense(StartDailyDefenseServiceRequest request, Long memberId, LocalDateTime requestTime) {
@@ -98,9 +99,9 @@
                     DefenseSession.startSession(member, recordId, dailyDefense.getDefenseType(), tryProblem.keySet(), now, dailyDefense.getEndTime(now)));
 
             /*
-             *  DefenseSession에 관련된 타이머 시작
+             *  DefenseSession에 관련된 타이머 시작 이벤트 발행
              * */
-            defenseTimerService.startDefenseTimer(defenseSession);
+            publisher.publishEvent(new DefenseStartTimerEvent(defenseSession.getDefenseSessionId(), defenseSession.getStartDateTime(), defenseSession.getEndDateTime()));
 
             return defenseSession;
         }

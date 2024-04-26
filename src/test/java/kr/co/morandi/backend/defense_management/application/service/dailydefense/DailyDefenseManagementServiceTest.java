@@ -1,32 +1,33 @@
 package kr.co.morandi.backend.defense_management.application.service.dailydefense;
 
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
-import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
-import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
-import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
-import kr.co.morandi.backend.defense_management.application.service.session.DailyDefenseManagementService;
-import kr.co.morandi.backend.problem_information.infrastructure.adapter.problemcontent.ProblemContentAdapter;
-import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
+import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDetailRepository;
+import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
+import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
+import kr.co.morandi.backend.defense_management.application.service.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.SessionDetailRepository;
-import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDetailRepository;
-import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
-import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
 import kr.co.morandi.backend.defense_record.infrastructure.persistence.dailydefense_record.DailyRecordRepository;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
+import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
+import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
+import kr.co.morandi.backend.problem_information.infrastructure.adapter.problemcontent.ProblemContentAdapter;
+import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,8 +46,8 @@ import static org.mockito.ArgumentMatchers.anyList;
 
 
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
+@RecordApplicationEvents
 class DailyDefenseManagementServiceTest {
 
     @Autowired
@@ -78,6 +79,9 @@ class DailyDefenseManagementServiceTest {
 
     @MockBean
     private ProblemContentAdapter problemContentAdapter;
+
+    @Autowired
+    private ApplicationEvents applicationEvents;
 
     @BeforeEach
     void setUp() {
@@ -111,6 +115,33 @@ class DailyDefenseManagementServiceTest {
         memberRepository.deleteAllInBatch();
     }
 
+    @DisplayName("오늘의 문제가 시작될 때 타이머 이벤트를 발행한다.")
+    @Test
+    void eventPublishWhenStartDailyDefense() {
+        // given
+        Member member = createMember();
+        createDailyDefense(LocalDate.of(2021, 10, 1), "오늘의 문제 테스트");
+
+        LocalDateTime requestTime = LocalDateTime.of(2021, 10, 1, 0, 0, 0);
+
+        StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
+                .problemNumber(2L)
+                .build();
+
+        // when
+        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+
+        // then
+        assertThat(applicationEvents.stream(DefenseStartTimerEvent.class))
+            .hasSize(1)
+            .anySatisfy(event -> {
+                assertAll(
+                        () -> assertThat(event.getSessionId()).isNotNull(),
+                        () -> assertThat(event.getStartDateTime()).isNotNull(),
+                        () -> assertThat(event.getEndDateTime()).isNotNull()
+                );
+            });
+    }
     @DisplayName("전날 시작했던 시험이 안 끝났더라도 오늘의 문제를 시도하면 해당하는 날짜의 문제를 제공한다.")
     @Test
     void retryDailyDefenseWhenDayPassed() {
