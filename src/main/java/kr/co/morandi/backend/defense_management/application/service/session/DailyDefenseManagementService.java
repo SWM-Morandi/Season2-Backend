@@ -68,10 +68,6 @@
 
             final DefenseSession savedDefenseSession = defenseSessionPort.saveDefenseSession(defenseSession);
 
-            /*
-            *  DefenseSession에 관련된 타이머 시작
-            * */
-            defenseTimerService.startDefenseTimer(savedDefenseSession);
 
             // 문제 내용 가져오기
             final Map<Long, ProblemContent> problemContent = getProblemContents(tryProblem);
@@ -98,7 +94,15 @@
             DailyRecord savedDailyRecord = dailyRecordPort.saveDailyRecord(dailyRecord);
             Long recordId = savedDailyRecord.getRecordId();
 
-            return DefenseSession.startSession(member, recordId, dailyDefense.getDefenseType(), tryProblem.keySet(), now, dailyDefense.getEndTime(now));
+            final DefenseSession defenseSession = defenseSessionPort.saveDefenseSession(
+                    DefenseSession.startSession(member, recordId, dailyDefense.getDefenseType(), tryProblem.keySet(), now, dailyDefense.getEndTime(now)));
+
+            /*
+             *  DefenseSession에 관련된 타이머 시작
+             * */
+            defenseTimerService.startDefenseTimer(defenseSession);
+
+            return defenseSession;
         }
 
 
