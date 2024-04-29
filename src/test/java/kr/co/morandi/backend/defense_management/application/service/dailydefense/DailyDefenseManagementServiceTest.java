@@ -7,6 +7,7 @@ import kr.co.morandi.backend.defense_information.infrastructure.persistence.dail
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.application.service.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.application.service.timer.DefenseTimerService;
 import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.SessionDetailRepository;
@@ -28,6 +29,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.ApplicationEvents;
 import org.springframework.test.context.event.RecordApplicationEvents;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,7 +44,9 @@ import static kr.co.morandi.backend.member_management.domain.model.member.Social
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
@@ -83,6 +87,12 @@ class DailyDefenseManagementServiceTest {
     @Autowired
     private ApplicationEvents applicationEvents;
 
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
+    @MockBean
+    private DefenseTimerService defenseTimerService;
+
     @BeforeEach
     void setUp() {
         Map<Long, ProblemContent> problemContentMap = Map.of(
@@ -115,6 +125,40 @@ class DailyDefenseManagementServiceTest {
         memberRepository.deleteAllInBatch();
     }
 
+    @DisplayName("오늘의 문제가 시작되다가 롤백되면 타이머 이벤트가 실행되지 않는다.")
+    @Test
+    void eventPublishWhenStartDailyDefenseWhenRollback() {
+        // given
+        Member member = createMember();
+        createDailyDefense(LocalDate.of(2021, 10, 1), "오늘의 문제 테스트");
+
+        LocalDateTime requestTime = LocalDateTime.of(2021, 10, 1, 0, 0, 0);
+
+        StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
+                .problemNumber(2L)
+                .build();
+
+        // when
+        transactionTemplate.execute(status -> {
+            dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+            status.setRollbackOnly(); // Force rollback
+            return null;
+        });
+
+        // then
+        assertThat(applicationEvents.stream(DefenseStartTimerEvent.class))
+                .hasSize(1)
+                .anySatisfy(event -> {
+                    assertAll(
+                            () -> assertThat(event.getSessionId()).isNotNull(),
+                            () -> assertThat(event.getStartDateTime()).isNotNull(),
+                            () -> assertThat(event.getEndDateTime()).isNotNull()
+                    );
+                });
+
+        verify(defenseTimerService, never()).startDefenseTimer(any(), any(), any());
+    }
+
     @DisplayName("오늘의 문제가 시작될 때 타이머 이벤트를 발행한다.")
     @Test
     void eventPublishWhenStartDailyDefense() {
@@ -141,6 +185,7 @@ class DailyDefenseManagementServiceTest {
                         () -> assertThat(event.getEndDateTime()).isNotNull()
                 );
             });
+        verify(defenseTimerService, times(1)).startDefenseTimer(any(), any(), any());
     }
     @DisplayName("전날 시작했던 시험이 안 끝났더라도 오늘의 문제를 시도하면 해당하는 날짜의 문제를 제공한다.")
     @Test
