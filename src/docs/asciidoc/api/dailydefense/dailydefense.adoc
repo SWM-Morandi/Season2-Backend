@@ -1,0 +1,19 @@
+[[Daily-Defense]]
+== 오늘의 문제 정보 조회
+
+==== Request
+include::{snippets}/daily-defense-info/http-request.adoc[]
+
+==== Response
+include::{snippets}/daily-defense-info/http-response.adoc[]
+include::{snippets}/daily-defense-info/response-fields.adoc[]
+
+
+== 오늘의 문제 시작
+
+==== Request
+include::{snippets}/daily-defense-start/http-request.adoc[]
+
+==== Response
+include::{snippets}/daily-defense-start/http-response.adoc[]
+include::{snippets}/daily-defense-start/response-fields.adoc[]

@@ -1,0 +1,16 @@
+ifndef::snippets[]
+:snippets: ../../build/generated-snippets
+endif::[]
+= 모두의 랜덤 디펜스 REST API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 1
+:sectlinks:
+
+include::api/dailydefense/dailydefense.adoc[]
+
+
+
+[[Daily-Defense-List]]

@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 plugins {
     id "org.sonarqube" version "4.4.1.3373"
@@ -65,6 +66,8 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    asciidoctorExt
 }
 
 repositories {
@@ -108,6 +111,10 @@ dependencies {
     // Test Dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.h2database:h2'
+
+    // RestDocs
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
 tasks.named('sonarqube').configure {
@@ -119,7 +126,31 @@ tasks.named('test') {
     finalizedBy 'jacocoTestReport'
 }
 
+ext { //전역 변수
+    snippetsDir = file("build/generated-snippets")
+}
 
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExt'
+
+    sources { // 특정 파일만 html로 만든다
+        include '**/index.adoc'
+    }
+    baseDirFollowsSourceFile() // 다른 adoc 파일을 참조할 때 경로를 baseDir 기준으로 찾음
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}") {
+        into 'static/docs'
+    }
+}
 
 jacocoTestReport {
     dependsOn test

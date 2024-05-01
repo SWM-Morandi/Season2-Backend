@@ -1,5 +1,8 @@
 package kr.co.morandi.backend.defense_management.application.response.session;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,6 +19,7 @@ public class StartDailyDefenseResponse {
     private Long defenseSessionId;
     private String contentName;
     private DefenseType defenseType;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastAccessTime;
     private List<DefenseProblemResponse> defenseProblems;
 

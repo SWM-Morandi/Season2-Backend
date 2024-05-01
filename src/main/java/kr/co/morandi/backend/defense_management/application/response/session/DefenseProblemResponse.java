@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.defense_management.application.response.session;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.co.morandi.backend.problem_information.application.response.problemcontent.ProblemContent;
 import kr.co.morandi.backend.defense_management.application.response.tempcode.TempCodeResponse;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
@@ -21,6 +22,10 @@ public class DefenseProblemResponse {
     private boolean isCorrect;
     private Language lastAccessLanguage;
     private Set<TempCodeResponse> tempCodes;
+
+    public boolean getIsCorrect() {
+        return isCorrect;
+    }
 
     @Builder
     private DefenseProblemResponse(Long problemId, Long problemNumber, Long baekjoonProblemId,
