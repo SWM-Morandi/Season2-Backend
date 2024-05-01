@@ -21,9 +21,8 @@
 
             long delay = Duration.between(startDateTime, endDateTime).toMillis();
 
-            scheduler.schedule(() -> {
-                sessionService.terminateDefense(defenseSessionId);
-            }, delay, TimeUnit.MILLISECONDS);
+            scheduler.schedule(() ->
+                sessionService.terminateDefense(defenseSessionId), delay, TimeUnit.MILLISECONDS);
 
         }
 
