@@ -1,19 +1,28 @@
 [[Daily-Defense]]
 == 오늘의 문제 정보 조회
 
-==== Request
+=== Request
 include::{snippets}/daily-defense-info/http-request.adoc[]
 
-==== Response
+=== Response
 include::{snippets}/daily-defense-info/http-response.adoc[]
 include::{snippets}/daily-defense-info/response-fields.adoc[]
+
+== 오늘의 문제 기록 조회
+
+=== Request
+include::{snippets}/daily-defense-ranking/http-request.adoc[]
+
+=== Response
+include::{snippets}/daily-defense-ranking/http-response.adoc[]
+include::{snippets}/daily-defense-ranking/response-fields.adoc[]
 
 
 == 오늘의 문제 시작
 
-==== Request
+=== Request
 include::{snippets}/daily-defense-start/http-request.adoc[]
 
-==== Response
+=== Response
 include::{snippets}/daily-defense-start/http-response.adoc[]
 include::{snippets}/daily-defense-start/response-fields.adoc[]

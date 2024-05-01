@@ -40,7 +40,7 @@ public class DefenseManagementControllerDocsTest extends RestDocsSupport {
         return new DefenseMangementController(dailyDefenseManagementService);
     }
 
-    @DisplayName("DailyDefense 정보를 가져오는 API")
+    @DisplayName("DailyDefense를 시작하는 API")
     @Test
     void getDailyDefenseInfo() throws Exception {
         Subtask subtask = Subtask.builder()
