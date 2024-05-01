@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/daily-record/rankings/**").permitAll()
                         .requestMatchers(GET, "/daily-defense/**").permitAll()
                         .anyRequest().authenticated())
-                .exceptionHandling((exceptionHandling) -> exceptionHandling
+                .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

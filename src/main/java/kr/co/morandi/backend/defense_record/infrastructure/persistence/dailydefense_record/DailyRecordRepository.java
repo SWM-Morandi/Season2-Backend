@@ -1,14 +1,13 @@
 package kr.co.morandi.backend.defense_record.infrastructure.persistence.dailydefense_record;
 
-import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> {

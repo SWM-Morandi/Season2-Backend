@@ -1,10 +1,10 @@
 package kr.co.morandi.backend.member_management.infrastructure.config.jwt.utils;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.domain.model.member.Role;
 import kr.co.morandi.backend.member_management.infrastructure.config.jwt.constants.TokenType;
@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
+
 import java.security.PrivateKey;
 import java.util.Date;
 

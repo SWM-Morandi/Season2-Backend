@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import org.springframework.util.StreamUtils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class CachedBodyHttpServletWrapper extends HttpServletRequestWrapper {
     private final byte[] cachedBody;
@@ -26,7 +27,7 @@ public class CachedBodyHttpServletWrapper extends HttpServletRequestWrapper {
     @Override
     public BufferedReader getReader() throws IOException {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(this.cachedBody);
-        return new BufferedReader(new InputStreamReader(byteArrayInputStream, "UTF-8"));
+        return new BufferedReader(new InputStreamReader(byteArrayInputStream, StandardCharsets.UTF_8));
     }
     public static class CachedBodyServletInputStream extends ServletInputStream {
 

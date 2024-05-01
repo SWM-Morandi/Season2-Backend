@@ -8,7 +8,6 @@ import kr.co.morandi.backend.common.exception.response.ErrorResponse;
 import kr.co.morandi.backend.member_management.infrastructure.config.jwt.utils.JwtProvider;
 import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
