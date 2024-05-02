@@ -12,7 +12,6 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class DefenseEventService {
 
     private final DefenseTimerService defenseTimerService;
-
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void onDefenseStartTimerEvent(DefenseStartTimerEvent event) {
         defenseTimerService.startDefenseTimer(event.getSessionId(), event.getStartDateTime(), event.getEndDateTime());

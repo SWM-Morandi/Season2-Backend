@@ -45,7 +45,7 @@ public class DailyDefenseUseCaseImpl implements DailyDefenseUseCase {
         /*
         * 시험 기록이 존재하는 경우
         * */
-        if(maybeDailyRecord.isPresent()) {
+        if (maybeDailyRecord.isPresent()) {
             DailyRecord dailyRecord = maybeDailyRecord.get();
             return DailyDefenseInfoMapper.ofAttempted(dailyDefense, dailyRecord);
         }

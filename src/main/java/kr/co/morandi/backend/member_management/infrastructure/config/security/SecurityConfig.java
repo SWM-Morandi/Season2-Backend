@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/oauths/**","/swagger-ui/**", "/swagger-resources/**",
-                                "/v3/api-docs/**").permitAll()
+                                "/v3/api-docs/**", "/send", "/sse").permitAll()
                         .requestMatchers("/daily-record/rankings/**").permitAll()
                         .requestMatchers(GET, "/daily-defense/**").permitAll()
                         .anyRequest().authenticated())

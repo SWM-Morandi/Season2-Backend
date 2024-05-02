@@ -1,7 +1,9 @@
 package kr.co.morandi.backend.defense_record.domain.model.dailydefense_record;
 
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import kr.co.morandi.backend.defense_information.domain.model.defense.Defense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
@@ -44,7 +46,6 @@ public class DailyRecord extends Record<DailyDetail> {
                     }
                 });
     }
-
     public Set<Long> getSolvedProblemNumbers() {
         return super.getDetails().stream()
                 .filter(DailyDetail::getIsSolved)

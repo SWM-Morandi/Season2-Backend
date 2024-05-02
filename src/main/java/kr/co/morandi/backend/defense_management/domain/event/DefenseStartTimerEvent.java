@@ -12,5 +12,4 @@ public class DefenseStartTimerEvent {
     private final Long sessionId;
     private final LocalDateTime startDateTime;
     private final LocalDateTime endDateTime;
-
 }
