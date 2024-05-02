@@ -1,22 +1,20 @@
 package kr.co.morandi.backend.defense_management.application.port.out.session;
 
-import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
-import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
-import kr.co.morandi.backend.member_management.domain.model.member.Member;
-import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
+import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,9 +27,7 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Pro
 import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class DefenseSessionPortTest {
+class DefenseSessionPortTest extends IntegrationTestSupport {
 
     @Autowired
     private DefenseSessionPort defenseSessionPort;

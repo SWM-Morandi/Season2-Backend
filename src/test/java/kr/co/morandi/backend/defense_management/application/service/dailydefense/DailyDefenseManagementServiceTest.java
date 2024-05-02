@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.defense_management.application.service.dailydefense;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
@@ -24,9 +25,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.ApplicationEvents;
 import org.springframework.test.context.event.RecordApplicationEvents;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -49,10 +48,8 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 
-@SpringBootTest
-@ActiveProfiles("test")
 @RecordApplicationEvents
-class DailyDefenseManagementServiceTest {
+class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private DailyDefenseManagementService dailyDefenseManagementService;

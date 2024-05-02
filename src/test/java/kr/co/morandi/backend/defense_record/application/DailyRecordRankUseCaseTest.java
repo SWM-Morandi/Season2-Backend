@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.defense_record.application;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
@@ -14,8 +15,6 @@ import kr.co.morandi.backend.problem_information.infrastructure.persistence.prob
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -31,10 +30,8 @@ import static kr.co.morandi.backend.member_management.domain.model.member.Social
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
-@SpringBootTest
 @Transactional
-@ActiveProfiles("test")
-class DailyRecordRankUseCaseTest {
+class DailyRecordRankUseCaseTest extends IntegrationTestSupport {
 
     @Autowired
     private DailyRecordRankUseCase dailyRecordRankUseCase;

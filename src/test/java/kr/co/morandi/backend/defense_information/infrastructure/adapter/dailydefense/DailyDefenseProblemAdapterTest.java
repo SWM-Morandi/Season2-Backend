@@ -1,18 +1,16 @@
 package kr.co.morandi.backend.defense_information.infrastructure.adapter.dailydefense;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
-import kr.co.morandi.backend.defense_information.infrastructure.adapter.dailydefense.DailyDefenseProblemAdapter;
 import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
-import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
+import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,9 +20,7 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Pro
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class DailyDefenseProblemAdapterTest {
+class DailyDefenseProblemAdapterTest extends IntegrationTestSupport {
 
     @Autowired
     private ProblemRepository problemRepository;

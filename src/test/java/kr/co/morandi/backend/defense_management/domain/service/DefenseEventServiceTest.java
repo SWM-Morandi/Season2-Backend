@@ -1,23 +1,20 @@
 package kr.co.morandi.backend.defense_management.domain.service;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_management.application.service.timer.DefenseTimerService;
 import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class DefenseEventServiceTest {
+class DefenseEventServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ApplicationEventPublisher publisher;

@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.problem_information.infrastructure.config;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.problem_information.domain.model.algorithm.Algorithm;
 import kr.co.morandi.backend.problem_information.infrastructure.initializer.AlgorithmInitializer;
 import kr.co.morandi.backend.problem_information.infrastructure.persistence.algorithm.AlgorithmRepository;
@@ -7,8 +8,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,9 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class AlgorithmInitializerTest {
+class AlgorithmInitializerTest extends IntegrationTestSupport {
     @Autowired
     private AlgorithmInitializer algorithmInitializer;
 

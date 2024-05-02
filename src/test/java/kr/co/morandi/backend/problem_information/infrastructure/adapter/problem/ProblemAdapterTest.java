@@ -1,9 +1,9 @@
 package kr.co.morandi.backend.problem_information.infrastructure.adapter.problem;
 
-import org.springframework.boot.test.context.SpringBootTest;
+import kr.co.morandi.backend.IntegrationTestSupport;
 
-@SpringBootTest
-class ProblemAdapterTest {
+
+class ProblemAdapterTest extends IntegrationTestSupport {
 
 
 }

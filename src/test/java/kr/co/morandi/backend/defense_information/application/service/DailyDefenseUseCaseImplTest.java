@@ -1,9 +1,9 @@
 package kr.co.morandi.backend.defense_information.application.service;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.application.dto.response.DailyDefenseInfoResponse;
 import kr.co.morandi.backend.defense_information.application.port.in.DailyDefenseUseCase;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
-import kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
@@ -15,8 +15,6 @@ import kr.co.morandi.backend.problem_information.infrastructure.persistence.prob
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -30,12 +28,10 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Pro
 import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-@SpringBootTest
 @Transactional
-@ActiveProfiles("test")
-class DailyDefenseUseCaseImplTest {
+class DailyDefenseUseCaseImplTest extends IntegrationTestSupport {
 
     @Autowired
     private MemberRepository memberRepository;
