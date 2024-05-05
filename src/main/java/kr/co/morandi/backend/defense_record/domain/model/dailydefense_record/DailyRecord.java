@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,27 @@ public class DailyRecord extends Record<DailyDetail> {
     private Long solvedCount;
     private Integer problemCount;
 
+    public void solveProblem(Long problemNumber, String code, LocalDateTime solvedAt) {
+        super.getDetails().stream()
+                .filter(detail -> detail.getProblemNumber().equals(problemNumber))
+                .findFirst()
+                .ifPresent(detail -> {
+
+                    Long solvedTime = calculateSolvedTime(solvedAt);
+
+                    if(detail.solveProblem(code, solvedTime)) {
+                        ++this.solvedCount;
+                        super.addTotalSolvedTime(solvedTime);
+                    }
+                });
+    }
+
+    public Set<Long> getSolvedProblemNumbers() {
+        return super.getDetails().stream()
+                .filter(DailyDetail::getIsSolved)
+                .map(DailyDetail::getProblemNumber)
+                .collect(Collectors.toSet());
+    }
     public boolean isSolvedProblem(Long problemNumber) {
         return super.getDetails().stream()
                 .anyMatch(detail -> detail.getProblemNumber().equals(problemNumber)
@@ -71,6 +93,10 @@ public class DailyRecord extends Record<DailyDetail> {
         super(date, defense, member, problems);
         this.solvedCount = 0L;
         this.problemCount = problems.size();
+        defense.increaseAttemptCount();
     }
 
+    private long calculateSolvedTime(LocalDateTime solvedAt) {
+        return Duration.between(super.getTestDate(), solvedAt).getSeconds();
+    }
 }

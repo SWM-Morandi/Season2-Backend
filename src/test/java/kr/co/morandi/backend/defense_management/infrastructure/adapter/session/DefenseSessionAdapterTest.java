@@ -1,18 +1,17 @@
 package kr.co.morandi.backend.defense_management.infrastructure.adapter.session;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
-import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.SessionDetailRepository;
+import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -21,9 +20,7 @@ import java.util.Set;
 import static kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType.DAILY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class DefenseSessionAdapterTest {
+class DefenseSessionAdapterTest extends IntegrationTestSupport {
 
     @Autowired
     private DefenseSessionPort defenseSessionPort;

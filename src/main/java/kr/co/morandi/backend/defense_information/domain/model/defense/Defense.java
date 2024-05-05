@@ -30,6 +30,9 @@ public abstract class Defense extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DefenseType defenseType;
 
+    public void increaseAttemptCount() {
+        ++this.attemptCount;
+    }
     public abstract LocalDateTime getEndTime(LocalDateTime startTime);
     //팩토리 메소드 패턴
     public Map<Long, Problem> getDefenseProblems(ProblemGenerationService problemGenerationService) {

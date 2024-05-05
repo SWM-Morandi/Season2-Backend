@@ -1,8 +1,7 @@
 package kr.co.morandi.backend.defense_information.infrastructure.persistence.customdefense;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.customdefense.CustomDefense;
-import kr.co.morandi.backend.defense_information.infrastructure.persistence.customdefense.CustomDefenseProblemRepository;
-import kr.co.morandi.backend.defense_information.infrastructure.persistence.customdefense.CustomDefenseRepository;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -11,23 +10,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static kr.co.morandi.backend.defense_information.domain.model.defense.DefenseTier.*;
 import static kr.co.morandi.backend.defense_information.domain.model.customdefense.Visibility.CLOSE;
 import static kr.co.morandi.backend.defense_information.domain.model.customdefense.Visibility.OPEN;
+import static kr.co.morandi.backend.defense_information.domain.model.defense.DefenseTier.*;
 import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
 import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class CustomDefenseRepositoryTest {
+class CustomDefenseRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private CustomDefenseRepository customDefenseRepository;

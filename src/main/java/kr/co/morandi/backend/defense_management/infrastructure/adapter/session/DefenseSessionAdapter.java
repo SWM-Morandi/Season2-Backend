@@ -27,4 +27,9 @@ public class DefenseSessionAdapter implements DefenseSessionPort {
     public Optional<DefenseSession> findTodaysDailyDefenseSession(Member member, LocalDateTime now) {
         return defenseSessionRepository.findDailyDefenseSession(member, DAILY, now);
     }
+
+    @Override
+    public Optional<DefenseSession> findDefenseSessionById(Long sessionId) {
+        return defenseSessionRepository.findById(sessionId);
+    }
 }

@@ -1,10 +1,10 @@
 package kr.co.morandi.backend.defense_record.domain.model.dailydefense_record;
 
+import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
-import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -20,20 +21,149 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Pro
 import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
 class DailyRecordTest {
 
+    @DisplayName("시험 기록(Record)를 종료하면 종료 상태로 변경된다.")
+    @Test
+    void terminateDefense() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+
+
+        // when
+        final boolean result = dailyRecord.terminteDefense();
+
+        // then
+        assertThat(result).isTrue();
+
+    }
+
+    @DisplayName("시험 기록(Record)가 종료된 상태에서 다시 종료하려고 하면 false를 반환한다.")
+    @Test
+    void terminateDefenseWhenAlreadyTerminated() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+        dailyRecord.terminteDefense();
+
+        // when & then
+        assertThatThrownBy(() -> dailyRecord.terminteDefense())
+                .isInstanceOf(MorandiException.class);
+    }
+    @DisplayName("오늘의 문제를 정답처리 하면 푼 total 문제 수가 증가하고, 푼 시간이 기록된다.")
+    @Test
+    void solveProblem() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+
+        // when
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+
+
+        // then
+        assertThat(dailyRecord)
+                .extracting("totalSolvedTime", "solvedCount")
+                .contains(
+                        15 * 60L, 1L
+                );
+        assertThat(dailyRecord.getDetails()).hasSize(1)
+                .extracting("isSolved", "solvedTime")
+                .contains(
+                        tuple(true, 15 * 60L)
+                );
+    }
+
+    @DisplayName("이미 정답처리된 문제를 정답 solved하려하면 바뀌지 않는다.")
+    @Test
+    void solveProblemWhenAlreadySolved() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+
+        // when
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 20, 0));
+
+
+
+        // then
+        assertThat(dailyRecord)
+                .extracting("totalSolvedTime", "solvedCount")
+                .contains(
+                        15 * 60L, 1L
+                );
+        assertThat(dailyRecord.getDetails()).hasSize(1)
+                .extracting("isSolved", "solvedTime")
+                .contains(
+                        tuple(true, 15 * 60L)
+                );
+    }
+    @DisplayName("풀어낸 문제들에 대한 문제번호 목록을 반환할 수 있다.")
+    @Test
+    void getSolvedProblemNumbers() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+        dailyRecord.tryMoreProblem(getProblems(dailyDefense, 3L));
+        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+
+        // when
+        final Set<Long> solvedProblemNumbers = dailyRecord.getSolvedProblemNumbers();
+
+
+        // then
+        assertThat(solvedProblemNumbers).hasSize(1)
+                .contains(2L);
+
+    }
+
+    @DisplayName("시험에 응시하면 오늘의 문제 attemptCount가 1 증가한다.")
+    @Test
+    void increaseAttempCountWhenTryDefense() {
+        // given
+        DailyDefense dailyDefense = createDailyDefense();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        Member member = createMember("user");
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+
+        // when
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
+
+        // then
+        assertThat(dailyDefense.getAttemptCount()).isEqualTo(1L);
+
+    }
+
     @DisplayName("오늘의 문제 기록에서 세부 문제의 정답 여부를 확인할 수 있다.")
     @Test
     void isSolvedProblem() {
         // given
-        DailyDefense DailyDefense = createDailyDefense();
+        DailyDefense dailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> triedProblem = getProblems(DailyDefense, 2L);
-        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, triedProblem);
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
 
         // when
         final boolean solvedProblem = dailyRecord.isSolvedProblem(2L);
@@ -46,11 +176,11 @@ class DailyRecordTest {
     @Test
     void tryExistDetailThenReturnExistDetail() {
         // given
-        DailyDefense DailyDefense = createDailyDefense();
+        DailyDefense dailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> triedProblem = getProblems(DailyDefense, 2L);
-        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, triedProblem);
+        Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
 
         // when
         dailyRecord.tryMoreProblem(triedProblem);
@@ -65,13 +195,13 @@ class DailyRecordTest {
     @Test
     void solvedCountIsZero() {
         // given
-        DailyDefense DailyDefense = createDailyDefense();
+        DailyDefense dailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
+        Map<Long, Problem> problems = getProblems(dailyDefense, 2L);
 
         // when
-        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // then
         assertThat(dailyDefenseRecord.getSolvedCount()).isZero();
@@ -99,15 +229,15 @@ class DailyRecordTest {
     void recordCreatedWithinOneDay() {
         // given
         LocalDate createdDate = LocalDate.of(2024, 3, 1);
-        DailyDefense DailyDefense = createDailyDefense(createdDate);
+        DailyDefense dailyDefense = createDailyDefense(createdDate);
 
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
+        Map<Long, Problem> problems = getProblems(dailyDefense, 2L);
 
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 23, 59, 59);
 
         // when
-        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // then
         assertNotNull(dailyDefenseRecord);
@@ -116,13 +246,13 @@ class DailyRecordTest {
     @Test
     void isSolvedIsFalse() {
         // given
-        DailyDefense DailyDefense = createDailyDefense();
+        DailyDefense dailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
+        Map<Long, Problem> problems = getProblems(dailyDefense, 2L);
 
         // when
-        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // then
         assertThat(dailyDefenseRecord.getDetails())
@@ -133,13 +263,13 @@ class DailyRecordTest {
     @Test
     void submitCountIsZero() {
         // given
-        DailyDefense DailyDefense = createDailyDefense();
+        DailyDefense dailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense, 2L);
+        Map<Long, Problem> problems = getProblems(dailyDefense, 2L);
 
         // when
-        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // then
         assertThat(dailyDefenseRecord.getDetails())
@@ -150,13 +280,13 @@ class DailyRecordTest {
     @Test
     void solvedCodeIsNull() {
         // given
-        DailyDefense DailyDefense = createDailyDefense();
+        DailyDefense dailyDefense = createDailyDefense();
         LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
         Member member = createMember("user");
-        Map<Long, Problem> problems = getProblems(DailyDefense,2L);
+        Map<Long, Problem> problems = getProblems(dailyDefense,2L);
 
         // when
-        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, DailyDefense, member, problems);
+        DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // then
         assertThat(dailyDefenseRecord.getDetails())

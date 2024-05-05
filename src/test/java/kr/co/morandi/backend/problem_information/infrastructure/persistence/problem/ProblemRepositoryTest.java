@@ -1,15 +1,13 @@
 package kr.co.morandi.backend.problem_information.infrastructure.persistence.problem;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
-import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -18,9 +16,7 @@ import static kr.co.morandi.backend.problem_information.domain.model.problem.Pro
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class ProblemRepositoryTest {
+class ProblemRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private ProblemRepository problemRepository;

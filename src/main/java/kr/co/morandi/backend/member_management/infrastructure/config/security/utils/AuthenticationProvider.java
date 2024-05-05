@@ -9,26 +9,31 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationProvider {
 
-    private final OAuthUserDetailsService oAuthUserDetailsService;
-
     private final SecretKeyProvider secretKeyProvider;
+
     public void setAuthentication(String accessToken) {
         Authentication authentication = getAuthentication(accessToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
     private Authentication getAuthentication(String accessToken) {
         Long memberId = getMemberIdFromToken(accessToken);
-        UserDetails userDetails = oAuthUserDetailsService.loadUserByUsername(memberId.toString());
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+        //TODO : authorities를 이후에 저장해야함
+        List<GrantedAuthority> authorities = null;//getAuthoritiesFromToken(accessToken);
+
+        return new UsernamePasswordAuthenticationToken(memberId, null, authorities);
     }
     private Long getMemberIdFromToken(String token) {
         Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(secretKeyProvider.getPublicKey())

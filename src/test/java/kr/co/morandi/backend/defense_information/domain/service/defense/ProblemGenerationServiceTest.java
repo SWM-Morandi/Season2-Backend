@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.defense_information.domain.service.defense;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemGenerationService;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
@@ -23,9 +24,7 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Pro
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class ProblemGenerationServiceTest {
+class ProblemGenerationServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProblemGenerationService problemGenerationService;

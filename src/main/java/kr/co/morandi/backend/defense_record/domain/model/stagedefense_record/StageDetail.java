@@ -18,12 +18,11 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @DiscriminatorValue("StageDefenseProblemRecord")
 public class StageDetail extends Detail {
-    private Long solvedTime;
+
     private Long stageNumber;
 
     private StageDetail(Member member, Long stageNumber, Problem problem, Record<?> records, Defense defense) {
         super(member, problem, records, defense);
-        this.solvedTime = 0L;
         this.stageNumber = stageNumber;
     }
     public static StageDetail create(Member member, Long stageNumber, Problem problem, Record<?> records, Defense defense) {

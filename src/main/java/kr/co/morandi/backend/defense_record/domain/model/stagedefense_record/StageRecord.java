@@ -20,16 +20,14 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("StageDefenseRecord")
 public class StageRecord extends Record<StageDetail> {
-    private Long totalSolvedTime;
+
     private Long stageCount;
 
-    private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
     private static final Long INITIAL_STAGE_NUMBER = 1L;
     private static final Long INITIAL_STAGE_COUNT = 1L;
 
     private StageRecord(Defense defense, LocalDateTime testDate, Member member, Map<Long, Problem> problems) {
         super(testDate, defense, member, problems);
-        this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;
         this.stageCount = INITIAL_STAGE_COUNT;
     }
     @Override

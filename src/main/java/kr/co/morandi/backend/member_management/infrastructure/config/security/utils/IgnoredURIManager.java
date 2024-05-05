@@ -11,7 +11,8 @@ public class IgnoredURIManager {
         "/oauths/",
         "/swagger-ui/",
         "/v3/api-docs/",
-        "/swagger-resources/"
+        "/swagger-resources/",
+        "/daily-record/rankings"
     };
     private String PATTERN_STRING = String.join("|", IGNORED_URIS);
     public Pattern PATTERN = Pattern.compile(PATTERN_STRING);

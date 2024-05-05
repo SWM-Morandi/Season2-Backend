@@ -8,9 +8,12 @@ public class MorandiException extends RuntimeException {
     private final ErrorCode errorCode;
 
     public MorandiException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
+
     public MorandiException(ErrorCode errorCode, String message) {
+        super(message);
         this.errorCode = errorCode;
     }
 }

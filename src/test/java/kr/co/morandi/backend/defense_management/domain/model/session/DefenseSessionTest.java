@@ -1,12 +1,13 @@
 package kr.co.morandi.backend.defense_management.domain.model.session;
 
+import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.TempCode;
+import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
-import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,6 +27,48 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
 class DefenseSessionTest {
+    @DisplayName("세션을 종료할 수 있다.")
+    @Test
+    void terminateSession() {
+        // given
+        Member member = createMember();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        DailyDefense dailyDefense = createDailyDefense(startTime.toLocalDate());
+        Map<Long, Problem> problems = getProblems(dailyDefense, 1L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
+
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
+
+
+        // when
+        final boolean result = defenseSession.terminateSession();
+
+        // then
+        assertThat(result).isTrue();
+
+    }
+
+    @DisplayName("세션이 종료상태일 때 종료하려하면 false를 반환한다.")
+    @Test
+    void terminateSessionWhenAlreadyTerminated() {
+        // given
+        Member member = createMember();
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        DailyDefense dailyDefense = createDailyDefense(startTime.toLocalDate());
+        Map<Long, Problem> problems = getProblems(dailyDefense, 1L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
+
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
+        defenseSession.terminateSession();
+
+        // when & then
+        assertThatThrownBy(
+                () -> defenseSession.terminateSession()
+        )
+                .isInstanceOf(MorandiException.class)
+                .hasMessage("이미 종료된 세션입니다.");
+
+    }
 
     @DisplayName("문제 번호를 가지고 있는지 확인한다.")
     @Test

@@ -10,4 +10,5 @@ public interface DefenseSessionPort {
 
     DefenseSession saveDefenseSession(DefenseSession defenseSession);
     Optional<DefenseSession> findTodaysDailyDefenseSession(Member member, LocalDateTime now);
+    Optional<DefenseSession> findDefenseSessionById(Long sessionId);
 }

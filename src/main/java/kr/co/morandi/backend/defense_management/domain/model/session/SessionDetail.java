@@ -9,9 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -29,6 +27,7 @@ public class SessionDetail extends BaseEntity {
 
     private Long problemNumber;
 
+    @Enumerated(EnumType.STRING)
     private Language lastAccessLanguage;
 
     public static final Language INITIAL_LANGUAGE = Language.CPP;
