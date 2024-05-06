@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.application.service.dailydefense;
+package kr.co.morandi.backend.defense_management.application.usecase.dailydefense;
 
 import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
@@ -7,7 +7,7 @@ import kr.co.morandi.backend.defense_information.infrastructure.persistence.dail
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDetailRepository;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
-import kr.co.morandi.backend.defense_management.application.service.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementService;
 import kr.co.morandi.backend.defense_management.application.service.timer.DefenseTimerService;
 import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;

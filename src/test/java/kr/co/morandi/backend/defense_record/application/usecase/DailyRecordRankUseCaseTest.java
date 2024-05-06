@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_record.application;
+package kr.co.morandi.backend.defense_record.application.usecase;
 
 import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;

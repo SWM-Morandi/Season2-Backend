@@ -1,4 +1,4 @@
-    package kr.co.morandi.backend.defense_management.application.service.session;
+    package kr.co.morandi.backend.defense_management.application.usecase.session;
 
     import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
     import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
