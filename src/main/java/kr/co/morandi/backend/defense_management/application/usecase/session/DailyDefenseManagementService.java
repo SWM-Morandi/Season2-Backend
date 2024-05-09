@@ -7,6 +7,7 @@
     import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
     import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
     import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
+    import kr.co.morandi.backend.defense_management.domain.event.CreateDefenseMessageEvent;
     import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
     import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
     import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
@@ -102,6 +103,11 @@
              *  DefenseSession에 관련된 타이머 시작 이벤트 발행
              * */
             publisher.publishEvent(new DefenseStartTimerEvent(defenseSession.getDefenseSessionId(), defenseSession.getStartDateTime(), defenseSession.getEndDateTime()));
+
+            /*
+            *  DefenseMessage 연결 이벤트 발행 (현재는 SSE로 구현되어 있습니다.)
+            * */
+            publisher.publishEvent(new CreateDefenseMessageEvent(defenseSession.getDefenseSessionId()));
 
             return defenseSession;
         }

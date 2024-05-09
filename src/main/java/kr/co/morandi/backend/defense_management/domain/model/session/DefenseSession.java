@@ -51,8 +51,10 @@ public class DefenseSession extends BaseEntity {
 
     private static final Long INITIAL_ACCESS_PROBLEM_NUMBER = 1L;
 
-    public void terminateDefense(SessionService sessionService) {
-        sessionService.terminateDefense(this.getDefenseSessionId());
+    public void validateSessionOwner(Long memberId) {
+        if (!this.member.getMemberId().equals(memberId)) {
+            throw new MorandiException(SessionErrorCode.INVALID_SESSION_OWNER);
+        }
     }
 
     public boolean terminateSession() {
@@ -87,6 +89,7 @@ public class DefenseSession extends BaseEntity {
         lastAccessDateTime = accessDateTime;
 
     }
+
     public static DefenseSession startSession(Member member, Long recordId, DefenseType defenseType, Set<Long> problemNumbers,
                                               LocalDateTime startDateTime, LocalDateTime endDateTime) {
         return new DefenseSession(member, recordId, defenseType, problemNumbers, startDateTime, endDateTime);

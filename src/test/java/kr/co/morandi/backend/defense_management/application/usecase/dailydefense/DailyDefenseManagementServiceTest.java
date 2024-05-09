@@ -5,10 +5,12 @@ import kr.co.morandi.backend.defense_information.domain.model.dailydefense.Daily
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDetailRepository;
+import kr.co.morandi.backend.defense_management.application.port.out.defensemessaging.DefenseMessagePort;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
-import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementService;
 import kr.co.morandi.backend.defense_management.application.service.timer.DefenseTimerService;
+import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.domain.event.CreateDefenseMessageEvent;
 import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.SessionDetailRepository;
@@ -90,6 +92,9 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
     @MockBean
     private DefenseTimerService defenseTimerService;
 
+    @MockBean
+    private DefenseMessagePort defenseMessagePort;
+
     @BeforeEach
     void setUp() {
         Map<Long, ProblemContent> problemContentMap = Map.of(
@@ -120,6 +125,66 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
         dailyDefenseRepository.deleteAllInBatch();
         problemRepository.deleteAllInBatch();
         memberRepository.deleteAllInBatch();
+    }
+
+    @DisplayName("오늘의 문제가 시작되다가 롤백되면 Sse연결 이벤트가 실행되지 않는다.")
+    @Test
+    void eventPublishWhenStartDailyDefenseWhenRollbackSse() {
+        // given
+        Member 시험_시작_사용자 = createMember();
+        createDailyDefense(LocalDate.of(2021, 10, 1), "오늘의 문제 테스트");
+
+        LocalDateTime 요청_시각 = LocalDateTime.of(2021, 10, 1, 0, 0, 0);
+
+        StartDailyDefenseServiceRequest 시험_시작_요청 = StartDailyDefenseServiceRequest.builder()
+                .problemNumber(2L)
+                .build();
+
+        // when
+        transactionTemplate.execute(status -> {
+            dailyDefenseManagementService.startDailyDefense(시험_시작_요청, 시험_시작_사용자.getMemberId(), 요청_시각);
+            status.setRollbackOnly(); // Force rollback
+            return null;
+        });
+
+        // then
+        assertThat(applicationEvents.stream(CreateDefenseMessageEvent.class))
+                .hasSize(1)
+                .anySatisfy(event -> {
+                    assertAll(
+                            () -> assertThat(event.getDefenseSessionId()).isNotNull()
+                    );
+                });
+
+        verify(defenseMessagePort, never()).createConnection(any());
+    }
+
+    @DisplayName("오늘의 문제가 시작되면 Sse연결 이벤트가 실행된다.")
+    @Test
+    void eventPublishWhenStartDailyDefenseSse() {
+        // given
+        Member 시험_시작_사용자 = createMember();
+        createDailyDefense(LocalDate.of(2021, 10, 1), "오늘의 문제 테스트");
+
+        LocalDateTime 요청_시각 = LocalDateTime.of(2021, 10, 1, 0, 0, 0);
+
+        StartDailyDefenseServiceRequest 시험_시작_요청 = StartDailyDefenseServiceRequest.builder()
+                .problemNumber(2L)
+                .build();
+
+        // when
+        dailyDefenseManagementService.startDailyDefense(시험_시작_요청, 시험_시작_사용자.getMemberId(), 요청_시각);
+
+        // then
+        assertThat(applicationEvents.stream(CreateDefenseMessageEvent.class))
+                .hasSize(1)
+                .anySatisfy(event -> {
+                    assertAll(
+                            () -> assertThat(event.getDefenseSessionId()).isNotNull()
+                    );
+                });
+
+        verify(defenseMessagePort, times(1)).createConnection(any());
     }
 
     @DisplayName("오늘의 문제가 시작되다가 롤백되면 타이머 이벤트가 실행되지 않는다.")
