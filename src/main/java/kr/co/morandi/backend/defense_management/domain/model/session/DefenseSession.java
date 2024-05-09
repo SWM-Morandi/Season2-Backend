@@ -57,6 +57,10 @@ public class DefenseSession extends BaseEntity {
         }
     }
 
+    public boolean isTerminated() {
+        return examStatus == ExamStatus.COMPLETED;
+    }
+
     public boolean terminateSession() {
         if(examStatus == ExamStatus.COMPLETED) {
             throw new MorandiException(SessionErrorCode.SESSION_ALREADY_ENDED);

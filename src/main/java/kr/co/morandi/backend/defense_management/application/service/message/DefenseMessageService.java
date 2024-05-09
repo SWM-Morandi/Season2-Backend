@@ -25,7 +25,9 @@ public class DefenseMessageService {
          *  세션의 소유자가 아닐 경우 예외 발생
          * */
         defenseSession.validateSessionOwner(memberId);
-
+        if(defenseSession.isTerminated()) {
+            throw new MorandiException(SessionErrorCode.SESSION_TERMINATED);
+        }
         return defenseMessagePort.getConnection(defenseSessionId);
     }
 
