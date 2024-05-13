@@ -1,0 +1,34 @@
+package kr.co.morandi.backend.defense_management.application.service.codesubmit;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.co.morandi.backend.defense_management.application.port.out.defensemessaging.DefenseMessagePort;
+import kr.co.morandi.backend.defense_management.application.response.codesubmit.CodeResponse;
+import kr.co.morandi.backend.defense_management.application.response.codesubmit.MessageResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.connection.Message;
+import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class RedisMessageSubscriber implements MessageListener {
+
+    private final ObjectMapper objectMapper;
+
+    private final DefenseMessagePort defenseMessagePort;
+    @Override
+    public void onMessage(Message message, byte[] pattern) {
+        String resultString = new String(message.getBody());
+        try {
+            System.out.println("result : " + resultString);
+            MessageResponse messageResponse = objectMapper.readValue(resultString, MessageResponse.class);
+            CodeResponse codeResponse = CodeResponse.create(messageResponse);
+            defenseMessagePort.sendMessage(Long.valueOf(messageResponse.getSseId()), codeResponse);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

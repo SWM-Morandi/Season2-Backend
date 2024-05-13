@@ -2,6 +2,7 @@ package kr.co.morandi.backend.defense_management.infrastructure.adapter.defensem
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.application.port.out.defensemessaging.DefenseMessagePort;
+import kr.co.morandi.backend.defense_management.application.response.codesubmit.CodeResponse;
 import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,6 @@ public class DefenseMessageSseAdapter implements DefenseMessagePort {
     public SseEmitter getConnection(Long defenseSessionId) {
         emitters.putIfAbsent(defenseSessionId, createSseEmitter(defenseSessionId));
 
-
         final SseEmitter sseEmitter = emitters.get(defenseSessionId);
 
         // init 메세지 전송
@@ -55,29 +55,26 @@ public class DefenseMessageSseAdapter implements DefenseMessagePort {
 
         return emitters.get(defenseSessionId);
     }
-
-
     /*
     * 메세지 보낼 떄 사용하면 됩니다. defenseSessionId를 기준으로 SseEmitter를 찾아서 해당 SseEmitter에 message를 전송합니다.
     * (message에 직렬화하여 전송)
     * 성공적으로 전송되면 true를 반환하고, 실패하면 false를 반환합니다.
     * */
     @Override
-    public boolean sendMessage(Long defenseSessionId, String message) {
+    public boolean sendMessage(Long defenseSessionId, CodeResponse codeResponse) {
         SseEmitter emitter = emitters.get(defenseSessionId);
 
         if (emitter != null) {
             try {
                 emitter.send(SseEmitter.event()
                         .name("message")
-                        .data(message)
+                        .data(codeResponse)
                 );
                 return true;
             } catch (Exception e) {
                 emitters.remove(defenseSessionId);
             }
         }
-
         return false;
     }
 
@@ -117,7 +114,6 @@ public class DefenseMessageSseAdapter implements DefenseMessagePort {
 
         return emitter;
     }
-
     /**
      * 재시도 로직을 구현했습니다.
      * 재귀 호출로 최대 3번까지 재시도
