@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
-@RequestMapping("/defense")
+@RequestMapping("/session")
 @RequiredArgsConstructor
-public class DefenseCableController {
+public class SessionConnectionController {
 
     private final DefenseMessageService defenseMessageService;
 
-    @GetMapping(value = "/{sessionId}/cable", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter defenseCable(@PathVariable Long sessionId, @MemberId Long memberId) {
+    @GetMapping(value = "/{sessionId}/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter connectSession(@PathVariable Long sessionId, @MemberId Long memberId) {
 
         return defenseMessageService.getConnection(sessionId, memberId);
     }
-
 
 }

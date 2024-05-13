@@ -9,8 +9,9 @@ endif::[]
 :toclevels: 1
 :sectlinks:
 
-include::api/dailydefense/dailydefense.adoc[]
+include::api/defensesession/defensesession.adoc[]
 
+include::api/dailydefense/dailydefense.adoc[]
 
 
 [[Daily-Defense-List]]
