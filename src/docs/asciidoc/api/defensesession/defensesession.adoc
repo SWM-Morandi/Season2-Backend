@@ -1,0 +1,9 @@
+== 디펜스 세션 연결
+
+=== Request
+include::{snippets}/connect-session/http-request.adoc[]
+
+=== Response
+include::{snippets}/connect-session/response-body.adoc[]
+include::{snippets}/connect-session/http-response.adoc[]
+

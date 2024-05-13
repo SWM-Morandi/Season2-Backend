@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_record.application.service;
+package kr.co.morandi.backend.defense_record.usecase;
 
 import kr.co.morandi.backend.defense_record.application.dto.DailyDefenseRankPageResponse;
 import kr.co.morandi.backend.defense_record.application.dto.DailyDetailRankResponse;

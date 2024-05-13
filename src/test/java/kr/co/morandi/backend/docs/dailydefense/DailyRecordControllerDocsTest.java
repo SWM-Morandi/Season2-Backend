@@ -54,6 +54,7 @@ public class DailyRecordControllerDocsTest extends RestDocsSupport {
                     .build());
         }
 
+
         // 각 유저가 5개의 문제에 대한 세부 정보를 갖도록 설정
         List<DailyRecordRankResponse> records = new ArrayList<>();
         for (long i = 1; i <= 5; i++) {  // 5명의 유저

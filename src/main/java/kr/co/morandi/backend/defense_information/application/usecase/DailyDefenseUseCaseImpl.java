@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_information.application.service;
+package kr.co.morandi.backend.defense_information.application.usecase;
 
 import kr.co.morandi.backend.defense_information.application.dto.response.DailyDefenseInfoResponse;
 import kr.co.morandi.backend.defense_information.application.mapper.dailydefense.DailyDefenseInfoMapper;

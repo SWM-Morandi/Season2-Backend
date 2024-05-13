@@ -24,9 +24,52 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Pro
 import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.CPP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 class DefenseSessionTest {
+
+    @DisplayName("세션 소유자일 경우 아무 예외가 발생하지 않는다.")
+    @Test
+    void validateSessionOwner() {
+        // given
+        final Member member = mock(Member.class);
+        when(member.getMemberId())
+                .thenReturn(1L);
+
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        DailyDefense dailyDefense = createDailyDefense(startTime.toLocalDate());
+        Map<Long, Problem> problems = getProblems(dailyDefense, 1L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
+
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
+
+
+        // when & then
+        defenseSession.validateSessionOwner(member.getMemberId());
+    }
+
+    @DisplayName("세션 소유자가 아닐 경우 예외를 발생한다.")
+    @Test
+    void throwWhenNotSessionOwner() {
+        // given
+        final Member member = mock(Member.class);
+        when(member.getMemberId())
+                .thenReturn(1L);
+        LocalDateTime startTime = LocalDateTime.of(2024, 3, 1, 12, 0, 0);
+        DailyDefense dailyDefense = createDailyDefense(startTime.toLocalDate());
+        Map<Long, Problem> problems = getProblems(dailyDefense, 1L);
+        DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
+
+        DefenseSession defenseSession = DefenseSession.startSession(member, dailyRecord.getRecordId(), dailyDefense.getDefenseType(), problems.keySet(), startTime, dailyDefense.getEndTime(startTime));
+
+
+        // when & then
+        assertThatThrownBy(() -> defenseSession.validateSessionOwner(2L))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage("사용자의 시험 세션이 아닙니다.");
+    }
     @DisplayName("세션을 종료할 수 있다.")
     @Test
     void terminateSession() {
@@ -224,7 +267,11 @@ class DefenseSessionTest {
     }
 
     private Member createMember() {
-        return Member.create("nickname", "email", SocialType.GOOGLE, "imageURL", "description");
+        return Member.builder()
+                .nickname("nickname")
+                .email("email")
+                .socialType(SocialType.GOOGLE)
+                .build();
     }
     private DailyDefense createDailyDefense(LocalDate createdDate) {
         AtomicLong problemNumber = new AtomicLong(1L);
