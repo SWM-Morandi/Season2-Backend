@@ -23,7 +23,6 @@ public class RedisMessageSubscriber implements MessageListener {
     public void onMessage(Message message, byte[] pattern) {
         String resultString = new String(message.getBody());
         try {
-            System.out.println("result : " + resultString);
             MessageResponse messageResponse = objectMapper.readValue(resultString, MessageResponse.class);
             CodeResponse codeResponse = CodeResponse.create(messageResponse);
             defenseMessagePort.sendMessage(Long.valueOf(messageResponse.getSseId()), codeResponse);
