@@ -5,6 +5,8 @@ import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.co.morandi.backend.common.exception.MorandiException;
+import kr.co.morandi.backend.defense_management.infrastructure.exception.SQSMessageErrorCode;
 import kr.co.morandi.backend.defense_management.infrastructure.request.codesubmit.CodeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +28,7 @@ public class SQSService {
             SendMessageRequest sendMessageRequest = new SendMessageRequest(url, requestString);
             amazonSQS.sendMessage(sendMessageRequest);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new MorandiException(SQSMessageErrorCode.MESSAGE_PARSE_ERROR);
         }
     }
 }

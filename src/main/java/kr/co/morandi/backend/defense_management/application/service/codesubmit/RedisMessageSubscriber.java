@@ -2,9 +2,11 @@ package kr.co.morandi.backend.defense_management.application.service.codesubmit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.application.port.out.defensemessaging.DefenseMessagePort;
 import kr.co.morandi.backend.defense_management.application.response.codesubmit.CodeResponse;
 import kr.co.morandi.backend.defense_management.application.response.codesubmit.MessageResponse;
+import kr.co.morandi.backend.defense_management.infrastructure.exception.RedisMessageErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
@@ -27,7 +29,7 @@ public class RedisMessageSubscriber implements MessageListener {
             CodeResponse codeResponse = CodeResponse.create(messageResponse);
             defenseMessagePort.sendMessage(Long.valueOf(messageResponse.getSseId()), codeResponse);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new MorandiException(RedisMessageErrorCode.MESSAGE_PARSE_ERROR);
         }
     }
 }
