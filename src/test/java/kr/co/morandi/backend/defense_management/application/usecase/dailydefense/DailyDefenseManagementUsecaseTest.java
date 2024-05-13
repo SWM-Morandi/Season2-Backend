@@ -9,7 +9,7 @@ import kr.co.morandi.backend.defense_management.application.port.out.defensemess
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.application.service.timer.DefenseTimerService;
-import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementUsecase;
 import kr.co.morandi.backend.defense_management.domain.event.CreateDefenseMessageEvent;
 import kr.co.morandi.backend.defense_management.domain.event.DefenseStartTimerEvent;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
@@ -51,10 +51,10 @@ import static org.mockito.Mockito.*;
 
 
 @RecordApplicationEvents
-class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
+class DailyDefenseManagementUsecaseTest extends IntegrationTestSupport {
 
     @Autowired
-    private DailyDefenseManagementService dailyDefenseManagementService;
+    private DailyDefenseManagementUsecase dailyDefenseManagementUsecase;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -142,7 +142,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
 
         // when
         transactionTemplate.execute(status -> {
-            dailyDefenseManagementService.startDailyDefense(시험_시작_요청, 시험_시작_사용자.getMemberId(), 요청_시각);
+            dailyDefenseManagementUsecase.startDailyDefense(시험_시작_요청, 시험_시작_사용자.getMemberId(), 요청_시각);
             status.setRollbackOnly(); // Force rollback
             return null;
         });
@@ -173,7 +173,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
                 .build();
 
         // when
-        dailyDefenseManagementService.startDailyDefense(시험_시작_요청, 시험_시작_사용자.getMemberId(), 요청_시각);
+        dailyDefenseManagementUsecase.startDailyDefense(시험_시작_요청, 시험_시작_사용자.getMemberId(), 요청_시각);
 
         // then
         assertThat(applicationEvents.stream(CreateDefenseMessageEvent.class))
@@ -202,7 +202,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
 
         // when
         transactionTemplate.execute(status -> {
-            dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+            dailyDefenseManagementUsecase.startDailyDefense(request, member.getMemberId(), requestTime);
             status.setRollbackOnly(); // Force rollback
             return null;
         });
@@ -235,7 +235,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
                 .build();
 
         // when
-        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+        dailyDefenseManagementUsecase.startDailyDefense(request, member.getMemberId(), requestTime);
 
         // then
         assertThat(applicationEvents.stream(DefenseStartTimerEvent.class))
@@ -262,7 +262,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
         StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(1L)
                 .build();
-        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+        dailyDefenseManagementUsecase.startDailyDefense(request, member.getMemberId(), requestTime);
 
         StartDailyDefenseServiceRequest retryRequest = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(2L)
@@ -271,7 +271,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 2, 12, 0, 0);
 
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member.getMemberId(), retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementUsecase.startDailyDefense(retryRequest, member.getMemberId(), retryRequestTime);
 
 
         // then
@@ -301,7 +301,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
         StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(1L)
                 .build();
-        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+        dailyDefenseManagementUsecase.startDailyDefense(request, member.getMemberId(), requestTime);
 
         StartDailyDefenseServiceRequest retryRequest = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(2L)
@@ -309,7 +309,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
 
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(retryRequest, member.getMemberId(), retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementUsecase.startDailyDefense(retryRequest, member.getMemberId(), retryRequestTime);
 
         // then
         assertAll(
@@ -338,12 +338,12 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
         StartDailyDefenseServiceRequest request = StartDailyDefenseServiceRequest.builder()
                 .problemNumber(2L)
                 .build();
-        dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+        dailyDefenseManagementUsecase.startDailyDefense(request, member.getMemberId(), requestTime);
 
 
         LocalDateTime retryRequestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), retryRequestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementUsecase.startDailyDefense(request, member.getMemberId(), retryRequestTime);
 
         // then
         assertAll(
@@ -373,7 +373,7 @@ class DailyDefenseManagementServiceTest extends IntegrationTestSupport {
                 .build();
 
         // when
-        final StartDailyDefenseResponse response = dailyDefenseManagementService.startDailyDefense(request, member.getMemberId(), requestTime);
+        final StartDailyDefenseResponse response = dailyDefenseManagementUsecase.startDailyDefense(request, member.getMemberId(), requestTime);
 
         // then
 

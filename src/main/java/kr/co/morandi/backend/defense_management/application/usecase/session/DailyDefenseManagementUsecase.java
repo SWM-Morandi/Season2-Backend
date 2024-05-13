@@ -31,7 +31,7 @@
     @Service
     @Transactional(readOnly = true)
     @RequiredArgsConstructor
-    public class DailyDefenseManagementService {
+    public class DailyDefenseManagementUsecase {
 
         private final DailyDefensePort dailyDefensePort;
         private final DailyRecordPort dailyRecordPort;

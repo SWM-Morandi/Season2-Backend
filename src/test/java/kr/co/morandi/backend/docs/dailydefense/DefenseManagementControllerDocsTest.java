@@ -4,7 +4,7 @@ import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseTyp
 import kr.co.morandi.backend.defense_management.application.response.session.DefenseProblemResponse;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
 import kr.co.morandi.backend.defense_management.application.response.tempcode.TempCodeResponse;
-import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementUsecase;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.defense_management.infrastructure.controller.DefenseMangementController;
 import kr.co.morandi.backend.defense_management.infrastructure.request.dailydefense.StartDailyDefenseRequest;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class DefenseManagementControllerDocsTest extends RestDocsSupport {
 
-    private final DailyDefenseManagementService dailyDefenseManagementService = mock(DailyDefenseManagementService.class);
+    private final DailyDefenseManagementUsecase dailyDefenseManagementService = mock(DailyDefenseManagementUsecase.class);
 
     @Override
     protected Object initController() {

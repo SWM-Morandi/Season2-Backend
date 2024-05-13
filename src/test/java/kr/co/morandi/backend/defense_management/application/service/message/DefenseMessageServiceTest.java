@@ -6,7 +6,7 @@ import kr.co.morandi.backend.defense_information.domain.model.dailydefense.Daily
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.defense_management.application.request.session.StartDailyDefenseServiceRequest;
 import kr.co.morandi.backend.defense_management.application.response.session.StartDailyDefenseResponse;
-import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementService;
+import kr.co.morandi.backend.defense_management.application.usecase.session.DailyDefenseManagementUsecase;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_management.infrastructure.persistence.session.DefenseSessionRepository;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
@@ -47,7 +47,7 @@ class DefenseMessageServiceTest extends IntegrationTestSupport {
     private ProblemRepository problemRepository;
 
     @Autowired
-    private DailyDefenseManagementService dailyDefenseManagementService;
+    private DailyDefenseManagementUsecase dailyDefenseManagementService;
 
     @Autowired
     private DefenseSessionRepository defenseSessionRepository;
