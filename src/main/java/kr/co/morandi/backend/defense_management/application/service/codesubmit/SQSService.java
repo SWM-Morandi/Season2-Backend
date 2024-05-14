@@ -22,11 +22,11 @@ public class SQSService {
     private final AmazonSQS amazonSQS;
 
     private final ObjectMapper objectMapper;
-    public void sendMessage(CodeRequest codeRequest) {
+    public SendMessageResult sendMessage(CodeRequest codeRequest) {
         try {
             String requestString = objectMapper.writeValueAsString(codeRequest);
             SendMessageRequest sendMessageRequest = new SendMessageRequest(url, requestString);
-            amazonSQS.sendMessage(sendMessageRequest);
+            return amazonSQS.sendMessage(sendMessageRequest);
         } catch (JsonProcessingException e) {
             throw new MorandiException(SQSMessageErrorCode.MESSAGE_PARSE_ERROR);
         }

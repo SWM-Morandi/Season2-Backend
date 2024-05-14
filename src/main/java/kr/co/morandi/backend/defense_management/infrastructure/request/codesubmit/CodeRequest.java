@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.defense_management.infrastructure.request.codesubmit;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,5 +10,5 @@ public class CodeRequest {
     private String code;
     private String language;
     private String input;
-    private String sseId; // defenseId
+    private String sseId;
 }
