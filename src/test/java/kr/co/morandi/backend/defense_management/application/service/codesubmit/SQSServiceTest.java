@@ -5,22 +5,19 @@ import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_management.infrastructure.request.codesubmit.CodeRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ActiveProfiles;
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-@ExtendWith(MockitoExtension.class)
-@ActiveProfiles("test")
-class SQSServiceTest {
+
+class SQSServiceTest extends IntegrationTestSupport {
     @Mock
     private AmazonSQS amazonSQS;
     @Mock
