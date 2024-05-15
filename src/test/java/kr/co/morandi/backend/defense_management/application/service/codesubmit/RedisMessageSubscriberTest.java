@@ -10,10 +10,13 @@ import kr.co.morandi.backend.defense_management.application.response.codesubmit.
 import kr.co.morandi.backend.defense_management.infrastructure.exception.RedisMessageErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.redis.connection.DefaultMessage;
 import org.springframework.data.redis.connection.Message;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,7 +24,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-class RedisMessageSubscriberTest extends IntegrationTestSupport {
+
+@ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
+class RedisMessageSubscriberTest {
     @Mock
     private ObjectMapper objectMapper;
     @Mock
