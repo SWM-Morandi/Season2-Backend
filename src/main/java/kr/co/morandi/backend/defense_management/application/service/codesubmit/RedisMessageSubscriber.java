@@ -23,12 +23,12 @@ public class RedisMessageSubscriber implements MessageListener {
     private final DefenseMessagePort defenseMessagePort;
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        String resultString = new String(message.getBody());
         try {
+            String resultString = new String(message.getBody());
             MessageResponse messageResponse = objectMapper.readValue(resultString, MessageResponse.class);
             CodeResponse codeResponse = CodeResponse.create(messageResponse);
             defenseMessagePort.sendMessage(Long.valueOf(messageResponse.getSseId()), codeResponse);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new MorandiException(RedisMessageErrorCode.MESSAGE_PARSE_ERROR);
         }
     }

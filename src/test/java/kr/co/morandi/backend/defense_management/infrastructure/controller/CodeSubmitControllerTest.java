@@ -24,7 +24,7 @@ class CodeSubmitControllerTest extends ControllerTestSupport {
     @Test
     public void testSubmitCodeRequest() throws Exception {
         // Given
-        CodeRequest codeRequest = new CodeRequest();
+        CodeRequest codeRequest = CodeRequest.create("Hello world", "Python", "", "123");
         SendMessageResult sendMessageResult = new SendMessageResult();
         sendMessageResult.setMessageId("12345");
         when(sqsService.sendMessage(any(CodeRequest.class))).thenReturn(sendMessageResult);
