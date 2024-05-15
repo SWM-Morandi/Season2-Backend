@@ -41,9 +41,9 @@ class RedisMessageSubscriberTest {
         String json = "{\"sseId\":\"123\", \"result\":\"Hello\"}";
         String channel = "channel";
         Message message = new DefaultMessage(channel.getBytes(), json.getBytes());
-        MessageResponse messageResponse = new MessageResponse();
-        messageResponse.setSseId("123");
-        messageResponse.setResult("Hello");
+        MessageResponse messageResponse = MessageResponse.builder().sseId("123")
+                                                                    .result("Hello")
+                                                                    .build();
 
         when(objectMapper.readValue(json, MessageResponse.class)).thenReturn(messageResponse);
 

@@ -23,7 +23,6 @@ public class AmazonSqsConfig {
     @Value("${cloud.aws.region.static}")
     private String region;
 
-    @Primary
     @Bean
     public AmazonSQSAsync amazonCompileSQSAws() {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
