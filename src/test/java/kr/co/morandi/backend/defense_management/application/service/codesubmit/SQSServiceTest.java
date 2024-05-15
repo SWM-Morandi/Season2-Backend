@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,16 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@ActiveProfiles("test")
-class SQSServiceTest {
-    private ObjectMapper objectMapper = new ObjectMapper();
-    @Mock
-    private AmazonSQS amazonSQS;
+class SQSServiceTest extends IntegrationTestSupport {
+
+    @Autowired
     private SQSService sqsService;
-    @BeforeEach
-    void setUp() {
-        sqsService = new SQSService(amazonSQS, objectMapper);
-    }
     @DisplayName("사용자가 소스코드를 제출하면 AWS SQS에 JSON 메시지가 올바른 주소에 전송된다.")
     @Test
     void correctSendMessage() {

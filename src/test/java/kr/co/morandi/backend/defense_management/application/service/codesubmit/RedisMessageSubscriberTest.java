@@ -2,6 +2,7 @@ package kr.co.morandi.backend.defense_management.application.service.codesubmit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.application.port.out.defensemessaging.DefenseMessagePort;
 import kr.co.morandi.backend.defense_management.application.response.codesubmit.CodeResponse;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.connection.DefaultMessage;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,15 +28,14 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
-class RedisMessageSubscriberTest {
-    private ObjectMapper objectMapper = new ObjectMapper();
-    @Mock
+class RedisMessageSubscriberTest extends IntegrationTestSupport {
+
+    @MockBean
     private DefenseMessagePort defenseMessagePort;
+    @Autowired
     private RedisMessageSubscriber redisMessageSubscriber;
-    @BeforeEach
-    void setUp() {
-        redisMessageSubscriber = new RedisMessageSubscriber(objectMapper, defenseMessagePort);
-    }
+    @Autowired
+    private ObjectMapper objectMapper;
     @DisplayName("Redis pub/sub에 메시지가 도착하면 메시지가 정상적으로 SSE에 전송되어야 한다.")
     @Test
     void correctOnMessage() throws JsonProcessingException {
