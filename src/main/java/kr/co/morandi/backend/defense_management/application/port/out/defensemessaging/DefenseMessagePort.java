@@ -7,5 +7,5 @@ public interface DefenseMessagePort {
 
     void createConnection(Long defenseSessionId);
     SseEmitter getConnection(Long defenseSessionId);
-    boolean sendMessage(Long defenseSessionId, CodeResponse codeResponse);
+    boolean sendMessage(Long defenseSessionId, String message);
 }

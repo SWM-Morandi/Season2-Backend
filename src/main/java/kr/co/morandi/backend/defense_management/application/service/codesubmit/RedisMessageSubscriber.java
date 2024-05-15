@@ -26,9 +26,9 @@ public class RedisMessageSubscriber implements MessageListener {
         try {
             String resultString = new String(message.getBody());
             MessageResponse messageResponse = objectMapper.readValue(resultString, MessageResponse.class);
-            CodeResponse codeResponse = CodeResponse.create(messageResponse);
-            defenseMessagePort.sendMessage(Long.valueOf(messageResponse.getSseId()), codeResponse);
-        } catch (Exception e) {
+            String jsonMessage = objectMapper.writeValueAsString(CodeResponse.create(messageResponse));
+            defenseMessagePort.sendMessage(Long.valueOf(messageResponse.getSseId()), jsonMessage);
+        } catch (JsonProcessingException | NullPointerException e) {
             throw new MorandiException(RedisMessageErrorCode.MESSAGE_PARSE_ERROR);
         }
     }

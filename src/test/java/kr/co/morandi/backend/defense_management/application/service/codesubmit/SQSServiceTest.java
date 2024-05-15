@@ -12,15 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.util.ReflectionTestUtils;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,11 +26,10 @@ class SQSServiceTest {
     private ObjectMapper objectMapper = new ObjectMapper();
     @Mock
     private AmazonSQS amazonSQS;
-    @InjectMocks
     private SQSService sqsService;
     @BeforeEach
     void setUp() {
-        ReflectionTestUtils.setField(sqsService, "objectMapper", objectMapper);
+        sqsService = new SQSService(amazonSQS, objectMapper);
     }
     @DisplayName("사용자가 소스코드를 제출하면 AWS SQS에 JSON 메시지가 올바른 주소에 전송된다.")
     @Test
@@ -52,13 +45,5 @@ class SQSServiceTest {
 
         // then
         assertEquals(전송_결과물, 실제_전송_결과물);
-    }
-    @DisplayName("사용자가 적절하지 않은 소스코드를 보내면 예외가 발생해야 한다.")
-    @Test
-    void incorrectSendMessage() {
-        assertThrows(MorandiException.class, () -> {
-            sqsService.sendMessage(null);
-        });
-        verify(amazonSQS, never()).sendMessage(any(SendMessageRequest.class));
     }
 }

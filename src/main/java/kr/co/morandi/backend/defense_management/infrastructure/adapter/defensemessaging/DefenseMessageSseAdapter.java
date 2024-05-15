@@ -61,14 +61,14 @@ public class DefenseMessageSseAdapter implements DefenseMessagePort {
     * 성공적으로 전송되면 true를 반환하고, 실패하면 false를 반환합니다.
     * */
     @Override
-    public boolean sendMessage(Long defenseSessionId, CodeResponse codeResponse) {
+    public boolean sendMessage(Long defenseSessionId, String message) {
         SseEmitter emitter = emitters.get(defenseSessionId);
 
         if (emitter != null) {
             try {
                 emitter.send(SseEmitter.event()
                         .name("message")
-                        .data(codeResponse)
+                        .data(message)
                 );
                 return true;
             } catch (Exception e) {

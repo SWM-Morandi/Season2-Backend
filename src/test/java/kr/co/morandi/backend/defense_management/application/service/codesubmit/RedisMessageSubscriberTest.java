@@ -2,7 +2,6 @@ package kr.co.morandi.backend.defense_management.application.service.codesubmit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.application.port.out.defensemessaging.DefenseMessagePort;
 import kr.co.morandi.backend.defense_management.application.response.codesubmit.CodeResponse;
@@ -12,20 +11,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.redis.connection.DefaultMessage;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
@@ -33,11 +29,10 @@ class RedisMessageSubscriberTest {
     private ObjectMapper objectMapper = new ObjectMapper();
     @Mock
     private DefenseMessagePort defenseMessagePort;
-    @InjectMocks
     private RedisMessageSubscriber redisMessageSubscriber;
     @BeforeEach
     void setUp() {
-        ReflectionTestUtils.setField(redisMessageSubscriber, "objectMapper", objectMapper);
+        redisMessageSubscriber = new RedisMessageSubscriber(objectMapper, defenseMessagePort);
     }
     @DisplayName("Redis pub/sub에 메시지가 도착하면 메시지가 정상적으로 SSE에 전송되어야 한다.")
     @Test
@@ -52,7 +47,7 @@ class RedisMessageSubscriberTest {
         redisMessageSubscriber.onMessage(message, null);
 
         // then
-        verify(defenseMessagePort).sendMessage(eq(123L), any(CodeResponse.class));
+        verify(defenseMessagePort).sendMessage(eq(123L), any(String.class));
     }
 
     @DisplayName("Redis pub/sub에 형식에 맞지 않는 메시지가 오면 예외를 발생시켜야 한다.")
