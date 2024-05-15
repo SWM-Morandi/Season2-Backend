@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SQSService {
 
-    @Value("${cloud.aws.sqs.queue.compile-url}")
+    @Value("${cloud.aws.sqs.queue.example-compile-url}")
     private String url;
 
     private final AmazonSQS amazonSQS;
