@@ -1,7 +1,10 @@
-package kr.co.morandi.backend.defense_management.infrastructure.adapter.judgement;
+package kr.co.morandi.backend.defense_management.infrastructure.baekjoon;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
+import kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon.BaekjoonJudgementLanguageCode;
+import kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon.BaekjoonSubmitVisuability;
 import kr.co.morandi.backend.defense_management.domain.model.judgement.JudgementErrorCode;
+import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -14,8 +17,8 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
-import static kr.co.morandi.backend.defense_management.application.service.judgement.BaekjoonJudgementConstants.BAEKJOON_SUBMIT_URL;
-import static kr.co.morandi.backend.defense_management.application.service.judgement.BaekjoonJudgementConstants.BAEKJOON_USER_AGENT;
+import static kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon.BaekjoonJudgementConstants.BAEKJOON_SUBMIT_URL;
+import static kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon.BaekjoonJudgementConstants.BAEKJOON_USER_AGENT;
 import static org.springframework.http.HttpHeaders.COOKIE;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
@@ -30,9 +33,11 @@ public class BaekjoonSubmitAdapter {
     /*
     * 제출을 하고 솔루션 아이디를 가져오는 메소드
     */
-    public String submitAndGetSolutionId(String baekjoonProblemId, String cookie, String languageCode, String sourceCode, String submitVisibilityCode) {
+    public String submitAndGetSolutionId(String baekjoonProblemId, String cookie, Language language, String sourceCode, String submitVisibility) {
         String csrfKey = getCsrfKeyFromSubmitPage(cookie, baekjoonProblemId);
 
+        final String languageCode = BaekjoonJudgementLanguageCode.getLanguageCode(language);
+        final String submitVisibilityCode = BaekjoonSubmitVisuability.getSubmitVisibilityCode(submitVisibility);
 
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("problem_id", baekjoonProblemId);

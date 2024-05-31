@@ -56,20 +56,20 @@ public class JudgementUsecase {
         * DefenseSession에 대응하는
         * Record를 찾아온다.
         * */
-        final Record<? extends Detail> record = recordPort.findRecordById(defenseSession.getRecordId())
+        final Record<? extends Detail> defenseRecord = recordPort.findRecordById(defenseSession.getRecordId())
                 .orElseThrow(() -> new MorandiException(RecordErrorCode.RECORD_NOT_FOUND));
 
         /*
         * Record가 종료되어 있는지 확인한다.
         * */
-        if (record.isTerminated()) {
+        if (defenseRecord.isTerminated()) {
             throw new MorandiException(RecordErrorCode.RECORD_ALREADY_TERMINATED);
         }
 
         /*
         * 문제 번호로 Detail을 찾아온다.
         * */
-        final Detail detail = record.getDetail(problemNumber);
+        final Detail detail = defenseRecord.getDetail(problemNumber);
 
 
         Problem problem = detail.getProblem();

@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.application.service.judgement;
+package kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ public enum BaekjoonSubmitVisuability {
     private final String submitVisibilityCode;
 
     public static String getSubmitVisibilityCode(String submitVisibility) {
-        return BaekjoonSubmitVisuability.valueOf(submitVisibility).getSubmitVisibilityCode();
+        return BaekjoonSubmitVisuability.valueOf(submitVisibility.toUpperCase()).getSubmitVisibilityCode();
     }
 
 }

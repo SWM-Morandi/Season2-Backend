@@ -2,8 +2,9 @@ package kr.co.morandi.backend.defense_management.application.service.judgement;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.domain.model.judgement.JudgementErrorCode;
-import kr.co.morandi.backend.defense_management.infrastructure.adapter.judgement.BaekjoonHtmlParser;
-import kr.co.morandi.backend.defense_management.infrastructure.adapter.judgement.BaekjoonSubmitAdapter;
+import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
+import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.BaekjoonHtmlParser;
+import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.BaekjoonSubmitAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,9 +49,9 @@ class BaekjoonSubmitAdapterTest {
         // reqeust parameter
         String 백준_문제_ID = "1000";
         String 사용자_쿠키 = "cookieValue";
-        String 제출_언어_ID = BaekjoonJudgementLanguageCode.PYTHON.getLanguageCode();
+        Language 제출_언어 = Language.PYTHON;
+        String 제출_코드_공개범위 = "open";
         String 제출_코드 = "print('Hello World')";
-        String 제출_코드_공개범위 = BaekjoonSubmitVisuability.OPEN.getSubmitVisibilityCode();
 
         // WebClient response stubbing
         String csrfKey = "stubbingCsrfKey";
@@ -80,7 +81,7 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when
-        String solutionId = baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어_ID, 제출_코드, 제출_코드_공개범위);
+        String solutionId = baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위);
 
         // then
         assertThat(solutionId)
@@ -98,9 +99,9 @@ class BaekjoonSubmitAdapterTest {
         // reqeust parameter
         String 백준_문제_ID = "1000";
         String 사용자_쿠키 = "cookieValue";
-        String 제출_언어_ID = BaekjoonJudgementLanguageCode.PYTHON.getLanguageCode();
+        Language 제출_언어 = Language.PYTHON;
+        String 제출_코드_공개범위 = "open";
         String 제출_코드 = "print('Hello World')";
-        String 제출_코드_공개범위 = BaekjoonSubmitVisuability.OPEN.getSubmitVisibilityCode();
 
         // WebClient response stubbing
 
@@ -115,7 +116,7 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어_ID, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining("제출 페이지에서 CSRF 키를 찾을 수 없습니다.");
 
@@ -128,9 +129,9 @@ class BaekjoonSubmitAdapterTest {
         // reqeust parameter
         String 백준_문제_ID = "1000";
         String 사용자_쿠키 = "cookieValue";
-        String 제출_언어_ID = BaekjoonJudgementLanguageCode.PYTHON.getLanguageCode();
+        Language 제출_언어 = Language.PYTHON;
+        String 제출_코드_공개범위 = "open";
         String 제출_코드 = "print('Hello World')";
-        String 제출_코드_공개범위 = BaekjoonSubmitVisuability.OPEN.getSubmitVisibilityCode();
 
         // WebClient response stubbing
 
@@ -145,7 +146,7 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어_ID, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining("제출 페이지에서 CSRF 키를 찾을 수 없습니다.");
 
@@ -158,9 +159,9 @@ class BaekjoonSubmitAdapterTest {
         // reqeust parameter
         String 백준_문제_ID = "1000";
         String 사용자_쿠키 = "cookieValue";
-        String 제출_언어_ID = BaekjoonJudgementLanguageCode.PYTHON.getLanguageCode();
+        Language 제출_언어 = Language.PYTHON;
+        String 제출_코드_공개범위 = "open";
         String 제출_코드 = "print('Hello World')";
-        String 제출_코드_공개범위 = BaekjoonSubmitVisuability.OPEN.getSubmitVisibilityCode();
 
         // WebClient response stubbing
         String csrfKey = "stubbingCsrfKey";
@@ -192,7 +193,7 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어_ID, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining(JudgementErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
 
@@ -206,9 +207,9 @@ class BaekjoonSubmitAdapterTest {
         // reqeust parameter
         String 백준_문제_ID = "1000";
         String 사용자_쿠키 = "cookieValue";
-        String 제출_언어_ID = BaekjoonJudgementLanguageCode.PYTHON.getLanguageCode();
+        Language 제출_언어 = Language.PYTHON;
+        String 제출_코드_공개범위 = "open";
         String 제출_코드 = "print('Hello World')";
-        String 제출_코드_공개범위 = BaekjoonSubmitVisuability.OPEN.getSubmitVisibilityCode();
 
         // WebClient response stubbing
         String csrfKey = "stubbingCsrfKey";
@@ -225,7 +226,7 @@ class BaekjoonSubmitAdapterTest {
 
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어_ID, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining(JudgementErrorCode.REDIRECTION_LOCATION_NOT_FOUND.getMessage());
 

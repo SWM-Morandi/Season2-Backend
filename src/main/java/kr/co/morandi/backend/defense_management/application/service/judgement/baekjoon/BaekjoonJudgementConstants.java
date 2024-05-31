@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.application.service.judgement;
+package kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -2,6 +2,7 @@ package kr.co.morandi.backend.defense_management.infrastructure.adapter.judgemen
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.domain.model.judgement.JudgementErrorCode;
+import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.BaekjoonHtmlParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
