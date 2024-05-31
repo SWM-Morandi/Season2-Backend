@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.infrastructure.baekjoon;
+package kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

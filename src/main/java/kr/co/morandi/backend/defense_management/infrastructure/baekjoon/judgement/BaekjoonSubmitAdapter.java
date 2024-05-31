@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.infrastructure.baekjoon;
+package kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.domain.model.judgement.JudgementErrorCode;
@@ -15,8 +15,8 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
-import static kr.co.morandi.backend.defense_management.infrastructure.baekjoon.BaekjoonJudgementConstants.BAEKJOON_SUBMIT_URL;
-import static kr.co.morandi.backend.defense_management.infrastructure.baekjoon.BaekjoonJudgementConstants.BAEKJOON_USER_AGENT;
+import static kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.BaekjoonJudgementConstants.BAEKJOON_SUBMIT_URL;
+import static kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.BaekjoonJudgementConstants.BAEKJOON_USER_AGENT;
 import static org.springframework.http.HttpHeaders.COOKIE;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
