@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.defense_management.infrastructure.adapter.judgement;
 
-import kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon.BaekjoonJudgementLanguageCode;
+import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.BaekjoonJudgementLanguageCode;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
