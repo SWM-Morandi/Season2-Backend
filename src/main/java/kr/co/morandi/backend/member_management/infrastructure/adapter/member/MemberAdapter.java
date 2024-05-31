@@ -29,5 +29,9 @@ public class MemberAdapter implements MemberPort {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new MorandiException(OAuthErrorCode.MEMBER_NOT_FOUND));
     }
+    @Override
+    public Optional<Member> findById(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
 
 }

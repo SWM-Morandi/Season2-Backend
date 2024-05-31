@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum RecordErrorCode implements ErrorCode {
     RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "시험 기록(Record)를 찾을 수 없습니다."),
-    RECORD_ALREADY_TERMINATED(HttpStatus.BAD_REQUEST, "이미 종료된 시험 기록입니다.")
-    ;
+    RECORD_ALREADY_TERMINATED(HttpStatus.BAD_REQUEST, "이미 종료된 시험 기록입니다."),
+    DETAIL_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 번호의 문제 풀이 기록을 찾을 수 없습니다."),;
     @Override
     public HttpStatus getHttpStatus() {
         return httpStatus;

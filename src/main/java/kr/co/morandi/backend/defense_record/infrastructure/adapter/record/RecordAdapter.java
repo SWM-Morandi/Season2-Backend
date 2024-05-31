@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.defense_record.infrastructure.adapter.record;
 
 import kr.co.morandi.backend.defense_record.application.port.out.record.RecordPort;
+import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import kr.co.morandi.backend.defense_record.infrastructure.persistence.record.RecordRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,13 @@ public class RecordAdapter implements RecordPort {
 
     private final RecordRepository recordRepository;
     @Override
-    public Optional<Record<?>> findRecordById(Long recordId) {
+    public Optional<Record<? extends Detail>> findRecordById(Long recordId) {
             return recordRepository.findById(recordId);
+    }
+
+    @Override
+    public Optional<Record<? extends Detail>> findRecordByIdFetchDetails(Long recordId) {
+        return recordRepository.findByIdFetchDetails(recordId);
     }
 
     @Override

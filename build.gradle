@@ -89,6 +89,9 @@ dependencies {
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.16.1'
+
 
     // WebFlux (WebClient)
     implementation 'org.springframework.boot:spring-boot-starter-webflux'

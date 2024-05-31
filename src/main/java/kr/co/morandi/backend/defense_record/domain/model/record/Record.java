@@ -49,6 +49,20 @@ public abstract class Record<T extends Detail> extends BaseEntity {
 
     private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
 
+    public T getDetail(Long sequenceNumber) {
+        return this.details.stream()
+                .filter(detail -> detail.getSequenceNumber().equals(sequenceNumber))
+                .findFirst()
+                .orElseThrow(() -> new MorandiException(RecordErrorCode.DETAIL_NOT_FOUND));
+    }
+
+    public Problem getProblem(Long sequenceNumber) {
+        return getDetail(sequenceNumber).getProblem();
+    }
+    public boolean isTerminated() {
+        return this.status.equals(RecordStatus.COMPLETED);
+    }
+
     public boolean terminteDefense() {
         if(this.status.equals(RecordStatus.COMPLETED)) {
             throw new MorandiException(RecordErrorCode.RECORD_ALREADY_TERMINATED);

@@ -41,6 +41,8 @@ public abstract class Detail extends BaseEntity {
 
     private Long solvedTime;
 
+    public abstract Long getSequenceNumber();
+
     private static final Long INITIAL_SUBMIT_COUNT = 0L;
     private static final Long INITIAL_SOLVED_TIME = 0L;
     private static final Boolean INITIAL_IS_SOLVED = false;

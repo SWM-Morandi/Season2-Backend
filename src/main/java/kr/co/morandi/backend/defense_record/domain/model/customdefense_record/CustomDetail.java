@@ -22,6 +22,11 @@ public class CustomDetail extends Detail {
     private Long problemNumber;
     private Long solvedTime;
 
+    @Override
+    public Long getSequenceNumber() {
+        return problemNumber;
+    }
+
     private static final long INITIAL_SOLVED_TIME = 0L;
     private CustomDetail(Member member, Long sequenceNumber, Problem problem, Record<?> records, Defense defense) {
         super(member, problem, records, defense);

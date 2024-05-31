@@ -19,8 +19,12 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("DailyDefenseProblemRecord")
 public class DailyDetail extends Detail {
 
-    Long problemNumber;
+    private Long problemNumber;
 
+    @Override
+    public Long getSequenceNumber() {
+        return problemNumber;
+    }
 
     private DailyDetail(Member member, Long problemNumber, Problem problem, Record<?> records, Defense defense) {
         super(member, problem, records, defense);

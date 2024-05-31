@@ -21,6 +21,11 @@ public class StageDetail extends Detail {
 
     private Long stageNumber;
 
+    @Override
+    public Long getSequenceNumber() {
+        return stageNumber;
+    }
+
     private StageDetail(Member member, Long stageNumber, Problem problem, Record<?> records, Defense defense) {
         super(member, problem, records, defense);
         this.stageNumber = stageNumber;
