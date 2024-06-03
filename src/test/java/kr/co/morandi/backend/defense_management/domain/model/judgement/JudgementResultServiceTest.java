@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.defense_management.domain.model.judgement;
 
 import kr.co.morandi.backend.IntegrationTestSupport;
-import kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon.result.JudgementResultService;
+import kr.co.morandi.backend.judgement.application.service.baekjoon.result.JudgementResultService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

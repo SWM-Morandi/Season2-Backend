@@ -1,15 +1,15 @@
 package kr.co.morandi.backend.defense_management.infrastructure.adapter.judgement;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.defense_management.domain.error.JudgementErrorCode;
-import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.submit.BaekjoonHtmlParser;
+import kr.co.morandi.backend.judgement.domain.error.JudgementErrorCode;
+import kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit.BaekjoonSubmitHtmlParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class BaekjoonHtmlParserTest {
 
-    private final BaekjoonHtmlParser baekjoonHtmlParser = new BaekjoonHtmlParser();
+    private final BaekjoonSubmitHtmlParser baekjoonHtmlParser = new BaekjoonSubmitHtmlParser();
 
     @DisplayName("CSRF 키를 정상적으로 파싱한다.")
     @Test
