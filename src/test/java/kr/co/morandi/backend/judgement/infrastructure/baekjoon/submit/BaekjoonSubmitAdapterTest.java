@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.judgement.infrastructure.baekjoon;
+package kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.JudgementErrorCode;
