@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.domain.model.judgement;
+package kr.co.morandi.backend.defense_management.domain.error;
 
 import kr.co.morandi.backend.common.exception.errorcode.ErrorCode;
 import lombok.Getter;

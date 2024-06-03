@@ -5,7 +5,6 @@ import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.model.BaseEntity;
 import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType;
 import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
-import kr.co.morandi.backend.defense_management.domain.service.SessionService;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;

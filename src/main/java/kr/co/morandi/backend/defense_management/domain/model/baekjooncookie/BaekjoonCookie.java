@@ -2,6 +2,7 @@ package kr.co.morandi.backend.defense_management.domain.model.baekjooncookie;
 
 import jakarta.persistence.Embeddable;
 import kr.co.morandi.backend.common.exception.MorandiException;
+import kr.co.morandi.backend.defense_management.domain.error.BaekjoonCookieErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

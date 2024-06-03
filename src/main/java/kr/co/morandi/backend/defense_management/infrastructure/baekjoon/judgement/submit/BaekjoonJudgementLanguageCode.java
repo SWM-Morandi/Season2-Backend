@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement;
+package kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.submit;
 
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import lombok.Getter;

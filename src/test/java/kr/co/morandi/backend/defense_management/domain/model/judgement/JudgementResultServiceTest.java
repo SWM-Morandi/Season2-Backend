@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.defense_management.domain.model.judgement;
 
 import kr.co.morandi.backend.IntegrationTestSupport;
+import kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon.result.JudgementResultService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,11 @@ class JudgementResultServiceTest extends IntegrationTestSupport {
     @Test
     void test() throws InterruptedException {
         // given
-        String solutionId = "79192042";
 
         // when
-        judgementResultService.subscribeJudgement(solutionId);
+        for(int i = 79196920;i<79197000;i++){
+            judgementResultService.subscribeJudgement(String.valueOf(i));
+        }
 
         // then
 //        Thread.sleep(100000L);

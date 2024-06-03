@@ -1,10 +1,10 @@
 package kr.co.morandi.backend.defense_management.application.service.judgement;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.defense_management.domain.model.judgement.JudgementErrorCode;
+import kr.co.morandi.backend.defense_management.domain.error.JudgementErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
-import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.BaekjoonHtmlParser;
-import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.BaekjoonSubmitAdapter;
+import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.submit.BaekjoonHtmlParser;
+import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.submit.BaekjoonSubmitAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

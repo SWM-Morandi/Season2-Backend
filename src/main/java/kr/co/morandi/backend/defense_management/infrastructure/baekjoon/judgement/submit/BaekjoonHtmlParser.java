@@ -1,7 +1,7 @@
-package kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement;
+package kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.submit;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.defense_management.domain.model.judgement.JudgementErrorCode;
+import kr.co.morandi.backend.defense_management.domain.error.JudgementErrorCode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

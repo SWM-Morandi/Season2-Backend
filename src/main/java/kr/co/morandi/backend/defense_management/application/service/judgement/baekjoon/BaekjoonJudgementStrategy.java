@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.defense_management.application.service.judgement.baekjoon;
 
 import kr.co.morandi.backend.defense_management.application.service.judgement.JudgementStrategy;
-import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.BaekjoonSubmitAdapter;
+import kr.co.morandi.backend.defense_management.infrastructure.baekjoon.judgement.submit.BaekjoonSubmitAdapter;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.RequiredArgsConstructor;
