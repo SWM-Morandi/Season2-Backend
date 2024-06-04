@@ -1,7 +1,10 @@
-package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
+package kr.co.morandi.backend.judgement.domain.model.baekjoon.result;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import kr.co.morandi.backend.common.exception.MorandiException;
+import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
+import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +25,7 @@ public enum ResultType {
     MEMORY_LIMIT_EXCEEDED(8, "메모리 초과"),
     OUTPUT_LIMIT_EXCEEDED(9, "출력 초과"),
     OUTPUT_FORMAT_ERROR(5, "출력 형식이 잘못되었습니다."),
+    SUBMITTED(-1, "제출됨"),
     OTHER(0, "Other");
 
     private final int code;
@@ -34,7 +38,9 @@ public enum ResultType {
         return code;
     }
     @JsonCreator
-    public static ResultType fromCode(int code) {
+    public static ResultType fromCode(Integer code) {
+        if(code == null)
+            throw new MorandiException(JudgementResultErrorCode.RESULT_CODE_IS_NULL);
         return valueMap.getOrDefault(code, OTHER);
     }
 }

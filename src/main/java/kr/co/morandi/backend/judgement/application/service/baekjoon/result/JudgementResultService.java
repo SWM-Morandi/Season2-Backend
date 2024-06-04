@@ -18,7 +18,6 @@ public class JudgementResultService {
     private final Map<String, JudgementResponse> judgementResultMap = new ConcurrentHashMap<>();
     private final PusherService pusherService;
     private final ObjectMapper objectMapper;
-    private final BiConsumer<String, String> judgementCallback = this::handleResult;
     private static final String CHANNEL_FORMAT = "solution-%s";
 
     public void subscribeJudgement(final String solutionId) {
@@ -30,7 +29,7 @@ public class JudgementResultService {
         /*
         * 콜백 함수를 파라미터로 전달하여 Listener에서 메세지가 도착하면 콜백함수를 실행하도록 구현
         * */
-        pusherService.subscribeJudgement(solutionChannelId, judgementCallback);
+        pusherService.subscribeJudgement(solutionChannelId, this::handleResult);
     }
 
     /*

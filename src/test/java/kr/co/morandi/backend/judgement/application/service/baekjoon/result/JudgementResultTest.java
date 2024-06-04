@@ -3,6 +3,7 @@ package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.morandi.backend.IntegrationTestSupport;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.ResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

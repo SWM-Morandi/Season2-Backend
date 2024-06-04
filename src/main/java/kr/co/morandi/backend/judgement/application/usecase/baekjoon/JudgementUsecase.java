@@ -2,7 +2,7 @@ package kr.co.morandi.backend.judgement.application.usecase.baekjoon;
 
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.judgement.application.service.JudgementStrategy;
+import kr.co.morandi.backend.judgement.application.service.SubmitStrategy;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.judgement.application.request.JudgementServiceRequest;
 import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
@@ -26,7 +26,7 @@ public class JudgementUsecase {
     private final DefenseSessionPort defenseSessionport;
     private final RecordPort recordPort;
     private final MemberPort memberPort;
-    private final JudgementStrategy judgementPort;
+    private final SubmitStrategy judgementPort;
 
     @Transactional
     public void judgement(final JudgementServiceRequest request) {
@@ -89,7 +89,7 @@ public class JudgementUsecase {
         * 채점 시작을 비동기 별도 스레드로 처리하고
         * 채점 결과를 받아서 성공하면 그 결과를 채점 기록에 저장한다.
         * */
-        judgementPort.judge(language, problem, sourceCode, submitVisibility);
+        judgementPort.submit(language, problem, sourceCode, submitVisibility);
 
 
     }

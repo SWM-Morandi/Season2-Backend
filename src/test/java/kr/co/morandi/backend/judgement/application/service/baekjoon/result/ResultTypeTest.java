@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
 
-import kr.co.morandi.backend.judgement.application.service.baekjoon.result.ResultType;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.ResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

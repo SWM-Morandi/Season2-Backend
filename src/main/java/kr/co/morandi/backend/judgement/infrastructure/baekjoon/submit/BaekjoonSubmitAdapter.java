@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.judgement.domain.error.JudgementErrorCode;
+import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -80,13 +80,13 @@ public class BaekjoonSubmitAdapter {
             URI locationUri = initialResponse.headers().asHttpHeaders().getLocation();
 
             if (locationUri == null) {
-                throw new MorandiException(JudgementErrorCode.REDIRECTION_LOCATION_NOT_FOUND);
+                throw new MorandiException(SubmitErrorCode.REDIRECTION_LOCATION_NOT_FOUND);
             }
 
             String location = locationUri.toString();
 
             if (location == null || location.isEmpty()) {
-                throw new MorandiException(JudgementErrorCode.REDIRECTION_LOCATION_NOT_FOUND);
+                throw new MorandiException(SubmitErrorCode.REDIRECTION_LOCATION_NOT_FOUND);
             }
 
             if (!location.startsWith("http")) {

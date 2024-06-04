@@ -1,10 +1,8 @@
 package kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.judgement.domain.error.JudgementErrorCode;
+import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
-import kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit.BaekjoonSubmitHtmlParser;
-import kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit.BaekjoonSubmitAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -195,7 +193,7 @@ class BaekjoonSubmitAdapterTest {
         // when & then
         assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
-                .hasMessageContaining(JudgementErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
+                .hasMessageContaining(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
 
     }
 
@@ -228,7 +226,7 @@ class BaekjoonSubmitAdapterTest {
         // when & then
         assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
-                .hasMessageContaining(JudgementErrorCode.REDIRECTION_LOCATION_NOT_FOUND.getMessage());
+                .hasMessageContaining(SubmitErrorCode.REDIRECTION_LOCATION_NOT_FOUND.getMessage());
 
     }
 

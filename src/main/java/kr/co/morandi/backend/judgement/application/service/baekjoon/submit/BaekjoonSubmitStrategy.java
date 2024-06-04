@@ -1,6 +1,6 @@
 package kr.co.morandi.backend.judgement.application.service.baekjoon.submit;
 
-import kr.co.morandi.backend.judgement.application.service.JudgementStrategy;
+import kr.co.morandi.backend.judgement.application.service.SubmitStrategy;
 import kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit.BaekjoonSubmitAdapter;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class BaekjoonJudgementStrategy implements JudgementStrategy {
+public class BaekjoonSubmitStrategy implements SubmitStrategy {
 
     private final BaekjoonSubmitAdapter baekjoonSubmitAdapter;
     private final BaekjoonMemberCookieService baekjoonMemberCookieService;
 
     @Override
-    public boolean judge(Language language, Problem problem, String sourceCode, String submitVisibility) {
+    public boolean submit(Language language, Problem problem, String sourceCode, String submitVisibility) {
         final String baejoonProblemId = String.valueOf(problem.getBaekjoonProblemId());
         final String cookie = baekjoonMemberCookieService.getCurrentMemberCookie();
 

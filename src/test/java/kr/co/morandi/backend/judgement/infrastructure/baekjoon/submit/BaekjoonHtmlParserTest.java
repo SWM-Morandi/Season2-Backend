@@ -1,8 +1,7 @@
 package kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.judgement.domain.error.JudgementErrorCode;
-import kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit.BaekjoonSubmitHtmlParser;
+import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
@@ -33,7 +32,7 @@ class BaekjoonHtmlParserTest {
         // when & then
         assertThatThrownBy(() -> baekjoonHtmlParser.parseCsrfKeyInSubmitPage(invalidHtml))
                 .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementErrorCode.CSRF_KEY_NOT_FOUND.getMessage());
+                .hasMessage(SubmitErrorCode.CSRF_KEY_NOT_FOUND.getMessage());
     }
 
     @DisplayName("null 응답인 경우 예외를 던진다.")
@@ -45,7 +44,7 @@ class BaekjoonHtmlParserTest {
         // when & then
         assertThatThrownBy(() -> baekjoonHtmlParser.parseCsrfKeyInSubmitPage(nullResponse))
                 .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementErrorCode.BAEKJOON_SUBMIT_PAGE_ERROR.getMessage());
+                .hasMessage(SubmitErrorCode.BAEKJOON_SUBMIT_PAGE_ERROR.getMessage());
     }
 
     @DisplayName("솔루션 아이디를 정상적으로 파싱한다.")
@@ -86,7 +85,7 @@ class BaekjoonHtmlParserTest {
         // when & then
         assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
                 .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
+                .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
     }
 
     @DisplayName("상태 테이블이 없는 경우 예외를 던진다.")
@@ -98,6 +97,6 @@ class BaekjoonHtmlParserTest {
         // when & then
         assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
                 .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
+                .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
     }
 }

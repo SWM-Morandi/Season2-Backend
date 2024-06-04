@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.ResultType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
