@@ -3,14 +3,12 @@ package kr.co.morandi.backend.defense_information.domain.service.dailydefense;
 import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.defense_information.application.port.out.dailydefense.DailyDefensePort;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
-import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseProblemRepository;
-import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,29 +17,17 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 class DailyDefenseGenerationServiceTest extends IntegrationTestSupport {
     
     @Autowired
     private DailyDefenseGenerationService dailyDefenseGenerationService;
-    
+
     @Autowired
     private DailyDefensePort dailyDefensePort;
 
     @Autowired
-    private DailyDefenseRepository dailyDefenseRepository;
-
-    @Autowired
-    private DailyDefenseProblemRepository dailyDefenseProblemRepository;
-    
-    @Autowired
     private ProblemRepository problemRepository;
-
-    @AfterEach
-    void tearDown() {
-        dailyDefenseProblemRepository.deleteAllInBatch();
-        dailyDefenseRepository.deleteAllInBatch();
-        problemRepository.deleteAllInBatch();
-    }
 
     @DisplayName("오늘의 문제를 생성할 수 있다.")
     @Test
