@@ -25,14 +25,11 @@ public class JudgementResult {
     @Column(name = "time")
     private Integer time;
 
-    @Column(name = "trial_number")
-    private Integer trialNumber;
-
     private static final Integer INITIAL_MEMORY = 0;
     private static final Integer INITIAL_TIME = 0;
 
-    public static JudgementResult submit(Integer trialNumber) {
-        return new JudgementResult(INITIAL_MEMORY, INITIAL_TIME, trialNumber);
+    public static JudgementResult submit() {
+        return new JudgementResult(INITIAL_MEMORY, INITIAL_TIME);
     }
 
     public void updateToAccepted(Integer memory, Integer time) {
@@ -49,7 +46,7 @@ public class JudgementResult {
     }
 
     @Builder
-    private JudgementResult(Integer memory, Integer time, Integer trialNumber) {
+    private JudgementResult(Integer memory, Integer time) {
         this.judgementStatus = JudgementStatus.SUBMITTED;
 
         validateMemory(memory);
@@ -57,17 +54,6 @@ public class JudgementResult {
 
         validateTime(time);
         this.time = time;
-
-        validateTrialNumber(trialNumber);
-        this.trialNumber = trialNumber;
-    }
-
-    private void validateTrialNumber(Integer trialNumber) {
-        if(trialNumber == null)
-            throw new MorandiException(JudgementResultErrorCode.TRIAL_NUMBER_IS_NULL);
-        if(trialNumber < 0)
-            throw new MorandiException(JudgementResultErrorCode.TRIAL_NUMBER_IS_NEGATIVE);
-
     }
 
     private void validateMemory(Integer memory) {

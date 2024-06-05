@@ -12,19 +12,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaekjoonJudgementResult {
 
-    private Double subtaskScore;
-
-    private Double partialScore;
-
+    private Integer subtaskScore;
+    private Integer partialScore;
     private Integer ac;
-
     private Integer tot;
 
-    public static BaekjoonJudgementResult of(Double subtaskScore, Double partialScore, Integer ac, Integer tot) {
-        return new BaekjoonJudgementResult(subtaskScore, partialScore, ac, tot);
+    private static final Integer INITIAL_SUBTASK_SCORE = 0;
+    private static final Integer INITIAL_PARTIAL_SCORE = 0;
+    private static final Integer INITIAL_AC = 0;
+    private static final Integer INITIAL_TOT = 0;
+
+    public static BaekjoonJudgementResult defaultResult() {
+        return new BaekjoonJudgementResult(INITIAL_SUBTASK_SCORE, INITIAL_PARTIAL_SCORE, INITIAL_AC, INITIAL_TOT);
     }
 
-    private BaekjoonJudgementResult(Double subtaskScore, Double partialScore, Integer ac, Integer tot) {
+    public static BaekjoonJudgementResult subtaskScoreFrom(Integer subtaskScore) {
+        return new BaekjoonJudgementResult(subtaskScore, INITIAL_PARTIAL_SCORE, INITIAL_AC, INITIAL_TOT);
+    }
+
+    public static BaekjoonJudgementResult partialScoreFrom(Integer partialScore) {
+        return new BaekjoonJudgementResult(INITIAL_SUBTASK_SCORE, partialScore, INITIAL_AC, INITIAL_TOT);
+    }
+
+    public static BaekjoonJudgementResult acTotOf(Integer ac, Integer tot) {
+        return new BaekjoonJudgementResult(INITIAL_SUBTASK_SCORE, INITIAL_PARTIAL_SCORE, ac, tot);
+    }
+
+    private BaekjoonJudgementResult(Integer subtaskScore, Integer partialScore, Integer ac, Integer tot) {
         validateSubtaskScore(subtaskScore);
         this.subtaskScore = subtaskScore;
 
@@ -36,14 +50,14 @@ public class BaekjoonJudgementResult {
         this.tot = tot;
     }
 
-    private void validateSubtaskScore(Double subtaskScore) {
+    private void validateSubtaskScore(Integer subtaskScore) {
         if(subtaskScore == null)
             throw new MorandiException(JudgementResultErrorCode.SUBTASK_SCORE_IS_NULL);
         if(subtaskScore < 0)
             throw new MorandiException(JudgementResultErrorCode.SUBTASK_SCORE_IS_NEGATIVE);
     }
 
-    private void validatePartialScore(Double partialScore) {
+    private void validatePartialScore(Integer partialScore) {
         if(partialScore == null)
             throw new MorandiException(JudgementResultErrorCode.PARTIAL_SCORE_IS_NULL);
         if(partialScore < 0)

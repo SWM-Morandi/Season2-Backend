@@ -17,19 +17,17 @@ class JudgementResultTest {
         // given
         Integer memory = 0;
         Integer time = 0;
-        Integer trialNumber = 0;
 
         // when
         final JudgementResult judgementResult = JudgementResult.builder()
                 .memory(memory)
                 .time(time)
-                .trialNumber(trialNumber)
                 .build();
 
         // then
         assertThat(judgementResult).isNotNull()
-                .extracting("memory", "time", "trialNumber")
-                .containsExactly(memory, time, trialNumber);
+                .extracting("memory", "time")
+                .containsExactly(memory, time);
 
     }
 
@@ -39,13 +37,12 @@ class JudgementResultTest {
         // given
         Integer memory = null;
         Integer time = 0;
-        Integer trialNumber = 0;
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
                 .memory(memory)
                 .time(time)
-                .trialNumber(trialNumber)
+                
                 .build()
         )
                 .isInstanceOf(MorandiException.class)
@@ -58,13 +55,11 @@ class JudgementResultTest {
         // given
         Integer memory = -1;
         Integer time = 0;
-        Integer trialNumber = 0;
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
                 .memory(memory)
                 .time(time)
-                .trialNumber(trialNumber)
                 .build()
         )
                 .isInstanceOf(MorandiException.class)
@@ -77,13 +72,11 @@ class JudgementResultTest {
         // given
         Integer memory = 0;
         Integer time = null;
-        Integer trialNumber = 0;
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
                 .memory(memory)
                 .time(time)
-                .trialNumber(trialNumber)
                 .build()
         )
                 .isInstanceOf(MorandiException.class)
@@ -96,57 +89,15 @@ class JudgementResultTest {
         // given
         Integer memory = 0;
         Integer time = -1;
-        Integer trialNumber = 0;
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
                 .memory(memory)
                 .time(time)
-                .trialNumber(trialNumber)
                 .build()
         )
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.TIME_IS_NEGATIVE.getMessage());
     }
-
-    @DisplayName("BaekjoonCorrectInfo 객체 생성 시 trialNumber null인 경우 예외 발생 테스트")
-    @Test
-    void createCorrectInfoWithNullSubtaskScore() {
-        // given
-        Integer memory = 0;
-        Integer time = 0;
-        Integer trialNumber = null;
-
-        // when, then
-        assertThatThrownBy(() -> JudgementResult.builder()
-                .memory(memory)
-                .time(time)
-                .trialNumber(trialNumber)
-                .build()
-        )
-                .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementResultErrorCode.TRIAL_NUMBER_IS_NULL.getMessage());
-    }
-
-    @DisplayName("BaekjoonCorrectInfo 객체 생성 시 trialNumber 음수인 경우 예외 발생 테스트")
-    @Test
-    void createCorrectInfoWithNegativeSubtaskScore() {
-        // given
-        Integer memory = 0;
-        Integer time = 0;
-        Integer trialNumber = -1;
-
-        // when, then
-        assertThatThrownBy(() -> JudgementResult.builder()
-                .memory(memory)
-                .time(time)
-                .trialNumber(trialNumber)
-                .build())
-                .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementResultErrorCode.TRIAL_NUMBER_IS_NEGATIVE.getMessage());
-    }
-
-
-
 
 }

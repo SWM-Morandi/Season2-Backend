@@ -34,6 +34,8 @@ public abstract class Submit extends BaseEntity {
     @Embedded
     private JudgementResult judgementResult;
 
+    private Integer trialNumber;
+
     protected void updateStatusToAccepted(Integer memory, Integer time) {
         this.judgementResult.updateToAccepted(memory, time);
     }
@@ -51,7 +53,10 @@ public abstract class Submit extends BaseEntity {
         validateSubmitVisibility(submitVisibility);
         this.submitVisibility = submitVisibility;
 
-        this.judgementResult = JudgementResult.submit(trialNumber);
+        this.judgementResult = JudgementResult.submit();
+
+        validateTrialNumber(trialNumber);
+        this.trialNumber = trialNumber;
     }
 
     private void validateDetail(Detail detail) {
@@ -65,5 +70,11 @@ public abstract class Submit extends BaseEntity {
     private void validateSubmitVisibility(SubmitVisibility submitVisibility) {
         if(submitVisibility == null)
             throw new MorandiException(SubmitErrorCode.VISIBILITY_NOT_NULL);
+    }
+    private void validateTrialNumber(Integer trialNumber) {
+        if(trialNumber == null)
+            throw new MorandiException(SubmitErrorCode.TRIAL_NUMBER_IS_NULL);
+        if(trialNumber < 0)
+            throw new MorandiException(SubmitErrorCode.TRIAL_NUMBER_IS_NEGATIVE);
     }
 }

@@ -5,21 +5,31 @@ import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BaekjoonJudgementResultTest {
+
+    @DisplayName("BaekjoonCorrectInfo default 객체 생성 테스트")
+    @Test
+    void createDefaultCorrectInfo() {
+        // when
+        BaekjoonJudgementResult defaultResult = BaekjoonJudgementResult.defaultResult();
+
+        // then
+        assertThat(defaultResult)
+                .extracting("subtaskScore", "partialScore", "ac", "tot")
+                .contains(0, 0, 0, 0);
+    }
 
     @DisplayName("BaekjoonCorrectInfo 객체 생성 시 subtaskScore null인 경우 예외 발생 테스트")
     @Test
     void createCorrectInfoWithNullSubtaskScore() {
         // given
-        Double subtaskScore = null;
-        Double partialScore = 0.0;
-        Integer ac = 0;
-        Integer tot = 0;
+        Integer subtaskScore = null;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.subtaskScoreFrom(subtaskScore))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.SUBTASK_SCORE_IS_NULL.getMessage());
     }
@@ -28,13 +38,10 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithNegativeSubtaskScore() {
         // given
-        Double subtaskScore = -1.0;
-        Double partialScore = 0.0;
-        Integer ac = 0;
-        Integer tot = 0;
+        Integer subtaskScore = -1;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.subtaskScoreFrom(subtaskScore))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.SUBTASK_SCORE_IS_NEGATIVE.getMessage());
     }
@@ -42,13 +49,10 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithNullPartialScore() {
         // given
-        Double subtaskScore = 0.0;
-        Double partialScore = null;
-        Integer ac = 0;
-        Integer tot = 0;
+        Integer partialScore = null;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.partialScoreFrom(partialScore))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.PARTIAL_SCORE_IS_NULL.getMessage());
     }
@@ -57,13 +61,10 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithNegativePartialScore() {
         // given
-        Double subtaskScore = 0.0;
-        Double partialScore = -1.0;
-        Integer ac = 0;
-        Integer tot = 0;
+        Integer partialScore = -1;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.partialScoreFrom(partialScore))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.PARTIAL_SCORE_IS_NEGATIVE.getMessage());
     }
@@ -72,13 +73,11 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithNullAcTot() {
         // given
-        Double subtaskScore = 0.0;
-        Double partialScore = 0.0;
         Integer ac = null;
         Integer tot = 10;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.acTotOf(ac, tot))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.AC_OR_TOT_IS_NULL.getMessage());
     }
@@ -87,13 +86,11 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithNullTot() {
         // given
-        Double subtaskScore = 0.0;
-        Double partialScore = 0.0;
         Integer ac = 0;
         Integer tot = null;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.acTotOf(ac, tot))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.AC_OR_TOT_IS_NULL.getMessage());
     }
@@ -102,13 +99,11 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithNegativeAc() {
         // given
-        Double subtaskScore = 0.0;
-        Double partialScore = 0.0;
         Integer ac = -1;
         Integer tot = 10;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.acTotOf(ac, tot))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.AC_OR_TOT_IS_NEGATIVE.getMessage());
     }
@@ -117,13 +112,11 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithNegativeTot() {
         // given
-        Double subtaskScore = 0.0;
-        Double partialScore = 0.0;
         Integer ac = 0;
         Integer tot = -1;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.acTotOf(ac, tot))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.AC_OR_TOT_IS_NEGATIVE.getMessage());
     }
@@ -132,13 +125,11 @@ class BaekjoonJudgementResultTest {
     @Test
     void createCorrectInfoWithAcGreaterThanTot() {
         // given
-        Double subtaskScore = 0.0;
-        Double partialScore = 0.0;
         Integer ac = 10;
         Integer tot = 5;
 
         // when, then
-        assertThatThrownBy(() -> BaekjoonJudgementResult.of(subtaskScore, partialScore, ac, tot))
+        assertThatThrownBy(() -> BaekjoonJudgementResult.acTotOf(ac, tot))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(JudgementResultErrorCode.AC_GREATER_THAN_TOT.getMessage());
     }
