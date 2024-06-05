@@ -2,7 +2,7 @@ package kr.co.morandi.backend.judgement.domain.model.baekjoon.result;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
-import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.JudgementResult;
+import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

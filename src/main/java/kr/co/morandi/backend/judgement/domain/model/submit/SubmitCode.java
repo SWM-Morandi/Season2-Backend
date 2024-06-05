@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.judgement.domain.model.baekjoon.submit;
+package kr.co.morandi.backend.judgement.domain.model.submit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

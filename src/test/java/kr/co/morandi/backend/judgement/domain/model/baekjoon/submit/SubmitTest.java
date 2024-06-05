@@ -9,6 +9,9 @@ import kr.co.morandi.backend.factory.TestMemberFactory;
 import kr.co.morandi.backend.factory.TestProblemFactory;
 import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
 import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.Submit;
+import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.JAVA;
-import static kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.JudgementStatus.ACCEPTED;
+import static kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus.ACCEPTED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

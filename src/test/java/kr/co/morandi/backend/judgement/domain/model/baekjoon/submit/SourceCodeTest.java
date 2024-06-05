@@ -3,6 +3,7 @@ package kr.co.morandi.backend.judgement.domain.model.baekjoon.submit;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

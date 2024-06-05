@@ -2,6 +2,7 @@ package kr.co.morandi.backend.judgement.domain.model.baekjoon.submit;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
