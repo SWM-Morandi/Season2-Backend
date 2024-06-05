@@ -8,12 +8,12 @@ import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DiscriminatorValue("RandomDefenseProblemRecord")
@@ -28,6 +28,8 @@ public class RandomDetail extends Detail {
     }
 
     private static final long INITIAL_SOLVED_TIME = 0L;
+
+    @Builder
     private RandomDetail(Member member, Long sequenceNumber, Problem problem, Record<?> records, Defense defense) {
         super(member, problem, records, defense);
         this.problemNumber = sequenceNumber;

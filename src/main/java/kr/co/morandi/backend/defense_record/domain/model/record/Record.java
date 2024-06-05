@@ -8,10 +8,8 @@ import kr.co.morandi.backend.defense_record.domain.error.RecordErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Record<T extends Detail> extends BaseEntity {
 
@@ -38,7 +35,6 @@ public abstract class Record<T extends Detail> extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @Builder.Default
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, targetEntity = Detail.class)
     private List<T> details = new ArrayList<>();
 

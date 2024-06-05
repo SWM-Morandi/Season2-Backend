@@ -7,7 +7,6 @@ import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -16,7 +15,6 @@ import java.util.Map;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Defense extends BaseEntity {
 

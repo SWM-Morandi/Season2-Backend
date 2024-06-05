@@ -13,7 +13,6 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 @Entity
 @DiscriminatorValue("RandomDefense")
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RandomDefense extends Defense {
 
@@ -29,6 +28,7 @@ public class RandomDefense extends Defense {
         return startTime.plusMinutes(timeLimit);
     }
 
+    @Builder
     private RandomDefense(RandomCriteria randomCriteria, Integer problemCount, Long timeLimit, String contentName) {
         super(contentName, RANDOM);
         this.randomCriteria = randomCriteria;

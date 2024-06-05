@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BaekjoonCorrectInfo {
-
-    private Integer memory;
-
-    private Integer time;
+public class BaekjoonJudgementResult {
 
     private Double subtaskScore;
 
@@ -24,20 +20,11 @@ public class BaekjoonCorrectInfo {
 
     private Integer tot;
 
-    public static BaekjoonCorrectInfo initial() {
-        return new BaekjoonCorrectInfo(0, 0, 0.0, 0.0, 0, 0);
-    }
-    public static BaekjoonCorrectInfo of(Integer memory, Integer time, Double subtaskScore, Double partialScore, Integer ac, Integer tot) {
-        return new BaekjoonCorrectInfo(memory, time, subtaskScore, partialScore, ac, tot);
+    public static BaekjoonJudgementResult of(Double subtaskScore, Double partialScore, Integer ac, Integer tot) {
+        return new BaekjoonJudgementResult(subtaskScore, partialScore, ac, tot);
     }
 
-    private BaekjoonCorrectInfo(Integer memory, Integer time, Double subtaskScore, Double partialScore, Integer ac, Integer tot) {
-        validateMemory(memory);
-        this.memory = memory;
-
-        validateTime(time);
-        this.time = time;
-
+    private BaekjoonJudgementResult(Double subtaskScore, Double partialScore, Integer ac, Integer tot) {
         validateSubtaskScore(subtaskScore);
         this.subtaskScore = subtaskScore;
 
@@ -47,19 +34,6 @@ public class BaekjoonCorrectInfo {
         validateAcTot(ac, tot);
         this.ac = ac;
         this.tot = tot;
-    }
-
-    private void validateMemory(Integer memory) {
-        if(memory == null)
-            throw new MorandiException(JudgementResultErrorCode.MEMORY_IS_NULL);
-        if(memory < 0)
-            throw new MorandiException(JudgementResultErrorCode.MEMORY_IS_NEGATIVE);
-    }
-    private void validateTime(Integer time) {
-        if(time == null)
-            throw new MorandiException(JudgementResultErrorCode.TIME_IS_NULL);
-        if(time < 0)
-            throw new MorandiException(JudgementResultErrorCode.TIME_IS_NEGATIVE);
     }
 
     private void validateSubtaskScore(Double subtaskScore) {

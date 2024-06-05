@@ -31,7 +31,11 @@ public enum JudgementResultErrorCode implements ErrorCode {
 
 
     RESULT_INFO_WHEN_CORRECT(HttpStatus.INTERNAL_SERVER_ERROR, "정답 상태일 때는 결과 정보를 업데이트 할 수 없습니다."),
+    TRIAL_NUMBER_IS_NULL(HttpStatus.BAD_REQUEST, "시도 횟수는 null일 수 없습니다."),
+    TRIAL_NUMBER_IS_NEGATIVE(HttpStatus.BAD_REQUEST, "시도 횟수는 음수일 수 없습니다."),
+    ALREADY_ACCEPTED(HttpStatus.BAD_REQUEST, "이미 정답 처리된 결과입니다."),
     ;
+
 
     private final HttpStatus httpStatus;
     private final String message;

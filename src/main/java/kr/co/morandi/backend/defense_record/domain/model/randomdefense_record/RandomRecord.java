@@ -8,6 +8,7 @@ import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -17,7 +18,6 @@ import java.util.Map;
 
 @Entity
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("RandomDefenseRecord")
 public class RandomRecord extends Record<RandomDetail> {
@@ -27,6 +27,7 @@ public class RandomRecord extends Record<RandomDetail> {
 
     private static final Integer INITIAL_SOLVED_COUNT = 0;
 
+    @Builder
     private RandomRecord(LocalDateTime testDate, RandomDefense randomDefense, Member member, Map<Long, Problem> problems) {
         super(testDate, randomDefense, member, problems);
         this.solvedCount = INITIAL_SOLVED_COUNT;

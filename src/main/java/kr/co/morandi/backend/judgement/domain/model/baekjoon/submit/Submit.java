@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorColumn
 public abstract class Submit extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long submitId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,8 +31,15 @@ public abstract class Submit extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SubmitVisibility submitVisibility;
 
+    @Embedded
+    private JudgementResult judgementResult;
+
+    protected void updateStatusToAccepted(Integer memory, Integer time) {
+        this.judgementResult.updateToAccepted(memory, time);
+    }
+
     protected Submit(Member member, Detail detail, SubmitCode submitCode,
-                     SubmitVisibility submitVisibility) {
+                     SubmitVisibility submitVisibility, Integer trialNumber) {
         this.member = member;
 
         validateDetail(detail);
@@ -44,6 +50,8 @@ public abstract class Submit extends BaseEntity {
 
         validateSubmitVisibility(submitVisibility);
         this.submitVisibility = submitVisibility;
+
+        this.judgementResult = JudgementResult.submit(trialNumber);
     }
 
     private void validateDetail(Detail detail) {

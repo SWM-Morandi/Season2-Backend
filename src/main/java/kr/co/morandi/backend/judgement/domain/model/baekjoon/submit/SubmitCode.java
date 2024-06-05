@@ -8,6 +8,7 @@ import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SubmitCode {
 
-    @Column(name = "source_code")
+    @Column(name = "source_code", columnDefinition = "TEXT", nullable = false)
     private String sourceCode;
 
     @Enumerated(EnumType.STRING)
@@ -31,6 +32,7 @@ public class SubmitCode {
             throw new MorandiException(SubmitErrorCode.SOURCE_CODE_NOT_FOUND);
     }
 
+    @Builder
     private SubmitCode(String sourceCode, Language language) {
         validateLength(sourceCode);
         this.sourceCode = sourceCode;

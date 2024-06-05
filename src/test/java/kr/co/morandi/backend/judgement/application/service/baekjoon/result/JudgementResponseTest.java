@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JudgementResultTest extends IntegrationTestSupport {
+class JudgementResponseTest extends IntegrationTestSupport {
 
     @Autowired
     private ObjectMapper objectMapper;

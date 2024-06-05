@@ -21,7 +21,6 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 @Entity
 @DiscriminatorValue("CustomDefense")
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CustomDefense extends Defense {
 
@@ -42,7 +41,6 @@ public class CustomDefense extends Defense {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @Builder.Default
     @OneToMany(mappedBy = "customDefense", cascade = CascadeType.ALL)
     private List<CustomDefenseProblem> customDefenseProblems = new ArrayList<>();
 
