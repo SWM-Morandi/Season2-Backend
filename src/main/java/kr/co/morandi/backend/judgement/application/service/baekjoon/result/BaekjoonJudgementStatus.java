@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class JudgementResponse {
+public class BaekjoonJudgementStatus {
 
     @JsonProperty("result")
     private ResultType result;

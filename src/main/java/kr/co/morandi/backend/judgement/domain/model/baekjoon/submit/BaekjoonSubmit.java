@@ -2,6 +2,7 @@ package kr.co.morandi.backend.judgement.domain.model.baekjoon.submit;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
 import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.Submit;
@@ -13,9 +14,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Getter
 @DiscriminatorValue("BaekjoonSubmit")
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaekjoonSubmit extends Submit {
 
     @Embedded

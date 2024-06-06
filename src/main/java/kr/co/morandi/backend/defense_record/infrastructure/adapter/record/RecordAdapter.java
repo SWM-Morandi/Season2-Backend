@@ -20,8 +20,13 @@ public class RecordAdapter implements RecordPort {
     }
 
     @Override
-    public Optional<Record<? extends Detail>> findRecordByIdFetchDetails(Long recordId) {
-        return recordRepository.findByIdFetchDetails(recordId);
+    public Optional<Record<? extends Detail>> findRecordFetchJoinWithDetail(Long recordId) {
+        return recordRepository.findRecordFetchJoinWithDetail(recordId);
+    }
+
+    @Override
+    public Optional<Record<? extends Detail>> findRecordFetchJoinWithDetailAndProblem(Long recordId) {
+        return recordRepository.findRecordFetchJoinWithDetailAndProblem(recordId);
     }
 
     @Override

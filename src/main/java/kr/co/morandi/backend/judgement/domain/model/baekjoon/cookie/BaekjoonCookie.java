@@ -1,5 +1,6 @@
 package kr.co.morandi.backend.judgement.domain.model.baekjoon.cookie;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.BaekjoonCookieErrorCode;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaekjoonCookie {
 
+    @Column(name = "baekjoon_cookie")
     private String value;
     private LocalDateTime expiredAt;
 

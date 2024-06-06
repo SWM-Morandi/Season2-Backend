@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JudgementResponseTest extends IntegrationTestSupport {
+class BaekjoonJudgementStatusTest extends IntegrationTestSupport {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -20,7 +20,7 @@ class JudgementResponseTest extends IntegrationTestSupport {
     void testDeserializationCompileError() throws JsonProcessingException {
         String json = "{\"result\":11,\"solution_id\":79195594}";
 
-        JudgementResponse result = objectMapper.readValue(json, JudgementResponse.class);
+        BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
         assertEquals(ResultType.COMPILE_ERROR, result.getResult());
         assertNull(result.getProgress());
@@ -40,7 +40,7 @@ class JudgementResponseTest extends IntegrationTestSupport {
     void testDeserializationRuntimeError() throws JsonProcessingException {
         String json = "{\"result\":10,\"solution_id\":79195594}";
 
-        JudgementResponse result = objectMapper.readValue(json, JudgementResponse.class);
+        BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
         assertEquals(ResultType.RUNTIME_ERROR, result.getResult());
         assertNull(result.getProgress());
@@ -60,7 +60,7 @@ class JudgementResponseTest extends IntegrationTestSupport {
     void testDeserializationProgress97() throws JsonProcessingException {
         String json = "{\"progress\":97,\"result\":3,\"solution_id\":79195594}";
 
-        JudgementResponse result = objectMapper.readValue(json, JudgementResponse.class);
+        BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
         assertEquals(ResultType.PROGRESS, result.getResult());
         assertEquals(97, result.getProgress());
@@ -80,7 +80,7 @@ class JudgementResponseTest extends IntegrationTestSupport {
     void testDeserializationFinalResult() throws JsonProcessingException {
         String json = "{\"memory\":739436,\"result\":4,\"solution_id\":79195594,\"time\":3944}";
 
-        JudgementResponse result = objectMapper.readValue(json, JudgementResponse.class);
+        BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
         assertEquals(ResultType.CORRECT, result.getResult());
         assertEquals(739436, result.getMemory());

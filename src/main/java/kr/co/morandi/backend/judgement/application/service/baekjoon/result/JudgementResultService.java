@@ -2,25 +2,26 @@ package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.co.morandi.backend.common.exception.MorandiException;
+import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
+import kr.co.morandi.backend.judgement.domain.service.BaekjoonSubmitService;
 import kr.co.morandi.backend.judgement.infrastructure.baekjoon.result.PusherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiConsumer;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class JudgementResultService {
-    private final Map<String, JudgementResponse> judgementResultMap = new ConcurrentHashMap<>();
+
     private final PusherService pusherService;
     private final ObjectMapper objectMapper;
+    private final BaekjoonSubmitService baekjoonSubmitService;
     private static final String CHANNEL_FORMAT = "solution-%s";
 
-    public void subscribeJudgement(final String solutionId) {
+    public void subscribeJudgement(final String solutionId, final Long submitId) {
         /*
         * solutionId를 바탕으로 pusher 채널을 구독하는 로직
         * */
@@ -29,37 +30,43 @@ public class JudgementResultService {
         /*
         * 콜백 함수를 파라미터로 전달하여 Listener에서 메세지가 도착하면 콜백함수를 실행하도록 구현
         * */
-        pusherService.subscribeJudgement(solutionChannelId, this::handleResult);
+        pusherService.subscribeJudgement(solutionChannelId, submitId, this::handleResult);
     }
+
 
     /*
     * 등록된 콜백함수에서 메세지가 도착하면 실행되는 함수
     *
-    * solutionId를 통해 결과를 저장하고, 결과를 파싱하여 저장하는 로직
+    * 결과를 파싱하여 저장하는 로직
     * */
-    private void handleResult(final String solutionId, final String data) {
+    private void handleResult(final Long submitId, final String data) {
+        final BaekjoonJudgementStatus baekjoonJudgementStatus = parseJudgementStatus(data);
 
-        final JudgementResponse judgementResponse = parseJudgementResult(data);
+        if(baekjoonJudgementStatus.isFinalResult()) {
+            pusherService.unsubscribeJudgement(String.format(CHANNEL_FORMAT, submitId));
 
-        judgementResultMap.put(solutionId, judgementResponse);
+            /*
+             * JudgementStatus를 바탕으로 DB에 저장하는 로직
+             * 비동기로 처리해야 PusherService의 스레드가 블로킹되지 않음
+             * */
+            final Integer memory = baekjoonJudgementStatus.getMemory();
+            final Integer time = baekjoonJudgementStatus.getTime();
 
-        if(judgementResponse == null) {
-            log.error("Failed to parse judgement result data : {}", data);
-            return;
+            // TODO -> JudgementStatus에 따라 저장되는 BaekjoonJudgementResult가 달라져야함,,
+            baekjoonSubmitService.asyncUpdateJudgementStatus(submitId, memory, time, BaekjoonJudgementResult.defaultResult());
         }
-
-
     }
 
-    private JudgementResponse parseJudgementResult(String data) {
+    private BaekjoonJudgementStatus parseJudgementStatus(String data) {
         try {
-            return objectMapper.readValue(data, JudgementResponse.class);
+            final BaekjoonJudgementStatus baekjoonJudgementStatus = objectMapper.readValue(data, BaekjoonJudgementStatus.class);
+            if(baekjoonJudgementStatus != null) {
+                return baekjoonJudgementStatus;
+            }
         } catch (JsonProcessingException e) {
-            log.error("Failed to parse judgement result data : {}", data);
-            return null;
+            throw new MorandiException(JudgementResultErrorCode.INVALID_JUDGEMENT_RESULT);
         }
+        throw new MorandiException(JudgementResultErrorCode.INVALID_JUDGEMENT_RESULT);
     }
-
-
 
 }

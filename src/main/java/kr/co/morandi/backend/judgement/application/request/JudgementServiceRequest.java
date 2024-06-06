@@ -1,6 +1,7 @@
 package kr.co.morandi.backend.judgement.application.request;
 
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
+import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class JudgementServiceRequest {
     private Long problemNumber;
     private Language language;
     private String sourceCode;
-    private String submitVisibility;
+    private SubmitVisibility submitVisibility;
 
 }
 

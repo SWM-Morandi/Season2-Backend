@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface RecordPort {
     Optional<Record<? extends Detail>> findRecordById(Long recordId);
-    Optional<Record<? extends Detail>> findRecordByIdFetchDetails(Long recordId);
+    Optional<Record<? extends Detail>> findRecordFetchJoinWithDetail(Long recordId);
+    Optional<Record<? extends Detail>> findRecordFetchJoinWithDetailAndProblem(Long recordId);
     void saveRecord(Record<? extends Detail> record);
 }

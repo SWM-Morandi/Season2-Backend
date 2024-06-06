@@ -12,8 +12,17 @@ public interface RecordRepository extends JpaRepository<Record<?>, Long> {
     @Query("""
         SELECT r
         FROM Record r
-        LEFT JOIN FETCH r.details
+        LEFT JOIN FETCH r.details d
         WHERE r.recordId = :recordId
     """)
-    Optional<Record<? extends Detail>> findByIdFetchDetails(Long recordId);
+    Optional<Record<? extends Detail>> findRecordFetchJoinWithDetail(Long recordId);
+
+    @Query("""
+        SELECT r
+        FROM Record r
+        LEFT JOIN FETCH r.details d
+        LEFT JOIN FETCH d.problem
+        WHERE r.recordId = :recordId
+    """)
+    Optional<Record<? extends Detail>> findRecordFetchJoinWithDetailAndProblem(Long recordId);
 }

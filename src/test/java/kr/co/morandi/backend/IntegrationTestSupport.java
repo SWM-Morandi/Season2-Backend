@@ -7,7 +7,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Import(WebClientTestConfig.class)
+@Import({
+        WebClientTestConfig.class
+})
 public abstract class IntegrationTestSupport {
 
 }

@@ -57,7 +57,7 @@ class RecordAdapterTest extends IntegrationTestSupport {
         final DailyRecord dailyRecord = tryDailyDefense(today, member);
 
         // when
-        final Optional<Record<? extends Detail>> record = recordAdapter.findRecordByIdFetchDetails(dailyRecord.getRecordId());
+        final Optional<Record<? extends Detail>> record = recordAdapter.findRecordFetchJoinWithDetail(dailyRecord.getRecordId());
 
         // then
         assertThat(record).isPresent()

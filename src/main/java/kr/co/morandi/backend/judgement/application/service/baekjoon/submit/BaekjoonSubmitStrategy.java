@@ -1,8 +1,9 @@
 package kr.co.morandi.backend.judgement.application.service.baekjoon.submit;
 
-import kr.co.morandi.backend.judgement.application.service.SubmitStrategy;
-import kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit.BaekjoonSubmitAdapter;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
+import kr.co.morandi.backend.judgement.application.service.SubmitStrategy;
+import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
+import kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit.BaekjoonSubmitApiAdapter;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,23 +12,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BaekjoonSubmitStrategy implements SubmitStrategy {
 
-    private final BaekjoonSubmitAdapter baekjoonSubmitAdapter;
+    private final BaekjoonSubmitApiAdapter baekjoonSubmitApiAdapter;
     private final BaekjoonMemberCookieService baekjoonMemberCookieService;
 
     @Override
-    public boolean submit(Language language, Problem problem, String sourceCode, String submitVisibility) {
+    public String submit(Language language, Problem problem, String sourceCode, SubmitVisibility submitVisibility) {
         final String baejoonProblemId = String.valueOf(problem.getBaekjoonProblemId());
         final String cookie = baekjoonMemberCookieService.getCurrentMemberCookie();
 
-        final String solutionId = baekjoonSubmitAdapter.submitAndGetSolutionId(baejoonProblemId, cookie, language, sourceCode, submitVisibility);
-
         /*
-        * solutionId를 바탕으로 websocket을 비동기로 구독하는 로직
+        * 제출을 하고 솔루션 아이디를 가져오는 메소드
         * */
-
-
-
-        return true;
+        return baekjoonSubmitApiAdapter.submitAndGetSolutionId(baejoonProblemId, cookie, language, sourceCode, submitVisibility.getValue().toLowerCase());
     }
 
 

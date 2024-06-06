@@ -1,4 +1,4 @@
-package kr.co.morandi.backend.judgement.domain.model.baekjoon.submit;
+package kr.co.morandi.backend.judgement.domain.model.submit;
 
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;

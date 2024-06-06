@@ -1,11 +1,11 @@
 package kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit;
 
+import kr.co.morandi.backend.common.annotation.Adapter;
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
+import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -19,9 +19,9 @@ import static org.springframework.http.HttpHeaders.COOKIE;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
-@Service
+@Adapter
 @RequiredArgsConstructor
-public class BaekjoonSubmitAdapter {
+public class BaekjoonSubmitApiAdapter {
 
     private final WebClient webClient;
     private final BaekjoonSubmitHtmlParser baekjoonHtmlParser;

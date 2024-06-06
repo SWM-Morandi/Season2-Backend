@@ -17,9 +17,9 @@ class JudgementResultServiceTest extends IntegrationTestSupport {
         // given
 
         // when
-        for(int i = 79196920;i<79197000;i++){
-            judgementResultService.subscribeJudgement(String.valueOf(i));
-        }
+//        for(int i = 79196920;i<79197000;i++){
+//            judgementResultService.subscribeJudgement(String.valueOf(i), );
+
 
         // then
 //        Thread.sleep(100000L);

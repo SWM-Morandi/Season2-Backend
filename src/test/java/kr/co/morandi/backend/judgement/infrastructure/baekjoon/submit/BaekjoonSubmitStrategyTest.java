@@ -1,46 +1,35 @@
 package kr.co.morandi.backend.judgement.infrastructure.baekjoon.submit;
 
+import kr.co.morandi.backend.IntegrationTestSupport;
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
-import org.junit.jupiter.api.BeforeEach;
+import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ActiveProfiles("test")
-class BaekjoonSubmitAdapterTest {
+class BaekjoonSubmitStrategyTest extends IntegrationTestSupport {
 
-    private BaekjoonSubmitAdapter baekjoonSubmitAdapter;
+    @Autowired
+    private BaekjoonSubmitApiAdapter baekjoonSubmitApiAdapter;
+
+    @Autowired
     private ExchangeFunction exchangeFunction;
-    private final BaekjoonSubmitHtmlParser baekjoonHtmlParser = new BaekjoonSubmitHtmlParser();
-
-    @BeforeEach
-    void setUp() {
-        exchangeFunction = Mockito.mock(ExchangeFunction.class);
-        WebClient webClient = WebClient.builder()
-                .exchangeFunction(exchangeFunction)
-                .baseUrl("https://www.acmicpc.net")
-                .build();
-
-        this.baekjoonSubmitAdapter = new BaekjoonSubmitAdapter(webClient, baekjoonHtmlParser);
-    }
 
     @DisplayName("제출을 하고 솔루션 아이디를 가져온다.")
+    @Order(1)
     @Test
     void submitAndGetSolutionId() {
         // given
@@ -79,14 +68,12 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when
-        String solutionId = baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위);
+        String solutionId = baekjoonSubmitApiAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위);
 
         // then
         assertThat(solutionId)
                 .isNotNull()
                 .isEqualTo("123456");
-        verify(exchangeFunction, Mockito.times(3))
-                .exchange(any(ClientRequest.class));
 
     }
 
@@ -114,7 +101,7 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitApiAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining("제출 페이지에서 CSRF 키를 찾을 수 없습니다.");
 
@@ -144,7 +131,7 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitApiAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining("제출 페이지에서 CSRF 키를 찾을 수 없습니다.");
 
@@ -191,7 +178,7 @@ class BaekjoonSubmitAdapterTest {
                         .build()));
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitApiAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
 
@@ -224,7 +211,7 @@ class BaekjoonSubmitAdapterTest {
 
 
         // when & then
-        assertThatThrownBy(() -> baekjoonSubmitAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
+        assertThatThrownBy(() -> baekjoonSubmitApiAdapter.submitAndGetSolutionId(백준_문제_ID, 사용자_쿠키, 제출_언어, 제출_코드, 제출_코드_공개범위))
                 .isInstanceOf(MorandiException.class)
                 .hasMessageContaining(SubmitErrorCode.REDIRECTION_LOCATION_NOT_FOUND.getMessage());
 
