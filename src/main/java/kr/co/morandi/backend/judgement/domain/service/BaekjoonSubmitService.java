@@ -31,8 +31,6 @@ public class BaekjoonSubmitService {
                                            final Integer time,
                                            final BaekjoonJudgementResult baekjoonJudgementResult) {
 
-        log.info("asyncUpdateJudgementStatus(submitId = {}, memory = {}, time = {}, baekjoonJudgementResult = {})", submitId, memory, time, baekjoonJudgementResult);
-        System.out.println("TransactionSynchronizationManager.getCurrentTransactionName() = " + TransactionSynchronizationManager.getCurrentTransactionName());
         final BaekjoonSubmit submit = baekjoonSubmitPort.findSubmit(submitId)
                 .orElseThrow(() -> new MorandiException(JudgementResultErrorCode.SUBMIT_NOT_FOUND));
 
