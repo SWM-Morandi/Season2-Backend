@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.JAVA;
-import static kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus.ACCEPTED;
+import static kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -132,8 +132,13 @@ class SubmitTest {
                 SubmitVisibility.OPEN,
                 1);
 
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(ACCEPTED)
+                .memory(300)
+                .time(30)
+                .build();
         // when
-        제출.updateStatusToAccepted(300, 30);
+        제출.updateJudgementResult(judgementResult);
 
         // then
         assertThat(제출)
@@ -169,19 +174,25 @@ class SubmitTest {
                 제출할_코드,
                 SubmitVisibility.OPEN,
                 1);
-        제출.updateStatusToAccepted(300, 30);
 
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(ACCEPTED)
+                .memory(300)
+                .time(30)
+                .build();
+
+        제출.updateJudgementResult(judgementResult);
 
         // when & then
-        assertThatThrownBy(() -> 제출.updateStatusToAccepted(300, 30))
+        assertThatThrownBy(() -> 제출.updateJudgementResult(judgementResult))
                 .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementResultErrorCode.ALREADY_ACCEPTED.getMessage());
+                .hasMessage(JudgementResultErrorCode.ALREADY_JUDGED.getMessage());
 
     }
 
-    @DisplayName("적절하지 않은 메모리 값으로 정답 상태로 변경할 수 없다.")
+    @DisplayName("이미 런타임 에러인 Submit은 다시 다른 상태로 변경할 수 없다.")
     @Test
-    void updateStatusToAcceptedWithInvalidMemory() {
+    void updateStatusToAcceptedWhenAlreadyRuntimeError() {
         // given
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
@@ -200,23 +211,31 @@ class SubmitTest {
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
+
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
                 SubmitVisibility.OPEN,
                 1);
 
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(RUNTIME_ERROR)
+                .memory(0)
+                .time(0)
+                .build();
+
+        제출.updateJudgementResult(judgementResult);
 
         // when & then
-        assertThatThrownBy(() -> 제출.updateStatusToAccepted(-300, 30))
+        assertThatThrownBy(() -> 제출.updateJudgementResult(judgementResult))
                 .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementResultErrorCode.MEMORY_IS_NEGATIVE.getMessage());
+                .hasMessage(JudgementResultErrorCode.ALREADY_JUDGED.getMessage());
 
     }
 
-    @DisplayName("적절하지 않은 시간 값으로 정답 상태로 변경할 수 없다.")
+    @DisplayName("이미 컴파일 에러인 Submit은 다시 다른 상태로 변경할 수 없다.")
     @Test
-    void updateStatusToAcceptedWithInvalidTime() {
+    void updateStatusToAcceptedWhenAlreadyCompileError() {
         // given
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
@@ -235,17 +254,154 @@ class SubmitTest {
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
+
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
                 SubmitVisibility.OPEN,
                 1);
 
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(COMPILE_ERROR)
+                .memory(0)
+                .time(0)
+                .build();
+
+        제출.updateJudgementResult(judgementResult);
 
         // when & then
-        assertThatThrownBy(() -> 제출.updateStatusToAccepted(300, -30))
+        assertThatThrownBy(() -> 제출.updateJudgementResult(judgementResult))
                 .isInstanceOf(MorandiException.class)
-                .hasMessage(JudgementResultErrorCode.TIME_IS_NEGATIVE.getMessage());
+                .hasMessage(JudgementResultErrorCode.ALREADY_JUDGED.getMessage());
+
+    }
+
+    @DisplayName("이미 시간 초과인 Submit은 다시 다른 상태로 변경할 수 없다.")
+    @Test
+    void updateStatusToAcceptedWhenAlreadyTimeLimitExceeded() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        SubmitCode 제출할_코드 = SubmitCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        Submit 제출 = new SubmitTestImpl(사용자,
+                dailyRecord.getDetail(1L),
+                제출할_코드,
+                SubmitVisibility.OPEN,
+                1);
+
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(TIME_LIMIT_EXCEEDED)
+                .memory(0)
+                .time(0)
+                .build();
+
+        제출.updateJudgementResult(judgementResult);
+
+        // when & then
+        assertThatThrownBy(() -> 제출.updateJudgementResult(judgementResult))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage(JudgementResultErrorCode.ALREADY_JUDGED.getMessage());
+
+    }
+
+    @DisplayName("이미 메모리 초과인 Submit은 다시 다른 상태로 변경할 수 없다.")
+    @Test
+    void updateStatusToAcceptedWhenAlreadyMemoryLimitExceeded() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        SubmitCode 제출할_코드 = SubmitCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        Submit 제출 = new SubmitTestImpl(사용자,
+                dailyRecord.getDetail(1L),
+                제출할_코드,
+                SubmitVisibility.OPEN,
+                1);
+
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(MEMORY_LIMIT_EXCEEDED)
+                .memory(0)
+                .time(0)
+                .build();
+
+        제출.updateJudgementResult(judgementResult);
+
+        // when & then
+        assertThatThrownBy(() -> 제출.updateJudgementResult(judgementResult))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage(JudgementResultErrorCode.ALREADY_JUDGED.getMessage());
+
+    }
+
+    @DisplayName("이미 틀린 답인 Submit은 다시 다른 상태로 변경할 수 없다.")
+    @Test
+    void updateStatusToAcceptedWhenAlreadyWrongAnswer() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        SubmitCode 제출할_코드 = SubmitCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        Submit 제출 = new SubmitTestImpl(사용자,
+                dailyRecord.getDetail(1L),
+                제출할_코드,
+                SubmitVisibility.OPEN,
+                1);
+
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(WRONG_ANSWER)
+                .memory(0)
+                .time(0)
+                .build();
+
+        제출.updateJudgementResult(judgementResult);
+
+        // when & then
+        assertThatThrownBy(() -> 제출.updateJudgementResult(judgementResult))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage(JudgementResultErrorCode.ALREADY_JUDGED.getMessage());
 
     }
 

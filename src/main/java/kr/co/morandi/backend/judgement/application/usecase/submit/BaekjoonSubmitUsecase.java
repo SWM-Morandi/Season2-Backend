@@ -4,7 +4,7 @@ package kr.co.morandi.backend.judgement.application.usecase.submit;
 import kr.co.morandi.backend.common.annotation.Usecase;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.application.port.out.BaekjoonSubmitPort;
-import kr.co.morandi.backend.judgement.application.service.SubmitStrategy;
+import kr.co.morandi.backend.judgement.application.service.SubmitService;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
 import kr.co.morandi.backend.judgement.application.request.JudgementServiceRequest;
 import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
@@ -14,7 +14,7 @@ import kr.co.morandi.backend.defense_record.application.port.out.record.RecordPo
 import kr.co.morandi.backend.defense_record.domain.error.RecordErrorCode;
 import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
-import kr.co.morandi.backend.judgement.application.service.baekjoon.result.JudgementResultService;
+import kr.co.morandi.backend.judgement.domain.event.TempCodeSaveEvent;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
@@ -23,6 +23,7 @@ import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;
 
 @Usecase
@@ -30,12 +31,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BaekjoonSubmitUsecase {
 
+    private final BaekjoonSubmitPort baekjoonSubmitPort;
     private final DefenseSessionPort defenseSessionport;
     private final RecordPort recordPort;
     private final MemberPort memberPort;
-    private final SubmitStrategy submitStrategy;
-    private final BaekjoonSubmitPort baekjoonSubmitPort;
-    private final JudgementResultService judgementResultService;
+    private final SubmitService submitService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
     public void judgement(final JudgementServiceRequest request) {
@@ -88,19 +89,12 @@ public class BaekjoonSubmitUsecase {
         * 채점 시작을 비동기 별도 스레드로 처리하고
         * 채점 결과를 받아서 성공하면 그 결과를 채점 기록에 저장한다.
         * */
-        Problem problem = detail.getProblem();
-        final String solutionId = submitStrategy.submit(language, problem, sourceCode, submitVisibility);
-
-        /*
-         * solutionId를 바탕으로 websocket을 비동기로 구독하는 로직
-         * */
-        judgementResultService.subscribeJudgement(solutionId, savedSubmit.getSubmitId());
+        submitService.asyncProcessSubmitAndSubscribeJudgement(savedSubmit.getSubmitId(), detail.getProblem(), language, sourceCode, submitVisibility);
 
         /*
          * 비동기로 시험 채점 서비스를 호출했던 코드를 TempCode에 저장한다.
-         * 이 때, 주의할 점
+         * 이 요청은 이벤트로 발행하여 TempCode 저장이 비즈니스 로직 실행에 영향을 주지 않도록 한다.
          * */
-
-        return;
+        applicationEventPublisher.publishEvent(new TempCodeSaveEvent(defenseSessionId, problemNumber, sourceCode, language));
     }
 }

@@ -10,6 +10,7 @@ import kr.co.morandi.backend.factory.TestMemberFactory;
 import kr.co.morandi.backend.factory.TestProblemFactory;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
+import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.judgement.infrastructure.persistence.submit.BaekjoonSubmitRepository;
@@ -31,7 +32,7 @@ import static kr.co.morandi.backend.defense_management.domain.model.tempcode.mod
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
-class BaekjoonSubmitServiceTest extends IntegrationTestSupport {
+class BaekjoonJudgementServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private BaekjoonSubmitRepository baekjoonSubmitRepository;
@@ -49,13 +50,13 @@ class BaekjoonSubmitServiceTest extends IntegrationTestSupport {
     private DailyRecordRepository dailyRecordRepository;
 
     @Autowired
-    private BaekjoonSubmitService baekjoonSubmitService;
+    private BaekjoonJudgementService baekjoonJudgementService;
 
     @DisplayName("채점 결과를 업데이트할 수 있다.")
     @Test
     void canUpdateJudgementStatusCorrectly() {
 
-        baekjoonSubmitService = AopTestUtils.getTargetObject(baekjoonSubmitService);
+        baekjoonJudgementService = AopTestUtils.getTargetObject(baekjoonJudgementService);
 
         Member 사용자 = TestMemberFactory.createMember();
         memberRepository.save(사용자);
@@ -90,9 +91,10 @@ class BaekjoonSubmitServiceTest extends IntegrationTestSupport {
         final BaekjoonSubmit 저장된_백준_제출 = baekjoonSubmitRepository.save(백준_제출);
 
         final BaekjoonJudgementResult 백준_채점_디테일_정보 = BaekjoonJudgementResult.defaultResult();
+        final JudgementStatus 채점_결과 = JudgementStatus.ACCEPTED;
 
         // when
-        baekjoonSubmitService.asyncUpdateJudgementStatus(저장된_백준_제출.getSubmitId(), 512, 120, 백준_채점_디테일_정보);
+        baekjoonJudgementService.asyncUpdateJudgementStatus(저장된_백준_제출.getSubmitId(), 채점_결과, 512, 120, 백준_채점_디테일_정보);
 
         final Optional<BaekjoonSubmit> maybeBaekjoonSubmit = baekjoonSubmitRepository.findById(저장된_백준_제출.getSubmitId());
 

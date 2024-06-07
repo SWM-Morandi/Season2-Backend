@@ -29,31 +29,33 @@ public class JudgementResult {
     private static final Integer INITIAL_TIME = 0;
 
     public static JudgementResult submit() {
-        return new JudgementResult(INITIAL_MEMORY, INITIAL_TIME);
+        return new JudgementResult(JudgementStatus.SUBMITTED, INITIAL_MEMORY, INITIAL_TIME);
     }
-
-    public void updateToAccepted(Integer memory, Integer time) {
-        if(judgementStatus.equals(JudgementStatus.ACCEPTED))
-            throw new MorandiException(JudgementResultErrorCode.ALREADY_ACCEPTED);
-
-        this.judgementStatus = JudgementStatus.ACCEPTED;
-
-        validateMemory(memory);
-        this.memory = memory;
-
-        validateTime(time);
-        this.time = time;
+    public static JudgementResult accepted(Integer memory, Integer time) {
+        return new JudgementResult(JudgementStatus.ACCEPTED, memory, time);
     }
-
+    public static JudgementResult rejected(JudgementStatus judgementStatus) {
+        return new JudgementResult(judgementStatus, INITIAL_MEMORY, INITIAL_TIME);
+    }
+    public void canUpdateJudgementResult() {
+        if(!judgementStatus.equals(JudgementStatus.SUBMITTED))
+            throw new MorandiException(JudgementResultErrorCode.ALREADY_JUDGED);
+    }
     @Builder
-    private JudgementResult(Integer memory, Integer time) {
-        this.judgementStatus = JudgementStatus.SUBMITTED;
-
+    private JudgementResult(JudgementStatus judgementStatus, Integer memory, Integer time) {
+        if(judgementStatus == null)
+            throw new MorandiException(JudgementResultErrorCode.JUDGEMENT_RESULT_NOT_FOUND);
         validateMemory(memory);
-        this.memory = memory;
-
         validateTime(time);
+        validateCanExistTimeAndMemory(judgementStatus, memory, time);
+
+        this.judgementStatus = judgementStatus;
+        this.memory = memory;
         this.time = time;
+    }
+    private void validateCanExistTimeAndMemory(JudgementStatus judgementStatus, Integer memory, Integer time) {
+        if(!judgementStatus.equals(JudgementStatus.ACCEPTED) && (memory != 0 || time != 0))
+            throw new MorandiException(JudgementResultErrorCode.NOT_ACCEPTED_CANNOT_HAVE_MEMORY_AND_TIME);
     }
 
     private void validateMemory(Integer memory) {
@@ -68,6 +70,4 @@ public class JudgementResult {
         if(time < 0)
             throw new MorandiException(JudgementResultErrorCode.TIME_IS_NEGATIVE);
     }
-
-
 }

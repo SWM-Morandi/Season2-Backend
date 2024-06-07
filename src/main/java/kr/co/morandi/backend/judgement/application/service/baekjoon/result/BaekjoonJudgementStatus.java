@@ -43,6 +43,16 @@ public class BaekjoonJudgementStatus {
     @JsonProperty("remain")
     private Integer remain;
 
+    public boolean isAccepted() {
+        return this.getResult().equals(ResultType.CORRECT);
+    }
+
+    public boolean isRejected() {
+        return this.getResult().equals(ResultType.WRONG_ANSWER) || this.getResult().equals(ResultType.RUNTIME_ERROR)
+                || this.getResult().equals(ResultType.COMPILE_ERROR) || this.getResult().equals(ResultType.TIME_LIMIT_EXCEEDED)
+                || this.getResult().equals(ResultType.OTHER);
+    }
+
     public boolean isFinalResult() {
         ResultType resultType = this.getResult();
         return resultType.equals(ResultType.CORRECT) || resultType.equals(ResultType.WRONG_ANSWER)

@@ -22,7 +22,7 @@ public abstract class Submit extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)//, targetEntity = Detail.class)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Detail detail;
 
     @Embedded
@@ -36,8 +36,9 @@ public abstract class Submit extends BaseEntity {
 
     private Integer trialNumber;
 
-    protected void updateStatusToAccepted(Integer memory, Integer time) {
-        this.judgementResult.updateToAccepted(memory, time);
+    protected void updateJudgementResult(JudgementResult judgementResult) {
+        this.judgementResult.canUpdateJudgementResult();
+        this.judgementResult = judgementResult;
     }
 
     protected Submit(Member member, Detail detail, SubmitCode submitCode,

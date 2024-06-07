@@ -3,6 +3,7 @@ package kr.co.morandi.backend.judgement.domain.model.baekjoon.result;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
+import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,7 @@ class JudgementResultTest {
 
         // when
         final JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(JudgementStatus.ACCEPTED)
                 .memory(memory)
                 .time(time)
                 .build();
@@ -40,9 +42,9 @@ class JudgementResultTest {
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
+                .judgementStatus(JudgementStatus.ACCEPTED)
                 .memory(memory)
                 .time(time)
-                
                 .build()
         )
                 .isInstanceOf(MorandiException.class)
@@ -58,6 +60,7 @@ class JudgementResultTest {
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
+                .judgementStatus(JudgementStatus.ACCEPTED)
                 .memory(memory)
                 .time(time)
                 .build()
@@ -75,6 +78,7 @@ class JudgementResultTest {
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
+                .judgementStatus(JudgementStatus.ACCEPTED)
                 .memory(memory)
                 .time(time)
                 .build()
@@ -92,6 +96,7 @@ class JudgementResultTest {
 
         // when, then
         assertThatThrownBy(() -> JudgementResult.builder()
+                .judgementStatus(JudgementStatus.ACCEPTED)
                 .memory(memory)
                 .time(time)
                 .build()

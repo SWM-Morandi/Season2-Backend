@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
-import kr.co.morandi.backend.judgement.domain.service.BaekjoonSubmitService;
+import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
+import kr.co.morandi.backend.judgement.domain.service.BaekjoonJudgementService;
 import kr.co.morandi.backend.judgement.infrastructure.baekjoon.result.PusherService;
+import kr.co.morandi.backend.judgement.infrastructure.helper.JudgementStatusMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class JudgementResultService {
+public class JudgementResultSubscriber {
 
     private final PusherService pusherService;
     private final ObjectMapper objectMapper;
-    private final BaekjoonSubmitService baekjoonSubmitService;
+    private final BaekjoonJudgementService baekjoonJudgementService;
     private static final String CHANNEL_FORMAT = "solution-%s";
 
     public void subscribeJudgement(final String solutionId, final Long submitId) {
@@ -45,15 +47,16 @@ public class JudgementResultService {
         if(baekjoonJudgementStatus.isFinalResult()) {
             pusherService.unsubscribeJudgement(String.format(CHANNEL_FORMAT, submitId));
 
-            /*
-             * JudgementStatus를 바탕으로 DB에 저장하는 로직
-             * 비동기로 처리해야 PusherService의 스레드가 블로킹되지 않음
-             * */
+            log.info("BaekjoonJudgement : submitId: {}, status: {}", submitId, baekjoonJudgementStatus);
+
+            final JudgementStatus judgementStatus = JudgementStatusMapper.mapToJudgementStatus(baekjoonJudgementStatus.getResult());
+
             final Integer memory = baekjoonJudgementStatus.getMemory();
             final Integer time = baekjoonJudgementStatus.getTime();
 
-            // TODO -> JudgementStatus에 따라 저장되는 BaekjoonJudgementResult가 달라져야함,,
-            baekjoonSubmitService.asyncUpdateJudgementStatus(submitId, memory, time, BaekjoonJudgementResult.defaultResult());
+            // JudgementStatus를 바탕으로 DB에 저장하는 로직
+            // 비동기로 처리해야 PusherService의 스레드가 블로킹되지 않음
+            baekjoonJudgementService.asyncUpdateJudgementStatus(submitId, judgementStatus, memory, time, BaekjoonJudgementResult.defaultResult());
         }
     }
 

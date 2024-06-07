@@ -5,6 +5,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
+import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.Submit;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
@@ -28,8 +29,8 @@ public class BaekjoonSubmit extends Submit {
         return new BaekjoonSubmit(member, detail, submitCode, submitVisibility, trialNumber, null);
     }
 
-    public void updateStatusToAccepted(Integer memory, Integer time, BaekjoonJudgementResult baekjoonJudgementResult) {
-        super.updateStatusToAccepted(memory, time);
+    public void updateJudgementResult(JudgementResult judgementResult, BaekjoonJudgementResult baekjoonJudgementResult) {
+        super.updateJudgementResult(judgementResult);
         this.baekjoonJudgementResult = baekjoonJudgementResult;
     }
     @Builder

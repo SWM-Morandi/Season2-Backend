@@ -35,7 +35,10 @@ public enum JudgementResultErrorCode implements ErrorCode {
     TRIAL_NUMBER_IS_NEGATIVE(HttpStatus.BAD_REQUEST, "시도 횟수는 음수일 수 없습니다."),
     ALREADY_ACCEPTED(HttpStatus.BAD_REQUEST, "이미 정답 처리된 결과입니다."),
     SUBMIT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 제출을 찾을 수 없습니다."),
-    INVALID_JUDGEMENT_RESULT(HttpStatus.INTERNAL_SERVER_ERROR, "백준으로부터 받은 채점 결과 응답이 올바르지 않습니다.");
+    INVALID_JUDGEMENT_RESULT(HttpStatus.INTERNAL_SERVER_ERROR, "백준으로부터 받은 채점 결과 응답이 올바르지 않습니다."),
+    ALREADY_JUDGED(HttpStatus.BAD_REQUEST, "이미 채점된 결과입니다."),
+    ACCEPT_MUST_HAVE_MEMORY_AND_TIME(HttpStatus.BAD_REQUEST, "정답 상태일 때는 메모리와 시간이 있어야 합니다."),
+    NOT_ACCEPTED_CANNOT_HAVE_MEMORY_AND_TIME(HttpStatus.BAD_REQUEST, "정답 상태가 아닐 때는 메모리와 시간이 있을 수 없습니다.");
 
 
     private final HttpStatus httpStatus;

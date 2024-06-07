@@ -6,6 +6,7 @@ import kr.co.morandi.backend.factory.TestDefenseFactory;
 import kr.co.morandi.backend.factory.TestMemberFactory;
 import kr.co.morandi.backend.factory.TestProblemFactory;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
+import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
@@ -92,11 +93,17 @@ class BaekjoonSubmitTest {
                 .trialNumber(1)
                 .build();
 
+        JudgementResult judgementResult = JudgementResult.builder()
+                .judgementStatus(ACCEPTED)
+                .memory(300)
+                .time(30)
+                .build();
+
 
         // when
         final BaekjoonJudgementResult baekjoonJudgementResult = BaekjoonJudgementResult.defaultResult();
 
-        백준_제출.updateStatusToAccepted(300, 30, baekjoonJudgementResult);
+        백준_제출.updateJudgementResult(judgementResult, baekjoonJudgementResult);
 
         // then
         assertThat(백준_제출)
