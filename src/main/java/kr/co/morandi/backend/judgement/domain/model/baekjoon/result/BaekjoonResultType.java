@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.JudgementResultErrorCode;
-import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
-public enum ResultType {
+public enum BaekjoonResultType {
     CORRECT(4, "맞았습니다!!"),
     WRONG_ANSWER(6, "틀렸습니다!!"),
     RUNTIME_ERROR(10, "런타임 에러"),
@@ -31,14 +30,14 @@ public enum ResultType {
     private final int code;
     private final String description;
 
-    private static final Map<Integer, ResultType> valueMap = Arrays.stream(values())
-            .collect(Collectors.toMap(ResultType::getCode, e -> e));
+    private static final Map<Integer, BaekjoonResultType> valueMap = Arrays.stream(values())
+            .collect(Collectors.toMap(BaekjoonResultType::getCode, e -> e));
     @JsonValue
     public int getCode() {
         return code;
     }
     @JsonCreator
-    public static ResultType fromCode(Integer code) {
+    public static BaekjoonResultType fromCode(Integer code) {
         if(code == null)
             throw new MorandiException(JudgementResultErrorCode.RESULT_CODE_IS_NULL);
         return valueMap.getOrDefault(code, OTHER);

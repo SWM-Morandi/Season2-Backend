@@ -3,7 +3,7 @@ package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.morandi.backend.IntegrationTestSupport;
-import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.ResultType;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class BaekjoonJudgementStatusTest extends IntegrationTestSupport {
 
         BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
-        assertEquals(ResultType.COMPILE_ERROR, result.getResult());
+        assertEquals(BaekjoonResultType.COMPILE_ERROR, result.getResult());
         assertNull(result.getProgress());
         assertNull(result.getMemory());
         assertNull(result.getTime());
@@ -42,7 +42,7 @@ class BaekjoonJudgementStatusTest extends IntegrationTestSupport {
 
         BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
-        assertEquals(ResultType.RUNTIME_ERROR, result.getResult());
+        assertEquals(BaekjoonResultType.RUNTIME_ERROR, result.getResult());
         assertNull(result.getProgress());
         assertNull(result.getMemory());
         assertNull(result.getTime());
@@ -62,7 +62,7 @@ class BaekjoonJudgementStatusTest extends IntegrationTestSupport {
 
         BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
-        assertEquals(ResultType.PROGRESS, result.getResult());
+        assertEquals(BaekjoonResultType.PROGRESS, result.getResult());
         assertEquals(97, result.getProgress());
         assertNull(result.getMemory());
         assertNull(result.getTime());
@@ -82,7 +82,7 @@ class BaekjoonJudgementStatusTest extends IntegrationTestSupport {
 
         BaekjoonJudgementStatus result = objectMapper.readValue(json, BaekjoonJudgementStatus.class);
 
-        assertEquals(ResultType.CORRECT, result.getResult());
+        assertEquals(BaekjoonResultType.CORRECT, result.getResult());
         assertEquals(739436, result.getMemory());
         assertEquals(3944, result.getTime());
         assertNull(result.getProgress());

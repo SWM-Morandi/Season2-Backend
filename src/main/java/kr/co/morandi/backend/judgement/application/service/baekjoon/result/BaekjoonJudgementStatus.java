@@ -1,7 +1,7 @@
 package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.ResultType;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonResultType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class BaekjoonJudgementStatus {
 
     @JsonProperty("result")
-    private ResultType result;
+    private BaekjoonResultType result;
 
     @JsonProperty("progress")
     private Integer progress;
@@ -44,20 +44,20 @@ public class BaekjoonJudgementStatus {
     private Integer remain;
 
     public boolean isAccepted() {
-        return this.getResult().equals(ResultType.CORRECT);
+        return this.getResult().equals(BaekjoonResultType.CORRECT);
     }
 
     public boolean isRejected() {
-        return this.getResult().equals(ResultType.WRONG_ANSWER) || this.getResult().equals(ResultType.RUNTIME_ERROR)
-                || this.getResult().equals(ResultType.COMPILE_ERROR) || this.getResult().equals(ResultType.TIME_LIMIT_EXCEEDED)
-                || this.getResult().equals(ResultType.OTHER);
+        return this.getResult().equals(BaekjoonResultType.WRONG_ANSWER) || this.getResult().equals(BaekjoonResultType.RUNTIME_ERROR)
+                || this.getResult().equals(BaekjoonResultType.COMPILE_ERROR) || this.getResult().equals(BaekjoonResultType.TIME_LIMIT_EXCEEDED)
+                || this.getResult().equals(BaekjoonResultType.OTHER);
     }
 
     public boolean isFinalResult() {
-        ResultType resultType = this.getResult();
-        return resultType.equals(ResultType.CORRECT) || resultType.equals(ResultType.WRONG_ANSWER)
-                || resultType.equals(ResultType.RUNTIME_ERROR) || resultType.equals(ResultType.COMPILE_ERROR)
-                || resultType.equals(ResultType.TIME_LIMIT_EXCEEDED) || resultType.equals(ResultType.OTHER);
+        BaekjoonResultType baekjoonResultType = this.getResult();
+        return baekjoonResultType.equals(BaekjoonResultType.CORRECT) || baekjoonResultType.equals(BaekjoonResultType.WRONG_ANSWER)
+                || baekjoonResultType.equals(BaekjoonResultType.RUNTIME_ERROR) || baekjoonResultType.equals(BaekjoonResultType.COMPILE_ERROR)
+                || baekjoonResultType.equals(BaekjoonResultType.TIME_LIMIT_EXCEEDED) || baekjoonResultType.equals(BaekjoonResultType.OTHER);
     }
 
 

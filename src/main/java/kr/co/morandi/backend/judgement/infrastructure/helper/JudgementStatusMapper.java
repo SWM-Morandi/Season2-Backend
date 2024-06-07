@@ -1,12 +1,12 @@
 package kr.co.morandi.backend.judgement.infrastructure.helper;
 
-import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.ResultType;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonResultType;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
 
 public class JudgementStatusMapper {
 
-    public static JudgementStatus mapToJudgementStatus(ResultType resultType) {
-        return switch (resultType) {
+    public static JudgementStatus mapToJudgementStatus(BaekjoonResultType baekjoonResultType) {
+        return switch (baekjoonResultType) {
             case CORRECT -> JudgementStatus.ACCEPTED;
             case WRONG_ANSWER -> JudgementStatus.WRONG_ANSWER;
             case RUNTIME_ERROR -> JudgementStatus.RUNTIME_ERROR;
