@@ -33,6 +33,8 @@ public class BaekjoonJudgementService {
                                            final Integer time,
                                            final BaekjoonJudgementResult baekjoonJudgementResult) {
 
+        log.info("Update Judgement Status submitId: {}, judgementStatus: {}, memory: {}, time: {}", submitId, judgementStatus, memory, time);
+
         final BaekjoonSubmit submit = baekjoonSubmitPort.findSubmit(submitId)
                 .orElseThrow(() -> new MorandiException(JudgementResultErrorCode.SUBMIT_NOT_FOUND));
 
