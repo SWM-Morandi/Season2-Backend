@@ -10,6 +10,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SubmitVisibilityTest {
+
+    @DisplayName("getValue 테스트")
+    @Test
+    void getValue() {
+        // given
+        SubmitVisibility submitVisibility = SubmitVisibility.OPEN;
+
+        // when
+        String value = submitVisibility.getValue();
+
+        // then
+        assertThat(value).isEqualTo("OPEN");
+    }
     @DisplayName("OPEN 값으로 SubmitVisibility 생성")
     @Test
     void fromOPEN() {
