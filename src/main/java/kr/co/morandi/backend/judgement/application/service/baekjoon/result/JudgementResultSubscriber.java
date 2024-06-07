@@ -20,6 +20,13 @@ public class JudgementResultSubscriber {
 
     private final PusherService pusherService;
     private final ObjectMapper objectMapper;
+
+    // TODO Subscriber가 고수준 Service를 의존하는 것을 해결하고 싶음
+    // 1. 인터페이스를 만들어 의존성을 주입하는 방법
+    // 2. 이벤트를 이용하는 방법
+    // 3. 콜백함수를 이용하는 방법
+    //
+    // Pusher에서 실행하는 콜백함수에서 BaekjoonJudgementService를 사용하게 될 것이고, 저장 행위가 비동기로 이루어져야함
     private final BaekjoonJudgementService baekjoonJudgementService;
     private static final String CHANNEL_FORMAT = "solution-%s";
 
@@ -47,7 +54,7 @@ public class JudgementResultSubscriber {
         if(baekjoonJudgementStatus.isFinalResult()) {
             pusherService.unsubscribeJudgement(String.format(CHANNEL_FORMAT, submitId));
 
-            log.info("BaekjoonJudgement : submitId: {}, status: {}", submitId, baekjoonJudgementStatus);
+            log.info("BaekjoonJudgement : submitId: {}, status: {}", submitId, baekjoonJudgementStatus.getResult());
 
             final JudgementStatus judgementStatus = JudgementStatusMapper.mapToJudgementStatus(baekjoonJudgementStatus.getResult());
 
