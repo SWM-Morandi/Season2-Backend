@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
-class BaekjoonHtmlParserTest {
+class BaekjoonSubmitHtmlParserTest {
 
     private final BaekjoonSubmitHtmlParser baekjoonHtmlParser = new BaekjoonSubmitHtmlParser();
 
@@ -93,6 +93,62 @@ class BaekjoonHtmlParserTest {
     void parseSolutionIdFromHtml_missingStatusTable() {
         // given
         String invalidHtml = "<html><body></body></html>";
+
+        // when & then
+        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
+    }
+
+    @DisplayName("첫 번째 행이 없는 경우 예외를 던진다.")
+    @Test
+    void parseSolutionIdFromHtml_missingFirstRow() {
+        // given
+        String invalidHtml = """
+            <table id="status-table">
+                <tbody>
+                </tbody>
+            </table>
+            """;
+
+        // when & then
+        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
+    }
+
+    @DisplayName("solutionIdElement가 null인 경우 예외를 던진다.")
+    @Test
+    void parseSolutionIdFromHtml_nullSolutionIdElement() {
+        // given
+        String invalidHtml = """
+            <table id="status-table">
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+            """;
+
+        // when & then
+        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
+    }
+
+    @DisplayName("solutionIdElement의 텍스트가 비어있는 경우 예외를 던진다.")
+    @Test
+    void parseSolutionIdFromHtml_emptySolutionIdElement() {
+        // given
+        String invalidHtml = """
+            <table id="status-table">
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            """;
 
         // when & then
         assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
