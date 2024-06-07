@@ -134,4 +134,66 @@ class BaekjoonJudgementResultTest {
                 .hasMessage(JudgementResultErrorCode.AC_GREATER_THAN_TOT.getMessage());
     }
 
+    @DisplayName("defaultResult로 생성한 BaekjoonCorrectInfo 객체의 subtaskScore, partialScore, ac, tot 값 확인 테스트")
+    @Test
+    void defaultResult() {
+        // given
+
+
+        // when
+        BaekjoonJudgementResult defaultResult = BaekjoonJudgementResult.defaultResult();
+
+        // then
+        assertThat(defaultResult)
+                .extracting("subtaskScore", "partialScore", "ac", "tot")
+                .contains(0, 0, 0, 0);
+
+    }
+
+    @DisplayName("subtaskScoreFrom으로 생성한 BaekjoonCorrectInfo 객체의 subtaskScore 값 확인 테스트")
+    @Test
+    void subtaskScoreFrom() {
+        // given
+        Integer subtaskScore = 10;
+
+        // when
+        BaekjoonJudgementResult subtaskScoreResult = BaekjoonJudgementResult.subtaskScoreFrom(subtaskScore);
+
+        // then
+        assertThat(subtaskScoreResult)
+                .extracting("subtaskScore")
+                .isEqualTo(10);
+    }
+
+    @DisplayName("partialScoreFrom으로 생성한 BaekjoonCorrectInfo 객체의 partialScore 값 확인 테스트")
+    @Test
+    void partialScoreFrom() {
+        // given
+        Integer partialScore = 10;
+
+        // when
+        BaekjoonJudgementResult partialScoreResult = BaekjoonJudgementResult.partialScoreFrom(partialScore);
+
+        // then
+        assertThat(partialScoreResult)
+                .extracting("partialScore")
+                .isEqualTo(10);
+    }
+
+    @DisplayName("acTotOf으로 생성한 BaekjoonCorrectInfo 객체의 ac, tot 값 확인 테스트")
+    @Test
+    void acTotOf() {
+        // given
+        Integer ac = 10;
+        Integer tot = 20;
+
+        // when
+        BaekjoonJudgementResult acTotResult = BaekjoonJudgementResult.acTotOf(ac, tot);
+
+        // then
+        assertThat(acTotResult)
+                .extracting("ac", "tot")
+                .contains(10, 20);
+    }
+
 }
