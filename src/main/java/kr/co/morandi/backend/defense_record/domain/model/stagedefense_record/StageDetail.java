@@ -26,11 +26,11 @@ public class StageDetail extends Detail {
     }
 
     @Builder
-    private StageDetail(Member member, Long stageNumber, Problem problem, Record<?> records, Defense defense) {
+    private StageDetail(Member member, Long stageNumber, Problem problem, Record<? extends Detail> records, Defense defense) {
         super(member, problem, records, defense);
         this.stageNumber = stageNumber;
     }
-    public static StageDetail create(Member member, Long stageNumber, Problem problem, Record<?> records, Defense defense) {
+    public static StageDetail create(Member member, Long stageNumber, Problem problem, Record<? extends Detail> records, Defense defense) {
         return new StageDetail(member, stageNumber, problem, records, defense);
     }
 }

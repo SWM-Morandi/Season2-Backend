@@ -29,7 +29,7 @@ public abstract class Detail extends BaseEntity {
     private Defense defense;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Record<?> record;
+    private Record<? extends Detail> record;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
@@ -54,7 +54,7 @@ public abstract class Detail extends BaseEntity {
         this.solvedTime = solvedTime;
         return true;
     }
-    protected Detail(Member member, Problem problem, Record<?> records, Defense defense) {
+    protected Detail(Member member, Problem problem, Record<? extends Detail> records, Defense defense) {
         this.isSolved = INITIAL_IS_SOLVED;
         this.submitCount = INITIAL_SUBMIT_COUNT;
         this.solvedTime = INITIAL_SOLVED_TIME;

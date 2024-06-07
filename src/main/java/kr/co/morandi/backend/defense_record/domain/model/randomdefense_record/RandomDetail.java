@@ -30,13 +30,13 @@ public class RandomDetail extends Detail {
     private static final long INITIAL_SOLVED_TIME = 0L;
 
     @Builder
-    private RandomDetail(Member member, Long sequenceNumber, Problem problem, Record<?> records, Defense defense) {
+    private RandomDetail(Member member, Long sequenceNumber, Problem problem, Record<? extends Detail> records, Defense defense) {
         super(member, problem, records, defense);
         this.problemNumber = sequenceNumber;
         this.solvedTime = INITIAL_SOLVED_TIME;
     }
 
-    public static RandomDetail create(Member member, Long sequenceNumber, Problem problem, Record<?> records, Defense defense) {
+    public static RandomDetail create(Member member, Long sequenceNumber, Problem problem, Record<? extends Detail> records, Defense defense) {
         return new RandomDetail(member, sequenceNumber, problem, records, defense);
     }
 }

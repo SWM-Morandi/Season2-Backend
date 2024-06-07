@@ -6,6 +6,7 @@ import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_record.application.port.out.record.RecordPort;
 import kr.co.morandi.backend.defense_record.domain.error.RecordErrorCode;
+import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class SessionService {
 
         defenseSession.terminateSession();
 
-        final Record<?> record = recordPort.findRecordById(defenseSession.getRecordId())
+        final Record<? extends Detail> record = recordPort.findRecordById(defenseSession.getRecordId())
                 .orElseThrow(() -> new MorandiException(RecordErrorCode.RECORD_NOT_FOUND));
 
         record.terminteDefense();

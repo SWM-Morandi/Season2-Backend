@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface RecordRepository extends JpaRepository<Record<?>, Long> {
+public interface RecordRepository extends JpaRepository<Record<? extends Detail>, Long> {
 
     @Query("""
         SELECT r

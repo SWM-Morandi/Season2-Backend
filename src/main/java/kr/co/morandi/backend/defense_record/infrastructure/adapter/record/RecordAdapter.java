@@ -16,7 +16,7 @@ public class RecordAdapter implements RecordPort {
     private final RecordRepository recordRepository;
     @Override
     public Optional<Record<? extends Detail>> findRecordById(Long recordId) {
-            return recordRepository.findById(recordId);
+        return recordRepository.findById(recordId);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class RecordAdapter implements RecordPort {
     }
 
     @Override
-    public void saveRecord(Record<?> record) {
+    public void saveRecord(Record<? extends Detail> record) {
         recordRepository.save(record);
     }
 }
