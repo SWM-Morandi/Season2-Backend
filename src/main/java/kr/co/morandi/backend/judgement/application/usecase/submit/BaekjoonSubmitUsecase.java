@@ -86,6 +86,8 @@ public class BaekjoonSubmitUsecase {
         final BaekjoonSubmit savedSubmit = baekjoonSubmitPort.save(submit);
 
         /*
+        * 외부 API 요청이 트랜잭션을 잡고 있는 것을 최소화하기 위함
+        *
         * 채점 시작을 비동기 별도 스레드로 처리하고
         * 채점 결과를 받아서 성공하면 그 결과를 채점 기록에 저장한다.
         * */
