@@ -25,7 +25,7 @@ public class BaekjoonJudgementService {
     * TODO 실패 시 어떻게 해야할 지
     * Pusher가 단일 스레드가 아니라면 Async를 사용하지 않아도 괜찮습니다. (I/O 시 다른 스레드가 처리할 수 있기 때문)
     * */
-    @Async("baekjoonJudgementExecutor")
+    @Async("updateJudgementStatusExecutor")
     @Transactional
     public void asyncUpdateJudgementStatus(final Long submitId,
                                            final JudgementStatus judgementStatus,
