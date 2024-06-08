@@ -16,6 +16,7 @@ import kr.co.morandi.backend.problem_information.infrastructure.persistence.prob
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.Set;
 import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.JAVA;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 class DefenseSessionRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
