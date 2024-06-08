@@ -24,7 +24,6 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 public class BaekjoonSubmitApiAdapter {
 
     private final WebClient webClient;
-    private final BaekjoonSubmitHtmlParser baekjoonHtmlParser;
 
     /*
     * 제출을 하고 솔루션 아이디를 가져오는 메소드
@@ -52,7 +51,7 @@ public class BaekjoonSubmitApiAdapter {
                 .exchangeToMono(response -> handleRedirection(response, baekjoonProblemId))
                 .block();
 
-        return baekjoonHtmlParser.parseSolutionIdFromHtml(resultHtml);
+        return BaekjoonSubmitHtmlParser.parseSolutionIdFromHtml(resultHtml);
     }
 
     /*
@@ -67,7 +66,7 @@ public class BaekjoonSubmitApiAdapter {
                 .bodyToMono(String.class)
                 .block();
 
-        return baekjoonHtmlParser.parseCsrfKeyInSubmitPage(submitPageHtml);
+        return BaekjoonSubmitHtmlParser.parseCsrfKeyInSubmitPage(submitPageHtml);
     }
 
 

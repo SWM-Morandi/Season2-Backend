@@ -8,8 +8,6 @@ import static org.assertj.core.api.Assertions.*;
 
 class BaekjoonSubmitHtmlParserTest {
 
-    private final BaekjoonSubmitHtmlParser baekjoonHtmlParser = new BaekjoonSubmitHtmlParser();
-
     @DisplayName("CSRF 키를 정상적으로 파싱한다.")
     @Test
     void parseCsrfKeyInSubmitPage_validResponse() {
@@ -17,7 +15,7 @@ class BaekjoonSubmitHtmlParserTest {
         String validHtml = "<html><body><input name='csrf_key' value='validCsrfKey' /></body></html>";
 
         // when
-        String csrfKey = baekjoonHtmlParser.parseCsrfKeyInSubmitPage(validHtml);
+        String csrfKey = BaekjoonSubmitHtmlParser.parseCsrfKeyInSubmitPage(validHtml);
 
         // then
         assertThat(csrfKey).isEqualTo("validCsrfKey");
@@ -30,7 +28,7 @@ class BaekjoonSubmitHtmlParserTest {
         String invalidHtml = "<html><body></body></html>";
 
         // when & then
-        assertThatThrownBy(() -> baekjoonHtmlParser.parseCsrfKeyInSubmitPage(invalidHtml))
+        assertThatThrownBy(() -> BaekjoonSubmitHtmlParser.parseCsrfKeyInSubmitPage(invalidHtml))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.CSRF_KEY_NOT_FOUND.getMessage());
     }
@@ -42,7 +40,7 @@ class BaekjoonSubmitHtmlParserTest {
         String nullResponse = null;
 
         // when & then
-        assertThatThrownBy(() -> baekjoonHtmlParser.parseCsrfKeyInSubmitPage(nullResponse))
+        assertThatThrownBy(() -> BaekjoonSubmitHtmlParser.parseCsrfKeyInSubmitPage(nullResponse))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.BAEKJOON_SUBMIT_PAGE_ERROR.getMessage());
     }
@@ -62,7 +60,7 @@ class BaekjoonSubmitHtmlParserTest {
                 """;
 
         // when
-        String solutionId = baekjoonHtmlParser.parseSolutionIdFromHtml(validHtml);
+        String solutionId = BaekjoonSubmitHtmlParser.parseSolutionIdFromHtml(validHtml);
 
         // then
         assertThat(solutionId).isEqualTo("123456");
@@ -83,7 +81,7 @@ class BaekjoonSubmitHtmlParserTest {
                 """;
 
         // when & then
-        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+        assertThatThrownBy(() -> BaekjoonSubmitHtmlParser.parseSolutionIdFromHtml(invalidHtml))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
     }
@@ -95,7 +93,7 @@ class BaekjoonSubmitHtmlParserTest {
         String invalidHtml = "<html><body></body></html>";
 
         // when & then
-        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+        assertThatThrownBy(() -> BaekjoonSubmitHtmlParser.parseSolutionIdFromHtml(invalidHtml))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
     }
@@ -112,7 +110,7 @@ class BaekjoonSubmitHtmlParserTest {
             """;
 
         // when & then
-        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+        assertThatThrownBy(() -> BaekjoonSubmitHtmlParser.parseSolutionIdFromHtml(invalidHtml))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
     }
@@ -131,7 +129,7 @@ class BaekjoonSubmitHtmlParserTest {
             """;
 
         // when & then
-        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+        assertThatThrownBy(() -> BaekjoonSubmitHtmlParser.parseSolutionIdFromHtml(invalidHtml))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
     }
@@ -151,7 +149,7 @@ class BaekjoonSubmitHtmlParserTest {
             """;
 
         // when & then
-        assertThatThrownBy(() -> baekjoonHtmlParser.parseSolutionIdFromHtml(invalidHtml))
+        assertThatThrownBy(() -> BaekjoonSubmitHtmlParser.parseSolutionIdFromHtml(invalidHtml))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.CANT_FIND_SOLUTION_ID.getMessage());
     }

@@ -7,12 +7,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Component;
 
-@Component
 public class BaekjoonSubmitHtmlParser {
     /*
      * 제출 결과 페이지에서 솔루션 아이디를 추출하는 메소드
      * */
-    public String parseSolutionIdFromHtml(String html) {
+    public static String parseSolutionIdFromHtml(String html) {
         // HTML을 파싱합니다.
         Document doc = Jsoup.parse(html);
 
@@ -43,7 +42,7 @@ public class BaekjoonSubmitHtmlParser {
 
     }
 
-    public String parseCsrfKeyInSubmitPage(String response) {
+    public static String parseCsrfKeyInSubmitPage(String response) {
         if (response == null) {
             throw new MorandiException(SubmitErrorCode.BAEKJOON_SUBMIT_PAGE_ERROR);
         }
