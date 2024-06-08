@@ -26,12 +26,12 @@ public class SessionService {
 
         defenseSession.terminateSession();
 
-        final Record<? extends Detail> record = recordPort.findRecordById(defenseSession.getRecordId())
+        final Record<? extends Detail> foundRecord = recordPort.findRecordById(defenseSession.getRecordId())
                 .orElseThrow(() -> new MorandiException(RecordErrorCode.RECORD_NOT_FOUND));
 
-        record.terminteDefense();
+        foundRecord.terminteDefense();
 
         defenseSessionPort.saveDefenseSession(defenseSession);
-        recordPort.saveRecord(record);
+        recordPort.saveRecord(foundRecord);
     }
 }
