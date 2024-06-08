@@ -24,15 +24,15 @@ public class TempCodeSaveService {
     @Async("tempCodeSaveExecutor")
     public void saveTempCode(final TempCodeSaveEvent tempCodeSaveEvent) {
         log.info("Save Temp Code Event: defenseSessionId: {}, problemNumber: {}, language: {}",
-                tempCodeSaveEvent.getDefenseSessionId(), tempCodeSaveEvent.getProblemNumber(), tempCodeSaveEvent.getLanguage());
-        final Long defenseSessionId = tempCodeSaveEvent.getDefenseSessionId();
+                tempCodeSaveEvent.defenseSessionId(), tempCodeSaveEvent.problemNumber(), tempCodeSaveEvent.language());
+        final Long defenseSessionId = tempCodeSaveEvent.defenseSessionId();
 
         final DefenseSession defenseSession = defenseSessionPort.findDefenseSessionJoinFetchTempCode(defenseSessionId)
                 .orElseThrow(() -> new MorandiException(SessionErrorCode.SESSION_NOT_FOUND));
 
-        defenseSession.updateTempCode(tempCodeSaveEvent.getProblemNumber(),
-                tempCodeSaveEvent.getLanguage(),
-                tempCodeSaveEvent.getSourceCode());
+        defenseSession.updateTempCode(tempCodeSaveEvent.problemNumber(),
+                tempCodeSaveEvent.language(),
+                tempCodeSaveEvent.sourceCode());
 
         defenseSessionPort.saveDefenseSession(defenseSession);
     }

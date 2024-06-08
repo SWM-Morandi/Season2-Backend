@@ -4,12 +4,9 @@ import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Lang
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
-public class TempCodeSaveEvent {
-
-    private final Long defenseSessionId;
-    private final Long problemNumber;
-    private final String sourceCode;
-    private final Language language;
-}
+public record TempCodeSaveEvent(
+    Long defenseSessionId,
+    Long problemNumber,
+    String sourceCode,
+    Language language
+) {}
