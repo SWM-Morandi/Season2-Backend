@@ -19,6 +19,7 @@ public class TempCode extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private SessionDetail sessionDetail;
 
+    // TODO Embedded타입인 SubmitCode로 나중에 변경하기
     @Enumerated(EnumType.STRING)
     private Language language;
 

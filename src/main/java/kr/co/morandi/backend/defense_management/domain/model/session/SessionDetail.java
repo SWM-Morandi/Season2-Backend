@@ -34,6 +34,10 @@ public class SessionDetail extends BaseEntity {
     public static SessionDetail create(DefenseSession defenseSession, Long problemNumber) {
         return new SessionDetail(defenseSession, problemNumber);
     }
+    /*
+    * getTempCode는 만약 없는 언어로 tempCode를 get해도
+    * addTempCode를 호출해서 추가하고, 예외를 반환하지 않는다.
+    * */
     public TempCode getTempCode(Language language) {
         Optional<TempCode> maybeTempCode = getTempCodes().stream()
                 .filter(tempcode -> tempcode.getLanguage().equals(language))
@@ -42,23 +46,13 @@ public class SessionDetail extends BaseEntity {
         return maybeTempCode.orElseGet(() -> addTempCode(language, language.getInitialCode()));
     }
 
-    /*
-    * 만약 없는 언어로 tempCode를 update하려고 했더라도
-    * addTempCode를 호출해서 추가하고, 예외를 반환하지 않는다.
-    * */
     public void updateTempCode(Language language, String code) {
         this.lastAccessLanguage = language;
-        final Optional<TempCode> tempCode = getTempCodes().stream()
-                .filter(tempcode -> tempcode.getLanguage().equals(language))
-                .findFirst();
 
-        if(tempCode.isPresent()) {
-            tempCode.get().updateTempCode(code);
-            return;
-        }
-        // 만약 없는 언어로 tempCode를 update하려고 했으면 addTempCode를 호출해서 추가해준다.
-        addTempCode(language, code);
+        TempCode tempCode = getTempCode(language);
+        tempCode.updateTempCode(code);
     }
+
     protected TempCode addTempCode(Language language, String code) {
         TempCode tempCode = TempCode.create(language, code, this);
         getTempCodes().add(tempCode);
@@ -66,17 +60,11 @@ public class SessionDetail extends BaseEntity {
         return tempCode;
     }
 
+    @Builder
     private SessionDetail(DefenseSession defenseSession, Long problemNumber) {
         this.defenseSession = defenseSession;
         this.problemNumber = problemNumber;
         this.lastAccessLanguage = INITIAL_LANGUAGE;
         this.tempCodes.add(TempCode.create(INITIAL_LANGUAGE, INITIAL_LANGUAGE.getInitialCode(), this));
-    }
-    @Builder
-    private SessionDetail(DefenseSession defenseSession, Set<TempCode> tempCodes, Long problemNumber, Language lastAccessLanguage) {
-        this.defenseSession = defenseSession;
-        this.tempCodes = tempCodes;
-        this.problemNumber = problemNumber;
-        this.lastAccessLanguage = lastAccessLanguage;
     }
 }
