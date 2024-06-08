@@ -3,10 +3,7 @@ package kr.co.morandi.backend.judgement.application.usecase.submit;
 
 import kr.co.morandi.backend.common.annotation.Usecase;
 import kr.co.morandi.backend.common.exception.MorandiException;
-import kr.co.morandi.backend.judgement.application.port.out.BaekjoonSubmitPort;
-import kr.co.morandi.backend.judgement.application.service.SubmitService;
 import kr.co.morandi.backend.defense_management.application.port.out.session.DefenseSessionPort;
-import kr.co.morandi.backend.judgement.application.request.JudgementServiceRequest;
 import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.session.DefenseSession;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
@@ -14,6 +11,9 @@ import kr.co.morandi.backend.defense_record.application.port.out.record.RecordPo
 import kr.co.morandi.backend.defense_record.domain.error.RecordErrorCode;
 import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
+import kr.co.morandi.backend.judgement.application.port.out.BaekjoonSubmitPort;
+import kr.co.morandi.backend.judgement.application.request.JudgementServiceRequest;
+import kr.co.morandi.backend.judgement.application.service.SubmitService;
 import kr.co.morandi.backend.judgement.domain.event.TempCodeSaveEvent;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
@@ -21,7 +21,6 @@ import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.member_management.application.port.out.member.MemberPort;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.exception.OAuthErrorCode;
-import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;
