@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class TempCodeService {
+public class TempCodeSaveService {
 
     private final DefenseSessionPort defenseSessionPort;
 
