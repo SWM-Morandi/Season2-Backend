@@ -9,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,7 +48,9 @@ public class CustomDefense extends Defense {
         return startTime.plusMinutes(timeLimit);
     }
 
-    public static CustomDefense create(List<Problem> problems, Member member, String contentName, String description, Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
+    public static CustomDefense create(List<Problem> problems, Member member, String contentName,
+                                       String description, Visibility visibility, DefenseTier defenseTier,
+                                       Long timeLimit, LocalDateTime createDate) {
         return new CustomDefense(problems, member, contentName, description, visibility, defenseTier, timeLimit, createDate);
     }
 
@@ -67,6 +68,7 @@ public class CustomDefense extends Defense {
         return problemCount;
     }
 
+    @Builder
     private CustomDefense(List<Problem> problems, Member member, String contentName, String description,
                           Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
         super(contentName, CUSTOM);
