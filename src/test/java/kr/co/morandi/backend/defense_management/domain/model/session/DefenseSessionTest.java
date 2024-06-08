@@ -3,8 +3,12 @@ package kr.co.morandi.backend.defense_management.domain.model.session;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
+import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.TempCode;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.factory.TestDefenseFactory;
+import kr.co.morandi.backend.factory.TestMemberFactory;
+import kr.co.morandi.backend.factory.TestProblemFactory;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.domain.model.member.SocialType;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -17,11 +21,13 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
 import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.CPP;
+import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.JAVA;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
@@ -29,6 +35,81 @@ import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 class DefenseSessionTest {
+
+    @DisplayName("DefenseSession에서 해당하는 문제의 TempCode를 업데이트할 수 있다.")
+    @Test
+    void updateTempCode() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord 오늘의_문제_기록 = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        DefenseSession 디펜스_세션 = DefenseSession.builder()
+                .member(사용자)
+                .defenseType(오늘의_문제.getDefenseType())
+                .problemNumbers(Set.of(1L))
+                .recordId(오늘의_문제_기록.getRecordId())
+                .startDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .endDateTime(LocalDateTime.of(2021, 1, 1, 1, 0))
+                .build();
+
+        // when
+        디펜스_세션.updateTempCode(1L, JAVA, "code");
+
+        // then
+        assertThat(디펜스_세션.getSessionDetail(1L)
+                .getTempCode(JAVA))
+                .extracting("code", "language")
+                .containsExactly("code", JAVA);
+
+    }
+
+    @DisplayName("끝난 DefenseSession에서 TempCode를 업데이트하려고 하면 예외를 발생한다.")
+    @Test
+    void updateTempCodeWhenTerminated() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord 오늘의_문제_기록 = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        DefenseSession 디펜스_세션 = DefenseSession.builder()
+                .member(사용자)
+                .defenseType(오늘의_문제.getDefenseType())
+                .problemNumbers(Set.of(1L))
+                .recordId(오늘의_문제_기록.getRecordId())
+                .startDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .endDateTime(LocalDateTime.of(2021, 1, 1, 1, 0))
+                .build();
+
+        디펜스_세션.terminateSession();
+
+        // when & then
+        assertThatThrownBy(() -> 디펜스_세션.updateTempCode(1L, JAVA, "code"))
+                .isInstanceOf(MorandiException.class)
+                .hasMessage(SessionErrorCode.SESSION_ALREADY_ENDED.getMessage());
+    }
 
     @DisplayName("세션 소유자일 경우 아무 예외가 발생하지 않는다.")
     @Test

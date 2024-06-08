@@ -19,4 +19,13 @@ public interface DefenseSessionRepository extends JpaRepository<DefenseSession, 
         and ds.member = :member
        """)
     Optional<DefenseSession> findDailyDefenseSession(Member member, DefenseType defenseType, LocalDateTime now);
+
+    @Query("""
+        select ds
+        from DefenseSession as ds
+        left join fetch ds.sessionDetails d
+        left join fetch d.tempCodes
+        where ds.defenseSessionId = :sessionId
+    """)
+    Optional<DefenseSession> findDefenseSessionJoinFetchTempCode(Long sessionId);
 }

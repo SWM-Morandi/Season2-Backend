@@ -42,13 +42,6 @@ public class SessionDetail extends BaseEntity {
         return maybeTempCode.orElseGet(() -> addTempCode(language, language.getInitialCode()));
     }
 
-    public TempCode addTempCode(Language language, String code) {
-        TempCode tempCode = TempCode.create(language, code, this);
-        getTempCodes().add(tempCode);
-
-        return tempCode;
-    }
-
     /*
     * 만약 없는 언어로 tempCode를 update하려고 했더라도
     * addTempCode를 호출해서 추가하고, 예외를 반환하지 않는다.
@@ -65,6 +58,12 @@ public class SessionDetail extends BaseEntity {
         }
         // 만약 없는 언어로 tempCode를 update하려고 했으면 addTempCode를 호출해서 추가해준다.
         addTempCode(language, code);
+    }
+    protected TempCode addTempCode(Language language, String code) {
+        TempCode tempCode = TempCode.create(language, code, this);
+        getTempCodes().add(tempCode);
+
+        return tempCode;
     }
 
     private SessionDetail(DefenseSession defenseSession, Long problemNumber) {
