@@ -2,7 +2,10 @@ package kr.co.morandi.backend.judgement.infrastructure.helper;
 
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonResultType;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JudgementStatusMapper {
 
     public static JudgementStatus mapToJudgementStatus(BaekjoonResultType baekjoonResultType) {
