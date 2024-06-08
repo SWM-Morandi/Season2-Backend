@@ -1,10 +1,14 @@
 package kr.co.morandi.backend.defense_information.domain.model.randomdefense.model;
 
-import jakarta.persistence.*;
-import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
 import kr.co.morandi.backend.defense_information.domain.model.defense.Defense;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
