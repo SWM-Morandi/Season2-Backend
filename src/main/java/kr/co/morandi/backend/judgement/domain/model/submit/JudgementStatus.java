@@ -2,6 +2,7 @@ package kr.co.morandi.backend.judgement.domain.model.submit;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ public enum JudgementStatus {
     MEMORY_LIMIT_EXCEEDED("MEMORY_LIMIT_EXCEEDED"),
     SUBMITTED("SUBMITTED");
 
+    @Column(name = "judgement_status")
     private final String value;
 
     @JsonCreator

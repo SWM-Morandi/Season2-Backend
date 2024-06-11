@@ -2,6 +2,7 @@ package kr.co.morandi.backend.judgement.domain.model.submit;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.persistence.Column;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public enum SubmitVisibility {
     OPEN("OPEN"),
     CLOSE("CLOSE");
 
+    @Column(name = "submit_visibility")
     private final String value;
 
     @JsonValue

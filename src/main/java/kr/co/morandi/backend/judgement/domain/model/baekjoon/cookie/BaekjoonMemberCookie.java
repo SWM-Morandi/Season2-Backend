@@ -19,7 +19,7 @@ public class BaekjoonMemberCookie {
     @Embedded
     private BaekjoonCookie baekjoonCookie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @Builder

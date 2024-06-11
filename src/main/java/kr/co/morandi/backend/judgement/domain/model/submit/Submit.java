@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Submit extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
