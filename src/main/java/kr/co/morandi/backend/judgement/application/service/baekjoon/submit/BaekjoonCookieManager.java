@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BaekjoonMemberCookieManager {
+public class BaekjoonCookieManager {
 
     private final BaekjoonMemberCookieRepository memberCookieRepository;
     private final BaekjoonGlobalCookieRepository globalCookieRepository;

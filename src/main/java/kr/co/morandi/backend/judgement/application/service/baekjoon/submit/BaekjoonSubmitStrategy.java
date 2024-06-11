@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class BaekjoonSubmitStrategy implements SubmitStrategy {
 
     private final BaekjoonSubmitApiAdapter baekjoonSubmitApiAdapter;
-    private final BaekjoonMemberCookieManager baekjoonMemberCookieManager;
+    private final BaekjoonCookieManager baekjoonCookieManager;
 
     @Override
     public String submit(final Long memberId,
@@ -22,7 +22,7 @@ public class BaekjoonSubmitStrategy implements SubmitStrategy {
                          final String sourceCode,
                          final SubmitVisibility submitVisibility) {
         final String baejoonProblemId = String.valueOf(problem.getBaekjoonProblemId());
-        final String cookie = baekjoonMemberCookieManager.getCurrentMemberCookie(memberId);
+        final String cookie = baekjoonCookieManager.getCurrentMemberCookie(memberId);
         /*
         * 제출을 하고 솔루션 아이디를 가져오는 메소드
         * */
