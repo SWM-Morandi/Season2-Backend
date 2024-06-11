@@ -3,6 +3,7 @@ package kr.co.morandi.backend.judgement.application.service.baekjoon.result;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonResultType;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -60,5 +61,19 @@ public class BaekjoonJudgementStatus {
                 || baekjoonResultType.equals(BaekjoonResultType.TIME_LIMIT_EXCEEDED) || baekjoonResultType.equals(BaekjoonResultType.OTHER);
     }
 
-
+    @Builder
+    private BaekjoonJudgementStatus(BaekjoonResultType result, Integer progress, Integer memory, Integer time,
+                                   Double subtaskScore, Double partialScore, Integer ac, Integer tot, String feedback, String rteReason, Integer remain) {
+        this.result = result;
+        this.progress = progress;
+        this.memory = memory;
+        this.time = time;
+        this.subtaskScore = subtaskScore;
+        this.partialScore = partialScore;
+        this.ac = ac;
+        this.tot = tot;
+        this.feedback = feedback;
+        this.rteReason = rteReason;
+        this.remain = remain;
+    }
 }
