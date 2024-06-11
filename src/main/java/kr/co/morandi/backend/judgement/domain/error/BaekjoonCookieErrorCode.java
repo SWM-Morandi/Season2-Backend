@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum BaekjoonCookieErrorCode implements ErrorCode {
 
-    INVALID_COOKIE_VALUE(HttpStatus.BAD_REQUEST, "쿠키 값은 null이거나 빈 문자열일 수 없습니다.");
+    INVALID_COOKIE_VALUE(HttpStatus.BAD_REQUEST, "쿠키 값은 null이거나 빈 문자열일 수 없습니다."),
+    ALREADY_LOGGED_OUT(HttpStatus.BAD_REQUEST, "이미 로그아웃된 쿠키입니다."),
+    ;
+
 
     private final HttpStatus httpStatus;
     private final String message;
@@ -18,6 +21,7 @@ public enum BaekjoonCookieErrorCode implements ErrorCode {
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
+
     @Override
     public String getMessage() {
         return message;

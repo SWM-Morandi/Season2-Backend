@@ -2,9 +2,11 @@ package kr.co.morandi.backend.judgement.domain.model.baekjoon.cookie;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaekjoonGlobalCookie {
 
