@@ -90,7 +90,8 @@ public class BaekjoonSubmitUsecase {
         * 채점 시작을 비동기 별도 스레드로 처리하고
         * 채점 결과를 받아서 성공하면 그 결과를 채점 기록에 저장한다.
         * */
-        submitService.asyncProcessSubmitAndSubscribeJudgement(savedSubmit.getSubmitId(), detail.getProblem(), language, sourceCode, submitVisibility);
+        submitService.asyncProcessSubmitAndSubscribeJudgement(savedSubmit.getSubmitId(), memberId,
+                detail.getProblem(), language, sourceCode, submitVisibility);
 
         /*
          * 비동기로 시험 채점 서비스를 호출했던 코드를 TempCode에 저장한다.

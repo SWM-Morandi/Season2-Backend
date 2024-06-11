@@ -23,13 +23,14 @@ public class SubmitService {
     * */
     @Async("submitBaekjoonApiExecutor")
     public void asyncProcessSubmitAndSubscribeJudgement(final Long submitId,
+                                                        final Long memberId,
                                                         final Problem problem,
                                                         final Language language,
                                                         final String sourceCode,
                                                         final SubmitVisibility submitVisibility) {
         log.info("Submit and Subscribe Judgement submitId: {}, baekjoonProblemId: {}, language: {}, submitVisibility: {}",
                 submitId, problem.getBaekjoonProblemId(), language, submitVisibility);
-        final String solutionId = submitStrategy.submit(language, problem, sourceCode, submitVisibility);
+        final String solutionId = submitStrategy.submit(memberId, language, problem, sourceCode, submitVisibility);
         /*
          * solutionId를 바탕으로 websocket을 채널을 등록하는 로직
          * */

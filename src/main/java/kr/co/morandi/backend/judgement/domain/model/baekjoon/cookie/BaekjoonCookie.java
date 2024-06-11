@@ -24,10 +24,10 @@ public class BaekjoonCookie {
         return now.isBefore(expiredAt);
     }
 
-    public static BaekjoonCookie of(String cookie, LocalDateTime now) {
+    public static BaekjoonCookie of(String cookie, LocalDateTime nowDateTime) {
         return BaekjoonCookie.builder()
                 .cookie(cookie)
-                .now(now)
+                .nowDateTime(nowDateTime)
                 .build();
     }
 
@@ -42,9 +42,9 @@ public class BaekjoonCookie {
     }
 
     @Builder
-    private BaekjoonCookie(String cookie, LocalDateTime now) {
+    private BaekjoonCookie(String cookie, LocalDateTime nowDateTime) {
         validateCookie(cookie);
         this.value = cookie;
-        this.expiredAt = calculateCookieExpiredAt(now);
+        this.expiredAt = calculateCookieExpiredAt(nowDateTime);
     }
 }
