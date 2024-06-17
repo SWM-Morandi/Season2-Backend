@@ -17,10 +17,11 @@ public class BaekjoonSubmitController {
     private final BaekjoonSubmitUsecase baekjoonSubmitUsecase;
 
     @PostMapping("/submit")
-    public ResponseEntity<?> submit(@Valid @RequestBody BaekjoonJudgementRequest request,
+    public ResponseEntity<Void> submit(@Valid @RequestBody BaekjoonJudgementRequest request,
                                     @MemberId Long memberId) {
 
         baekjoonSubmitUsecase.judgement(request.toServiceRequest(memberId));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok()
+                .build();
     }
 }
