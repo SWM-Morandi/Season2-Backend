@@ -13,7 +13,7 @@ import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import kr.co.morandi.backend.judgement.application.port.out.BaekjoonSubmitPort;
 import kr.co.morandi.backend.judgement.application.request.JudgementServiceRequest;
-import kr.co.morandi.backend.judgement.application.service.SubmitService;
+import kr.co.morandi.backend.judgement.application.service.SubmitFacade;
 import kr.co.morandi.backend.judgement.domain.event.TempCodeSaveEvent;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
@@ -36,7 +36,7 @@ public class BaekjoonSubmitUsecase {
     private final DefenseSessionPort defenseSessionport;
     private final RecordPort recordPort;
     private final MemberPort memberPort;
-    private final SubmitService submitService;
+    private final SubmitFacade submitFacade;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
@@ -93,7 +93,7 @@ public class BaekjoonSubmitUsecase {
         * 채점 시작을 비동기 별도 스레드로 처리하고
         * 채점 결과를 받아서 성공하면 그 결과를 채점 기록에 저장한다.
         * */
-        submitService.asyncProcessSubmitAndSubscribeJudgement(savedSubmit.getSubmitId(), memberId,
+        submitFacade.asyncProcessSubmitAndSubscribeJudgement(savedSubmit.getSubmitId(), memberId,
                 detail.getProblem(), language, sourceCode, submitVisibility, nowDateTime);
 
         /*

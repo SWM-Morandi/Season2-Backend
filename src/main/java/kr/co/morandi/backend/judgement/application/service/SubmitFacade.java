@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class SubmitService {
+public class SubmitFacade {
 
     private final SubmitStrategy submitStrategy;
     private final JudgementResultSubscriber judgementResultSubscriber;
