@@ -24,6 +24,12 @@ public class BaekjoonMemberCookie {
     @OneToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    public void updateCookie(String cookie, LocalDateTime nowDateTime) {
+        baekjoonCookie.updateCookie(cookie, nowDateTime);
+    }
+    public void setLoggedOut(LocalDateTime nowDateTime) {
+        baekjoonCookie.setLoggedOut(nowDateTime);
+    }
     public boolean isValidCookie(LocalDateTime nowDateTime) {
         return baekjoonCookie.isValidCookie(nowDateTime);
     }
