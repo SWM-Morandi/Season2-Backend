@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -27,10 +29,11 @@ public class SubmitService {
                                                         final Problem problem,
                                                         final Language language,
                                                         final String sourceCode,
-                                                        final SubmitVisibility submitVisibility) {
+                                                        final SubmitVisibility submitVisibility,
+                                                        final LocalDateTime nowDateTime) {
         log.info("Submit and Subscribe Judgement submitId: {}, baekjoonProblemId: {}, language: {}, submitVisibility: {}",
                 submitId, problem.getBaekjoonProblemId(), language, submitVisibility);
-        final String solutionId = submitStrategy.submit(memberId, language, problem, sourceCode, submitVisibility);
+        final String solutionId = submitStrategy.submit(memberId, language, problem, sourceCode, submitVisibility, nowDateTime);
         /*
          * solutionId를 바탕으로 websocket을 채널을 등록하는 로직
          * */

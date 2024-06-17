@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,6 +25,10 @@ public class BaekjoonGlobalCookie {
 
     // 백준의 Refresh Token을 저장하는 필드
     private String baekjoonRefreshToken;
+
+    public boolean isValidCookie(LocalDateTime nowDateTime) {
+        return baekjoonCookie.isValidCookie(nowDateTime);
+    }
 
     public static BaekjoonGlobalCookie create(BaekjoonCookie baekjoonCookie, String globalUserId, String refreshToken) {
         return new BaekjoonGlobalCookie(baekjoonCookie, globalUserId, refreshToken);

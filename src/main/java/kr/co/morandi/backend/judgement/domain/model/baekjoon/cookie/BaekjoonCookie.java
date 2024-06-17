@@ -25,22 +25,33 @@ public class BaekjoonCookie {
     @Enumerated(EnumType.STRING)
     private CookieStatus cookieStatus;
 
-    public void updateCookie(String cookie, LocalDateTime now) {
+    public void updateCookie(String cookie, LocalDateTime nowDateTime) {
         validateCookie(cookie);
         this.value = cookie;
-        this.expiredAt = calculateCookieExpiredAt(now);
+        this.expiredAt = calculateCookieExpiredAt(nowDateTime);
         this.cookieStatus = CookieStatus.LOGGED_IN;
     }
-    public void setLoggedOut(LocalDateTime now){
+    public void setLoggedOut(LocalDateTime nowDateTime){
         if(this.cookieStatus == CookieStatus.LOGGED_OUT) {
             throw new MorandiException(BaekjoonCookieErrorCode.ALREADY_LOGGED_OUT);
         }
-        this.expiredAt = now;
+        this.expiredAt = nowDateTime;
         this.cookieStatus = CookieStatus.LOGGED_OUT;
     }
 
-    public boolean isValidCookie(LocalDateTime now) {
-        return now.isBefore(expiredAt);
+    protected boolean isValidCookie(LocalDateTime nowDateTime) {
+        if (cookieStatus == CookieStatus.LOGGED_OUT) {
+            return false;
+        }
+        if (nowDateTime.isBefore(expiredAt)) {
+            return true;
+        }
+        unvalidateCookie();
+        return false;
+    }
+
+    private void unvalidateCookie() {
+        this.cookieStatus = CookieStatus.LOGGED_OUT;
     }
 
     public static BaekjoonCookie of(String cookie, LocalDateTime nowDateTime) {

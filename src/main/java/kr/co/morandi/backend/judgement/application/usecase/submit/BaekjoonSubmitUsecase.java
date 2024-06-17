@@ -25,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Usecase
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -45,6 +47,7 @@ public class BaekjoonSubmitUsecase {
         final String sourceCode = request.getSourceCode();
         final Long problemNumber = request.getProblemNumber();
         final SubmitVisibility submitVisibility = request.getSubmitVisibility();
+        final LocalDateTime nowDateTime = request.getNowDateTime();
 
         DefenseSession defenseSession = defenseSessionport.findDefenseSessionById(defenseSessionId)
                 .orElseThrow(() -> new MorandiException(SessionErrorCode.SESSION_NOT_FOUND));
@@ -91,7 +94,7 @@ public class BaekjoonSubmitUsecase {
         * 채점 결과를 받아서 성공하면 그 결과를 채점 기록에 저장한다.
         * */
         submitService.asyncProcessSubmitAndSubscribeJudgement(savedSubmit.getSubmitId(), memberId,
-                detail.getProblem(), language, sourceCode, submitVisibility);
+                detail.getProblem(), language, sourceCode, submitVisibility, nowDateTime);
 
         /*
          * 비동기로 시험 채점 서비스를 호출했던 코드를 TempCode에 저장한다.

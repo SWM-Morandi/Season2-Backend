@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,6 +24,9 @@ public class BaekjoonMemberCookie {
     @OneToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    public boolean isValidCookie(LocalDateTime nowDateTime) {
+        return baekjoonCookie.isValidCookie(nowDateTime);
+    }
     @Builder
     private BaekjoonMemberCookie(BaekjoonCookie baekjoonCookie, Member member) {
         this.baekjoonCookie = baekjoonCookie;
