@@ -29,27 +29,25 @@ class BaekjoonMemberCookieRepositoryTest extends IntegrationTestSupport {
     @Test
     void findBaekjoonMemberCookieByMemberId() {
         // given
-        Member member = TestMemberFactory.createMember();
-        BaekjoonCookie baekjoonCookie = BaekjoonCookie.builder()
-                .cookie("testCookie")
+        Member 사용자 = TestMemberFactory.createMember();
+        String 쿠키 = "dummyCookie";
+
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
+                .cookie(쿠키)
                 .nowDateTime(LocalDateTime.of(2021, 1, 1, 0, 0))
                 .build();
 
-        BaekjoonMemberCookie baekjoonMemberCookie = BaekjoonMemberCookie.builder()
-                .member(member)
-                .baekjoonCookie(baekjoonCookie)
-                .build();
-
-        memberRepository.save(member);
-        baekjoonMemberCookieRepository.save(baekjoonMemberCookie);
+        memberRepository.save(사용자);
+        baekjoonMemberCookieRepository.save(백준_사용자_쿠키);
 
         // when
-        Optional<BaekjoonMemberCookie> maybeBaekjoonMemberCookie = baekjoonMemberCookieRepository.findBaekjoonMemberCookieByMember_MemberId(member.getMemberId());
+        Optional<BaekjoonMemberCookie> maybeBaekjoonMemberCookie = baekjoonMemberCookieRepository.findBaekjoonMemberCookieByMember_MemberId(사용자.getMemberId());
 
         // then
         assertThat(maybeBaekjoonMemberCookie).isPresent()
                 .get()
-                .extracting("baekjoonCookie.value").isEqualTo("testCookie");
+                .extracting("baekjoonCookie.value").isEqualTo("dummyCookie");
 
     }
 

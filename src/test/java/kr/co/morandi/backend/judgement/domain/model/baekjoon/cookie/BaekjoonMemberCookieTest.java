@@ -21,13 +21,9 @@ class BaekjoonMemberCookieTest {
         final Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
-                .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
                 .member(사용자)
                 .build();
 
@@ -48,14 +44,11 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
-                .cookie(쿠키)
-                .nowDateTime(등록된_시간)
-                .build();
 
         BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
                 .member(사용자)
+                .cookie(쿠키)
+                .nowDateTime(등록된_시간)
                 .build();
 
         String 새로운_쿠키 = null;
@@ -74,15 +67,10 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
-                .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
-                .member(사용자)
                 .build();
 
         String 새로운_쿠키 = "newCookie";
@@ -101,14 +89,10 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
-                .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
-                .member(사용자)
                 .build();
 
         LocalDateTime 로그아웃_시간 = LocalDateTime.of(2021, 1, 1, 6, 0);
@@ -131,14 +115,10 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
-                .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
-                .member(사용자)
                 .build();
 
         LocalDateTime 로그아웃_시간 = LocalDateTime.of(2021, 1, 1, 6, 0);
@@ -158,14 +138,10 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
-                .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
-                .member(사용자)
                 .build();
 
         백준_사용자_쿠키.setLoggedOut(LocalDateTime.of(2021, 1, 1, 6, 0));
@@ -191,14 +167,10 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
-                .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
-                .member(사용자)
                 .build();
 
 
@@ -224,14 +196,10 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
-                .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
-                .member(사용자)
                 .build();
 
         // when
@@ -250,16 +218,11 @@ class BaekjoonMemberCookieTest {
         Member 사용자 = TestMemberFactory.createMember();
         LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
-        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
+                .member(사용자)
                 .cookie(쿠키)
                 .nowDateTime(등록된_시간)
                 .build();
-
-        BaekjoonMemberCookie 백준_사용자_쿠키 = BaekjoonMemberCookie.builder()
-                .baekjoonCookie(백준_쿠키)
-                .member(사용자)
-                .build();
-
 
         LocalDateTime 만료된_시간 = LocalDateTime.of(2021, 1, 1, 6, 0);
 

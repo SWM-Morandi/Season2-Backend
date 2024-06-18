@@ -34,8 +34,16 @@ public class BaekjoonMemberCookie {
         return baekjoonCookie.isValidCookie(nowDateTime);
     }
     @Builder
+    private BaekjoonMemberCookie(String cookie, LocalDateTime nowDateTime, Member member) {
+        this(BaekjoonCookie.builder()
+                .cookie(cookie)
+                .nowDateTime(nowDateTime)
+                .build(), member);
+    }
+
     private BaekjoonMemberCookie(BaekjoonCookie baekjoonCookie, Member member) {
         this.baekjoonCookie = baekjoonCookie;
         this.member = member;
     }
+
 }
