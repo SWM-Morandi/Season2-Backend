@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class DailyDefenseControllerDocsTest extends RestDocsSupport {
+class DailyDefenseControllerDocsTest extends RestDocsSupport {
 
     private final DailyDefenseUseCase dailyDefenseUseCase = mock(DailyDefenseUseCase.class);
     @Override
