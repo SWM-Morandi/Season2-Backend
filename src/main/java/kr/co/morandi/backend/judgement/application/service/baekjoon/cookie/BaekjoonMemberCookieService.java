@@ -16,7 +16,7 @@ public class BaekjoonMemberCookieService {
 
     private final BaekjoonMemberCookieRepository baekjoonMemberCookieRepository;
 
-    public void setMemberBaekjoonCookie(BaekjoonMemberCookieServiceRequest request) {
+    public void saveMemberBaekjoonCookie(BaekjoonMemberCookieServiceRequest request) {
         final Long memberId = request.memberId();
         final String cookie = request.cookie();
         final LocalDateTime nowDateTime = request.nowDateTime();
