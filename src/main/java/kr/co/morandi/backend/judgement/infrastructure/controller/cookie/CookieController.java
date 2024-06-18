@@ -17,7 +17,7 @@ public class CookieController {
 
     private final BaekjoonMemberCookieService baekjoonMemberCookieService;
 
-    @PostMapping("cookie/baekjoon")
+    @PostMapping("/cookie/baekjoon")
     public ResponseEntity<Void> saveMemberBaekjoonCookie(@Valid @RequestBody BaekjoonMemberCookieRequest request,
                                     @MemberId Long memberId) {
         baekjoonMemberCookieService.saveMemberBaekjoonCookie(request.toServiceRequest(memberId, LocalDateTime.now()));
