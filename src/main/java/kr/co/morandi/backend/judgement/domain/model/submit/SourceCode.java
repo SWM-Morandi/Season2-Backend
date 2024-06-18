@@ -23,6 +23,10 @@ public class SourceCode {
     @Enumerated(EnumType.STRING)
     private Language language;
 
+    public void updateSourceCode(String sourceCode) {
+        validateLength(sourceCode);
+        this.sourceCode = sourceCode;
+    }
     public static SourceCode of(String sourceCode, Language language) {
         return new SourceCode(sourceCode, language);
     }
