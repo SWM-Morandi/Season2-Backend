@@ -3,7 +3,6 @@ package kr.co.morandi.backend.judgement.domain.model.submit;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.judgement.domain.error.SubmitErrorCode;
-import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +18,10 @@ class SourceCodeTest {
         String source = "sourceCode";
 
         // when
-        SubmitCode submitCode = SubmitCode.of(source, Language.JAVA);
+        SourceCode sourceCode = SourceCode.of(source, Language.JAVA);
 
         // then
-        assertThat(submitCode)
+        assertThat(sourceCode)
                 .isNotNull()
                 .extracting("sourceCode", "language")
                 .containsExactly(source, Language.JAVA);
@@ -36,7 +35,7 @@ class SourceCodeTest {
         String source = null;
 
         // when & then
-        assertThatThrownBy(() -> SubmitCode.of(source, Language.JAVA))
+        assertThatThrownBy(() -> SourceCode.of(source, Language.JAVA))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.SOURCE_CODE_NOT_FOUND.getMessage());
     }
@@ -48,7 +47,7 @@ class SourceCodeTest {
         String source = "";
 
         // when & then
-        assertThatThrownBy(() -> SubmitCode.of(source, Language.JAVA))
+        assertThatThrownBy(() -> SourceCode.of(source, Language.JAVA))
                 .isInstanceOf(MorandiException.class)
                 .hasMessage(SubmitErrorCode.SOURCE_CODE_NOT_FOUND.getMessage());
     }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SubmitCode {
+public class SourceCode {
 
     @Column(name = "source_code", columnDefinition = "TEXT", nullable = false)
     private String sourceCode;
@@ -23,8 +23,8 @@ public class SubmitCode {
     @Enumerated(EnumType.STRING)
     private Language language;
 
-    public static SubmitCode of(String sourceCode, Language language) {
-        return new SubmitCode(sourceCode, language);
+    public static SourceCode of(String sourceCode, Language language) {
+        return new SourceCode(sourceCode, language);
     }
 
     private void validateLength(String sourceCode) {
@@ -33,7 +33,7 @@ public class SubmitCode {
     }
 
     @Builder
-    private SubmitCode(String sourceCode, Language language) {
+    private SourceCode(String sourceCode, Language language) {
         validateLength(sourceCode);
         this.sourceCode = sourceCode;
         this.language = language;

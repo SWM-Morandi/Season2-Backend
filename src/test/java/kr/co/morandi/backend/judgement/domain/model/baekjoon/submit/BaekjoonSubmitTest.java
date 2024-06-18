@@ -7,7 +7,7 @@ import kr.co.morandi.backend.factory.TestMemberFactory;
 import kr.co.morandi.backend.factory.TestProblemFactory;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
-import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.SourceCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -42,7 +42,7 @@ class BaekjoonSubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -80,7 +80,7 @@ class BaekjoonSubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();

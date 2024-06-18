@@ -31,8 +31,8 @@ class SubmitTest {
     *  Submit 클래스를 상속받는 SubmitImpl 클래스를 생성했습니다.
     */
     static class SubmitTestImpl extends Submit {
-        public SubmitTestImpl(Member member, Detail detail, SubmitCode submitCode, SubmitVisibility submitVisibility, Integer trialNumber) {
-            super(member, detail, submitCode, submitVisibility, trialNumber);
+        public SubmitTestImpl(Member member, Detail detail, SourceCode sourceCode, SubmitVisibility submitVisibility, Integer trialNumber) {
+            super(member, detail, sourceCode, submitVisibility, trialNumber);
         }
     }
 
@@ -53,7 +53,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -87,7 +87,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -121,7 +121,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -164,7 +164,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -207,7 +207,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -250,7 +250,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -293,7 +293,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -336,7 +336,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
@@ -379,7 +379,7 @@ class SubmitTest {
                 .member(사용자)
                 .build();
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();

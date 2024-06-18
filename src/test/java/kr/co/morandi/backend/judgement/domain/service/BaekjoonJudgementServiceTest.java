@@ -11,7 +11,7 @@ import kr.co.morandi.backend.factory.TestProblemFactory;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
-import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.SourceCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.judgement.infrastructure.persistence.submit.BaekjoonSubmitRepository;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
@@ -75,7 +75,7 @@ class BaekjoonJudgementServiceTest extends IntegrationTestSupport {
                 .build();
         dailyRecordRepository.save(dailyRecord);
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();

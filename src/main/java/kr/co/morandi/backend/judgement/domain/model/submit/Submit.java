@@ -27,7 +27,7 @@ public abstract class Submit extends BaseEntity {
     private Detail detail;
 
     @Embedded
-    private SubmitCode submitCode;
+    private SourceCode sourceCode;
 
     @Enumerated(EnumType.STRING)
     private SubmitVisibility submitVisibility;
@@ -42,15 +42,15 @@ public abstract class Submit extends BaseEntity {
         this.judgementResult = judgementResult;
     }
 
-    protected Submit(Member member, Detail detail, SubmitCode submitCode,
+    protected Submit(Member member, Detail detail, SourceCode sourceCode,
                      SubmitVisibility submitVisibility, Integer trialNumber) {
         this.member = member;
 
         validateDetail(detail);
         this.detail = detail;
 
-        validateSubmitCode(submitCode);
-        this.submitCode = submitCode;
+        validateSubmitCode(sourceCode);
+        this.sourceCode = sourceCode;
 
         validateSubmitVisibility(submitVisibility);
         this.submitVisibility = submitVisibility;
@@ -65,8 +65,8 @@ public abstract class Submit extends BaseEntity {
         if(detail == null)
             throw new MorandiException(SubmitErrorCode.DETAIL_IS_NULL);
     }
-    private void validateSubmitCode(SubmitCode submitCode) {
-        if(submitCode == null)
+    private void validateSubmitCode(SourceCode sourceCode) {
+        if(sourceCode == null)
             throw new MorandiException(SubmitErrorCode.SUBMIT_CODE_IS_NULL);
     }
     private void validateSubmitVisibility(SubmitVisibility submitVisibility) {

@@ -7,7 +7,7 @@ import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.result.BaekjoonJudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.Submit;
-import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.SourceCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import lombok.AccessLevel;
@@ -24,9 +24,9 @@ public class BaekjoonSubmit extends Submit {
     @Embedded
     private BaekjoonJudgementResult baekjoonJudgementResult;
 
-    public static BaekjoonSubmit submit(Member member, Detail detail, SubmitCode submitCode,
+    public static BaekjoonSubmit submit(Member member, Detail detail, SourceCode sourceCode,
                                         SubmitVisibility submitVisibility, Integer trialNumber) {
-        return new BaekjoonSubmit(member, detail, submitCode, submitVisibility, trialNumber, null);
+        return new BaekjoonSubmit(member, detail, sourceCode, submitVisibility, trialNumber, null);
     }
 
     public void updateJudgementResult(JudgementResult judgementResult, BaekjoonJudgementResult baekjoonJudgementResult) {
@@ -34,10 +34,10 @@ public class BaekjoonSubmit extends Submit {
         this.baekjoonJudgementResult = baekjoonJudgementResult;
     }
     @Builder
-    private BaekjoonSubmit(Member member, Detail detail, SubmitCode submitCode,
+    private BaekjoonSubmit(Member member, Detail detail, SourceCode sourceCode,
                            SubmitVisibility submitVisibility, Integer trialNumber,
                            BaekjoonJudgementResult baekjoonJudgementResult) {
-        super(member, detail, submitCode, submitVisibility, trialNumber);
+        super(member, detail, sourceCode, submitVisibility, trialNumber);
         this.baekjoonJudgementResult = baekjoonJudgementResult;
     }
 }

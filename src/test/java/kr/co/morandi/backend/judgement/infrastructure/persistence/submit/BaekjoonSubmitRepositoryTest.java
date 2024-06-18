@@ -9,7 +9,7 @@ import kr.co.morandi.backend.factory.TestDefenseFactory;
 import kr.co.morandi.backend.factory.TestMemberFactory;
 import kr.co.morandi.backend.factory.TestProblemFactory;
 import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
-import kr.co.morandi.backend.judgement.domain.model.submit.SubmitCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.SourceCode;
 import kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
@@ -65,7 +65,7 @@ class BaekjoonSubmitRepositoryTest extends IntegrationTestSupport {
                 .build();
         dailyRecordRepository.save(dailyRecord);
 
-        SubmitCode 제출할_코드 = SubmitCode.builder()
+        SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
                 .build();
