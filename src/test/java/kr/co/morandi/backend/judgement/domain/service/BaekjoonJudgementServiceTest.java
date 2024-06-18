@@ -81,7 +81,7 @@ class BaekjoonJudgementServiceTest extends IntegrationTestSupport {
                 .build();
 
         BaekjoonSubmit 백준_제출 = BaekjoonSubmit.builder()
-                .submitCode(제출할_코드)
+                .sourceCode(제출할_코드)
                 .member(사용자)
                 .detail(dailyRecord.getDetail(1L))
                 .submitVisibility(SubmitVisibility.OPEN)

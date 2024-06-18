@@ -49,7 +49,7 @@ class BaekjoonSubmitTest {
 
         // when
         BaekjoonSubmit 백준_제출 = BaekjoonSubmit.builder()
-                .submitCode(제출할_코드)
+                .sourceCode(제출할_코드)
                 .member(사용자)
                 .detail(dailyRecord.getDetail(1L))
                 .submitVisibility(SubmitVisibility.OPEN)
@@ -59,7 +59,7 @@ class BaekjoonSubmitTest {
         // then
         assertThat(백준_제출)
                 .isNotNull()
-                .extracting("submitCode.sourceCode", "submitCode.language", "member", "detail", "submitVisibility", "trialNumber")
+                .extracting("sourceCode.sourceCode", "sourceCode.language", "member", "detail", "submitVisibility", "trialNumber")
                 .contains(제출할_코드.getSourceCode(), 제출할_코드.getLanguage(), 사용자, dailyRecord.getDetail(1L), SubmitVisibility.OPEN, 1);
     }
 
@@ -86,7 +86,7 @@ class BaekjoonSubmitTest {
                 .build();
 
         BaekjoonSubmit 백준_제출 = BaekjoonSubmit.builder()
-                .submitCode(제출할_코드)
+                .sourceCode(제출할_코드)
                 .member(사용자)
                 .detail(dailyRecord.getDetail(1L))
                 .submitVisibility(SubmitVisibility.OPEN)
