@@ -1,0 +1,10 @@
+[[Submit-for-Judgement]]
+== 제출 후 채점 요청
+
+=== Request
+include::{snippets}/submit-for-judgement/http-request.adoc[]
+include::{snippets}/submit-for-judgement/request-fields.adoc[]
+
+=== Response
+include::{snippets}/submit-for-judgement/http-response.adoc[]
+
