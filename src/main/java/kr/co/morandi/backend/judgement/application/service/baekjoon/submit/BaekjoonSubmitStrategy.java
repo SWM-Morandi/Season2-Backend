@@ -24,9 +24,9 @@ public class BaekjoonSubmitStrategy implements SubmitStrategy {
                          final Problem problem,
                          final String sourceCode,
                          final SubmitVisibility submitVisibility,
-                         final LocalDateTime now) {
+                         final LocalDateTime nowDateTime) {
         final String baejoonProblemId = String.valueOf(problem.getBaekjoonProblemId());
-        final String cookie = baekjoonCookieManager.getCurrentMemberCookie(memberId, now);
+        final String cookie = baekjoonCookieManager.getCurrentMemberCookie(memberId, nowDateTime);
         /*
         * 제출을 하고 솔루션 아이디를 가져오는 메소드
         * */
