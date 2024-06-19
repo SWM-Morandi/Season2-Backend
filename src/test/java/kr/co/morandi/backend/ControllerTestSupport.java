@@ -8,6 +8,8 @@ import kr.co.morandi.backend.defense_management.infrastructure.controller.Sessio
 import kr.co.morandi.backend.defense_record.application.port.in.DailyRecordRankUseCase;
 import kr.co.morandi.backend.defense_record.infrastructure.controller.DailyRecordController;
 import kr.co.morandi.backend.judgement.application.service.baekjoon.cookie.BaekjoonMemberCookieService;
+import kr.co.morandi.backend.judgement.application.usecase.submit.BaekjoonSubmitUsecase;
+import kr.co.morandi.backend.judgement.infrastructure.controller.BaekjoonSubmitController;
 import kr.co.morandi.backend.judgement.infrastructure.controller.cookie.CookieController;
 import kr.co.morandi.backend.member_management.infrastructure.config.cookie.utils.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
         DailyDefenseController.class,
         DailyRecordController.class,
         SessionConnectionController.class,
-        CookieController.class
+        CookieController.class,
+        BaekjoonSubmitController.class
 },
         excludeAutoConfiguration = SecurityAutoConfiguration.class,
         excludeFilters = {
@@ -60,5 +63,10 @@ public abstract class ControllerTestSupport {
     // CookieController
     @MockBean
     protected BaekjoonMemberCookieService baekjoonMemberCookieService;
+
+    // BaekjoonSubmitController
+    @MockBean
+    protected BaekjoonSubmitUsecase baekjoonSubmitUsecase;
+
 
 }
