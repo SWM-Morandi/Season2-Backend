@@ -84,7 +84,7 @@ public class BaekjoonSubmitUsecase {
         /*
         * 제출 기록을 저장한다.
         * */
-        final BaekjoonSubmit submit = BaekjoonSubmit.submit(mebmer, detail, SourceCode.of(sourceCode, language), submitVisibility, 0);
+        final BaekjoonSubmit submit = BaekjoonSubmit.submit(mebmer, detail, SourceCode.of(sourceCode, language), nowDateTime, submitVisibility);
         final BaekjoonSubmit savedSubmit = baekjoonSubmitPort.save(submit);
 
         /*

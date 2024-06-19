@@ -9,6 +9,7 @@ import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BaekjoonJudgementService {
 
     private final BaekjoonSubmitPort baekjoonSubmitPort;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     /*
     * Pusher의 결과를 받는 스레드를 블로킹하지 않기 위해 비동기로 처리하는 메서드입니다.
@@ -42,7 +44,7 @@ public class BaekjoonJudgementService {
 
         submit.updateJudgementResult(judgementResult, baekjoonJudgementResult);
 
-        // TODO 여기서 결정된 정답 여부를 바탕으로 Detail도 업데이트 해야하는데, 직접 의존해야할지, 이벤트를 이용해야 할지
+
         baekjoonSubmitPort.save(submit);
     }
     private JudgementResult getJudgementResult(JudgementStatus judgementStatus, Integer memory, Integer time) {

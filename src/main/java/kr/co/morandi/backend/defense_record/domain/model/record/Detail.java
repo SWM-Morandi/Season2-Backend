@@ -9,6 +9,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
@@ -54,6 +57,25 @@ public abstract class Detail extends BaseEntity {
         this.solvedTime = solvedTime;
         return true;
     }
+
+    public void solveProblem(String sourceCode, LocalDateTime nowDateTime) {
+//        if (Boolean.FALSE.equals(this.isSolved)) {
+//            throw new MorandiException(DetailErrorCode.PROBLEM_ALREADY_SOLVED);
+//        }
+        incrementSubmitCount();
+        long solvedTime = calculateSolvedTime(nowDateTime);
+        solveProblem(sourceCode, solvedTime);
+
+    }
+    private void incrementSubmitCount() {
+        this.submitCount++;
+    }
+
+    private long calculateSolvedTime(LocalDateTime nowDateTime) {
+        LocalDateTime startTime = this.record.getTestDate();
+        return Duration.between(startTime, nowDateTime).toMinutes();
+    }
+
     protected Detail(Member member, Problem problem, Record<? extends Detail> records, Defense defense) {
         this.isSolved = INITIAL_IS_SOLVED;
         this.submitCount = INITIAL_SUBMIT_COUNT;

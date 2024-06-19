@@ -65,6 +65,8 @@ class BaekjoonSubmitRepositoryTest extends IntegrationTestSupport {
                 .build();
         dailyRecordRepository.save(dailyRecord);
 
+        LocalDateTime 제출시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+
         SourceCode 제출할_코드 = SourceCode.builder()
                 .sourceCode("code")
                 .language(JAVA)
@@ -73,9 +75,9 @@ class BaekjoonSubmitRepositoryTest extends IntegrationTestSupport {
         BaekjoonSubmit 백준_제출 = BaekjoonSubmit.builder()
                 .sourceCode(제출할_코드)
                 .member(사용자)
+                .submitDateTime(제출시간)
                 .detail(dailyRecord.getDetail(1L))
                 .submitVisibility(SubmitVisibility.OPEN)
-                .trialNumber(1)
                 .build();
 
 
@@ -85,8 +87,8 @@ class BaekjoonSubmitRepositoryTest extends IntegrationTestSupport {
         // then
         assertThat(저장된_백준_제출)
                 .isNotNull()
-                .extracting("sourceCode.sourceCode", "sourceCode.language", "member", "detail", "submitVisibility", "trialNumber")
-                .containsExactly("code", JAVA, 사용자, dailyRecord.getDetail(1L), SubmitVisibility.OPEN, 1);
+                .extracting("sourceCode.sourceCode", "sourceCode.language", "member", "detail", "submitVisibility")
+                .containsExactly("code", JAVA, 사용자, dailyRecord.getDetail(1L), SubmitVisibility.OPEN);
     }
 
 }

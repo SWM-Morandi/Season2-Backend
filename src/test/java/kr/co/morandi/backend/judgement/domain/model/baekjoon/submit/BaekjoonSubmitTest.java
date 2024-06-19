@@ -32,6 +32,7 @@ class BaekjoonSubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -51,16 +52,16 @@ class BaekjoonSubmitTest {
         BaekjoonSubmit 백준_제출 = BaekjoonSubmit.builder()
                 .sourceCode(제출할_코드)
                 .member(사용자)
+                .submitDateTime(제출_시간)
                 .detail(dailyRecord.getDetail(1L))
                 .submitVisibility(SubmitVisibility.OPEN)
-                .trialNumber(1)
                 .build();
 
         // then
         assertThat(백준_제출)
                 .isNotNull()
-                .extracting("sourceCode.sourceCode", "sourceCode.language", "member", "detail", "submitVisibility", "trialNumber")
-                .contains(제출할_코드.getSourceCode(), 제출할_코드.getLanguage(), 사용자, dailyRecord.getDetail(1L), SubmitVisibility.OPEN, 1);
+                .extracting("sourceCode.sourceCode", "sourceCode.language", "member", "detail", "submitVisibility")
+                .contains(제출할_코드.getSourceCode(), 제출할_코드.getLanguage(), 사용자, dailyRecord.getDetail(1L), SubmitVisibility.OPEN);
     }
 
     @DisplayName("백준 제출을 default와 함께 정답 처리할 수 있다.")
@@ -70,6 +71,7 @@ class BaekjoonSubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -88,9 +90,9 @@ class BaekjoonSubmitTest {
         BaekjoonSubmit 백준_제출 = BaekjoonSubmit.builder()
                 .sourceCode(제출할_코드)
                 .member(사용자)
+                .submitDateTime(제출_시간)
                 .detail(dailyRecord.getDetail(1L))
                 .submitVisibility(SubmitVisibility.OPEN)
-                .trialNumber(1)
                 .build();
 
         JudgementResult judgementResult = JudgementResult.builder()
@@ -107,8 +109,8 @@ class BaekjoonSubmitTest {
 
         // then
         assertThat(백준_제출)
-                .extracting("judgementResult.judgementStatus", "judgementResult.memory", "judgementResult.time", "trialNumber", "baekjoonJudgementResult")
-                .contains(ACCEPTED, 300, 30, 1, baekjoonJudgementResult);
+                .extracting("judgementResult.judgementStatus", "judgementResult.memory", "judgementResult.time", "baekjoonJudgementResult")
+                .contains(ACCEPTED, 300, 30, baekjoonJudgementResult);
 
     }
 

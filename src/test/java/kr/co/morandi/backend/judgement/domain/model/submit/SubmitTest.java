@@ -31,19 +31,19 @@ class SubmitTest {
     *  Submit 클래스를 상속받는 SubmitImpl 클래스를 생성했습니다.
     */
     static class SubmitTestImpl extends Submit {
-        public SubmitTestImpl(Member member, Detail detail, SourceCode sourceCode, SubmitVisibility submitVisibility, Integer trialNumber) {
-            super(member, detail, sourceCode, submitVisibility, trialNumber);
+        public SubmitTestImpl(Member member, Detail detail, SourceCode sourceCode, LocalDateTime submitDateTime, SubmitVisibility submitVisibility) {
+            super(member, detail, sourceCode, submitDateTime, submitVisibility);
         }
     }
 
-    @DisplayName("trailNumber가 null일 때 Submit을 생성하려고 하면 예외가 발생한다.")
+    @DisplayName("제출 시간이 null일 때 Submit을 생성하려고 하면 예외가 발생한다.")
     @Test
-    void trialNumberIsNull() {
+    void submitDateTimeIsNull() {
         // given
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
-
+        LocalDateTime 제출_시간 = null;
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
         DailyRecord dailyRecord = DailyRecord.builder()
@@ -63,44 +63,10 @@ class SubmitTest {
                 () -> new SubmitTestImpl(사용자,
                         dailyRecord.getDetail(1L),
                         제출할_코드,
-                        SubmitVisibility.OPEN,
-                        null)
+                        제출_시간,
+                        SubmitVisibility.OPEN)
         ).isInstanceOf(MorandiException.class)
-                .hasMessage(SubmitErrorCode.TRIAL_NUMBER_IS_NULL.getMessage());
-
-    }
-
-    @DisplayName("음수인 trailNumber로 Submit을 생성하려고 하면 예외가 발생한다.")
-    @Test
-    void trialNumberIsNegative() {
-        // given
-        Member 사용자 = TestMemberFactory.createMember();
-        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
-        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
-
-        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
-
-        DailyRecord dailyRecord = DailyRecord.builder()
-                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
-                .problems(시도할_문제)
-                .defense(오늘의_문제)
-                .member(사용자)
-                .build();
-
-        SourceCode 제출할_코드 = SourceCode.builder()
-                .sourceCode("code")
-                .language(JAVA)
-                .build();
-
-        // when & then
-        assertThatThrownBy(
-                () -> new SubmitTestImpl(사용자,
-                        dailyRecord.getDetail(1L),
-                        제출할_코드,
-                        SubmitVisibility.OPEN,
-                        -1)
-        ).isInstanceOf(MorandiException.class)
-                .hasMessage(SubmitErrorCode.TRIAL_NUMBER_IS_NEGATIVE.getMessage());
+                .hasMessage(SubmitErrorCode.SUBMIT_DATE_TIME_IS_NULL.getMessage());
 
     }
 
@@ -111,6 +77,8 @@ class SubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -129,8 +97,8 @@ class SubmitTest {
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
-                SubmitVisibility.OPEN,
-                1);
+                제출_시간,
+                SubmitVisibility.OPEN);
 
         JudgementResult judgementResult = JudgementResult.builder()
                 .judgementStatus(ACCEPTED)
@@ -142,8 +110,8 @@ class SubmitTest {
 
         // then
         assertThat(제출)
-                .extracting("judgementResult.judgementStatus", "judgementResult.memory", "judgementResult.time", "trialNumber")
-                .contains(ACCEPTED, 300, 30, 1);
+                .extracting("judgementResult.judgementStatus", "judgementResult.memory", "judgementResult.time")
+                .contains(ACCEPTED, 300, 30);
 
     }
 
@@ -154,6 +122,8 @@ class SubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -172,8 +142,8 @@ class SubmitTest {
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
-                SubmitVisibility.OPEN,
-                1);
+                제출_시간,
+                SubmitVisibility.OPEN);
 
         JudgementResult judgementResult = JudgementResult.builder()
                 .judgementStatus(ACCEPTED)
@@ -197,6 +167,7 @@ class SubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -215,8 +186,8 @@ class SubmitTest {
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
-                SubmitVisibility.OPEN,
-                1);
+                제출_시간,
+                SubmitVisibility.OPEN);
 
         JudgementResult judgementResult = JudgementResult.builder()
                 .judgementStatus(RUNTIME_ERROR)
@@ -240,6 +211,7 @@ class SubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -258,8 +230,8 @@ class SubmitTest {
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
-                SubmitVisibility.OPEN,
-                1);
+                제출_시간,
+                SubmitVisibility.OPEN);
 
         JudgementResult judgementResult = JudgementResult.builder()
                 .judgementStatus(COMPILE_ERROR)
@@ -283,6 +255,7 @@ class SubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -301,8 +274,8 @@ class SubmitTest {
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
-                SubmitVisibility.OPEN,
-                1);
+                제출_시간,
+                SubmitVisibility.OPEN);
 
         JudgementResult judgementResult = JudgementResult.builder()
                 .judgementStatus(TIME_LIMIT_EXCEEDED)
@@ -326,6 +299,7 @@ class SubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -344,8 +318,8 @@ class SubmitTest {
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
-                SubmitVisibility.OPEN,
-                1);
+                제출_시간,
+                SubmitVisibility.OPEN);
 
         JudgementResult judgementResult = JudgementResult.builder()
                 .judgementStatus(MEMORY_LIMIT_EXCEEDED)
@@ -369,6 +343,7 @@ class SubmitTest {
         Member 사용자 = TestMemberFactory.createMember();
         Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
         DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
 
         Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
 
@@ -387,8 +362,8 @@ class SubmitTest {
         Submit 제출 = new SubmitTestImpl(사용자,
                 dailyRecord.getDetail(1L),
                 제출할_코드,
-                SubmitVisibility.OPEN,
-                1);
+                제출_시간,
+                SubmitVisibility.OPEN);
 
         JudgementResult judgementResult = JudgementResult.builder()
                 .judgementStatus(WRONG_ANSWER)

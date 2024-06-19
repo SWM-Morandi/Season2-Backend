@@ -15,6 +15,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @DiscriminatorValue("BaekjoonSubmit")
@@ -25,8 +27,8 @@ public class BaekjoonSubmit extends Submit {
     private BaekjoonJudgementResult baekjoonJudgementResult;
 
     public static BaekjoonSubmit submit(Member member, Detail detail, SourceCode sourceCode,
-                                        SubmitVisibility submitVisibility, Integer trialNumber) {
-        return new BaekjoonSubmit(member, detail, sourceCode, submitVisibility, trialNumber, null);
+                                        LocalDateTime submitDateTime, SubmitVisibility submitVisibility) {
+        return new BaekjoonSubmit(member, detail, sourceCode, submitDateTime, submitVisibility, null);
     }
 
     public void updateJudgementResult(JudgementResult judgementResult, BaekjoonJudgementResult baekjoonJudgementResult) {
@@ -35,9 +37,8 @@ public class BaekjoonSubmit extends Submit {
     }
     @Builder
     private BaekjoonSubmit(Member member, Detail detail, SourceCode sourceCode,
-                           SubmitVisibility submitVisibility, Integer trialNumber,
-                           BaekjoonJudgementResult baekjoonJudgementResult) {
-        super(member, detail, sourceCode, submitVisibility, trialNumber);
+                           LocalDateTime submitDateTime, SubmitVisibility submitVisibility, BaekjoonJudgementResult baekjoonJudgementResult) {
+        super(member, detail, sourceCode, submitDateTime, submitVisibility);
         this.baekjoonJudgementResult = baekjoonJudgementResult;
     }
 }

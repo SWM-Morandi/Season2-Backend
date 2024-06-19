@@ -10,6 +10,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,16 +37,22 @@ public abstract class Submit extends BaseEntity {
     @Embedded
     private JudgementResult judgementResult;
 
-    private Integer trialNumber;
+    private LocalDateTime submitDateTime;
 
     protected void updateJudgementResult(JudgementResult judgementResult) {
         this.judgementResult.canUpdateJudgementResult();
         this.judgementResult = judgementResult;
+
+        if(judgementResult.isAccepted()) {
+            this.detail.solveProblem(this.sourceCode.getSourceCode(), submitDateTime);
+        }
     }
 
-    protected Submit(Member member, Detail detail, SourceCode sourceCode,
-                     SubmitVisibility submitVisibility, Integer trialNumber) {
+    protected Submit
+            (Member member, Detail detail, SourceCode sourceCode, LocalDateTime submitDateTime, SubmitVisibility submitVisibility) {
         this.member = member;
+        validateSubmitDateTime(submitDateTime);
+        this.submitDateTime = submitDateTime;
 
         validateDetail(detail);
         this.detail = detail;
@@ -56,9 +64,10 @@ public abstract class Submit extends BaseEntity {
         this.submitVisibility = submitVisibility;
 
         this.judgementResult = JudgementResult.submit();
-
-        validateTrialNumber(trialNumber);
-        this.trialNumber = trialNumber;
+    }
+    private void validateSubmitDateTime(LocalDateTime submitDateTime) {
+        if(submitDateTime == null)
+            throw new MorandiException(SubmitErrorCode.SUBMIT_DATE_TIME_IS_NULL);
     }
 
     private void validateDetail(Detail detail) {
@@ -72,11 +81,5 @@ public abstract class Submit extends BaseEntity {
     private void validateSubmitVisibility(SubmitVisibility submitVisibility) {
         if(submitVisibility == null)
             throw new MorandiException(SubmitErrorCode.VISIBILITY_NOT_NULL);
-    }
-    private void validateTrialNumber(Integer trialNumber) {
-        if(trialNumber == null)
-            throw new MorandiException(SubmitErrorCode.TRIAL_NUMBER_IS_NULL);
-        if(trialNumber < 0)
-            throw new MorandiException(SubmitErrorCode.TRIAL_NUMBER_IS_NEGATIVE);
     }
 }

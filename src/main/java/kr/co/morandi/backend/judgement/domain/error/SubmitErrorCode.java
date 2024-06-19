@@ -32,7 +32,8 @@ public enum SubmitErrorCode implements ErrorCode {
     INVALID_VISIBILITY_VALUE(HttpStatus.BAD_REQUEST, "공개 여부는 OPEN 또는 CLOSE이어야 합니다."),
     SUBMIT_CODE_IS_NULL(HttpStatus.BAD_REQUEST, "제출 코드가 null일 수 없습니다."),
     TRIAL_NUMBER_IS_NULL(HttpStatus.BAD_REQUEST, "시도 횟수가 null일 수 없습니다."),
-    TRIAL_NUMBER_IS_NEGATIVE(HttpStatus.BAD_REQUEST, "시도 횟수가 음수입니다.");
+    TRIAL_NUMBER_IS_NEGATIVE(HttpStatus.BAD_REQUEST, "시도 횟수가 음수입니다."),
+    SUBMIT_DATE_TIME_IS_NULL(HttpStatus.BAD_REQUEST, "제출 시간이 null일 수 없습니다.");
 
 
 

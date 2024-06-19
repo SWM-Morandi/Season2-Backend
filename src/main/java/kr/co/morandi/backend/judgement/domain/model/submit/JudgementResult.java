@@ -28,6 +28,9 @@ public class JudgementResult {
     private static final Integer INITIAL_MEMORY = 0;
     private static final Integer INITIAL_TIME = 0;
 
+    public boolean isAccepted() {
+        return judgementStatus.equals(JudgementStatus.ACCEPTED);
+    }
     public static JudgementResult submit() {
         return new JudgementResult(JudgementStatus.SUBMITTED, INITIAL_MEMORY, INITIAL_TIME);
     }
