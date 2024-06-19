@@ -82,7 +82,7 @@ public abstract class Submit extends BaseEntity {
     }
     private void validateSubmitCode(SourceCode sourceCode) {
         if(sourceCode == null)
-            throw new MorandiException(SubmitErrorCode.SUBMIT_CODE_IS_NULL);
+            throw new MorandiException(SubmitErrorCode.SOURCE_CODE_IS_NULL);
     }
     private void validateSubmitVisibility(SubmitVisibility submitVisibility) {
         if(submitVisibility == null)

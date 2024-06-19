@@ -36,6 +36,131 @@ class SubmitTest {
         }
     }
 
+    @DisplayName("Submit을 생성할 수 있다.")
+    @Test
+    void createSubmit() {
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        SourceCode 제출할_코드 = SourceCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        // when
+        Submit 제출 = new SubmitTestImpl(사용자,
+                dailyRecord.getDetail(1L),
+                제출할_코드,
+                제출_시간,
+                SubmitVisibility.OPEN);
+
+        // then
+        assertThat(제출)
+                .extracting("member", "detail", "sourceCode", "submitVisibility", "submitDateTime")
+                .contains(사용자, dailyRecord.getDetail(1L), 제출할_코드, SubmitVisibility.OPEN, 제출_시간);
+
+    }
+
+    @DisplayName("sourceCode를 추가하지 않고 Submit을 생성하려고 하면 예외가 발생한다.")
+    @Test
+    void createSubmitWithoutDetail() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        // when & then
+        assertThatThrownBy(
+                () -> new SubmitTestImpl(사용자,
+                        dailyRecord.getDetail(1L),
+                        null,
+                        제출_시간,
+                        SubmitVisibility.OPEN)
+        ).isInstanceOf(MorandiException.class)
+        .hasMessage(SubmitErrorCode.SOURCE_CODE_IS_NULL.getMessage());
+
+
+    }
+
+    @DisplayName("detail을 추가하지 않고 Submit을 생성하려고 하면 예외가 발생한다.")
+    @Test
+    void createSubmitWithoutSourceCode() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+
+        SourceCode 제출할_코드 = SourceCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        // when & then
+        assertThatThrownBy(
+                () -> new SubmitTestImpl(사용자,
+                        null,
+                        제출할_코드,
+                        제출_시간,
+                        SubmitVisibility.OPEN)
+        ).isInstanceOf(MorandiException.class)
+                .hasMessage(SubmitErrorCode.DETAIL_IS_NULL.getMessage());
+
+    }
+
+    @DisplayName("submitVisibility를 추가하지 않고 Submit을 생성하려고 하면 예외가 발생한다.")
+    @Test
+    void createSubmitWithoutSubmitVisibility() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        SourceCode 제출할_코드 = SourceCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        // when & then
+        assertThatThrownBy(
+                () -> new SubmitTestImpl(사용자,
+                        dailyRecord.getDetail(1L),
+                        제출할_코드,
+                        제출_시간,
+                        null)
+        ).isInstanceOf(MorandiException.class)
+                .hasMessage(SubmitErrorCode.VISIBILITY_NOT_NULL.getMessage());
+
+
+    }
+
+
     @DisplayName("submit을 여러 번 진행하면 detail의 submitCount가 1씩 증가한다.")
     @Test
     void 여러_번_제출시_Detail의_제출횟수가_증가한다() {
