@@ -184,6 +184,28 @@ class BaekjoonCookieTest {
         assertThat(isValidCookie).isTrue();
 
     }
+    @DisplayName("로그아웃된 백준 쿠키는 Valid하지 않다.")
+    @Test
+    void validateCookieWhenLoggedOut() {
+        // given
+        String 쿠키 = "testCookie";
+        LocalDateTime 등록된_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+        BaekjoonCookie 백준_쿠키 = BaekjoonCookie.builder()
+                .cookie(쿠키)
+                .nowDateTime(등록된_시간)
+                .build();
+
+        LocalDateTime 만료된_시간 = LocalDateTime.of(2021, 1, 1, 6, 0);
+        백준_쿠키.setLoggedOut(만료된_시간);
+
+
+        // when
+        final boolean validCookie = 백준_쿠키.isValidCookie(LocalDateTime.of(2021, 1, 1, 3, 0));
+
+        // then
+        assertThat(validCookie).isFalse();
+
+    }
 
     @DisplayName("만료 시간이 지난 경우 백준 쿠키는 Valid하지 않다.")
     @Test
