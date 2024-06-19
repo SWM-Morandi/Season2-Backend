@@ -39,7 +39,7 @@ public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> 
             select dr
             from DailyRecord dr
             where CAST(dr.testDate as localdate) = :requestDate
-            order by dr.solvedCount desc, dr.totalSolvedTime asc, dr.recordId asc
+            order by dr.totalSolvedCount desc, dr.totalSolvedTime asc, dr.recordId asc
      """)
     Page<DailyRecord> getDailyRecordsRankByDate(LocalDate requestDate, Pageable pageable);
 }

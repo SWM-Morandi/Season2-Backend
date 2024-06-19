@@ -26,8 +26,6 @@ public abstract class Detail extends BaseEntity {
 
     private Long submitCount;
 
-    private String solvedCode;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Defense defense;
 
@@ -40,6 +38,8 @@ public abstract class Detail extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
 
+    private Long correctSubmitId;
+
     private Long solvedTime;
 
     public abstract Long getSequenceNumber();
@@ -48,39 +48,30 @@ public abstract class Detail extends BaseEntity {
     private static final Long INITIAL_SOLVED_TIME = 0L;
     private static final Boolean INITIAL_IS_SOLVED = false;
 
-    public boolean solveProblem(String solvedCode, Long solvedTime) {
-        if(this.isSolved) {
-            return false;
+    public void trySolveProblem(Long submitId, LocalDateTime solvedDateTime) {
+        if(isSolvedDetail()) {
+            return ;
         }
         this.isSolved = true;
-        this.solvedCode = solvedCode;
-        this.solvedTime = solvedTime;
-        return true;
+        this.correctSubmitId = submitId;
+        this.solvedTime = calculateSolvedTime(solvedDateTime);
+        record.addSolvedCountAndTime(this.solvedTime);
     }
 
-    public void solveProblem(String sourceCode, LocalDateTime nowDateTime) {
-//        if (Boolean.FALSE.equals(this.isSolved)) {
-//            throw new MorandiException(DetailErrorCode.PROBLEM_ALREADY_SOLVED);
-//        }
-        incrementSubmitCount();
-        long solvedTime = calculateSolvedTime(nowDateTime);
-        solveProblem(sourceCode, solvedTime);
-
-    }
-    private void incrementSubmitCount() {
-        this.submitCount++;
+    private boolean isSolvedDetail() {
+        return Boolean.TRUE.equals(this.isSolved);
     }
 
     private long calculateSolvedTime(LocalDateTime nowDateTime) {
         LocalDateTime startTime = this.record.getTestDate();
-        return Duration.between(startTime, nowDateTime).toMinutes();
+        return Duration.between(startTime, nowDateTime).toSeconds();
     }
 
     protected Detail(Member member, Problem problem, Record<? extends Detail> records, Defense defense) {
         this.isSolved = INITIAL_IS_SOLVED;
         this.submitCount = INITIAL_SUBMIT_COUNT;
         this.solvedTime = INITIAL_SOLVED_TIME;
-        this.solvedCode = null;
+        this.correctSubmitId = null;
         this.defense = defense;
         this.record = records;
         this.member = member;

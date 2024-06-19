@@ -5,6 +5,12 @@ import kr.co.morandi.backend.defense_information.domain.model.dailydefense.Daily
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
+import kr.co.morandi.backend.factory.TestBaekjoonSubmitFactory;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
+import kr.co.morandi.backend.judgement.domain.model.submit.SourceCode;
+import kr.co.morandi.backend.judgement.domain.model.submit.Submit;
+import kr.co.morandi.backend.judgement.infrastructure.persistence.submit.BaekjoonSubmitRepository;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -27,9 +33,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import static kr.co.morandi.backend.defense_information.domain.model.defense.ProblemTier.*;
+import static kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language.JAVA;
+import static kr.co.morandi.backend.judgement.domain.model.submit.SubmitVisibility.CLOSE;
 import static kr.co.morandi.backend.member_management.domain.model.member.SocialType.GOOGLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Transactional
 class DailyRecordRepositoryTest extends IntegrationTestSupport {
@@ -45,6 +55,11 @@ class DailyRecordRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private BaekjoonSubmitRepository baekjoonSubmitRepository;
+
+
 
     @DisplayName("특정 시점 DailyRecord의 순위를 조회할 수 있다.")
     @Test
@@ -68,16 +83,26 @@ class DailyRecordRepositoryTest extends IntegrationTestSupport {
         *
         * -> 등수 = 2 -> 1 -> 3
         * */
-        dailyRecord1.solveProblem(1L, "exampleCode", LocalDateTime.of(2021, 10, 1, 0, 15));
 
-        dailyRecord2.solveProblem(2L, "exampleCode", LocalDateTime.of(2021, 10, 1, 0, 30));
+        BaekjoonSubmit 제출1 = TestBaekjoonSubmitFactory.createSubmit(member1, dailyRecord1.getDetail(1L), LocalDateTime.of(2021, 10, 1, 0, 15));
+        final BaekjoonSubmit 저장된_제출1 = baekjoonSubmitRepository.save(제출1);
+        저장된_제출1.trySolveProblem();
+
+        BaekjoonSubmit 제출2 = TestBaekjoonSubmitFactory.createSubmit(member2, dailyRecord2.getDetail(2L), LocalDateTime.of(2021, 10, 1, 0, 30));
+        final BaekjoonSubmit 저장된_제출2 = baekjoonSubmitRepository.save(제출2);
+        저장된_제출2.trySolveProblem();
+
         dailyRecord2.tryMoreProblem(getProblem(dailyDefense, 3L));
-        dailyRecord2.solveProblem(3L, "exampleCode", LocalDateTime.of(2021, 10, 1, 0, 45));
 
-        dailyRecord3.solveProblem(3L, "exampleCode", LocalDateTime.of(2021, 10, 1, 1, 0));
+        BaekjoonSubmit 제출3 = TestBaekjoonSubmitFactory.createSubmit(member2, dailyRecord2.getDetail(3L), LocalDateTime.of(2021, 10, 1, 0, 45));
+        final BaekjoonSubmit 저장된_제출3 = baekjoonSubmitRepository.save(제출3);
+        저장된_제출3.trySolveProblem();
+
+        BaekjoonSubmit 제출4 = TestBaekjoonSubmitFactory.createSubmit(member3, dailyRecord3.getDetail(3L), LocalDateTime.of(2021, 10, 1, 1, 0));
+        final BaekjoonSubmit 저장된_제출4 = baekjoonSubmitRepository.save(제출4);
+        저장된_제출4.trySolveProblem();
 
         dailyRecordRepository.saveAll(List.of(dailyRecord1, dailyRecord2, dailyRecord3));
-
 
         // when
         Pageable pageable = PageRequest.of(0, 5);
@@ -85,7 +110,7 @@ class DailyRecordRepositoryTest extends IntegrationTestSupport {
 
         // then
         assertThat(dailyRecords).hasSize(3)
-                .extracting(DailyRecord::getMember, DailyRecord::getSolvedCount, DailyRecord::getTotalSolvedTime)
+                .extracting(DailyRecord::getMember, DailyRecord::getTotalSolvedCount, DailyRecord::getTotalSolvedTime)
                 .containsExactly(// 푼 시간은 초단위
                         tuple(member2, 2L, 75L * 60),
                         tuple(member1, 1L, 15L * 60),

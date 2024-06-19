@@ -39,12 +39,17 @@ public abstract class Submit extends BaseEntity {
 
     private LocalDateTime submitDateTime;
 
+    public void trySolveProblem() {
+        this.detail.trySolveProblem(this.getSubmitId(), submitDateTime);
+    }
+
     protected void updateJudgementResult(JudgementResult judgementResult) {
+        // 제출 하나의 결과는 한 번 정해지면 변하지 않음
         this.judgementResult.canUpdateJudgementResult();
         this.judgementResult = judgementResult;
 
         if(judgementResult.isAccepted()) {
-            this.detail.solveProblem(this.sourceCode.getSourceCode(), submitDateTime);
+            this.detail.trySolveProblem(this.getSubmitId(), submitDateTime);
         }
     }
 

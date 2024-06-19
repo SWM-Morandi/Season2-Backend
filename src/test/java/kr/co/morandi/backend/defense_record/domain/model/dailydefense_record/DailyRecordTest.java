@@ -3,6 +3,8 @@ package kr.co.morandi.backend.defense_record.domain.model.dailydefense_record;
 import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefenseProblem;
+import kr.co.morandi.backend.factory.TestBaekjoonSubmitFactory;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import org.junit.jupiter.api.DisplayName;
@@ -72,12 +74,12 @@ class DailyRecordTest {
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
 
         // when
-        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
-
+        BaekjoonSubmit 제출 = TestBaekjoonSubmitFactory.createSubmit(member, dailyRecord.getDetail(2L), LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+        제출.trySolveProblem();
 
         // then
         assertThat(dailyRecord)
-                .extracting("totalSolvedTime", "solvedCount")
+                .extracting("totalSolvedTime", "totalSolvedCount")
                 .contains(
                         15 * 60L, 1L
                 );
@@ -87,7 +89,6 @@ class DailyRecordTest {
                         tuple(true, 15 * 60L)
                 );
     }
-
     @DisplayName("이미 정답처리된 문제를 정답 solved하려하면 바뀌지 않는다.")
     @Test
     void solveProblemWhenAlreadySolved() {
@@ -97,16 +98,18 @@ class DailyRecordTest {
         Member member = createMember("user");
         Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
-        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+
+        BaekjoonSubmit 제출 = TestBaekjoonSubmitFactory.createSubmit(member, dailyRecord.getDetail(2L), LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+        제출.trySolveProblem();
 
         // when
-        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 20, 0));
-
+        BaekjoonSubmit 제출2 = TestBaekjoonSubmitFactory.createSubmit(member, dailyRecord.getDetail(2L), LocalDateTime.of(2024, 3, 1, 12, 20, 0));
+        제출2.trySolveProblem();
 
 
         // then
         assertThat(dailyRecord)
-                .extracting("totalSolvedTime", "solvedCount")
+                .extracting("totalSolvedTime", "totalSolvedCount")
                 .contains(
                         15 * 60L, 1L
                 );
@@ -126,7 +129,9 @@ class DailyRecordTest {
         Map<Long, Problem> triedProblem = getProblems(dailyDefense, 2L);
         DailyRecord dailyRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, triedProblem);
         dailyRecord.tryMoreProblem(getProblems(dailyDefense, 3L));
-        dailyRecord.solveProblem(2L, "solvedCode", LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+
+        BaekjoonSubmit 제출 = TestBaekjoonSubmitFactory.createSubmit(member, dailyRecord.getDetail(2L), LocalDateTime.of(2024, 3, 1, 12, 15, 0));
+        제출.trySolveProblem();
 
         // when
         final Set<Long> solvedProblemNumbers = dailyRecord.getSolvedProblemNumbers();
@@ -204,7 +209,7 @@ class DailyRecordTest {
         DailyRecord dailyDefenseRecord = DailyRecord.tryDefense(startTime, dailyDefense, member, problems);
 
         // then
-        assertThat(dailyDefenseRecord.getSolvedCount()).isZero();
+        assertThat(dailyDefenseRecord.getTotalSolvedCount()).isZero();
     }
 
     @DisplayName("오늘의 문제 기록이 만들어진 시점이 문제가 출제된 시점에서 하루 이상 넘어가면 예외가 발생한다.")
@@ -276,7 +281,7 @@ class DailyRecordTest {
                 .extracting("submitCount")
                 .containsExactlyInAnyOrder(0L);
     }
-    @DisplayName("오늘의 문제 테스트 기록이 만들어졌을 때 세부 문제들의 정답 코드는 null 이어야 한다.")
+    @DisplayName("오늘의 문제 테스트 기록이 만들어졌을 때 세부 문제들의 정답 제출은 null 이어야 한다.")
     @Test
     void solvedCodeIsNull() {
         // given
@@ -290,7 +295,7 @@ class DailyRecordTest {
 
         // then
         assertThat(dailyDefenseRecord.getDetails())
-                .extracting("solvedCode")
+                .extracting("correctSubmitId")
                 .contains((String)null);
     }
     private Map<Long, Problem> getProblems(DailyDefense DailyDefense, Long problemNumber) {

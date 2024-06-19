@@ -30,7 +30,7 @@ class StageDetailTest {
         StageDetail stageDefenseProblemRecord = StageDetail.create(member,1L, problem, stageDefenseRecord, randomStageDefense);
 
         // then
-        assertThat(stageDefenseProblemRecord.getSolvedTime()).isEqualTo(0L);
+        assertThat(stageDefenseProblemRecord.getSolvedTime()).isZero();
 
     }
     @DisplayName("원하는 스테이지 번호에 따른 스테이지 문제 기록을 만들 수 있다.")
@@ -97,8 +97,8 @@ class StageDetailTest {
 
         // then
         assertThat(stageDefenseProblemRecord)
-                .extracting("solvedCode")
-                .isEqualTo(null);
+                .extracting("correctSubmitId")
+                .isNull();
 
     }
     @DisplayName("스테이지 문제 기록을 생성할 수 있다.")

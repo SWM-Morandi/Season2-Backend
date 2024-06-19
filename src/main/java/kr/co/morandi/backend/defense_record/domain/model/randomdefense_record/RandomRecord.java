@@ -21,15 +21,11 @@ import java.util.Map;
 @DiscriminatorValue("RandomDefenseRecord")
 public class RandomRecord extends Record<RandomDetail> {
 
-    private Integer solvedCount;
     private Integer problemCount;
-
-    private static final Integer INITIAL_SOLVED_COUNT = 0;
 
     @Builder
     private RandomRecord(LocalDateTime testDate, RandomDefense randomDefense, Member member, Map<Long, Problem> problems) {
         super(testDate, randomDefense, member, problems);
-        this.solvedCount = INITIAL_SOLVED_COUNT;
         this.problemCount = problems.size();
     }
     @Override

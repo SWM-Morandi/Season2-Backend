@@ -80,7 +80,7 @@ class DailyDetailTest {
         // then
         assertThat(DailyDefenseProblemRecord.getSubmitCount()).isZero();
     }
-    @DisplayName("DailyDefenseProblemRecord가 생성되면 solvedCode는 null이다")
+    @DisplayName("DailyDefenseProblemRecord가 생성되면 correctSubmit은 null이다")
     @Test
     void initialSolvedCodeIsSetToNull() {
         // given
@@ -96,8 +96,8 @@ class DailyDetailTest {
         DailyDetail DailyDefenseProblemRecord = DailyDetail.create(member, 1L, problem, DailyDefenseRecord, DailyDefense);
 
         // then
-        assertThat(DailyDefenseProblemRecord.getSolvedCode())
-                .isEqualTo(null);
+        assertThat(DailyDefenseProblemRecord.getCorrectSubmitId())
+                .isNull();
     }
 
     private DailyDefense createDailyDefense() {

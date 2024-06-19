@@ -43,7 +43,10 @@ public abstract class Record<T extends Detail> extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RecordStatus status;
 
+    private Long totalSolvedCount;
+
     private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
+    private static final Long INITIAL_TOTAL_SOLVED_COUNT = 0L;
 
     public T getDetail(Long sequenceNumber) {
         return this.details.stream()
@@ -66,14 +69,16 @@ public abstract class Record<T extends Detail> extends BaseEntity {
         this.status = RecordStatus.COMPLETED;
         return true;
     }
-    public void addTotalSolvedTime(Long totalSolvedTime) {
+    public void addSolvedCountAndTime(Long totalSolvedTime) {
         this.totalSolvedTime += totalSolvedTime;
+        this.totalSolvedCount += 1;
     }
     protected abstract T createDetail(Member member, Long sequenceNumber, Problem problem, Record<T> records, Defense defense);
 
     protected Record(LocalDateTime testDate, Defense defense, Member member, Map<Long, Problem> problems) {
         this.testDate = testDate;
         this.defense = defense;
+        this.totalSolvedCount = INITIAL_TOTAL_SOLVED_COUNT;
         this.member = member;
         this.status = RecordStatus.IN_PROGRESS;
         this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;

@@ -153,8 +153,8 @@ class StageRecordTest {
 
         // then
         assertThat(stageDefenseRecord.getDetails())
-                .extracting("solvedCode")
-                .containsExactly((String)null);
+                .extracting("correctSubmitId")
+                .contains((String) null);
     }
     private StageDefense createRandomStageDefense() {
         RandomCriteria.DifficultyRange bronzeRange = RandomCriteria.DifficultyRange.of(B5, B1);

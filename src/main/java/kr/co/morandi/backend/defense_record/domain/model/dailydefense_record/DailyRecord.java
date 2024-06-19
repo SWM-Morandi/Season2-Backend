@@ -13,7 +13,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -26,23 +25,8 @@ import java.util.stream.Collectors;
 @DiscriminatorValue("DailyDefenseRecord")
 public class DailyRecord extends Record<DailyDetail> {
 
-    private Long solvedCount;
+
     private Integer problemCount;
-
-    public void solveProblem(Long problemNumber, String code, LocalDateTime solvedAt) {
-        super.getDetails().stream()
-                .filter(detail -> detail.getProblemNumber().equals(problemNumber))
-                .findFirst()
-                .ifPresent(detail -> {
-
-                    Long solvedTime = calculateSolvedTime(solvedAt);
-
-                    if(detail.solveProblem(code, solvedTime)) {
-                        ++this.solvedCount;
-                        super.addTotalSolvedTime(solvedTime);
-                    }
-                });
-    }
 
     public Set<Long> getSolvedProblemNumbers() {
         return super.getDetails().stream()
@@ -92,12 +76,8 @@ public class DailyRecord extends Record<DailyDetail> {
     @Builder
     private DailyRecord(LocalDateTime date, Defense defense, Member member, Map<Long, Problem> problems) {
         super(date, defense, member, problems);
-        this.solvedCount = 0L;
         this.problemCount = problems.size();
         defense.increaseAttemptCount();
     }
 
-    private long calculateSolvedTime(LocalDateTime solvedAt) {
-        return Duration.between(super.getTestDate(), solvedAt).getSeconds();
-    }
 }
