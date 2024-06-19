@@ -93,7 +93,7 @@ class BaekjoonSubmitRepositoryTest extends IntegrationTestSupport {
                         "member", "detail", "detail.submitCount", "detail.isSolved",
                         "detail.solvedTime", "submitVisibility", "detail.record.defense")
                 .containsExactly("code", JAVA,
-                        사용자, dailyRecord.getDetail(1L), 0L, false,
+                        사용자, dailyRecord.getDetail(1L), 1L, false,
                         0L, SubmitVisibility.OPEN, 오늘의_문제);
 
 
@@ -142,8 +142,8 @@ class BaekjoonSubmitRepositoryTest extends IntegrationTestSupport {
         // then
         assertThat(저장된_백준_제출)
                 .isNotNull()
-                .extracting("sourceCode.sourceCode", "sourceCode.language", "member", "detail", "submitVisibility")
-                .containsExactly("code", JAVA, 사용자, dailyRecord.getDetail(1L), SubmitVisibility.OPEN);
+                .extracting("sourceCode.sourceCode", "sourceCode.language", "member", "detail", "submitVisibility", "detail.submitCount")
+                .containsExactly("code", JAVA, 사용자, dailyRecord.getDetail(1L), SubmitVisibility.OPEN, 1L);
     }
 
 }

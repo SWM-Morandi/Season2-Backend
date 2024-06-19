@@ -57,6 +57,9 @@ public abstract class Detail extends BaseEntity {
         this.solvedTime = calculateSolvedTime(solvedDateTime);
         record.addSolvedCountAndTime(this.solvedTime);
     }
+    public void increaseSubmitCount() {
+        this.submitCount++;
+    }
 
     private boolean isSolvedDetail() {
         return Boolean.TRUE.equals(this.isSolved);
@@ -77,4 +80,5 @@ public abstract class Detail extends BaseEntity {
         this.member = member;
         this.problem = problem;
     }
+
 }

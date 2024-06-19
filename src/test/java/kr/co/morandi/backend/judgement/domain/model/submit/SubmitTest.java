@@ -36,6 +36,76 @@ class SubmitTest {
         }
     }
 
+    @DisplayName("submit을 여러 번 진행하면 detail의 submitCount가 1씩 증가한다.")
+    @Test
+    void 여러_번_제출시_Detail의_제출횟수가_증가한다() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        SourceCode 제출할_코드 = SourceCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        // when & then
+        Submit 제출 = new SubmitTestImpl(사용자, dailyRecord.getDetail(1L), 제출할_코드, 제출_시간, SubmitVisibility.OPEN);
+        assertThat(제출.getDetail().getSubmitCount()).isEqualTo(1L);
+
+        new SubmitTestImpl(사용자, dailyRecord.getDetail(1L), 제출할_코드, 제출_시간, SubmitVisibility.OPEN);
+        assertThat(제출.getDetail().getSubmitCount()).isEqualTo(2L);
+
+        new SubmitTestImpl(사용자, dailyRecord.getDetail(1L), 제출할_코드, 제출_시간, SubmitVisibility.OPEN);
+        assertThat(제출.getDetail().getSubmitCount()).isEqualTo(3L);
+
+    }
+
+    @DisplayName("submit을 진행하면 detail의 submitCount가 1 증가한다.")
+    @Test
+    void 제출시_Detail의_제출횟수가_증가한다() {
+        // given
+        Member 사용자 = TestMemberFactory.createMember();
+        Map<Long, Problem> 문제 = TestProblemFactory.createProblems(5);
+        DailyDefense 오늘의_문제 = TestDefenseFactory.createDailyDefense(문제);
+        LocalDateTime 제출_시간 = LocalDateTime.of(2021, 1, 1, 0, 0);
+        Map<Long, Problem> 시도할_문제 = Map.of(1L, 문제.get(1L));
+
+        DailyRecord dailyRecord = DailyRecord.builder()
+                .date(LocalDateTime.of(2021, 1, 1, 0, 0))
+                .problems(시도할_문제)
+                .defense(오늘의_문제)
+                .member(사용자)
+                .build();
+
+        SourceCode 제출할_코드 = SourceCode.builder()
+                .sourceCode("code")
+                .language(JAVA)
+                .build();
+
+        // when
+        Submit 제출 = new SubmitTestImpl(사용자,
+                dailyRecord.getDetail(1L),
+                제출할_코드,
+                제출_시간,
+                SubmitVisibility.OPEN);
+
+        // then
+        assertThat(제출)
+                .extracting("detail.submitCount")
+                .isEqualTo(1L);
+
+    }
+
     @DisplayName("제출 시간이 null일 때 Submit을 생성하려고 하면 예외가 발생한다.")
     @Test
     void submitDateTimeIsNull() {

@@ -53,14 +53,15 @@ public abstract class Submit extends BaseEntity {
         }
     }
 
-    protected Submit
-            (Member member, Detail detail, SourceCode sourceCode, LocalDateTime submitDateTime, SubmitVisibility submitVisibility) {
+    protected Submit(Member member, Detail detail, SourceCode sourceCode,
+                     LocalDateTime submitDateTime, SubmitVisibility submitVisibility) {
         this.member = member;
         validateSubmitDateTime(submitDateTime);
         this.submitDateTime = submitDateTime;
 
         validateDetail(detail);
         this.detail = detail;
+        detail.increaseSubmitCount();
 
         validateSubmitCode(sourceCode);
         this.sourceCode = sourceCode;
