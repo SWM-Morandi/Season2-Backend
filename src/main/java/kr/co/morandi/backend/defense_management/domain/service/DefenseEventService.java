@@ -13,7 +13,7 @@ public class DefenseEventService {
 
     private final DefenseTimerService defenseTimerService;
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     public void onDefenseStartTimerEvent(DefenseStartTimerEvent event) {
         defenseTimerService.startDefenseTimer(event.getSessionId(), event.getStartDateTime(), event.getEndDateTime());
     }
