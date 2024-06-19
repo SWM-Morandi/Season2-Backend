@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface BaekjoonSubmitPort {
     BaekjoonSubmit save(BaekjoonSubmit submit);
 
-    Optional<BaekjoonSubmit> findSubmit(Long submitId);
+    Optional<BaekjoonSubmit> findSubmitJoinFetchDetailAndRecord(Long submitId);
 }

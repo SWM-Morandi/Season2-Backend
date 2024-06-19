@@ -19,7 +19,7 @@ public class BaekjoonSubmitAdapter implements BaekjoonSubmitPort {
     }
 
     @Override
-    public Optional<BaekjoonSubmit> findSubmit(Long submitId) {
-        return baekjoonSubmitRepository.findById(submitId);
+    public Optional<BaekjoonSubmit> findSubmitJoinFetchDetailAndRecord(Long submitId) {
+        return baekjoonSubmitRepository.findSubmitJoinFetchDetailAndRecord(submitId);
     }
 }

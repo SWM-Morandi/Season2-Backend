@@ -9,7 +9,6 @@ import kr.co.morandi.backend.judgement.domain.model.submit.JudgementResult;
 import kr.co.morandi.backend.judgement.domain.model.submit.JudgementStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class BaekjoonJudgementService {
 
     private final BaekjoonSubmitPort baekjoonSubmitPort;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     /*
     * Pusher의 결과를 받는 스레드를 블로킹하지 않기 위해 비동기로 처리하는 메서드입니다.
@@ -37,7 +35,7 @@ public class BaekjoonJudgementService {
 
         log.info("Update Judgement Status submitId: {}, judgementStatus: {}, memory: {}, time: {}", submitId, judgementStatus, memory, time);
 
-        final BaekjoonSubmit submit = baekjoonSubmitPort.findSubmit(submitId)
+        final BaekjoonSubmit submit = baekjoonSubmitPort.findSubmitJoinFetchDetailAndRecord(submitId)
                 .orElseThrow(() -> new MorandiException(JudgementResultErrorCode.SUBMIT_NOT_FOUND));
 
         JudgementResult judgementResult = getJudgementResult(judgementStatus, memory, time);
