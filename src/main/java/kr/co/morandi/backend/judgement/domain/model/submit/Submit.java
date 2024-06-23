@@ -52,40 +52,38 @@ public abstract class Submit extends BaseEntity {
             this.detail.trySolveProblem(this.getSubmitId(), submitDateTime);
         }
     }
-
     protected Submit(Member member, Detail detail, SourceCode sourceCode,
                      LocalDateTime submitDateTime, SubmitVisibility submitVisibility) {
         this.member = member;
-        validateSubmitDateTime(submitDateTime);
-        this.submitDateTime = submitDateTime;
-
-        validateDetail(detail);
-        this.detail = detail;
-        detail.increaseSubmitCount();
-
-        validateSubmitCode(sourceCode);
-        this.sourceCode = sourceCode;
-
-        validateSubmitVisibility(submitVisibility);
-        this.submitVisibility = submitVisibility;
-
+        this.submitDateTime = validateSubmitDateTime(submitDateTime);
+        this.detail = validateDetail(detail);
+        this.detail.increaseSubmitCount();
+        this.sourceCode = validateSubmitCode(sourceCode);
+        this.submitVisibility = validateSubmitVisibility(submitVisibility);
         this.judgementResult = JudgementResult.submit();
     }
-    private void validateSubmitDateTime(LocalDateTime submitDateTime) {
-        if(submitDateTime == null)
-            throw new MorandiException(SubmitErrorCode.SUBMIT_DATE_TIME_IS_NULL);
+    private LocalDateTime validateSubmitDateTime(LocalDateTime submitDateTime) {
+        if(submitDateTime != null) {
+            return submitDateTime;
+        }
+        throw new MorandiException(SubmitErrorCode.SUBMIT_DATE_TIME_IS_NULL);
     }
-
-    private void validateDetail(Detail detail) {
-        if(detail == null)
-            throw new MorandiException(SubmitErrorCode.DETAIL_IS_NULL);
+    private Detail validateDetail(Detail detail) {
+        if(detail != null) {
+            return detail;
+        }
+        throw new MorandiException(SubmitErrorCode.DETAIL_IS_NULL);
     }
-    private void validateSubmitCode(SourceCode sourceCode) {
-        if(sourceCode == null)
-            throw new MorandiException(SubmitErrorCode.SOURCE_CODE_IS_NULL);
+    private SourceCode validateSubmitCode(SourceCode sourceCode) {
+        if(sourceCode != null) {
+            return sourceCode;
+        }
+        throw new MorandiException(SubmitErrorCode.SOURCE_CODE_IS_NULL);
     }
-    private void validateSubmitVisibility(SubmitVisibility submitVisibility) {
-        if(submitVisibility == null)
-            throw new MorandiException(SubmitErrorCode.VISIBILITY_NOT_NULL);
+    private SubmitVisibility validateSubmitVisibility(SubmitVisibility submitVisibility) {
+        if(submitVisibility != null) {
+            return submitVisibility;
+        }
+        throw new MorandiException(SubmitErrorCode.VISIBILITY_NOT_NULL);
     }
 }
