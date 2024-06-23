@@ -26,8 +26,7 @@ public class BaekjoonCookie {
     private CookieStatus cookieStatus;
 
     public void updateCookie(String cookie, LocalDateTime nowDateTime) {
-        validateCookie(cookie);
-        this.value = cookie;
+        this.value = validateCookie(cookie);
         this.expiredAt = calculateCookieExpiredAt(nowDateTime);
         this.cookieStatus = CookieStatus.LOGGED_IN;
     }
@@ -46,11 +45,11 @@ public class BaekjoonCookie {
         if (nowDateTime.isBefore(expiredAt)) {
             return true;
         }
-        unvalidateCookie();
+        logOutCookie();
         return false;
     }
 
-    private void unvalidateCookie() {
+    private void logOutCookie() {
         this.cookieStatus = CookieStatus.LOGGED_OUT;
     }
 
@@ -61,10 +60,11 @@ public class BaekjoonCookie {
                 .build();
     }
 
-    private void validateCookie(String cookie) {
-        if (cookie == null || cookie.trim().isEmpty()) {
-            throw new MorandiException(BaekjoonCookieErrorCode.INVALID_COOKIE_VALUE);
+    private String validateCookie(String cookie) {
+        if(cookie != null && !cookie.trim().isEmpty()) {
+            return cookie;
         }
+        throw new MorandiException(BaekjoonCookieErrorCode.INVALID_COOKIE_VALUE);
     }
 
     private LocalDateTime calculateCookieExpiredAt(LocalDateTime cookieCreatedAt) {
@@ -76,8 +76,7 @@ public class BaekjoonCookie {
 
     @Builder
     private BaekjoonCookie(String cookie, LocalDateTime nowDateTime) {
-        validateCookie(cookie);
-        this.value = cookie;
+        this.value = validateCookie(cookie);
         this.expiredAt = calculateCookieExpiredAt(nowDateTime);
         this.cookieStatus = CookieStatus.LOGGED_IN;
     }
