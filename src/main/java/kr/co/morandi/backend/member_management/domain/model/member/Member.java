@@ -2,7 +2,10 @@ package kr.co.morandi.backend.member_management.domain.model.member;
 
 import jakarta.persistence.*;
 import kr.co.morandi.backend.common.model.BaseEntity;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.cookie.BaekjoonMemberCookie;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -25,6 +28,22 @@ public class Member extends BaseEntity {
     private String profileImageURL;
 
     private String description;
+
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private BaekjoonMemberCookie baekjoonMemberCookie;
+
+    public void saveBaekjoonCookie(String cookie, LocalDateTime nowDateTime) {
+        if(baekjoonMemberCookie == null) {
+            baekjoonMemberCookie = BaekjoonMemberCookie.builder()
+                    .cookie(cookie)
+                    .nowDateTime(nowDateTime)
+                    .member(this)
+                    .build();
+            return;
+        }
+        baekjoonMemberCookie.updateCookie(cookie, nowDateTime);
+    }
+
     @Builder
     private Member(String nickname, String baekjoonId, String email,
                    SocialType socialType, String profileImageURL, String description) {

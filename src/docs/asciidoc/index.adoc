@@ -13,5 +13,9 @@ include::api/defensesession/defensesession.adoc[]
 
 include::api/dailydefense/dailydefense.adoc[]
 
+include::api/cookie/cookie.adoc[]
+
+include::api/submit/submit.adoc[]
+
 
 [[Daily-Defense-List]]

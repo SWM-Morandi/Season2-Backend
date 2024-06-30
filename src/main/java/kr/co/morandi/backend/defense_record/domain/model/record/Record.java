@@ -8,10 +8,8 @@ import kr.co.morandi.backend.defense_record.domain.error.RecordErrorCode;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Record<T extends Detail> extends BaseEntity {
 
@@ -38,7 +35,6 @@ public abstract class Record<T extends Detail> extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @Builder.Default
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, targetEntity = Detail.class)
     private List<T> details = new ArrayList<>();
 
@@ -47,7 +43,24 @@ public abstract class Record<T extends Detail> extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RecordStatus status;
 
+    private Long totalSolvedCount;
+
     private static final Long INITIAL_TOTAL_SOLVED_TIME = 0L;
+    private static final Long INITIAL_TOTAL_SOLVED_COUNT = 0L;
+
+    public T getDetail(Long sequenceNumber) {
+        return this.details.stream()
+                .filter(detail -> detail.getSequenceNumber().equals(sequenceNumber))
+                .findFirst()
+                .orElseThrow(() -> new MorandiException(RecordErrorCode.DETAIL_NOT_FOUND));
+    }
+
+    public Problem getProblem(Long sequenceNumber) {
+        return getDetail(sequenceNumber).getProblem();
+    }
+    public boolean isTerminated() {
+        return this.status.equals(RecordStatus.COMPLETED);
+    }
 
     public boolean terminteDefense() {
         if(this.status.equals(RecordStatus.COMPLETED)) {
@@ -56,14 +69,16 @@ public abstract class Record<T extends Detail> extends BaseEntity {
         this.status = RecordStatus.COMPLETED;
         return true;
     }
-    public void addTotalSolvedTime(Long totalSolvedTime) {
+    public void addSolvedCountAndTime(Long totalSolvedTime) {
         this.totalSolvedTime += totalSolvedTime;
+        this.totalSolvedCount += 1;
     }
     protected abstract T createDetail(Member member, Long sequenceNumber, Problem problem, Record<T> records, Defense defense);
 
     protected Record(LocalDateTime testDate, Defense defense, Member member, Map<Long, Problem> problems) {
         this.testDate = testDate;
         this.defense = defense;
+        this.totalSolvedCount = INITIAL_TOTAL_SOLVED_COUNT;
         this.member = member;
         this.status = RecordStatus.IN_PROGRESS;
         this.totalSolvedTime = INITIAL_TOTAL_SOLVED_TIME;

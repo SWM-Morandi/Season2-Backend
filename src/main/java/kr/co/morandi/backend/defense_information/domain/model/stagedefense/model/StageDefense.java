@@ -1,10 +1,14 @@
 package kr.co.morandi.backend.defense_information.domain.model.stagedefense.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
 import kr.co.morandi.backend.defense_information.domain.model.defense.Defense;
 import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +17,6 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 @Entity
 @DiscriminatorValue("StageDefense")
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StageDefense extends Defense {
 
@@ -40,6 +43,7 @@ public class StageDefense extends Defense {
         return timeLimit;
     }
 
+    @Builder
     private StageDefense(RandomCriteria randomCriteria, Long timeLimit, String contentName) {
         super(contentName, STAGE);
         this.randomCriteria = randomCriteria;

@@ -2,18 +2,17 @@ package kr.co.morandi.backend.defense_record.domain.model.dailydefense_record;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import kr.co.morandi.backend.defense_information.domain.model.defense.Defense;
 import kr.co.morandi.backend.defense_information.domain.model.dailydefense.DailyDefense;
+import kr.co.morandi.backend.defense_information.domain.model.defense.Defense;
 import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
+import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
-import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -22,28 +21,12 @@ import java.util.stream.Collectors;
 
 @Entity
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("DailyDefenseRecord")
 public class DailyRecord extends Record<DailyDetail> {
 
-    private Long solvedCount;
+
     private Integer problemCount;
-
-    public void solveProblem(Long problemNumber, String code, LocalDateTime solvedAt) {
-        super.getDetails().stream()
-                .filter(detail -> detail.getProblemNumber().equals(problemNumber))
-                .findFirst()
-                .ifPresent(detail -> {
-
-                    Long solvedTime = calculateSolvedTime(solvedAt);
-
-                    if(detail.solveProblem(code, solvedTime)) {
-                        ++this.solvedCount;
-                        super.addTotalSolvedTime(solvedTime);
-                    }
-                });
-    }
 
     public Set<Long> getSolvedProblemNumbers() {
         return super.getDetails().stream()
@@ -89,14 +72,12 @@ public class DailyRecord extends Record<DailyDetail> {
         // 새로운 문제 추가로 문제 수 증가
         this.problemCount += newDetails.size();
     }
+
+    @Builder
     private DailyRecord(LocalDateTime date, Defense defense, Member member, Map<Long, Problem> problems) {
         super(date, defense, member, problems);
-        this.solvedCount = 0L;
         this.problemCount = problems.size();
         defense.increaseAttemptCount();
     }
 
-    private long calculateSolvedTime(LocalDateTime solvedAt) {
-        return Duration.between(super.getTestDate(), solvedAt).getSeconds();
-    }
 }

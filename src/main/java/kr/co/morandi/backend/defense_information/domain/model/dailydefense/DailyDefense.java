@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +24,6 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 @Entity
 @DiscriminatorValue("DailyDefense")
 @Getter
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class DailyDefense extends Defense {
@@ -34,7 +32,6 @@ public class DailyDefense extends Defense {
 
     private Integer problemCount;
 
-    @Builder.Default
     @OneToMany(mappedBy = "dailyDefense", cascade = CascadeType.ALL)
     List<DailyDefenseProblem> dailyDefenseProblems = new ArrayList<>();
 
@@ -53,6 +50,7 @@ public class DailyDefense extends Defense {
         return tryProblem;
     }
 
+    @Builder
     private DailyDefense(LocalDate date, String contentName, Map<Long, Problem> problems) {
         super(contentName, DAILY);
         this.date = date;

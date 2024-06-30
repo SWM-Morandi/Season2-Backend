@@ -149,10 +149,10 @@ class SessionServiceTest extends IntegrationTestSupport {
         final Map<Long, Problem> problem = getProblem(dailyDefense, 2L);
 
         DailyRecord dailyRecord = DailyRecord.builder()
-                .testDate(today)
+                .date(today)
                 .defense(dailyDefense)
-                .status(RecordStatus.IN_PROGRESS)
                 .member(member)
+                .problems(problem)
                 .build();
 
         final DailyRecord savedDailyRecord = dailyRecordRepository.save(dailyRecord);
@@ -161,7 +161,7 @@ class SessionServiceTest extends IntegrationTestSupport {
                 .member(member)
                 .problemNumber(1L)
                 .problem(problem.get(1L))
-                .record(savedDailyRecord)
+                .records(savedDailyRecord)
                 .defense(dailyDefense)
                 .build();
 

@@ -53,7 +53,7 @@ class CustomRecordTest {
         CustomRecord customDefenseRecord = CustomRecord.create(customDefense, member, startTime, problems);
 
         // then
-        assertThat(customDefenseRecord.getSolvedCount()).isZero();
+        assertThat(customDefenseRecord.getTotalSolvedCount()).isZero();
     }
     @DisplayName("커스텀 디펜스 기록이 만들어졌을 때 총 문제 수 기록은 커스텀 디펜스 문제 수와 같아야 한다.")
     @Test
@@ -151,7 +151,7 @@ class CustomRecordTest {
                 );
     }
 
-    @DisplayName("커스텀 디펜스 기록이 만들어졌을 때 세부 문제 기록의 문제 정답 코드는 null 값 이어야 한다.")
+    @DisplayName("커스텀 디펜스 기록이 만들어졌을 때 세부 문제 기록의 정답 제출 id는 null 값 이어야 한다.")
     @Test
     void solvedCodeIsNull() {
         // given
@@ -165,7 +165,7 @@ class CustomRecordTest {
 
         // when & then
         assertThat(customDefenseRecord.getDetails())
-                .extracting("solvedCode")
+                .extracting("correctSubmitId")
                 .containsExactlyInAnyOrder(
                         null,
                                 null

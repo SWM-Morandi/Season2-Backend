@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface MemberPort {
     Member saveMemberByEmail(String email, SocialType type);
     Member findMemberById(Long memberId);
+    Optional<Member> findById(Long memberId);
     Optional<Member> findMemberByEmail(String email);
 }

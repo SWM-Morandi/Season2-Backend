@@ -8,6 +8,8 @@ import kr.co.morandi.backend.defense_information.domain.service.defense.ProblemG
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.defense_record.application.port.out.dailyrecord.DailyRecordPort;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.factory.TestBaekjoonSubmitFactory;
+import kr.co.morandi.backend.judgement.domain.model.baekjoon.submit.BaekjoonSubmit;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
@@ -77,7 +79,6 @@ class DailyDefenseUseCaseImplTest extends IntegrationTestSupport {
                 )
         );
     }
-
     @DisplayName("사용자가 있을 때 응시 기록도 있다면 DailyDefense 정보를 조회하면 isSolved는 True/False를 포함하여 반환한다.")
     @Test
     void getDailyDefenseInfoWithMemberAndRecord() {
@@ -88,7 +89,9 @@ class DailyDefenseUseCaseImplTest extends IntegrationTestSupport {
         LocalDateTime requestTime = LocalDateTime.of(2021, 10, 1, 12, 0, 0);
 
         final DailyRecord dailyRecord = createDailyRecord(dailyDefense, member, 2L, requestTime);
-        dailyRecord.solveProblem(2L, "example", requestTime.plusHours(1));
+
+        BaekjoonSubmit 제출 = TestBaekjoonSubmitFactory.createSubmit(member, dailyRecord.getDetail(2L), requestTime.plusHours(1));
+        제출.trySolveProblem();
         dailyRecordPort.saveDailyRecord(dailyRecord);
 
         // when

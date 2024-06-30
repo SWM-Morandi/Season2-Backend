@@ -32,4 +32,9 @@ public class DefenseSessionAdapter implements DefenseSessionPort {
     public Optional<DefenseSession> findDefenseSessionById(Long sessionId) {
         return defenseSessionRepository.findById(sessionId);
     }
+
+    @Override
+    public Optional<DefenseSession> findDefenseSessionJoinFetchTempCode(Long sessionId) {
+        return defenseSessionRepository.findDefenseSessionJoinFetchTempCode(sessionId);
+    }
 }

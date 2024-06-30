@@ -32,7 +32,7 @@ class RandomRecordTest {
         RandomRecord randomDefenseRecord = RandomRecord.create(randomDefense, member, now, problems);
 
         // then
-        assertThat(randomDefenseRecord.getSolvedCount()).isZero();
+        assertThat(randomDefenseRecord.getTotalSolvedCount()).isZero();
     }
     @DisplayName("랜덤 디펜스 기록이 만들어졌을 때 총 문제 수는 랜덤 디펜스 문제 개수와 같아야 한다.")
     @Test
@@ -129,7 +129,7 @@ class RandomRecordTest {
                             0L
                 );
     }
-    @DisplayName("랜덤 디펜스 기록이 만들어졌을 때 세부 문제 기록의 정답 코드는 모두 null 이어야 한다.")
+    @DisplayName("랜덤 디펜스 기록이 만들어졌을 때 세부 문제 기록의 정답 제출 id는 모두 null 이어야 한다.")
     @Test
     void solvedCodeIsNull() {
         // given
@@ -144,7 +144,7 @@ class RandomRecordTest {
 
         // then
         assertThat(randomDefenseRecord.getDetails())
-                .extracting("solvedCode")
+                .extracting("correctSubmitId")
                 .containsExactly(
                     null,
                             null,

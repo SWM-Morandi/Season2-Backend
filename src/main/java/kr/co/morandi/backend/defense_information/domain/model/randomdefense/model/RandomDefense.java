@@ -1,10 +1,14 @@
 package kr.co.morandi.backend.defense_information.domain.model.randomdefense.model;
 
-import jakarta.persistence.*;
-import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
 import kr.co.morandi.backend.defense_information.domain.model.defense.Defense;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import kr.co.morandi.backend.defense_information.domain.model.defense.RandomCriteria;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +17,6 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 @Entity
 @DiscriminatorValue("RandomDefense")
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RandomDefense extends Defense {
 
@@ -29,6 +32,7 @@ public class RandomDefense extends Defense {
         return startTime.plusMinutes(timeLimit);
     }
 
+    @Builder
     private RandomDefense(RandomCriteria randomCriteria, Integer problemCount, Long timeLimit, String contentName) {
         super(contentName, RANDOM);
         this.randomCriteria = randomCriteria;

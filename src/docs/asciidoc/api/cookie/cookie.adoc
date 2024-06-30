@@ -1,0 +1,11 @@
+[[Baekjoon-Cookie]]
+== 백준 쿠키 저장하기
+
+=== Request
+include::{snippets}/save-member-baekjoon-cookie/http-request.adoc[]
+include::{snippets}/save-member-baekjoon-cookie/request-fields.adoc[]
+
+=== Response
+include::{snippets}/save-member-baekjoon-cookie/http-response.adoc[]
+
+

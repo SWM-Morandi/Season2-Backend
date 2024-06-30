@@ -13,11 +13,17 @@ import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import kr.co.morandi.backend.member_management.infrastructure.persistence.member.MemberRepository;
 import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import kr.co.morandi.backend.problem_information.infrastructure.persistence.problem.ProblemRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -52,6 +58,34 @@ class DefenseMessageServiceTest extends IntegrationTestSupport {
     @Autowired
     private DefenseSessionRepository defenseSessionRepository;
 
+
+    /*
+    * 내부에서 WebClient를 이용하는 통합 테스트에서는 ExchangeFunction의 exchange 메서드를
+    * Stubbing하여 테스트를 진행합니다.
+    *
+    * 내부적으로 API가 호출되는 횟수만큼 Stubbing을 해주어야 합니다.
+    * */
+    @Autowired
+    private ExchangeFunction exchangeFunction;
+
+    @BeforeEach
+    void setUp() {
+        Mockito.when(exchangeFunction.exchange(Mockito.any()))
+                .thenReturn(Mono.just(ClientResponse.create(HttpStatus.OK)
+                        .header("Content-Type", "application/json")
+                        .body("""
+                        [
+                            {
+                                "baekjoonProblemId": 1000,
+                                "title": "A+B"
+                            },
+                            {
+                                "baekjoonProblemId": 1001,
+                                "title": "A-B"
+                            }
+                        ]""")
+                        .build()));
+    }
 
     @DisplayName("다른 사람의 디펜스 세션에 연결을 요청하면 예외가 발생한다.")
     @Test

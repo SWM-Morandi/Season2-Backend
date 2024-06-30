@@ -9,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import static kr.co.morandi.backend.defense_information.domain.model.defense.Def
 @Entity
 @DiscriminatorValue("CustomDefense")
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CustomDefense extends Defense {
 
@@ -42,7 +40,6 @@ public class CustomDefense extends Defense {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @Builder.Default
     @OneToMany(mappedBy = "customDefense", cascade = CascadeType.ALL)
     private List<CustomDefenseProblem> customDefenseProblems = new ArrayList<>();
 
@@ -51,7 +48,9 @@ public class CustomDefense extends Defense {
         return startTime.plusMinutes(timeLimit);
     }
 
-    public static CustomDefense create(List<Problem> problems, Member member, String contentName, String description, Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
+    public static CustomDefense create(List<Problem> problems, Member member, String contentName,
+                                       String description, Visibility visibility, DefenseTier defenseTier,
+                                       Long timeLimit, LocalDateTime createDate) {
         return new CustomDefense(problems, member, contentName, description, visibility, defenseTier, timeLimit, createDate);
     }
 
@@ -69,6 +68,7 @@ public class CustomDefense extends Defense {
         return problemCount;
     }
 
+    @Builder
     private CustomDefense(List<Problem> problems, Member member, String contentName, String description,
                           Visibility visibility, DefenseTier defenseTier, Long timeLimit, LocalDateTime createDate) {
         super(contentName, CUSTOM);

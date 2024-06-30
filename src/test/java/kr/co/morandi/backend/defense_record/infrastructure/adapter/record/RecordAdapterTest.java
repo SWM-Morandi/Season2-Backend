@@ -6,6 +6,7 @@ import kr.co.morandi.backend.defense_information.domain.model.dailydefense.Daily
 import kr.co.morandi.backend.defense_information.infrastructure.persistence.dailydefense.DailyDefenseRepository;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyDetail;
 import kr.co.morandi.backend.defense_record.domain.model.dailydefense_record.DailyRecord;
+import kr.co.morandi.backend.defense_record.domain.model.record.Detail;
 import kr.co.morandi.backend.defense_record.domain.model.record.Record;
 import kr.co.morandi.backend.defense_record.infrastructure.persistence.dailydefense_record.DailyRecordRepository;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
@@ -47,6 +48,24 @@ class RecordAdapterTest extends IntegrationTestSupport {
     @Autowired
     private DailyRecordRepository dailyRecordRepository;
 
+    @DisplayName("RecordId로 Record를 찾아올 수 있다. (Fetch Join)")
+    @Test
+    void findRecordByIdFetchDetails() {
+        LocalDateTime today = LocalDateTime.of(2021, 10, 1, 0, 0);
+
+        final Member member = createMember();
+        final DailyRecord dailyRecord = tryDailyDefense(today, member);
+
+        // when
+        final Optional<Record<? extends Detail>> record = recordAdapter.findRecordFetchJoinWithDetail(dailyRecord.getRecordId());
+
+        // then
+        assertThat(record).isPresent()
+                .get()
+                .extracting("recordId", "defense.contentName", "details")
+                .contains(dailyRecord.getRecordId(), "오늘의 문제 테스트", dailyRecord.getDetails());
+    }
+
     @DisplayName("RecordId로 Record를 찾아올 수 있다.")
     @Test
     void findRecordById() {
@@ -57,7 +76,7 @@ class RecordAdapterTest extends IntegrationTestSupport {
         final DailyRecord dailyRecord = tryDailyDefense(today, member);
 
         // when
-        final Optional<Record<?>> record = recordAdapter.findRecordById(dailyRecord.getRecordId());
+        final Optional<Record<? extends Detail>> record = recordAdapter.findRecordById(dailyRecord.getRecordId());
 
         // then
         assertThat(record).isPresent()
@@ -72,9 +91,10 @@ class RecordAdapterTest extends IntegrationTestSupport {
         final Map<Long, Problem> problem = getProblem(dailyDefense, 2L);
 
         DailyRecord dailyRecord = DailyRecord.builder()
-                .testDate(today)
+                .date(today)
                 .defense(dailyDefense)
                 .member(member)
+                .problems(problem)
                 .build();
 
         final DailyRecord savedDailyRecord = dailyRecordRepository.save(dailyRecord);
@@ -83,7 +103,7 @@ class RecordAdapterTest extends IntegrationTestSupport {
                 .member(member)
                 .problemNumber(1L)
                 .problem(problem.get(1L))
-                .record(savedDailyRecord)
+                .records(savedDailyRecord)
                 .defense(dailyDefense)
                 .build();
 

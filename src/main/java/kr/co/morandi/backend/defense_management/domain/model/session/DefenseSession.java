@@ -5,7 +5,7 @@ import kr.co.morandi.backend.common.exception.MorandiException;
 import kr.co.morandi.backend.common.model.BaseEntity;
 import kr.co.morandi.backend.defense_information.domain.model.defense.DefenseType;
 import kr.co.morandi.backend.defense_management.domain.error.SessionErrorCode;
-import kr.co.morandi.backend.defense_management.domain.service.SessionService;
+import kr.co.morandi.backend.defense_management.domain.model.tempcode.model.Language;
 import kr.co.morandi.backend.member_management.domain.model.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -55,6 +55,14 @@ public class DefenseSession extends BaseEntity {
         if (!this.member.getMemberId().equals(memberId)) {
             throw new MorandiException(SessionErrorCode.INVALID_SESSION_OWNER);
         }
+    }
+
+    public void updateTempCode(Long problemNumber, Language language, String code) {
+        if(isTerminated()) {
+            throw new MorandiException(SessionErrorCode.SESSION_ALREADY_ENDED);
+        }
+        SessionDetail sessionDetail = getSessionDetail(problemNumber);
+        sessionDetail.updateTempCode(language, code);
     }
 
     public boolean isTerminated() {

@@ -1,11 +1,16 @@
 package kr.co.morandi.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.morandi.backend.defense_information.application.port.in.DailyDefenseUseCase;
 import kr.co.morandi.backend.defense_information.infrastructure.controller.DailyDefenseController;
 import kr.co.morandi.backend.defense_management.application.service.message.DefenseMessageService;
 import kr.co.morandi.backend.defense_management.infrastructure.controller.SessionConnectionController;
 import kr.co.morandi.backend.defense_record.application.port.in.DailyRecordRankUseCase;
 import kr.co.morandi.backend.defense_record.infrastructure.controller.DailyRecordController;
+import kr.co.morandi.backend.judgement.application.service.baekjoon.cookie.BaekjoonMemberCookieService;
+import kr.co.morandi.backend.judgement.application.usecase.submit.BaekjoonSubmitUsecase;
+import kr.co.morandi.backend.judgement.infrastructure.controller.BaekjoonSubmitController;
+import kr.co.morandi.backend.judgement.infrastructure.controller.cookie.CookieController;
 import kr.co.morandi.backend.member_management.infrastructure.config.cookie.utils.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -20,7 +25,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @WebMvcTest(controllers = {
         DailyDefenseController.class,
         DailyRecordController.class,
-        SessionConnectionController.class
+        SessionConnectionController.class,
+        CookieController.class,
+        BaekjoonSubmitController.class
 },
         excludeAutoConfiguration = SecurityAutoConfiguration.class,
         excludeFilters = {
@@ -34,6 +41,9 @@ public abstract class ControllerTestSupport {
 
     @Autowired
     protected MockMvc mockMvc;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     // DailyDefenseController
     @MockBean
@@ -49,5 +59,14 @@ public abstract class ControllerTestSupport {
     //SessionConnectionController
     @MockBean
     protected DefenseMessageService defenseMessageService;
+
+    // CookieController
+    @MockBean
+    protected BaekjoonMemberCookieService baekjoonMemberCookieService;
+
+    // BaekjoonSubmitController
+    @MockBean
+    protected BaekjoonSubmitUsecase baekjoonSubmitUsecase;
+
 
 }

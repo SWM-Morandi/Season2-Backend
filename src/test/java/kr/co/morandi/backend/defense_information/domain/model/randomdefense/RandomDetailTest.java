@@ -78,7 +78,7 @@ class RandomDetailTest {
         // then
         assertThat(randomDefenseProblemRecord.getSubmitCount()).isZero();
     }
-    @DisplayName("RandomDefenseProblemRecord가 생성되면 solvedCode는 null이다")
+    @DisplayName("RandomDefenseProblemRecord가 생성되면 correctSubmit은  null이다")
     @Test
     void initialSolvedCodeIsSetToNull() {
         // given
@@ -91,8 +91,8 @@ class RandomDetailTest {
         RandomDetail randomDefenseProblemRecord = RandomDetail.create(member, 1L, problem, randomDefenseRecord, randomDefense);
 
         // then
-        assertThat(randomDefenseProblemRecord.getSolvedCode())
-                .isEqualTo(null);
+        assertThat(randomDefenseProblemRecord.getCorrectSubmitId())
+                .isNull();
     }
 
     private Problem createProblem() {

@@ -3,6 +3,7 @@ package kr.co.morandi.backend.defense_management.domain.model.tempcode.model;
 import jakarta.persistence.*;
 import kr.co.morandi.backend.common.model.BaseEntity;
 import kr.co.morandi.backend.defense_management.domain.model.session.SessionDetail;
+import kr.co.morandi.backend.judgement.domain.model.submit.SourceCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,11 +20,20 @@ public class TempCode extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private SessionDetail sessionDetail;
 
-    @Enumerated(EnumType.STRING)
-    private Language language;
+    @Embedded
+    private SourceCode sourceCode;
 
-    @Column(columnDefinition = "TEXT")
-    private String code;
+    public Language getLanguage() {
+        return sourceCode.getLanguage();
+    }
+
+    public String getCode() {
+        return sourceCode.getSourceCode();
+    }
+
+    public void updateTempCode(String code) {
+        sourceCode.updateSourceCode(code);
+    }
 
     public static TempCode create(Language language, String code, SessionDetail sessionDetail) {
         return TempCode.builder()
@@ -33,15 +43,10 @@ public class TempCode extends BaseEntity {
                 .build();
     }
 
-    public void updateTempCode(String code) {
-        this.code = code;
-    }
-
     @Builder
     private TempCode(SessionDetail sessionDetail, Language language, String code) {
         this.sessionDetail = sessionDetail;
-        this.language = language;
-        this.code = code;
+        this.sourceCode = SourceCode.of(code, language);
     }
 
     @Override

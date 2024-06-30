@@ -8,13 +8,14 @@ import kr.co.morandi.backend.problem_information.domain.model.problem.Problem;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Detail extends BaseEntity {
 
@@ -25,13 +26,11 @@ public abstract class Detail extends BaseEntity {
 
     private Long submitCount;
 
-    private String solvedCode;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Defense defense;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Record<?> record;
+    private Record<? extends Detail> record;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
@@ -39,29 +38,47 @@ public abstract class Detail extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Problem problem;
 
+    private Long correctSubmitId;
+
     private Long solvedTime;
+
+    public abstract Long getSequenceNumber();
 
     private static final Long INITIAL_SUBMIT_COUNT = 0L;
     private static final Long INITIAL_SOLVED_TIME = 0L;
     private static final Boolean INITIAL_IS_SOLVED = false;
 
-    public boolean solveProblem(String solvedCode, Long solvedTime) {
-        if(this.isSolved) {
-            return false;
+    public void trySolveProblem(Long submitId, LocalDateTime solvedDateTime) {
+        if(isSolvedDetail()) {
+            return ;
         }
         this.isSolved = true;
-        this.solvedCode = solvedCode;
-        this.solvedTime = solvedTime;
-        return true;
+        this.correctSubmitId = submitId;
+        this.solvedTime = calculateSolvedTime(solvedDateTime);
+        record.addSolvedCountAndTime(this.solvedTime);
     }
-    protected Detail(Member member, Problem problem, Record<?> records, Defense defense) {
+    public void increaseSubmitCount() {
+        this.submitCount++;
+    }
+
+    private boolean isSolvedDetail() {
+        return Boolean.TRUE.equals(this.isSolved);
+    }
+
+    private long calculateSolvedTime(LocalDateTime nowDateTime) {
+        LocalDateTime startTime = this.record.getTestDate();
+        return Duration.between(startTime, nowDateTime).toSeconds();
+    }
+
+    protected Detail(Member member, Problem problem, Record<? extends Detail> records, Defense defense) {
         this.isSolved = INITIAL_IS_SOLVED;
         this.submitCount = INITIAL_SUBMIT_COUNT;
         this.solvedTime = INITIAL_SOLVED_TIME;
-        this.solvedCode = null;
+        this.correctSubmitId = null;
         this.defense = defense;
         this.record = records;
         this.member = member;
         this.problem = problem;
     }
+
 }
